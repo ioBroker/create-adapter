@@ -1,0 +1,32 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"noEmit": true,
+		"noEmitOnError": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"outDir": "build/",
+		"removeComments": false,
+
+		"strict": true,
+
+		// enable the new reflection API
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+
+		"resolveJsonModule": true,
+
+		"sourceMap": false,
+		"inlineSourceMap": false,
+		//"sourceRoot": "src/",
+		"target": "es6",
+		"watch": false // true breaks CircleCI
+	},
+	"include": [
+		"**/*.ts"
+	],
+	"exclude": [
+		"build/**",
+		"node_modules/**"
+	]
+}
