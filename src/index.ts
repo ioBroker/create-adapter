@@ -1,17 +1,30 @@
 // tslint:disable:no-var-requires
 
 // tslint:disable-next-line:variable-name
-import { prompt } from "enquirer";
+import * as Enquirer from "enquirer";
+// @ts-ignore
+const { prompt } = Enquirer;
 
 // Sadly, Enquirer does not export the PromptOptions type
 // tslint:disable-next-line:ban-types
 type PromptOptions = Exclude<Parameters<typeof prompt>[0], Function | any[]>;
 type QuestionAction<T> = (value: T) => Promise<boolean>;
 interface QuestionMeta {
-	condition?: {name: string, value: string | boolean | number};
+	condition?: { name: string, value: string | boolean | number };
 	action?: QuestionAction<string | boolean | number>;
 }
 type Question = PromptOptions & QuestionMeta;
+
+function localize(question: any) {
+	return {
+		...question,
+		onRun() {
+			this.isTrue = (input: string) => input === "j";
+			this.isFalse = (input: string) => input === "n";
+			this.default = question.initial ? "(J/n)" : "(j/N)";
+		},
+	};
+}
 
 const questions: Question[] = [
 	{
@@ -23,11 +36,12 @@ const questions: Question[] = [
 			"TypeScript",
 		],
 	},
-	{
+	localize({
 		type: "confirm",
 		name: "really",
 		message: "Wirklich?",
-		condition: {name: "language", value: "JavaScript"},
+		initial: false,
+		condition: { name: "language", value: "JavaScript" },
 		action: (val: boolean) => {
 			if (val) {
 				console.log("Du bist unbelehrbar!");
@@ -36,8 +50,10 @@ const questions: Question[] = [
 			}
 			return Promise.resolve(!val);
 		},
-	},
+	}),
 ];
+
+const enquirer = new Enquirer();
 
 async function main() {
 	let answers: Record<string, any> = {};
@@ -47,7 +63,7 @@ async function main() {
 			if (q.action && !await q.action(answer[q.name as string])) {
 				process.exit(1);
 			}
-			answers = {...answers, ...answer};
+			answers = { ...answers, ...answer };
 		}
 	}
 	console.dir(answers);

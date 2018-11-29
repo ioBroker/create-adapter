@@ -10,7 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // tslint:disable-next-line:variable-name
-const enquirer_1 = require("enquirer");
+const Enquirer = require("enquirer");
+// @ts-ignore
+const { prompt } = Enquirer;
+function localize(question) {
+    return Object.assign({}, question, { onRun() {
+            this.isTrue = (input) => input === "j";
+            this.isFalse = (input) => input === "n";
+            this.default = question.initial ? "(J/n)" : "(j/N)";
+        } });
+}
 const questions = [
     {
         type: "select",
@@ -21,10 +30,11 @@ const questions = [
             "TypeScript",
         ],
     },
-    {
+    localize({
         type: "confirm",
         name: "really",
         message: "Wirklich?",
+        initial: false,
         condition: { name: "language", value: "JavaScript" },
         action: (val) => {
             if (val) {
@@ -35,14 +45,15 @@ const questions = [
             }
             return Promise.resolve(!val);
         },
-    },
+    }),
 ];
+const enquirer = new Enquirer();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         let answers = {};
         for (const q of questions) {
             if (q.condition == undefined || answers[q.condition.name] === q.condition.value) {
-                const answer = yield enquirer_1.prompt([q]);
+                const answer = yield prompt([q]);
                 if (q.action && !(yield q.action(answer[q.name]))) {
                     process.exit(1);
                 }
