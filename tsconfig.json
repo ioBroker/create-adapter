@@ -9,6 +9,7 @@
 		"removeComments": false,
 
 		"strict": true,
+		"strictFunctionTypes": false,
 
 		// enable the new reflection API
 		"experimentalDecorators": true,
