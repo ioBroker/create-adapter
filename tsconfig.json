@@ -5,7 +5,7 @@
 		"noEmitOnError": true,
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"outDir": "build/",
+		"outDir": "./build/",
 		"removeComments": false,
 
 		"strict": true,
@@ -16,9 +16,8 @@
 
 		"resolveJsonModule": true,
 
-		"sourceMap": false,
+		"sourceMap": true,
 		"inlineSourceMap": false,
-		//"sourceRoot": "src/",
 		"target": "es6",
 		"watch": false // true breaks CircleCI
 	},

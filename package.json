@@ -1,10 +1,11 @@
 {
   "name": "@iobroker/create-adapter",
   "version": "0.0.1",
-  "description": "Boilerplate project for libraries written in TypeScript",
+  "description": "Command line utility to create customized ioBroker adapters",
   "keywords": [],
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "bin": "./build/index.js",
   "author": {
     "name": "AlCalzone",
     "email": "d.griesel@gmx.net"
@@ -50,12 +51,13 @@
   },
   "dependencies": {
     "alcalzone-shared": "^1.4.0",
-    "debug": "^4.1.0"
+    "debug": "^4.1.0",
+    "enquirer": "^2.1.0"
   },
   "scripts": {
     "prebuild": "rimraf ./build",
     "build": "tsc -p tsconfig.build.json",
-    "watch": "tsc --watch",
+    "watch": "tsc -p tsconfig.build.json --watch",
     "test:ts": "mocha",
     "test": "mocha --watch",
     "coverage": "node_modules/.bin/nyc npm run test:ts",
