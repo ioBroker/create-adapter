@@ -10,54 +10,116 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // tslint:disable-next-line:variable-name
-const Enquirer = require("enquirer");
-// @ts-ignore
-const { prompt } = Enquirer;
-function localize(question) {
-    return Object.assign({}, question, { onRun() {
-            this.isTrue = (input) => input === "j";
-            this.isFalse = (input) => input === "n";
-            this.default = question.initial ? "(J/n)" : "(j/N)";
-        } });
+const ansi_colors_1 = require("ansi-colors");
+const enquirer_1 = require("enquirer");
+function styleMultiselect(ms) {
+    return Object.assign({}, ms, {
+        symbols: {
+            indicator: {
+                on: ansi_colors_1.green("■"),
+                off: ansi_colors_1.dim.gray("□"),
+            },
+        },
+    });
 }
 const questions = [
     {
         type: "select",
         name: "language",
-        message: "Mit welcher Sprache soll der Adapter programmiert werden?",
+        message: "Which language do you want to use to code the adapter?",
         choices: [
             "JavaScript",
             "TypeScript",
         ],
     },
-    localize({
-        type: "confirm",
-        name: "really",
-        message: "Wirklich?",
-        initial: false,
+    styleMultiselect({
         condition: { name: "language", value: "JavaScript" },
-        action: (val) => {
-            if (val) {
-                console.log("Du bist unbelehrbar!");
-            }
-            else {
-                console.log("gut so!");
-            }
-            return Promise.resolve(!val);
-        },
+        type: "multiselect",
+        name: "tools",
+        message: "Which of the following tools do you want to use?",
+        initial: [0, 1],
+        choices: [
+            { message: "ESLint", hint: "(recommended)" },
+            { message: "type checking", hint: "(recommended)" },
+        ],
     }),
+    styleMultiselect({
+        condition: { name: "language", value: "TypeScript" },
+        type: "multiselect",
+        name: "tools",
+        message: "Which of the following tools do you want to use?",
+        initial: [0],
+        choices: [
+            { message: "TSLint", hint: "(recommended)" },
+            { message: "Code coverage" },
+        ],
+    }),
+    styleMultiselect({
+        type: "multiselect",
+        name: "language-features",
+        message: "Which of the following language features do you need?",
+        initial: [0, 1, 2, 3],
+        choices: [
+            "String.pad{Start,End}",
+            "async/await",
+            "Promise.finally",
+            "String.trim{Start,End}",
+            "bigint",
+            "Array.flat[Map]",
+        ],
+    }),
+    {
+        type: "select",
+        name: "admin-react",
+        message: "Use React for the Admin UI?",
+        initial: "no",
+        choices: ["yes", "no"],
+    },
+    {
+        type: "select",
+        name: "admin-tab",
+        message: "Create a tab in the admin UI?",
+        initial: "no",
+        choices: ["yes", "no"],
+    },
+    {
+        condition: { name: "admin-tab", value: "yes" },
+        type: "select",
+        name: "tab-react",
+        message: "Use React for the tab?",
+        initial: "no",
+        choices: ["yes", "no"],
+    },
+    {
+        type: "select",
+        name: "widget",
+        message: "Create a VIS widget?",
+        initial: "no",
+        choices: ["yes", "no"],
+    },
 ];
-const enquirer = new Enquirer();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         let answers = {};
         for (const q of questions) {
             if (q.condition == undefined || answers[q.condition.name] === q.condition.value) {
-                const answer = yield prompt([q]);
-                if (q.action && !(yield q.action(answer[q.name]))) {
-                    process.exit(1);
+                while (true) {
+                    const answer = yield enquirer_1.prompt(q);
+                    const value = answer[q.name];
+                    if (value == undefined) {
+                        console.error("Adapter creation canceled");
+                        process.exit(1);
+                    }
+                    else if (q.action != undefined) {
+                        const testResult = yield q.action(value);
+                        if (!testResult)
+                            process.exit(1);
+                        if (testResult === "retry")
+                            continue;
+                    }
+                    answers = Object.assign({}, answers, answer);
+                    break;
                 }
-                answers = Object.assign({}, answers, answer);
             }
         }
         console.dir(answers);
