@@ -52,12 +52,6 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
 		"name": "${answers.authorName}"
 		,"email": "${answers.authorEmail}"
 	}
-	,"contributors": [
-		{
-			"name": "${answers.authorName}"
-			,"email": "${answers.authorEmail}"
-		}
-	]
 	,"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}"
 	,"license": "MIT"
 	,"keywords": [

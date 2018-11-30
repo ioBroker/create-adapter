@@ -1,4 +1,3 @@
-import * as JSON5 from "json5";
 import { Answers } from "../lib/questions";
 
 export = async (answers: Answers) => {
@@ -34,5 +33,5 @@ export = async (answers: Answers) => {
 		"no-console": false
 	}
 }`;
-	return JSON5.stringify(JSON5.parse(template), { space: 4, quote: `"` });
+	return template.trim();
 };

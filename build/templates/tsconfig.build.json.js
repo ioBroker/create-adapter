@@ -7,25 +7,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const JSON5 = require("json5");
 module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     const useTypeScript = answers.language === "TypeScript";
     if (!useTypeScript)
         return;
     const template = `
 {
-	"extends": "./tsconfig.json",
-	// Modified config to only compile .ts-files in the src dir
-	"compilerOptions": {
-		"noEmit": false,
-		"declaration": false,
-	},
-	"include": [
-		"src/**/*.ts"
-	],
-	"exclude": [
-		"src/**/*.test.ts"
-	]
+    "extends": "./tsconfig.json",
+    // Modified config to only compile .ts-files in the src dir
+    "compilerOptions": {
+        "noEmit": false,
+        "declaration": false,
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "src/**/*.test.ts"
+    ]
 }`;
-    return JSON5.stringify(JSON5.parse(template), { space: 4, quote: `"` });
+    return template.trim();
 });

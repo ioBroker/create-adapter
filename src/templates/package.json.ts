@@ -49,12 +49,6 @@ export = async (answers: Answers) => {
 		"name": "${answers.authorName}"
 		,"email": "${answers.authorEmail}"
 	}
-	,"contributors": [
-		{
-			"name": "${answers.authorName}"
-			,"email": "${answers.authorEmail}"
-		}
-	]
 	,"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}"
 	,"license": "MIT"
 	,"keywords": [
