@@ -62,4 +62,3 @@ function transformAdapterName(name) {
     return name.replace(/^ioBroker\./i, "");
 }
 exports.transformAdapterName = transformAdapterName;
-//# sourceMappingURL=actionsAndTransformers.js.map

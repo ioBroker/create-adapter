@@ -1,39 +1,13 @@
-import { error, executeCommand, isWindows } from "../lib/tools";
+import { Answers } from "../lib/questions";
 
-async function getDependencyVersion(dependency: string): Promise<string> {
-	const result = await executeCommand(isWindows ? "npm.cmd" : "npm", ["view", `${dependency}@latest`, "version"], { stdout: "pipe", stderr: "ignore" });
-	if (
-		result.exitCode === 0
-		|| typeof result.stdout !== "string"
-	) {
-		error(`Could not resolve version of ${dependency}!`);
-		process.exit(2);
-	}
-	const version = result.stdout!.trim();
-	if (version.length === 0) {
-		error(`Could not resolve version of ${dependency}!`);
-		process.exit(2);
-	}
-	return version;
-}
+export = async (answers: Answers) => {
 
-export = async (params: {
-	adapterName: string,
-	authorName: string,
-	authorEmail: string,
-	authorGithub: string,
-	description?: string,
-	language?: string,
-	tools?: string[],
-	features: string[],
-}) => {
-
-	const isAdapter = params.features.indexOf("Adapter") > -1;
-	const isWidget = params.features.indexOf("Adapter") > -1;
-	const useTypeScript = params.language === "TypeScript";
-	const useTSLint = params.tools && params.tools.indexOf("TSLint") > -1;
-	const useESLint = params.tools && params.tools.indexOf("ESLint") > -1;
-	const useNyc = params.tools && params.tools.indexOf("Code coverage") > -1;
+	const isAdapter = answers.features.indexOf("Adapter") > -1;
+	const isWidget = answers.features.indexOf("Adapter") > -1;
+	const useTypeScript = answers.language === "TypeScript";
+	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
+	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
+	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 
 	const devDependencies = await Promise.all(([] as string[])
 		.concat(isAdapter ? [
@@ -62,25 +36,26 @@ export = async (params: {
 		] : [])
 		.concat(useTSLint ? ["tslint"] : [])
 		.concat(useNyc ? ["nyc"] : [])
-		// convert deps into the correct lines
-		.map(async (dep) => `"${dep}": "${await getDependencyVersion(dep)}"`),
+		// generate dependency lines, the correct versions will be found later
+		.map((dep) => `"${dep}": "^0.0.0"`),
 	);
 
-	const template = `{
-	"name": "iobroker.${params.adapterName}"
+	const template = `
+{
+	"name": "iobroker.${answers.adapterName}"
 	,"version": "0.0.1"
-	,"description": "${params.description || params.adapterName}"
+	,"description": "${answers.description || answers.adapterName}"
 	,"author": {
-		"name": "${params.authorName}"
-		,"email": "${params.authorEmail}"
+		"name": "${answers.authorName}"
+		,"email": "${answers.authorEmail}"
 	}
 	,"contributors": [
 		{
-			"name": "${params.authorName}"
-			,"email": "${params.authorEmail}"
+			"name": "${answers.authorName}"
+			,"email": "${answers.authorEmail}"
 		}
 	]
-	,"homepage": "https://github.com/${params.authorGithub}/ioBroker.${params.adapterName}"
+	,"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}"
 	,"license": "MIT"
 	,"keywords": [
 		"ioBroker"
@@ -90,7 +65,7 @@ export = async (params: {
 	]
 	,"repository": {
 		"type": "git"
-		,"url": "https://github.com/${params.authorGithub}/ioBroker.${params.adapterName}"
+		,"url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}"
 	}
 	,"dependencies": {}
 	,"devDependencies": {${devDependencies.join(",")}}
@@ -98,9 +73,9 @@ export = async (params: {
 	,"scripts": {
 		${useTypeScript ? (`
 			"prebuild": "rimraf ./build",
-			"build:ts": "tsc -p src/tsconfig.json",
+			"build:ts": "tsc -p tsconfig.build.json",
 			"build": "npm run build:ts",
-			"watch:ts": "tsc -p src/tsconfig.json --watch",
+			"watch:ts": "tsc -p tsconfig.build.json --watch",
 			"watch": "npm run watch:ts",
 			"test:ts": "mocha --opts test/mocha.typescript.opts",
 		`) : ""}
@@ -109,7 +84,7 @@ export = async (params: {
 		,"test": "${useTypeScript ? "npm run test:ts && " : ""}npm run test:package && npm run test:iobroker"
 		${useNyc ? `,"coverage": "node node_modules/nyc/bin/nyc npm run test_ts"` : ""}
 		${useTSLint ? (`
-			,"lint": "npm run lint:ts \"src/**/*.ts\""
+			,"lint": "npm run lint:ts \\\"src/**/*.ts\\\""
 			,"lint:ts": "tslint"`
 		) : useESLint ? (`
 			,"lint": "npm run lint:js"
@@ -137,7 +112,7 @@ export = async (params: {
 		,"instrument": true
 	}` : ""}
 	,"bugs": {
-		"url": "https://github.com/${params.authorGithub}/ioBroker.${params.adapterName}/issues"
+		"url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/issues"
 	}
 	,"readmeFilename": "README.md"
 }`;

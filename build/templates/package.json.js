@@ -7,30 +7,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const tools_1 = require("../lib/tools");
-function getDependencyVersion(dependency) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const result = yield tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["view", `${dependency}@latest`, "version"], { stdout: "pipe", stderr: "ignore" });
-        if (result.exitCode === 0
-            || typeof result.stdout !== "string") {
-            tools_1.error(`Could not resolve version of ${dependency}!`);
-            process.exit(2);
-        }
-        const version = result.stdout.trim();
-        if (version.length === 0) {
-            tools_1.error(`Could not resolve version of ${dependency}!`);
-            process.exit(2);
-        }
-        return version;
-    });
-}
-module.exports = (params) => __awaiter(this, void 0, void 0, function* () {
-    const isAdapter = params.features.indexOf("Adapter") > -1;
-    const isWidget = params.features.indexOf("Adapter") > -1;
-    const useTypeScript = params.language === "TypeScript";
-    const useTSLint = params.tools && params.tools.indexOf("TSLint") > -1;
-    const useESLint = params.tools && params.tools.indexOf("ESLint") > -1;
-    const useNyc = params.tools && params.tools.indexOf("Code coverage") > -1;
+module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
+    const isAdapter = answers.features.indexOf("Adapter") > -1;
+    const isWidget = answers.features.indexOf("Adapter") > -1;
+    const useTypeScript = answers.language === "TypeScript";
+    const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
+    const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
+    const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
     const devDependencies = yield Promise.all([]
         .concat(isAdapter ? [
         // support adapter testing by default
@@ -58,23 +41,24 @@ module.exports = (params) => __awaiter(this, void 0, void 0, function* () {
     ] : [])
         .concat(useTSLint ? ["tslint"] : [])
         .concat(useNyc ? ["nyc"] : [])
-        // convert deps into the correct lines
-        .map((dep) => __awaiter(this, void 0, void 0, function* () { return `"${dep}": "${yield getDependencyVersion(dep)}"`; })));
-    const template = `{
-	"name": "iobroker.${params.adapterName}"
+        // generate dependency lines, the correct versions will be found later
+        .map((dep) => `"${dep}": "^0.0.0"`));
+    const template = `
+{
+	"name": "iobroker.${answers.adapterName}"
 	,"version": "0.0.1"
-	,"description": "${params.description || params.adapterName}"
+	,"description": "${answers.description || answers.adapterName}"
 	,"author": {
-		"name": "${params.authorName}"
-		,"email": "${params.authorEmail}"
+		"name": "${answers.authorName}"
+		,"email": "${answers.authorEmail}"
 	}
 	,"contributors": [
 		{
-			"name": "${params.authorName}"
-			,"email": "${params.authorEmail}"
+			"name": "${answers.authorName}"
+			,"email": "${answers.authorEmail}"
 		}
 	]
-	,"homepage": "https://github.com/${params.authorGithub}/ioBroker.${params.adapterName}"
+	,"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}"
 	,"license": "MIT"
 	,"keywords": [
 		"ioBroker"
@@ -84,7 +68,7 @@ module.exports = (params) => __awaiter(this, void 0, void 0, function* () {
 	]
 	,"repository": {
 		"type": "git"
-		,"url": "https://github.com/${params.authorGithub}/ioBroker.${params.adapterName}"
+		,"url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}"
 	}
 	,"dependencies": {}
 	,"devDependencies": {${devDependencies.join(",")}}
@@ -92,9 +76,9 @@ module.exports = (params) => __awaiter(this, void 0, void 0, function* () {
 	,"scripts": {
 		${useTypeScript ? (`
 			"prebuild": "rimraf ./build",
-			"build:ts": "tsc -p src/tsconfig.json",
+			"build:ts": "tsc -p tsconfig.build.json",
 			"build": "npm run build:ts",
-			"watch:ts": "tsc -p src/tsconfig.json --watch",
+			"watch:ts": "tsc -p tsconfig.build.json --watch",
 			"watch": "npm run watch:ts",
 			"test:ts": "mocha --opts test/mocha.typescript.opts",
 		`) : ""}
@@ -103,7 +87,7 @@ module.exports = (params) => __awaiter(this, void 0, void 0, function* () {
 		,"test": "${useTypeScript ? "npm run test:ts && " : ""}npm run test:package && npm run test:iobroker"
 		${useNyc ? `,"coverage": "node node_modules/nyc/bin/nyc npm run test_ts"` : ""}
 		${useTSLint ? (`
-			,"lint": "npm run lint:ts \"src/**/*.ts\""
+			,"lint": "npm run lint:ts \\\"src/**/*.ts\\\""
 			,"lint:ts": "tslint"`) : useESLint ? (`
 			,"lint": "npm run lint:js"
 			,"lint:js": "eslint"`) : ""}
@@ -129,10 +113,9 @@ module.exports = (params) => __awaiter(this, void 0, void 0, function* () {
 		,"instrument": true
 	}` : ""}
 	,"bugs": {
-		"url": "https://github.com/${params.authorGithub}/ioBroker.${params.adapterName}/issues"
+		"url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/issues"
 	}
 	,"readmeFilename": "README.md"
 }`;
     return JSON.stringify(JSON.parse(template), null, 2);
 });
-//# sourceMappingURL=package.json.js.map

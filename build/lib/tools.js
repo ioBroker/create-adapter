@@ -130,4 +130,3 @@ function copyFilesRecursiveSync(sourceDir, targetDir, predicate) {
     }
 }
 exports.copyFilesRecursiveSync = copyFilesRecursiveSync;
-//# sourceMappingURL=tools.js.map

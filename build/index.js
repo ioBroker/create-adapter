@@ -72,9 +72,18 @@ function ask() {
 function work(answers) {
     return __awaiter(this, void 0, void 0, function* () {
         const templateDir = "./build/templates";
-        const files = yield Promise.all(tools_1.enumFilesRecursiveSync(templateDir, name => /\.js$/.test(name)).map(f => require(path.join("..", f))(answers)));
-        console.log(files[0]);
+        const files = yield Promise.all(tools_1.enumFilesRecursiveSync(templateDir, name => /\.js$/.test(name)).map((f) => __awaiter(this, void 0, void 0, function* () {
+            return ({
+                name: f,
+                content: yield require(path.join("..", f))(answers),
+            });
+        })));
+        const necessaryFiles = files.filter(f => f.content != undefined);
+        for (const file of necessaryFiles) {
+            console.log(file.name);
+            console.log(file.content);
+            console.log();
+        }
     });
 }
 ask().then(work).catch(console.error);
-//# sourceMappingURL=index.js.map

@@ -165,3 +165,14 @@ export const questions: (Question | string)[] = [
 		],
 	},
 ];
+
+export interface Answers {
+	adapterName: string;
+	authorName: string;
+	authorEmail: string;
+	authorGithub: string;
+	description?: string;
+	language?: string;
+	tools?: string[];
+	features: string[];
+}

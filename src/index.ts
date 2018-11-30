@@ -62,9 +62,17 @@ async function work(answers: Record<string, any>): Promise<void> {
 		enumFilesRecursiveSync(
 			templateDir,
 			name => /\.js$/.test(name),
-		).map(f => require(path.join("..", f))(answers) as Promise<string>),
+		).map(async (f) => ({
+			name: f,
+			content: await require(path.join("..", f))(answers) as string,
+		})),
 	);
-	console.log(files[0]);
+	const necessaryFiles = files.filter(f => f.content != undefined);
+	for (const file of necessaryFiles) {
+		console.log(file.name);
+		console.log(file.content);
+		console.log();
+	}
 }
 
 ask().then(work).catch(console.error);
