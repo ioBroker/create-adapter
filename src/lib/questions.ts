@@ -48,7 +48,7 @@ export const questions: (Question | string)[] = [
 	"Let's get started with a few questions about your project!",
 	{
 		type: "input",
-		name: "adapter-name",
+		name: "adapterName",
 		message: "Please enter the name of your project:",
 		resultTransform: transformAdapterName,
 		action: checkAdapterExistence,
@@ -95,7 +95,7 @@ export const questions: (Question | string)[] = [
 	}),
 	styledMultiselect({
 		condition: { name: "features", contains: "Adapter" },
-		name: "node-version",
+		name: "nodeVersion",
 		message: "Which of the following language features do you need?",
 		initial: [0, 1, 2, 3],
 		choices: features.map(f => f.message),
@@ -107,7 +107,7 @@ export const questions: (Question | string)[] = [
 	{
 		condition: { name: "features", contains: "Adapter" },
 		type: "select",
-		name: "admin-react",
+		name: "adminReact",
 		message: "Use React for the Admin UI?",
 		initial: "no",
 		choices: ["yes", "no"],
@@ -115,7 +115,7 @@ export const questions: (Question | string)[] = [
 	{
 		condition: { name: "features", contains: "Adapter" },
 		type: "select",
-		name: "admin-tab",
+		name: "adminTab",
 		message: "Create a tab in the admin UI?",
 		initial: "no",
 		choices: ["yes", "no"],
@@ -123,7 +123,7 @@ export const questions: (Question | string)[] = [
 	{
 		condition: { name: "admin-tab", value: "yes" },
 		type: "select",
-		name: "tab-react",
+		name: "tabReact",
 		message: "Use React for the tab?",
 		initial: "no",
 		choices: ["yes", "no"],
@@ -132,20 +132,20 @@ export const questions: (Question | string)[] = [
 	bold("Almost done! Just a few administrative details..."),
 	{
 		type: "input",
-		name: "author-name",
+		name: "authorName",
 		message: "Please enter your name:",
 		action: checkAuthorName,
 	},
 	{
 		type: "input",
-		name: "author-github",
+		name: "authorGithub",
 		message: "What's your name/org on GitHub?",
 		initial: (answers: Record<string, any>) => answers["author-name"],
 		action: checkAuthorName,
 	},
 	{
 		type: "input",
-		name: "author-email",
+		name: "authorEmail",
 		message: "What's your email address?",
 		action: checkEmail,
 	},
