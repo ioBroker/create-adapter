@@ -1,5 +1,16 @@
 import { isArray, isObject } from "alcalzone-shared/typeguards";
+import { bold } from "ansi-colors";
 import { spawn, SpawnOptions } from "child_process";
+import * as fs from "fs-extra";
+import * as os from "os";
+import * as path from "path";
+
+export function error(message: string) {
+	console.error(bold.red(message));
+	console.error();
+}
+
+export const isWindows = /^win/.test(os.platform());
 
 export interface ExecuteCommandOptions {
 	/** Whether the executed command should be logged to the stdout. Default: false */
@@ -102,4 +113,50 @@ export function executeCommand(command: string, argsOrOptions?: string[] | Parti
 			// doesn't matter, we return the exit code in the "close" handler
 		}
 	});
+}
+
+/**
+ * Recursively enumerates all files in the given directory
+ * @param dir The directory to scan
+ * @param predicate An optional predicate to apply to every found file system entry
+ * @returns A list of all files found
+ */
+export function enumFilesRecursiveSync(dir: string, predicate?: (name: string) => boolean): string[] {
+	const ret = [];
+	if (typeof predicate !== "function") predicate = () => true;
+	// enumerate all files in this directory
+	const filesOrDirs = fs.readdirSync(dir)
+		.filter(predicate) // exclude all files starting with "."
+		.map(f => path.join(dir, f)) // and prepend the full path
+		;
+	for (const entry of filesOrDirs) {
+		if (fs.statSync(entry).isDirectory()) {
+			// Continue recursing this directory and remember the files there
+			ret.push(...enumFilesRecursiveSync(entry, predicate));
+		} else {
+			// remember this file
+			ret.push(entry);
+		}
+	}
+	return ret;
+}
+
+/**
+ * Recursively copies all files from the source to the target directory
+ * @param sourceDir The directory to scan
+ * @param targetDir The directory to copy to
+ * @param predicate An optional predicate to apply to every found file system entry
+ */
+export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, predicate?: (name: string) => boolean) {
+	// Enumerate all files in this module that are supposed to be in the root directory
+	const filesToCopy = enumFilesRecursiveSync(sourceDir, predicate);
+	// Copy all of them to the corresponding target dir
+	for (const file of filesToCopy) {
+		// Find out where it's supposed to be
+		const targetFileName = path.join(targetDir, path.relative(sourceDir, file));
+		// Ensure the directory exists
+		fs.ensureDirSync(path.dirname(targetFileName));
+		// And copy the file
+		fs.copySync(file, targetFileName);
+	}
 }

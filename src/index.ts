@@ -1,9 +1,7 @@
-// tslint:disable:no-var-requires
-
-// tslint:disable-next-line:variable-name
 import { prompt } from "enquirer";
+import * as path from "path";
 import { AnswerValue, Condition, questions } from "./lib/questions";
-import { bold } from "ansi-colors";
+import { enumFilesRecursiveSync } from "./lib/tools";
 
 function testCondition(condition: Condition | undefined, answers: Record<string, any>): boolean {
 	if (condition == undefined) return true;
@@ -15,7 +13,7 @@ function testCondition(condition: Condition | undefined, answers: Record<string,
 	return false;
 }
 
-async function main() {
+async function ask() {
 	let answers: Record<string, any> = {};
 	for (const q of questions) {
 		// Headlines
@@ -54,6 +52,19 @@ async function main() {
 			}
 		}
 	}
-	console.dir(answers);
+	// console.dir(answers);
+	return answers;
 }
-main().catch(console.error);
+
+async function work(answers: Record<string, any>): Promise<void> {
+	const templateDir = "./build/templates";
+	const files = await Promise.all(
+		enumFilesRecursiveSync(
+			templateDir,
+			name => /\.js$/.test(name),
+		).map(f => require(path.join("..", f))(answers) as Promise<string>),
+	);
+	console.log(files[0]);
+}
+
+ask().then(work).catch(console.error);

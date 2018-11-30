@@ -28,7 +28,7 @@ exports.questions = [
     "Let's get started with a few questions about your project!",
     {
         type: "input",
-        name: "adapter-name",
+        name: "adapterName",
         message: "Please enter the name of your project:",
         resultTransform: actionsAndTransformers_1.transformAdapterName,
         action: actionsAndTransformers_1.checkAdapterExistence,
@@ -75,7 +75,7 @@ exports.questions = [
     }),
     styledMultiselect({
         condition: { name: "features", contains: "Adapter" },
-        name: "node-version",
+        name: "nodeVersion",
         message: "Which of the following language features do you need?",
         initial: [0, 1, 2, 3],
         choices: features.map(f => f.message),
@@ -87,7 +87,7 @@ exports.questions = [
     {
         condition: { name: "features", contains: "Adapter" },
         type: "select",
-        name: "admin-react",
+        name: "adminReact",
         message: "Use React for the Admin UI?",
         initial: "no",
         choices: ["yes", "no"],
@@ -95,7 +95,7 @@ exports.questions = [
     {
         condition: { name: "features", contains: "Adapter" },
         type: "select",
-        name: "admin-tab",
+        name: "adminTab",
         message: "Create a tab in the admin UI?",
         initial: "no",
         choices: ["yes", "no"],
@@ -103,7 +103,7 @@ exports.questions = [
     {
         condition: { name: "admin-tab", value: "yes" },
         type: "select",
-        name: "tab-react",
+        name: "tabReact",
         message: "Use React for the tab?",
         initial: "no",
         choices: ["yes", "no"],
@@ -112,20 +112,20 @@ exports.questions = [
     ansi_colors_1.bold("Almost done! Just a few administrative details..."),
     {
         type: "input",
-        name: "author-name",
+        name: "authorName",
         message: "Please enter your name:",
         action: actionsAndTransformers_1.checkAuthorName,
     },
     {
         type: "input",
-        name: "author-github",
+        name: "authorGithub",
         message: "What's your name/org on GitHub?",
         initial: (answers) => answers["author-name"],
         action: actionsAndTransformers_1.checkAuthorName,
     },
     {
         type: "input",
-        name: "author-email",
+        name: "authorEmail",
         message: "What's your email address?",
         action: actionsAndTransformers_1.checkEmail,
     },

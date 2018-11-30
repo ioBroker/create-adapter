@@ -8,20 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ansi_colors_1 = require("ansi-colors");
-const os = require("os");
-const executeCommand_1 = require("./executeCommand");
-const isWindows = /^win/.test(os.platform());
+const tools_1 = require("./tools");
+const tools_2 = require("./tools");
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-function error(message) {
-    console.error(ansi_colors_1.bold.red(message));
-    console.error();
-}
 function checkMinSelections(category, min, answers) {
     return __awaiter(this, void 0, void 0, function* () {
         if (answers.length >= min)
             return true;
-        error(`Please enter at least ${min} ${category}`);
+        tools_2.error(`Please enter at least ${min} ${category}`);
         return "retry";
     });
 }
@@ -29,12 +23,12 @@ exports.checkMinSelections = checkMinSelections;
 function checkAdapterExistence(name) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!checkName(name)) {
-            error("Please enter a valid name!");
+            tools_2.error("Please enter a valid name!");
             return "retry";
         }
-        const result = yield executeCommand_1.executeCommand(isWindows ? "npm.cmd" : "npm", ["view", `iobroker.${name}`, "versions"], { stdout: "ignore", stderr: "ignore" });
+        const result = yield tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["view", `iobroker.${name}`, "versions"], { stdout: "ignore", stderr: "ignore" });
         if (result.exitCode === 0) {
-            error(`The adapter ioBroker.${name} already exists!`);
+            tools_2.error(`The adapter ioBroker.${name} already exists!`);
             return "retry";
         }
         return true;
@@ -47,7 +41,7 @@ function checkName(name) {
 function checkAuthorName(name) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!checkName(name)) {
-            error("Please enter a valid name!");
+            tools_2.error("Please enter a valid name!");
             return "retry";
         }
         return true;
@@ -57,7 +51,7 @@ exports.checkAuthorName = checkAuthorName;
 function checkEmail(email) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!emailRegex.test(email)) {
-            error("Please enter a valid email address!");
+            tools_2.error("Please enter a valid email address!");
             return "retry";
         }
         return true;

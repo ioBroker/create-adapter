@@ -1,16 +1,9 @@
-import { bold, red } from "ansi-colors";
-import * as os from "os";
-import { executeCommand } from "./executeCommand";
+import { executeCommand, isWindows } from "./tools";
+import { error } from "./tools";
 
-const isWindows = /^win/.test(os.platform());
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export type CheckResult = boolean | "retry";
-function error(message: string) {
-	console.error(bold.red(message));
-	console.error();
-}
-
 export async function checkMinSelections(category: string, min: number, answers: any[]): Promise<CheckResult> {
 	if (answers.length >= min) return true;
 	error(`Please enter at least ${min} ${category}`);

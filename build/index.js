@@ -1,5 +1,4 @@
 "use strict";
-// tslint:disable:no-var-requires
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -9,9 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// tslint:disable-next-line:variable-name
 const enquirer_1 = require("enquirer");
+const path = require("path");
 const questions_1 = require("./lib/questions");
+const tools_1 = require("./lib/tools");
 function testCondition(condition, answers) {
     if (condition == undefined)
         return true;
@@ -23,7 +23,7 @@ function testCondition(condition, answers) {
     }
     return false;
 }
-function main() {
+function ask() {
     return __awaiter(this, void 0, void 0, function* () {
         let answers = {};
         for (const q of questions_1.questions) {
@@ -65,8 +65,16 @@ function main() {
                 }
             }
         }
-        console.dir(answers);
+        // console.dir(answers);
+        return answers;
     });
 }
-main().catch(console.error);
+function work(answers) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const templateDir = "./build/templates";
+        const files = yield Promise.all(tools_1.enumFilesRecursiveSync(templateDir, name => /\.js$/.test(name)).map(f => require(path.join("..", f))(answers)));
+        console.log(files[0]);
+    });
+}
+ask().then(work).catch(console.error);
 //# sourceMappingURL=index.js.map
