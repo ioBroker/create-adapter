@@ -10,6 +10,7 @@
 
 		"strict": true,
 		"strictFunctionTypes": false,
+		// "strictBindCallApply": true,
 
 		// enable the new reflection API
 		"experimentalDecorators": true,
