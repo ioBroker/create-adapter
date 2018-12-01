@@ -1,16 +1,8 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 const objects_1 = require("alcalzone-shared/objects");
 const JSON5 = require("json5");
 const tools_1 = require("../lib/tools");
-module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
+module.exports = async (answers) => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     const isWidget = answers.features.indexOf("Adapter") > -1;
     const useTypeScript = answers.language === "TypeScript";
@@ -19,9 +11,9 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
     const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl"];
     const title = answers.title || answers.adapterName;
-    const titleLang = JSON.stringify(objects_1.composeObject(yield Promise.all(languages.map((lang) => __awaiter(this, void 0, void 0, function* () { return [lang, yield tools_1.translateText(title, lang)]; })))));
+    const titleLang = JSON.stringify(objects_1.composeObject(await Promise.all(languages.map(async (lang) => [lang, await tools_1.translateText(title, lang)]))));
     const description = answers.description || answers.adapterName;
-    const descriptionLang = JSON.stringify(objects_1.composeObject(yield Promise.all(languages.map((lang) => __awaiter(this, void 0, void 0, function* () { return [lang, yield tools_1.translateText(description, lang)]; })))));
+    const descriptionLang = JSON.stringify(objects_1.composeObject(await Promise.all(languages.map(async (lang) => [lang, await tools_1.translateText(description, lang)]))));
     const template = `
 {
 	"common": {
@@ -79,4 +71,4 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
 	],
 }`;
     return JSON.stringify(JSON5.parse(template), null, 4);
-});
+};

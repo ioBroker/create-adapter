@@ -14,7 +14,7 @@
 
 		"sourceMap": false,
 		"inlineSourceMap": false,
-		"target": "es6",
+		"target": "es2017",
 		"watch": false // true breaks CircleCI
 	},
 	"include": [

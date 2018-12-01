@@ -1,21 +1,13 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 const JSON5 = require("json5");
-module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
+module.exports = async (answers) => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     const isWidget = answers.features.indexOf("Adapter") > -1;
     const useTypeScript = answers.language === "TypeScript";
     const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
     const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
     const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
-    const devDependencies = yield Promise.all([]
+    const devDependencies = await Promise.all([]
         .concat(isAdapter ? [
         // support adapter testing by default
         "@types/chai",
@@ -116,4 +108,4 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
 	"readmeFilename": "README.md",
 }`;
     return JSON.stringify(JSON5.parse(template), null, 2);
-});
+};

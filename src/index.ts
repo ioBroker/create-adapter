@@ -1,10 +1,10 @@
+import { blueBright, red } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
 import { AnswerValue, Condition, questions } from "./lib/questions";
 import { enumFilesRecursiveSync, error, executeCommand, isWindows } from "./lib/tools";
-import { blueBright, red } from "ansi-colors";
 
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
