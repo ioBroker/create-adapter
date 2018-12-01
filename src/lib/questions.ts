@@ -14,7 +14,7 @@ export type Condition = { name: string } & (
 );
 
 interface QuestionMeta {
-	condition?: Condition;
+	condition?: Condition | Condition[];
 	resultTransform?: (val: AnswerValue | AnswerValue[]) => AnswerValue | AnswerValue[];
 	action?: QuestionAction<AnswerValue | AnswerValue[]>;
 }
@@ -32,15 +32,6 @@ function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "typ
 		},
 	});
 }
-
-const features = [
-	{ nodeVersion: 8, message: "String.pad{Start,End}" },
-	{ nodeVersion: 8, message: "async/await" },
-	{ nodeVersion: 10, message: "Promise.finally" },
-	{ nodeVersion: 10, message: "String.trim{Start,End}" },
-	{ nodeVersion: 10.8, message: "bigint" },
-	{ nodeVersion: 11, message: "Array.flat[Map]" },
-];
 
 export const questions: (Question | string)[] = [
 	green.bold("Welcome to the ioBroker adapter creator!"),
@@ -93,41 +84,37 @@ export const questions: (Question | string)[] = [
 			{ message: "Code coverage" },
 		],
 	}),
-	// styledMultiselect({
+
+	// TODO: enable React (only TypeScript at the start)
+	// {
+	// 	condition: [
+	// 		{ name: "features", contains: "Adapter" },
+	// 		{ name: "language", value: "TypeScript" }, // TODO: enable React for JS through Babel
+	// 	],
+	// 	type: "select",
+	// 	name: "adminReact",
+	// 	message: "Use React for the Admin UI?",
+	// 	initial: "no",
+	// 	choices: ["yes", "no"],
+	// },
+
+	// TODO: support admin tab
+	// {
 	// 	condition: { name: "features", contains: "Adapter" },
-	// 	name: "nodeVersion",
-	// 	message: "Which of the following language features do you need?",
-	// 	initial: [0, 1, 2, 3],
-	// 	choices: features.map(f => f.message),
-	// 	resultTransform: (selectedFeatures: string[]) => {
-	// 		const nodeVersions = selectedFeatures.map(f => features.find(ff => ff.message === f)!.nodeVersion);
-	// 		return Math.max(...nodeVersions);
-	// 	},
-	// }),
-	{
-		condition: { name: "features", contains: "Adapter" },
-		type: "select",
-		name: "adminReact",
-		message: "Use React for the Admin UI?",
-		initial: "no",
-		choices: ["yes", "no"],
-	},
-	{
-		condition: { name: "features", contains: "Adapter" },
-		type: "select",
-		name: "adminTab",
-		message: "Create a tab in the admin UI?",
-		initial: "no",
-		choices: ["yes", "no"],
-	},
-	{
-		condition: { name: "admin-tab", value: "yes" },
-		type: "select",
-		name: "tabReact",
-		message: "Use React for the tab?",
-		initial: "no",
-		choices: ["yes", "no"],
-	},
+	// 	type: "select",
+	// 	name: "adminTab",
+	// 	message: "Create a tab in the admin UI?",
+	// 	initial: "no",
+	// 	choices: ["yes", "no"],
+	// },
+	// {
+	// 	condition: { name: "adminTab", value: "yes" },
+	// 	type: "select",
+	// 	name: "tabReact",
+	// 	message: "Use React for the tab?",
+	// 	initial: "no",
+	// 	choices: ["yes", "no"],
+	// },
 	"",
 	underline("Almost done! Just a few administrative details..."),
 	{
@@ -180,4 +167,5 @@ export interface Answers {
 	title?: string;
 	licenseText?: string;
 	type?: string;
+	adminReact?: string;
 }

@@ -2,6 +2,7 @@ import { Answers } from "../lib/questions";
 
 const templateFunction = async (answers: Answers) => {
 
+	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
@@ -14,6 +15,7 @@ node_modules/
 nbproject/
 .vs*/
 Thumbs.db
+${isAdapter ? `gulpfile.js` : ""}
 
 test/
 travis/

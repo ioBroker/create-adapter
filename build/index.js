@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const typeguards_1 = require("alcalzone-shared/typeguards");
 const ansi_colors_1 = require("ansi-colors");
 const enquirer_1 = require("enquirer");
 const fs = require("fs-extra");
@@ -12,13 +13,21 @@ const rootDir = path.resolve(yargs.argv.target || process.cwd());
 function testCondition(condition, answers) {
     if (condition == undefined)
         return true;
-    if ("value" in condition) {
-        return answers[condition.name] === condition.value;
+    function testSingleCondition(cond) {
+        if ("value" in cond) {
+            return answers[cond.name] === cond.value;
+        }
+        else if ("contains" in cond) {
+            return answers[cond.name].indexOf(cond.contains) > -1;
+        }
+        return false;
     }
-    else if ("contains" in condition) {
-        return answers[condition.name].indexOf(condition.contains) > -1;
+    if (typeguards_1.isArray(condition)) {
+        return condition.every(cond => testSingleCondition(cond));
     }
-    return false;
+    else {
+        return testSingleCondition(condition);
+    }
 }
 async function ask() {
     let answers = {};

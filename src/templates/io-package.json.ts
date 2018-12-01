@@ -87,7 +87,7 @@ export = async (answers: Answers) => {
 	},
 	"native": {
 		"option1": true,
-		"option2": 42
+		"option2": "42"
 	},
 	"objects": [
 	],

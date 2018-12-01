@@ -1,3 +1,4 @@
+import { isArray } from "alcalzone-shared/typeguards";
 import { blueBright, red } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
@@ -9,14 +10,24 @@ import { enumFilesRecursiveSync, error, executeCommand, isWindows } from "./lib/
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
 
-function testCondition(condition: Condition | undefined, answers: Record<string, any>): boolean {
+function testCondition(condition: Condition | Condition[] | undefined, answers: Record<string, any>): boolean {
 	if (condition == undefined) return true;
-	if ("value" in condition) {
-		return answers[condition.name] === condition.value;
-	} else if ("contains" in condition) {
-		return (answers[condition.name] as AnswerValue[]).indexOf(condition.contains) > -1;
+
+	function testSingleCondition(cond: Condition) {
+		if ("value" in cond) {
+			return answers[cond.name] === cond.value;
+		} else if ("contains" in cond) {
+			return (answers[cond.name] as AnswerValue[]).indexOf(cond.contains) > -1;
+		}
+		return false;
 	}
-	return false;
+
+	if (isArray(condition)) {
+		return condition.every(cond => testSingleCondition(cond));
+	} else {
+		return testSingleCondition(condition);
+	}
+
 }
 
 async function ask() {
