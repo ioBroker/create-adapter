@@ -4,6 +4,7 @@ import * as path from "path";
 import * as yargs from "yargs";
 import { AnswerValue, Condition, questions } from "./lib/questions";
 import { enumFilesRecursiveSync, error, executeCommand, isWindows } from "./lib/tools";
+import { blueBright, red } from "ansi-colors";
 
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
@@ -98,15 +99,15 @@ async function main() {
 		? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`)
 		;
 
-	console.log("[1/2] creating files...");
+	console.log(blueBright("[1/2] creating files..."));
 	const files = await createFiles(answers);
 	await writeFiles(targetDir, files);
 
 	if (!yargs.argv.noInstall || !!yargs.argv.install) {
-		console.log("[2/2] installing dependencies...");
+		console.log(blueBright("[2/2] installing dependencies..."));
 		await executeCommand(isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir });
 		await executeCommand(isWindows ? "npm.cmd" : "npm", ["install"], { cwd: targetDir });
 	}
-	console.log("done");
+	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
 }
 main();

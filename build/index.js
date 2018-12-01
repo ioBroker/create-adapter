@@ -14,6 +14,7 @@ const path = require("path");
 const yargs = require("yargs");
 const questions_1 = require("./lib/questions");
 const tools_1 = require("./lib/tools");
+const ansi_colors_1 = require("ansi-colors");
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
 function testCondition(condition, answers) {
@@ -101,15 +102,15 @@ function main() {
         // make sure we are working in a directory called ioBroker.<adapterName>
         const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
             ? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`);
-        console.log("[1/2] creating files...");
+        console.log(ansi_colors_1.blueBright("[1/2] creating files..."));
         const files = yield createFiles(answers);
         yield writeFiles(targetDir, files);
         if (!yargs.argv.noInstall || !!yargs.argv.install) {
-            console.log("[2/2] installing dependencies...");
+            console.log(ansi_colors_1.blueBright("[2/2] installing dependencies..."));
             yield tools_1.executeCommand(tools_1.isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir });
             yield tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["install"], { cwd: targetDir });
         }
-        console.log("done");
+        console.log(ansi_colors_1.blueBright("All done! Have fun programming! ") + ansi_colors_1.red("♥"));
     });
 }
 main();

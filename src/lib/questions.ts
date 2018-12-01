@@ -164,6 +164,8 @@ export const questions: (Question | string)[] = [
 			"The Unlicense",
 		],
 	},
+	"",
+	underline("That's it. Please wait a minute while I get this working..."),
 ];
 
 export interface Answers {
