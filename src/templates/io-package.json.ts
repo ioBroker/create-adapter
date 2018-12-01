@@ -52,27 +52,37 @@ export = async (answers: Answers) => {
 		"authors": [
 			"${answers.authorName} <${answers.authorEmail}>"
 		],
-		"platform": "Javascript/Node.js",
-		"mode": "daemon",
-		"main": "${useTypeScript ? "build/" : ""}main.js",
-		"icon": "template.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/template.png",
-		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
-		"loglevel": "info",
-		"type": "general",
 		"keywords": [
 			"ioBroker",
 			"template",
 			"Smart Home",
 			"home automation",
 		],
-		"materialize": true,
-		${isWidget ? `"restartAdapters": ["vis"],` : ""}
+		"platform": "Javascript/Node.js",
+		"main": "${useTypeScript ? "build/" : ""}main.js",
+		"icon": "icon.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/icon.png",
+		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
+		"loglevel": "info",
+		${isWidget ? (`
+			"restartAdapters": ["vis"],
+			"localLink": "%web_protocol%://%ip%:%web_port%/vis/edit.html",
+		`) : ""}
+		${isAdapter ? (`
+			"mode": "daemon",
+			"type": "${answers.type || "general"}",
+		`) : isWidget ? (`
+			"onlyWWW": true,
+			"noConfig": true,
+			"singleton": true,
+			"type": "visualization-widgets",
+			"mode": "once",
+		`) : ""}
+		${isAdapter ? `"materialize": true,` : ""}
 		"dependencies": [
-			{
-				"admin": ">=3.0.0"
-			}
+			${isAdapter ? `{ "admin": ">=3.0.0" },` : ""}
+			${isWidget ? `"vis",` : ""}
 		],
 	},
 	"native": {

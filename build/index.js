@@ -83,7 +83,7 @@ async function createFiles(answers) {
 async function writeFiles(targetDir, files) {
     // write the files and make sure the target dirs exist
     for (const file of files) {
-        await fs.outputFile(path.join(targetDir, file.name), file.content, "utf8");
+        await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file === "string" ? "utf8" : undefined);
     }
 }
 async function main() {

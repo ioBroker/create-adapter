@@ -64,7 +64,7 @@ async function ask() {
 
 interface File {
 	name: string;
-	content: string | undefined;
+	content: string | Buffer;
 }
 
 async function createFiles(answers: Record<string, any>): Promise<File[]> {
@@ -81,19 +81,18 @@ async function createFiles(answers: Record<string, any>): Promise<File[]> {
 			const templateFunction = require(f);
 			return {
 				name: templateFunction.customPath || path.relative(templateDir, f).replace(/\.js$/i, ""),
-				content: await templateFunction(answers) as string,
+				content: await templateFunction(answers) as string | Buffer | undefined,
 			};
 		}),
 	);
-	const necessaryFiles = files.filter(f => f.content != undefined);
+	const necessaryFiles = files.filter(f => f.content != undefined) as File[];
 	return necessaryFiles;
 }
 
 async function writeFiles(targetDir: string, files: File[]) {
-
 	// write the files and make sure the target dirs exist
 	for (const file of files) {
-		await fs.outputFile(path.join(targetDir, file.name), file.content, "utf8");
+		await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file === "string" ? "utf8" : undefined);
 	}
 }
 

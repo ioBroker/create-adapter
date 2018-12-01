@@ -179,4 +179,5 @@ export interface Answers {
 	features: string[];
 	title?: string;
 	licenseText?: string;
+	type?: string;
 }
