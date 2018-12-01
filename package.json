@@ -1,11 +1,11 @@
 {
   "name": "@iobroker/create-adapter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Command line utility to create customized ioBroker adapters",
   "keywords": [],
   "main": "build/index.js",
   "types": "build/index.d.ts",
-  "bin": "./build/index.js",
+  "bin": "./bin/create-adapter.js",
   "author": {
     "name": "AlCalzone",
     "email": "d.griesel@gmx.net"
