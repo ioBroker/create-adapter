@@ -82,17 +82,12 @@ function createFiles(answers) {
                 content: yield require(f)(answers),
             });
         })));
-        console.log(files.map(f => f.name));
         const necessaryFiles = files.filter(f => f.content != undefined);
         return necessaryFiles;
     });
 }
-function writeFiles(adapterName, files) {
+function writeFiles(targetDir, files) {
     return __awaiter(this, void 0, void 0, function* () {
-        const rootDirName = path.basename(rootDir);
-        // make sure we are working in a directory called ioBroker.<adapterName>
-        const targetDir = rootDirName.toLowerCase() === `iobroker.${adapterName.toLowerCase()}`
-            ? rootDir : path.join(rootDir, `ioBroker.${adapterName}`);
         // write the files and make sure the target dirs exist
         for (const file of files) {
             yield fs.outputFile(path.join(targetDir, file.name), file.content, "utf8");
@@ -102,8 +97,17 @@ function writeFiles(adapterName, files) {
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const answers = yield ask();
+        const rootDirName = path.basename(rootDir);
+        // make sure we are working in a directory called ioBroker.<adapterName>
+        const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
+            ? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`);
+        console.log("creating files");
         const files = yield createFiles(answers);
-        yield writeFiles(answers.adapterName, files);
+        yield writeFiles(targetDir, files);
+        if (!yargs.argv.noInstall) {
+            console.log("installing dependencies");
+            yield tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["update", "--save", "--prefix", `"${targetDir}"`]);
+        }
     });
 }
 main();

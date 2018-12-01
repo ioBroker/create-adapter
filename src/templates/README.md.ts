@@ -3,7 +3,7 @@ import { Answers } from "../lib/questions";
 export = async (answers: Answers) => {
 
 	const template = `
-ioBroker.${answers.adapterName}
+# ioBroker.${answers.adapterName}
 
 ${answers.description || "Describe your project here"}
 

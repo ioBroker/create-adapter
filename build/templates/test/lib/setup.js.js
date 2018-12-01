@@ -20,12 +20,12 @@ var pkg           = require(rootDir + 'package.json');
 var debug         = typeof v8debug === 'object';
 pkg.main = pkg.main || 'main.js';
 
-var adapterName = path.normalize(rootDir).replace(/\\/g, '/').split('/');
+var adapterName = path.normalize(rootDir).replace(/\\\\/g, '/').split('/');
 adapterName = adapterName[adapterName.length - 2];
 var adapterStarted = false;
 
 function getAppName() {
-    var parts = __dirname.replace(/\\/g, '/').split('/');
+    var parts = __dirname.replace(/\\\\/g, '/').split('/');
     return parts[parts.length - 3].split('.')[0];
 }
 

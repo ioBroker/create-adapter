@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     const template = `
-ioBroker.${answers.adapterName}
+# ioBroker.${answers.adapterName}
 
 ${answers.description || "Describe your project here"}
 

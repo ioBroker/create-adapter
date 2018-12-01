@@ -3,7 +3,7 @@ import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
 import { AnswerValue, Condition, questions } from "./lib/questions";
-import { enumFilesRecursiveSync, error } from "./lib/tools";
+import { enumFilesRecursiveSync, error, executeCommand, isWindows } from "./lib/tools";
 
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
@@ -77,17 +77,11 @@ async function createFiles(answers: Record<string, any>): Promise<File[]> {
 			content: await require(f)(answers) as string,
 		})),
 	);
-	console.log(files.map(f => f.name));
 	const necessaryFiles = files.filter(f => f.content != undefined);
 	return necessaryFiles;
 }
 
-async function writeFiles(adapterName: string, files: File[]) {
-	const rootDirName = path.basename(rootDir);
-	// make sure we are working in a directory called ioBroker.<adapterName>
-	const targetDir = rootDirName.toLowerCase() === `iobroker.${adapterName.toLowerCase()}`
-		? rootDir : path.join(rootDir, `ioBroker.${adapterName}`)
-		;
+async function writeFiles(targetDir: string, files: File[]) {
 
 	// write the files and make sure the target dirs exist
 	for (const file of files) {
@@ -97,7 +91,20 @@ async function writeFiles(adapterName: string, files: File[]) {
 
 async function main() {
 	const answers = await ask();
+
+	const rootDirName = path.basename(rootDir);
+	// make sure we are working in a directory called ioBroker.<adapterName>
+	const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
+		? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`)
+		;
+
+	console.log("creating files");
 	const files = await createFiles(answers);
-	await writeFiles(answers.adapterName, files);
+	await writeFiles(targetDir, files);
+
+	if (!yargs.argv.noInstall) {
+		console.log("installing dependencies");
+		await executeCommand(isWindows ? "npm.cmd" : "npm", ["update", "--save", "--prefix", `"${targetDir}"`]);
+	}
 }
 main();
