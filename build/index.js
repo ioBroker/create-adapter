@@ -9,9 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const enquirer_1 = require("enquirer");
+const fs = require("fs-extra");
 const path = require("path");
+const yargs = require("yargs");
 const questions_1 = require("./lib/questions");
 const tools_1 = require("./lib/tools");
+/** Where the output should be written */
+const rootDir = path.resolve(yargs.argv.target || process.cwd());
 function testCondition(condition, answers) {
     if (condition == undefined)
         return true;
@@ -69,13 +73,13 @@ function ask() {
         return answers;
     });
 }
-function work(answers) {
+function createFiles(answers) {
     return __awaiter(this, void 0, void 0, function* () {
-        const templateDir = "./build/templates";
+        const templateDir = path.join(__dirname, "./templates");
         const files = yield Promise.all(tools_1.enumFilesRecursiveSync(templateDir, name => /\.js$/.test(name)).map((f) => __awaiter(this, void 0, void 0, function* () {
             return ({
-                name: f,
-                content: yield require(path.join("..", f))(answers),
+                name: path.relative(templateDir, f).replace(/\.js$/i, ""),
+                content: yield require(f)(answers),
             });
         })));
         const necessaryFiles = files.filter(f => f.content != undefined);
@@ -84,6 +88,28 @@ function work(answers) {
             console.log(file.content);
             console.log();
         }
+        return necessaryFiles;
     });
 }
-ask().then(work).catch(console.error);
+function writeFiles(adapterName, files) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const rootDirName = path.basename(rootDir);
+        // make sure we are working in a directory called ioBroker.<adapterName>
+        const targetDir = rootDirName.toLowerCase() === `iobroker.${adapterName.toLowerCase()}`
+            ? rootDir : path.join(rootDir, `ioBroker.${adapterName}`);
+        // make sure the garget dir exists
+        if (!(yield fs.pathExists(targetDir)))
+            yield fs.ensureDir(targetDir);
+        for (const file of files) {
+            yield fs.writeFile(path.join(targetDir, file.name), file.content, "utf8");
+        }
+    });
+}
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const answers = yield ask();
+        const files = yield createFiles(answers);
+        yield writeFiles(answers.adapterName, files);
+    });
+}
+main();

@@ -45,7 +45,7 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
         .map((dep) => `"${dep}": "^0.0.0"`));
     const template = `
 {
-	"name": "iobroker.${answers.adapterName}"
+	"name": "iobroker.${answers.adapterName.toLowerCase()}"
 	,"version": "0.0.1"
 	,"description": "${answers.description || answers.adapterName}"
 	,"author": {

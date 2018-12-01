@@ -42,7 +42,7 @@ export = async (answers: Answers) => {
 
 	const template = `
 {
-	"name": "iobroker.${answers.adapterName}"
+	"name": "iobroker.${answers.adapterName.toLowerCase()}"
 	,"version": "0.0.1"
 	,"description": "${answers.description || answers.adapterName}"
 	,"author": {
