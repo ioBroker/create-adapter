@@ -55,7 +55,8 @@
     "alcalzone-shared": "^1.4.0",
     "debug": "^4.1.0",
     "enquirer": "^2.1.0",
-    "fs-extra": "^7.0.1"
+    "fs-extra": "^7.0.1",
+    "json5": "^2.1.0"
   },
   "scripts": {
     "prebuild": "rimraf ./build",

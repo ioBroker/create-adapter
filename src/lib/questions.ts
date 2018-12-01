@@ -175,4 +175,5 @@ export interface Answers {
 	language?: string;
 	tools?: string[];
 	features: string[];
+	title?: string;
 }

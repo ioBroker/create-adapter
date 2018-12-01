@@ -160,3 +160,8 @@ export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, pre
 		fs.copySync(file, targetFileName);
 	}
 }
+
+export async function translateText(text: string, language: string): Promise<string> {
+	// TODO: implement
+	return text;
+}
