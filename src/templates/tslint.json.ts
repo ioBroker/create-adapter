@@ -32,6 +32,7 @@ export = async (answers: Answers) => {
         "quotemark": [true, "double", "avoid-escape"],
         "no-console": false
     }
-}`;
+}
+`;
 	return template.trim();
 };

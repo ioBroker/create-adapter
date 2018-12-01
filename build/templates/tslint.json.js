@@ -38,6 +38,7 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
         "quotemark": [true, "double", "avoid-escape"],
         "no-console": false
     }
-}`;
+}
+`;
     return template.trim();
 });

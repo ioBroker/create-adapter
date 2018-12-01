@@ -24,58 +24,59 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     const descriptionLang = JSON.stringify(objects_1.composeObject(yield Promise.all(languages.map((lang) => __awaiter(this, void 0, void 0, function* () { return [lang, yield tools_1.translateText(description, lang)]; })))));
     const template = `
 {
-    "common": {
-        "name": "${answers.adapterName}",
-        "version": "0.0.1",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie"
-            }
-        },
-        "title": "${answers.title || answers.adapterName}",
-        "titleLang": ${titleLang},
-        "desc": ${descriptionLang},
-        "authors": [
-            "${answers.authorName} <${answers.authorEmail}>"
-        ],
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "icon": "template.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/template.png",
-        "readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
-        "loglevel": "info",
-        "type": "general",
-        "keywords": [
-            "ioBroker",
-            "template",
-            "Smart Home",
-            "home automation",
-        ],
-        "materialize": true,
-        ${isWidget ? `"restartAdapters": ["vis"],` : ""}
-        "dependencies": [
-            {
-                "admin": ">=3.0.0"
-            }
-        ],
-    },
-    "native": {
-        "option1": true,
-        "option2": 42
-    },
-    "objects": [
-    ],
-    "instanceObjects": [
-    ],
+	"common": {
+		"name": "${answers.adapterName}",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie"
+			}
+		},
+		"title": "${answers.title || answers.adapterName}",
+		"titleLang": ${titleLang},
+		"desc": ${descriptionLang},
+		"authors": [
+			"${answers.authorName} <${answers.authorEmail}>"
+		],
+		"platform": "Javascript/Node.js",
+		"mode": "daemon",
+		"main": "${useTypeScript ? "build/" : ""}main.js",
+		"icon": "template.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/template.png",
+		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
+		"loglevel": "info",
+		"type": "general",
+		"keywords": [
+			"ioBroker",
+			"template",
+			"Smart Home",
+			"home automation",
+		],
+		"materialize": true,
+		${isWidget ? `"restartAdapters": ["vis"],` : ""}
+		"dependencies": [
+			{
+				"admin": ">=3.0.0"
+			}
+		],
+	},
+	"native": {
+		"option1": true,
+		"option2": 42
+	},
+	"objects": [
+	],
+	"instanceObjects": [
+	],
 }`;
     return JSON.stringify(JSON5.parse(template), null, 4);
 });

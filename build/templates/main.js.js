@@ -7,17 +7,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const os = require("os");
 module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     const useTypeScript = answers.language === "TypeScript";
-    const template = [
-        "--require test/mocha.setup.js",
-        useTypeScript ? "--watch-extensions ts" : undefined,
-        useTypeScript ? "--require ts-node/register" : undefined,
-        useTypeScript ? "--require source-map-support/register" : undefined,
-        // Setup the filter in a way that we only test user-defined test files,
-        // not the ones for package and adapter tests
-        useTypeScript ? "src/**/*.test.ts" : "{!(node_modules|test)/**/*.test.js,*.test.js,test/test*.js}",
-    ].filter(line => !!line).join(os.EOL);
+    if (!useTypeScript)
+        return;
+    const template = `
+// This is a fallback in case ioBroker does not find the compiled main.js
+require("./build/main.js");
+`;
     return template.trim();
 });

@@ -1,4 +1,4 @@
-import { bold, dim, green, underline, gray } from "ansi-colors";
+import { bold, dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import { checkAdapterExistence, checkAuthorName, checkEmail, checkMinSelections, CheckResult, transformAdapterName } from "./actionsAndTransformers";
 
@@ -176,4 +176,5 @@ export interface Answers {
 	tools?: string[];
 	features: string[];
 	title?: string;
+	licenseText?: string;
 }
