@@ -77,5 +77,5 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     "instanceObjects": [
     ],
 }`;
-    return JSON5.stringify(JSON5.parse(template), { quote: '"', space: 4 });
+    return JSON.stringify(JSON5.parse(template), null, 4);
 });

@@ -4,7 +4,6 @@ import { Answers } from "../../lib/questions";
 export = async (answers: Answers) => {
 
 	const useTypeScript = answers.language === "TypeScript";
-	if (!useTypeScript) return;
 
 	const template = [
 		"--require test/mocha.setup.js",

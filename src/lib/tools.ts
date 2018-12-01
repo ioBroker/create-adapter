@@ -121,12 +121,12 @@ export function executeCommand(command: string, argsOrOptions?: string[] | Parti
  * @param predicate An optional predicate to apply to every found file system entry
  * @returns A list of all files found
  */
-export function enumFilesRecursiveSync(dir: string, predicate?: (name: string) => boolean): string[] {
+export function enumFilesRecursiveSync(dir: string, predicate?: (name: string, parentDir: string) => boolean): string[] {
 	const ret = [];
 	if (typeof predicate !== "function") predicate = () => true;
 	// enumerate all files in this directory
 	const filesOrDirs = fs.readdirSync(dir)
-		.filter(predicate) // exclude all files starting with "."
+		.filter(f => predicate!(f, dir)) // exclude all files starting with "."
 		.map(f => path.join(dir, f)) // and prepend the full path
 		;
 	for (const entry of filesOrDirs) {

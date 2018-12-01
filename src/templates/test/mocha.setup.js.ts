@@ -3,7 +3,6 @@ import { Answers } from "../../lib/questions";
 export = async (answers: Answers) => {
 
 	const useTypeScript = answers.language === "TypeScript";
-	if (!useTypeScript) return;
 
 	const template = (useTypeScript ? `
 // Makes ts-node ignore warnings, so mocha --watch does work

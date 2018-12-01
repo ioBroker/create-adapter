@@ -48,7 +48,7 @@ function ask() {
                     // Cancel the process if necessary
                     const value = answer[q.name];
                     if (value == undefined) {
-                        console.error("Adapter creation canceled");
+                        tools_1.error("Adapter creation canceled");
                         process.exit(1);
                     }
                     // Apply an optional transformation
@@ -76,18 +76,14 @@ function ask() {
 function createFiles(answers) {
     return __awaiter(this, void 0, void 0, function* () {
         const templateDir = path.join(__dirname, "./templates");
-        const files = yield Promise.all(tools_1.enumFilesRecursiveSync(templateDir, name => /\.js$/.test(name)).map((f) => __awaiter(this, void 0, void 0, function* () {
+        const files = yield Promise.all(tools_1.enumFilesRecursiveSync(templateDir, (name, parentDir) => fs.statSync(path.join(parentDir, name)).isDirectory() || /\.js$/.test(name)).map((f) => __awaiter(this, void 0, void 0, function* () {
             return ({
                 name: path.relative(templateDir, f).replace(/\.js$/i, ""),
                 content: yield require(f)(answers),
             });
         })));
+        console.log(files.map(f => f.name));
         const necessaryFiles = files.filter(f => f.content != undefined);
-        for (const file of necessaryFiles) {
-            console.log(file.name);
-            console.log(file.content);
-            console.log();
-        }
         return necessaryFiles;
     });
 }
@@ -97,11 +93,9 @@ function writeFiles(adapterName, files) {
         // make sure we are working in a directory called ioBroker.<adapterName>
         const targetDir = rootDirName.toLowerCase() === `iobroker.${adapterName.toLowerCase()}`
             ? rootDir : path.join(rootDir, `ioBroker.${adapterName}`);
-        // make sure the garget dir exists
-        if (!(yield fs.pathExists(targetDir)))
-            yield fs.ensureDir(targetDir);
+        // write the files and make sure the target dirs exist
         for (const file of files) {
-            yield fs.writeFile(path.join(targetDir, file.name), file.content, "utf8");
+            yield fs.outputFile(path.join(targetDir, file.name), file.content, "utf8");
         }
     });
 }

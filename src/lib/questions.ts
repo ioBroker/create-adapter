@@ -1,4 +1,4 @@
-import { bold, dim, green } from "ansi-colors";
+import { bold, dim, green, underline, gray } from "ansi-colors";
 import { prompt } from "enquirer";
 import { checkAdapterExistence, checkAuthorName, checkEmail, checkMinSelections, CheckResult, transformAdapterName } from "./actionsAndTransformers";
 
@@ -23,7 +23,7 @@ type Question = PromptOptions & QuestionMeta;
 function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "type">>>(ms: T): T & { type: string } {
 	return Object.assign({}, ms, {
 		type: "multiselect",
-		hint: "(Use <space> to select, <return> to submit)",
+		hint: gray("(<space> to select, <return> to submit)"),
 		symbols: {
 			indicator: {
 				on: green("■"),
@@ -43,9 +43,9 @@ const features = [
 ];
 
 export const questions: (Question | string)[] = [
-	bold("Welcome to the ioBroker adapter creator!"),
+	green.bold("Welcome to the ioBroker adapter creator!"),
 	"",
-	"Let's get started with a few questions about your project!",
+	underline("Let's get started with a few questions about your project!"),
 	{
 		type: "input",
 		name: "adapterName",
@@ -93,17 +93,17 @@ export const questions: (Question | string)[] = [
 			{ message: "Code coverage" },
 		],
 	}),
-	styledMultiselect({
-		condition: { name: "features", contains: "Adapter" },
-		name: "nodeVersion",
-		message: "Which of the following language features do you need?",
-		initial: [0, 1, 2, 3],
-		choices: features.map(f => f.message),
-		resultTransform: (selectedFeatures: string[]) => {
-			const nodeVersions = selectedFeatures.map(f => features.find(ff => ff.message === f)!.nodeVersion);
-			return Math.max(...nodeVersions);
-		},
-	}),
+	// styledMultiselect({
+	// 	condition: { name: "features", contains: "Adapter" },
+	// 	name: "nodeVersion",
+	// 	message: "Which of the following language features do you need?",
+	// 	initial: [0, 1, 2, 3],
+	// 	choices: features.map(f => f.message),
+	// 	resultTransform: (selectedFeatures: string[]) => {
+	// 		const nodeVersions = selectedFeatures.map(f => features.find(ff => ff.message === f)!.nodeVersion);
+	// 		return Math.max(...nodeVersions);
+	// 	},
+	// }),
 	{
 		condition: { name: "features", contains: "Adapter" },
 		type: "select",
@@ -129,18 +129,18 @@ export const questions: (Question | string)[] = [
 		choices: ["yes", "no"],
 	},
 	"",
-	bold("Almost done! Just a few administrative details..."),
+	underline("Almost done! Just a few administrative details..."),
 	{
 		type: "input",
 		name: "authorName",
-		message: "Please enter your name:",
+		message: "Please enter your name (or nickname):",
 		action: checkAuthorName,
 	},
 	{
 		type: "input",
 		name: "authorGithub",
 		message: "What's your name/org on GitHub?",
-		initial: (answers: Record<string, any>) => answers["author-name"],
+		initial: (answers: Record<string, any>) => answers.authorName,
 		action: checkAuthorName,
 	},
 	{

@@ -9,8 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     const useTypeScript = answers.language === "TypeScript";
-    if (!useTypeScript)
-        return;
     const template = (useTypeScript ? `
 // Makes ts-node ignore warnings, so mocha --watch does work
 process.env.TS_NODE_IGNORE_WARNINGS = "TRUE";

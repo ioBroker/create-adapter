@@ -5,7 +5,7 @@ const actionsAndTransformers_1 = require("./actionsAndTransformers");
 function styledMultiselect(ms) {
     return Object.assign({}, ms, {
         type: "multiselect",
-        hint: "(Use <space> to select, <return> to submit)",
+        hint: ansi_colors_1.gray("(<space> to select, <return> to submit)"),
         symbols: {
             indicator: {
                 on: ansi_colors_1.green("■"),
@@ -23,9 +23,9 @@ const features = [
     { nodeVersion: 11, message: "Array.flat[Map]" },
 ];
 exports.questions = [
-    ansi_colors_1.bold("Welcome to the ioBroker adapter creator!"),
+    ansi_colors_1.green.bold("Welcome to the ioBroker adapter creator!"),
     "",
-    "Let's get started with a few questions about your project!",
+    ansi_colors_1.underline("Let's get started with a few questions about your project!"),
     {
         type: "input",
         name: "adapterName",
@@ -73,17 +73,17 @@ exports.questions = [
             { message: "Code coverage" },
         ],
     }),
-    styledMultiselect({
-        condition: { name: "features", contains: "Adapter" },
-        name: "nodeVersion",
-        message: "Which of the following language features do you need?",
-        initial: [0, 1, 2, 3],
-        choices: features.map(f => f.message),
-        resultTransform: (selectedFeatures) => {
-            const nodeVersions = selectedFeatures.map(f => features.find(ff => ff.message === f).nodeVersion);
-            return Math.max(...nodeVersions);
-        },
-    }),
+    // styledMultiselect({
+    // 	condition: { name: "features", contains: "Adapter" },
+    // 	name: "nodeVersion",
+    // 	message: "Which of the following language features do you need?",
+    // 	initial: [0, 1, 2, 3],
+    // 	choices: features.map(f => f.message),
+    // 	resultTransform: (selectedFeatures: string[]) => {
+    // 		const nodeVersions = selectedFeatures.map(f => features.find(ff => ff.message === f)!.nodeVersion);
+    // 		return Math.max(...nodeVersions);
+    // 	},
+    // }),
     {
         condition: { name: "features", contains: "Adapter" },
         type: "select",
@@ -109,18 +109,18 @@ exports.questions = [
         choices: ["yes", "no"],
     },
     "",
-    ansi_colors_1.bold("Almost done! Just a few administrative details..."),
+    ansi_colors_1.underline("Almost done! Just a few administrative details..."),
     {
         type: "input",
         name: "authorName",
-        message: "Please enter your name:",
+        message: "Please enter your name (or nickname):",
         action: actionsAndTransformers_1.checkAuthorName,
     },
     {
         type: "input",
         name: "authorGithub",
         message: "What's your name/org on GitHub?",
-        initial: (answers) => answers["author-name"],
+        initial: (answers) => answers.authorName,
         action: actionsAndTransformers_1.checkAuthorName,
     },
     {

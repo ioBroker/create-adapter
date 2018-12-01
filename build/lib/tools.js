@@ -102,7 +102,7 @@ function enumFilesRecursiveSync(dir, predicate) {
         predicate = () => true;
     // enumerate all files in this directory
     const filesOrDirs = fs.readdirSync(dir)
-        .filter(predicate) // exclude all files starting with "."
+        .filter(f => predicate(f, dir)) // exclude all files starting with "."
         .map(f => path.join(dir, f)) // and prepend the full path
     ;
     for (const entry of filesOrDirs) {

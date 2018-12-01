@@ -3,7 +3,7 @@ import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
 import { AnswerValue, Condition, questions } from "./lib/questions";
-import { enumFilesRecursiveSync } from "./lib/tools";
+import { enumFilesRecursiveSync, error } from "./lib/tools";
 
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
@@ -38,7 +38,7 @@ async function ask() {
 				// Cancel the process if necessary
 				const value = answer[q.name as string];
 				if (value == undefined) {
-					console.error("Adapter creation canceled");
+					error("Adapter creation canceled");
 					process.exit(1);
 				}
 				// Apply an optional transformation
@@ -71,18 +71,14 @@ async function createFiles(answers: Record<string, any>): Promise<File[]> {
 	const files = await Promise.all(
 		enumFilesRecursiveSync(
 			templateDir,
-			name => /\.js$/.test(name),
+			(name, parentDir) => fs.statSync(path.join(parentDir, name)).isDirectory() || /\.js$/.test(name),
 		).map(async (f) => ({
 			name: path.relative(templateDir, f).replace(/\.js$/i, ""),
 			content: await require(f)(answers) as string,
 		})),
 	);
+	console.log(files.map(f => f.name));
 	const necessaryFiles = files.filter(f => f.content != undefined);
-	for (const file of necessaryFiles) {
-		console.log(file.name);
-		console.log(file.content);
-		console.log();
-	}
 	return necessaryFiles;
 }
 
@@ -93,11 +89,9 @@ async function writeFiles(adapterName: string, files: File[]) {
 		? rootDir : path.join(rootDir, `ioBroker.${adapterName}`)
 		;
 
-	// make sure the garget dir exists
-	if (!await fs.pathExists(targetDir)) await fs.ensureDir(targetDir);
-
+	// write the files and make sure the target dirs exist
 	for (const file of files) {
-		await fs.writeFile(path.join(targetDir, file.name), file.content, "utf8");
+		await fs.outputFile(path.join(targetDir, file.name), file.content, "utf8");
 	}
 }
 

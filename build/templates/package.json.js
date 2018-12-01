@@ -47,7 +47,7 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     // tslint:disable:indent
     const template = `
 {
-    "name": "iobroker.${answers.adapterName.toLowerCase()}"
+    "name": "iobroker.${answers.adapterName.toLowerCase()}",
     "version": "0.0.1",
     "description": "${answers.description || answers.adapterName}",
     "author": {
@@ -65,7 +65,7 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     "repository": {
         "type": "git",
         "url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
-    }
+    },
     "dependencies": {},
     "devDependencies": {${devDependencies.join(",")}},
     "main": "${useTypeScript ? "build/" : ""}main.js",
@@ -114,5 +114,5 @@ module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     "readmeFilename": "README.md",
 }`;
     // tslint:enable:indent
-    return JSON5.stringify(JSON5.parse(template), { quote: '"', space: 2 });
+    return JSON.stringify(JSON5.parse(template), null, 2);
 });

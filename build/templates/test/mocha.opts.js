@@ -10,8 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const os = require("os");
 module.exports = (answers) => __awaiter(this, void 0, void 0, function* () {
     const useTypeScript = answers.language === "TypeScript";
-    if (!useTypeScript)
-        return;
     const template = [
         "--require test/mocha.setup.js",
         useTypeScript ? "--watch-extensions ts" : undefined,
