@@ -101,13 +101,15 @@ function main() {
         // make sure we are working in a directory called ioBroker.<adapterName>
         const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
             ? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`);
-        console.log("creating files");
+        console.log("[1/2] creating files...");
         const files = yield createFiles(answers);
         yield writeFiles(targetDir, files);
-        if (!yargs.argv.noInstall) {
-            console.log("installing dependencies");
-            yield tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["update", "--save", "--prefix", `"${targetDir}"`]);
+        if (!yargs.argv.noInstall || !!yargs.argv.install) {
+            console.log("[2/2] installing dependencies...");
+            yield tools_1.executeCommand(tools_1.isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir });
+            yield tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["install"], { cwd: targetDir });
         }
+        console.log("done");
     });
 }
 main();

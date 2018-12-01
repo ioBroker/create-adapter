@@ -98,13 +98,15 @@ async function main() {
 		? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`)
 		;
 
-	console.log("creating files");
+	console.log("[1/2] creating files...");
 	const files = await createFiles(answers);
 	await writeFiles(targetDir, files);
 
-	if (!yargs.argv.noInstall) {
-		console.log("installing dependencies");
-		await executeCommand(isWindows ? "npm.cmd" : "npm", ["update", "--save", "--prefix", `"${targetDir}"`]);
+	if (!yargs.argv.noInstall || !!yargs.argv.install) {
+		console.log("[2/2] installing dependencies...");
+		await executeCommand(isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir });
+		await executeCommand(isWindows ? "npm.cmd" : "npm", ["install"], { cwd: targetDir });
 	}
+	console.log("done");
 }
 main();
