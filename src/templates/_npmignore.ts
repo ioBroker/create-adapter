@@ -1,6 +1,6 @@
 import { Answers } from "../lib/questions";
 
-export = async (answers: Answers) => {
+const templateFunction = async (answers: Answers) => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
@@ -49,3 +49,6 @@ maintenance/**
 `;
 	return template.trim();
 };
+
+templateFunction.customPath = ".npmignore";
+export = templateFunction;

@@ -66,10 +66,17 @@ async function ask() {
 }
 async function createFiles(answers) {
     const templateDir = path.join(__dirname, "./templates");
-    const files = await Promise.all(tools_1.enumFilesRecursiveSync(templateDir, (name, parentDir) => fs.statSync(path.join(parentDir, name)).isDirectory() || /\.js$/.test(name)).map(async (f) => ({
-        name: path.relative(templateDir, f).replace(/\.js$/i, ""),
-        content: await require(f)(answers),
-    })));
+    const files = await Promise.all(tools_1.enumFilesRecursiveSync(templateDir, (name, parentDir) => {
+        const fullName = path.join(parentDir, name);
+        const isDirectory = fs.statSync(fullName).isDirectory();
+        return isDirectory || /\.js$/.test(name);
+    }).map(async (f) => {
+        const templateFunction = require(f);
+        return {
+            name: templateFunction.customPath || path.relative(templateDir, f).replace(/\.js$/i, ""),
+            content: await templateFunction(answers),
+        };
+    }));
     const necessaryFiles = files.filter(f => f.content != undefined);
     return necessaryFiles;
 }
@@ -90,8 +97,10 @@ async function main() {
     await writeFiles(targetDir, files);
     if (!yargs.argv.noInstall || !!yargs.argv.install) {
         console.log(ansi_colors_1.blueBright("[2/2] installing dependencies..."));
-        await tools_1.executeCommand(tools_1.isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir });
-        await tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["install"], { cwd: targetDir });
+        await tools_1.executeCommand(tools_1.isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
+        await tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["install", "--quiet"], { cwd: targetDir });
+        if (await fs.pathExists("npm-debug.log"))
+            await fs.remove("npm-debug.log");
     }
     console.log(ansi_colors_1.blueBright("All done! Have fun programming! ") + ansi_colors_1.red("♥"));
 }

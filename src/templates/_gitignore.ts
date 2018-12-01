@@ -1,6 +1,6 @@
 import { Answers } from "../lib/questions";
 
-export = async (answers: Answers) => {
+const templateFunction = async (answers: Answers) => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 
@@ -30,3 +30,6 @@ admin/i18n
 `;
 	return template.trim();
 };
+
+templateFunction.customPath = ".gitignore";
+export = templateFunction;

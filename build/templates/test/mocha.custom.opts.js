@@ -9,7 +9,7 @@ module.exports = async (answers) => {
         useTypeScript ? "--require source-map-support/register" : undefined,
         // Setup the filter in a way that we only test user-defined test files,
         // not the ones for package and adapter tests
-        useTypeScript ? "src/**/*.test.ts" : "{!(node_modules|test)/**/*.test.js,*.test.js,test/test*.js}",
+        useTypeScript ? "src/**/*.test.ts" : "{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}",
     ].filter(line => !!line).join(os.EOL);
     return template.trim();
 };

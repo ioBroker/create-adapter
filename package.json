@@ -56,7 +56,8 @@
     "debug": "^4.1.0",
     "enquirer": "^2.1.0",
     "fs-extra": "^7.0.1",
-    "json5": "^2.1.0"
+    "json5": "^2.1.0",
+    "npm-check-updates": "^2.15.0"
   },
   "scripts": {
     "prebuild": "rimraf ./build",

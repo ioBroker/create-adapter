@@ -1,11 +1,9 @@
-import { Answers } from "../lib/questions";
-
-export = async (answers: Answers) => {
-
-	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
-	if (!useESLint) return;
-
-	const template = `
+"use strict";
+const templateFunction = async (answers) => {
+    const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
+    if (!useESLint)
+        return;
+    const template = `
 {
     "env": {
         "es6": true,
@@ -38,5 +36,7 @@ export = async (answers: Answers) => {
     }
 }
 `;
-	return template.trim();
+    return template.trim();
 };
+templateFunction.customPath = ".eslintrc.json";
+module.exports = templateFunction;

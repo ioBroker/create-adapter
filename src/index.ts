@@ -72,11 +72,18 @@ async function createFiles(answers: Record<string, any>): Promise<File[]> {
 	const files = await Promise.all(
 		enumFilesRecursiveSync(
 			templateDir,
-			(name, parentDir) => fs.statSync(path.join(parentDir, name)).isDirectory() || /\.js$/.test(name),
-		).map(async (f) => ({
-			name: path.relative(templateDir, f).replace(/\.js$/i, ""),
-			content: await require(f)(answers) as string,
-		})),
+			(name, parentDir) => {
+				const fullName = path.join(parentDir, name);
+				const isDirectory = fs.statSync(fullName).isDirectory();
+				return isDirectory || /\.js$/.test(name);
+			},
+		).map(async (f) => {
+			const templateFunction = require(f);
+			return {
+				name: templateFunction.customPath || path.relative(templateDir, f).replace(/\.js$/i, ""),
+				content: await templateFunction(answers) as string,
+			};
+		}),
 	);
 	const necessaryFiles = files.filter(f => f.content != undefined);
 	return necessaryFiles;
@@ -105,8 +112,9 @@ async function main() {
 
 	if (!yargs.argv.noInstall || !!yargs.argv.install) {
 		console.log(blueBright("[2/2] installing dependencies..."));
-		await executeCommand(isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir });
-		await executeCommand(isWindows ? "npm.cmd" : "npm", ["install"], { cwd: targetDir });
+		await executeCommand(isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
+		await executeCommand(isWindows ? "npm.cmd" : "npm", ["install", "--quiet"], { cwd: targetDir });
+		if (await fs.pathExists("npm-debug.log")) await fs.remove("npm-debug.log");
 	}
 	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
 }

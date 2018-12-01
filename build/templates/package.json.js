@@ -35,6 +35,7 @@ module.exports = async (answers) => {
         "rimraf",
     ] : [])
         .concat(useTSLint ? ["tslint"] : [])
+        .concat(useESLint ? ["eslint"] : [])
         .concat(useNyc ? ["nyc"] : [])
         // generate dependency lines, the correct versions will be found later
         .map((dep) => `"${dep}": "^0.0.0"`));
@@ -69,9 +70,9 @@ module.exports = async (answers) => {
 			"build": "npm run build:ts",
 			"watch:ts": "tsc -p tsconfig.build.json --watch",
 			"watch": "npm run watch:ts",
-			"test:ts": "mocha --opts test/mocha.opts",
+			"test:ts": "mocha --opts test/mocha.custom.opts",
 		`) : (`
-			"test:js": "mocha --opts test/mocha.opts",`)}
+			"test:js": "mocha --opts test/mocha.custom.opts",`)}
 		"test:package": "mocha test/testPackageFiles.js --exit",
 		"test:iobroker": "mocha test/testStartup.js --exit",
 		"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package && npm run test:iobroker",
