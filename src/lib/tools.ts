@@ -4,6 +4,7 @@ import { spawn, SpawnOptions } from "child_process";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
+import { Answers } from "./questions";
 
 export function error(message: string) {
 	console.error(bold.red(message));
@@ -164,4 +165,11 @@ export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, pre
 export async function translateText(text: string, language: string): Promise<string> {
 	// TODO: implement
 	return text;
+}
+
+export function formatLicense(licenseText: string, answers: Answers): string {
+	return licenseText
+		.replace(/\[year\]/g, new Date().getFullYear().toString())
+		.replace(/\[fullname\]/g, answers.authorName)
+	;
 }

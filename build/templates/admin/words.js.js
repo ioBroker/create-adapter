@@ -8,6 +8,17 @@ module.exports = async (answers) => {
 'use strict';
 
 systemDictionary = {
+	"${answers.adapterName} adapter settings": {
+		"en": "Adapter settings for ${answers.adapterName}",
+		"de": "Adaptereinstellungen für ${answers.adapterName}",
+		"ru": "Настройки адаптера для ${answers.adapterName}",
+		"pt": "Configurações do adaptador para ${answers.adapterName}",
+		"nl": "Adapterinstellingen voor ${answers.adapterName}",
+		"fr": "Paramètres d'adaptateur pour ${answers.adapterName}",
+		"it": "Impostazioni dell'adattatore per ${answers.adapterName}",
+		"es": "Ajustes del adaptador para ${answers.adapterName}",
+		"pl": "Ustawienia adaptera dla ${answers.adapterName}"
+	},
 	"option 1 description": {
 		"en": "Option 1 is cool",
 		"de": "Option 1 ist cool",

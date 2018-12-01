@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "alcalzone-shared": "^1.4.0",
+    "axios": "^0.18.0",
     "debug": "^4.1.0",
     "enquirer": "^2.1.0",
     "fs-extra": "^7.0.1",

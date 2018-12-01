@@ -1,6 +1,6 @@
 import { bold, dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
-import { checkAdapterExistence, checkAuthorName, checkEmail, checkMinSelections, CheckResult, transformAdapterName } from "./actionsAndTransformers";
+import { checkAdapterExistence, checkAuthorName, checkEmail, checkMinSelections, CheckResult, loadLicense, transformAdapterName } from "./actionsAndTransformers";
 
 // Sadly, Enquirer does not export the PromptOptions type
 // tslint:disable-next-line:ban-types
@@ -15,7 +15,7 @@ export type Condition = { name: string } & (
 
 interface QuestionMeta {
 	condition?: Condition | Condition[];
-	resultTransform?: (val: AnswerValue | AnswerValue[]) => AnswerValue | AnswerValue[];
+	resultTransform?: (val: AnswerValue | AnswerValue[]) => AnswerValue | AnswerValue[] | Promise<AnswerValue | AnswerValue[]>;
 	action?: QuestionAction<AnswerValue | AnswerValue[]>;
 }
 type Question = PromptOptions & QuestionMeta;
@@ -150,6 +150,7 @@ export const questions: (Question | string)[] = [
 			"MIT License",
 			"The Unlicense",
 		],
+		resultTransform: loadLicense as any,
 	},
 	"",
 	underline("That's it. Please wait a minute while I get this working..."),
@@ -165,7 +166,7 @@ export interface Answers {
 	tools?: string[];
 	features: string[];
 	title?: string;
-	licenseText?: string;
+	license?: {id: string, name: string, text: string};
 	type?: string;
 	adminReact?: string;
 }

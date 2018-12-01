@@ -129,6 +129,7 @@ exports.questions = [
             "MIT License",
             "The Unlicense",
         ],
+        resultTransform: actionsAndTransformers_1.loadLicense,
     },
     "",
     ansi_colors_1.underline("That's it. Please wait a minute while I get this working..."),

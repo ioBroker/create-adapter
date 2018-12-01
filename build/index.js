@@ -54,7 +54,8 @@ async function ask() {
                 }
                 // Apply an optional transformation
                 if (typeof q.resultTransform === "function") {
-                    answer[q.name] = q.resultTransform(answer[q.name]);
+                    const transformed = q.resultTransform(answer[q.name]);
+                    answer[q.name] = transformed instanceof Promise ? await transformed : transformed;
                 }
                 // Test the result
                 if (q.action != undefined) {
