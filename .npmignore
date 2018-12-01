@@ -2,12 +2,13 @@
 *.njsproj
 *.sln
 tsconfig.json
+tsconfig.*.json
 tslint.json
 test/
 tests/
 src/
 build/**/*.map
-@iobroker/create-adapter-*.tgz
+iobroker-create-adapter-*.tgz
 .vs*/
 .nyc_output/
 bin/
@@ -16,3 +17,4 @@ coverage/
 maintenance/
 .travis.yml
 .circleci/
+.editorconfig
