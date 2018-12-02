@@ -1,6 +1,6 @@
 import { Answers } from "../lib/questions";
 
-const templateFunction = async (answers: Answers) => {
+const templateFunction = (answers: Answers) => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;

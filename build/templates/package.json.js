@@ -2,7 +2,7 @@
 const JSON5 = require("json5");
 module.exports = async (answers) => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
-    const isWidget = answers.features.indexOf("Adapter") > -1;
+    const isWidget = answers.features.indexOf("VIS widget") > -1;
     const useTypeScript = answers.language === "TypeScript";
     const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
     const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
@@ -49,7 +49,7 @@ module.exports = async (answers) => {
 		"email": "${answers.authorEmail}",
 	},
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
-	"license": "MIT",
+	"license": "${answers.license.id}",
 	"keywords": [
 		"ioBroker",
 		"template",
@@ -62,7 +62,11 @@ module.exports = async (answers) => {
 	},
 	"dependencies": {},
 	"devDependencies": {${devDependencies.join(",")}},
-	"main": "${useTypeScript ? "build/" : ""}main.js",
+	${isAdapter ? (`
+		"main": "${useTypeScript ? "build/" : ""}main.js",
+	`) : isWidget ? (`
+		"main": "widgets/${answers.adapterName}.html",
+	`) : ""}
 	"scripts": {
 		${useTypeScript ? (`
 			"prebuild": "rimraf ./build",

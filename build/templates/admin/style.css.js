@@ -1,5 +1,5 @@
 "use strict";
-module.exports = async (answers) => {
+module.exports = (answers) => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     if (!isAdapter)
         return;

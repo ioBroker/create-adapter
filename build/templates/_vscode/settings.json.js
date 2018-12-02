@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = async (answers) => {
+const templateFunction = (answers) => {
     const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
     if (!useTypeChecking)
         return;

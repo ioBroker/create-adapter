@@ -1,6 +1,6 @@
 import { Answers } from "../../lib/questions";
 
-export = async (answers: Answers) => {
+export = (answers: Answers) => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	if (!isAdapter) return;

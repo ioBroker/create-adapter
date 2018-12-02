@@ -1,6 +1,6 @@
 "use strict";
 const tools_1 = require("../lib/tools");
-module.exports = async (answers) => {
+module.exports = (answers) => {
     return answers.license
         && answers.license.text
         && tools_1.formatLicense(answers.license.text, answers)

@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = async (answers) => {
+const templateFunction = (answers) => {
     const template = `
 os:
   - linux

@@ -1,5 +1,5 @@
 "use strict";
-module.exports = async (answers) => {
+module.exports = (answers) => {
     const useTypeScript = answers.language === "TypeScript";
     if (!useTypeScript)
         return;

@@ -6,11 +6,8 @@ import { translateText } from "../lib/tools";
 export = async (answers: Answers) => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
-	const isWidget = answers.features.indexOf("Adapter") > -1;
+	const isWidget = answers.features.indexOf("VIS widget") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
-	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
-	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 
 	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl"];
 
@@ -60,9 +57,9 @@ export = async (answers: Answers) => {
 		],
 		"platform": "Javascript/Node.js",
 		"main": "${useTypeScript ? "build/" : ""}main.js",
-		"icon": "icon.png",
+		"icon": "${answers.adapterName}.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/icon.png",
+		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${answers.adapterName}.png",
 		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
 		"loglevel": "info",
 		${isWidget ? (`

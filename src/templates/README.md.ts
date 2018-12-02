@@ -1,7 +1,7 @@
 import { Answers } from "../lib/questions";
 import { formatLicense } from "../lib/tools";
 
-export = async (answers: Answers) => {
+export = (answers: Answers) => {
 
 	const template = `
 # ioBroker.${answers.adapterName}

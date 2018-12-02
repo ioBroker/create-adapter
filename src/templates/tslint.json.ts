@@ -1,6 +1,6 @@
 import { Answers } from "../lib/questions";
 
-export = async (answers: Answers) => {
+export = (answers: Answers) => {
 
 	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
 	if (!useTSLint) return;

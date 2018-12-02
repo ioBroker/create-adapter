@@ -1,7 +1,7 @@
 import * as os from "os";
 import { Answers } from "../../lib/questions";
 
-export = async (answers: Answers) => {
+export = (answers: Answers) => {
 
 	const useTypeScript = answers.language === "TypeScript";
 

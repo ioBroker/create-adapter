@@ -91,9 +91,14 @@ async function createFiles(answers: Record<string, any>): Promise<File[]> {
 			},
 		).map(async (f) => {
 			const templateFunction = require(f);
+			const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
+				: typeof templateFunction.customPath === "string" ? templateFunction.customPath
+				: path.relative(templateDir, f).replace(/\.js$/i, "")
+			;
+			const templateResult = templateFunction(answers) as string | Buffer | undefined | Promise<string | Buffer | undefined>;
 			return {
-				name: templateFunction.customPath || path.relative(templateDir, f).replace(/\.js$/i, ""),
-				content: await templateFunction(answers) as string | Buffer | undefined,
+				name: customPath,
+				content: templateResult instanceof Promise ? await templateResult : templateResult,
 			};
 		}),
 	);

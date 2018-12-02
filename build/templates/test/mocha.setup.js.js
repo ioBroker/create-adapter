@@ -1,5 +1,5 @@
 "use strict";
-module.exports = async (answers) => {
+module.exports = (answers) => {
     const useTypeScript = answers.language === "TypeScript";
     const template = (useTypeScript ? `
 // Makes ts-node ignore warnings, so mocha --watch does work

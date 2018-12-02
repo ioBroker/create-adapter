@@ -166,7 +166,7 @@ export interface Answers {
 	tools?: string[];
 	features: string[];
 	title?: string;
-	license?: {id: string, name: string, text: string};
+	license: {id: string, name: string, text: string};
 	type?: string;
 	adminReact?: string;
 }

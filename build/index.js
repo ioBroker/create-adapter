@@ -82,9 +82,13 @@ async function createFiles(answers) {
         return isDirectory || /\.js$/.test(name);
     }).map(async (f) => {
         const templateFunction = require(f);
+        const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
+            : typeof templateFunction.customPath === "string" ? templateFunction.customPath
+                : path.relative(templateDir, f).replace(/\.js$/i, "");
+        const templateResult = templateFunction(answers);
         return {
-            name: templateFunction.customPath || path.relative(templateDir, f).replace(/\.js$/i, ""),
-            content: await templateFunction(answers),
+            name: customPath,
+            content: templateResult instanceof Promise ? await templateResult : templateResult,
         };
     }));
     const necessaryFiles = files.filter(f => f.content != undefined);

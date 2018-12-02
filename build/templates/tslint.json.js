@@ -1,5 +1,5 @@
 "use strict";
-module.exports = async (answers) => {
+module.exports = (answers) => {
     const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
     if (!useTSLint)
         return;

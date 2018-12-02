@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = async (answers) => {
+const templateFunction = (answers) => {
     const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
     const template = `
 .git

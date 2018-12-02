@@ -1,6 +1,6 @@
 import { Answers } from "../lib/questions";
 
-const templateFunction = async (answers: Answers) => {
+const templateFunction = (answers: Answers) => {
 	const template = `
 os:
   - linux

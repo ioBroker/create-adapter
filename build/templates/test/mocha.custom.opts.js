@@ -1,6 +1,6 @@
 "use strict";
 const os = require("os");
-module.exports = async (answers) => {
+module.exports = (answers) => {
     const useTypeScript = answers.language === "TypeScript";
     const template = [
         "--require test/mocha.setup.js",

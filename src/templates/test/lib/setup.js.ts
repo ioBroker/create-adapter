@@ -1,6 +1,6 @@
 import { Answers } from "../../../lib/questions";
 
-export = async (answers: Answers) => {
+export = (answers: Answers) => {
 
 	const template = `
 /* jshint -W097 */// jshint strict:false

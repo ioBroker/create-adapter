@@ -1,6 +1,6 @@
 "use strict";
 const tools_1 = require("../lib/tools");
-module.exports = async (answers) => {
+module.exports = (answers) => {
     const template = `
 # ioBroker.${answers.adapterName}
 
