@@ -36,9 +36,9 @@ After a short while, you will be asked a few questions. Afterwards all the neces
 * Choice between indentation: tabs or 4 spaces
 * Predefined settings page for the admin UI
 * Choice of an OpenSource license and automatic creation of the license file
-* Built-in component tests using `mocha` & `chai`, `sinon` (w/ `sinon-chai`) for:
+* Built-in component tests using `mocha` & `chai` (with `chai-as-promised`), `sinon` (w/ `sinon-chai`) for:
   * Correctly defined package files
-  * And your own tests...
+  * and your own tests...
 * Automated testing using Travis CI
 
 ## Roadmap
