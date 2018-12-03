@@ -1,6 +1,6 @@
 {
   "name": "@iobroker/create-adapter",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Command line utility to create customized ioBroker adapters",
   "keywords": [],
   "main": "build/index.js",
@@ -20,7 +20,7 @@
     "url": "https://github.com/AlCalzone/create-adapter/issues"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
