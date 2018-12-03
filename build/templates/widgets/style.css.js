@@ -13,5 +13,5 @@ const templateFunction = (answers) => {
 `;
     return template.trim();
 };
-templateFunction.customPath = (answers) => `widgets/${answers.adapterName}/style.css`;
+templateFunction.customPath = (answers) => `widgets/${answers.adapterName}/css/style.css`;
 module.exports = templateFunction;

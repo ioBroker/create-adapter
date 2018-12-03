@@ -10,7 +10,13 @@ export = async (answers: Answers) => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 
-	const devDependencies = await Promise.all(([] as string[])
+	const dependencies = ([] as string[])
+		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
+		// generate dependency lines, the correct versions will be found later
+		.map((dep) => `"${dep}": "^0.0.0"`)
+	;
+
+	const devDependencies = ([] as string[])
 		.concat(isAdapter ? [
 			// support adapter testing by default
 			"@types/chai",
@@ -41,8 +47,8 @@ export = async (answers: Answers) => {
 		.concat(useESLint ? ["eslint"] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		// generate dependency lines, the correct versions will be found later
-		.map((dep) => `"${dep}": "^0.0.0"`),
-	);
+		.map((dep) => `"${dep}": "^0.0.0"`)
+	;
 
 	const template = `
 {
@@ -65,7 +71,7 @@ export = async (answers: Answers) => {
 		"type": "git",
 		"url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
 	},
-	"dependencies": {},
+	"dependencies": {${dependencies.join(",")}},
 	"devDependencies": {${devDependencies.join(",")}},
 	${isAdapter ? (`
 		"main": "${useTypeScript ? "build/" : ""}main.js",
@@ -73,27 +79,29 @@ export = async (answers: Answers) => {
 		"main": "widgets/${answers.adapterName}.html",
 	`) : ""}
 	"scripts": {
-		${useTypeScript ? (`
-			"prebuild": "rimraf ./build",
-			"build:ts": "tsc -p tsconfig.build.json",
-			"build": "npm run build:ts",
-			"watch:ts": "tsc -p tsconfig.build.json --watch",
-			"watch": "npm run watch:ts",
-			"test:ts": "mocha --opts test/mocha.custom.opts",
-		`) : (`
-			"test:js": "mocha --opts test/mocha.custom.opts",`
-		)}
-		"test:package": "mocha test/testPackageFiles.js --exit",
-		"test:iobroker": "mocha test/testStartup.js --exit",
-		"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package && npm run test:iobroker",
-		${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
-		${useTSLint ? (`
-			"lint": "npm run lint:ts \\\"src/**/*.ts\\\"",
-			"lint:ts": "tslint",`
-		) : useESLint ? (`
-			"lint": "npm run lint:js",
-			"lint:js": "eslint",`
-		) : ""}
+		${isAdapter ? (`
+			${useTypeScript ? (`
+				"prebuild": "rimraf ./build",
+				"build:ts": "tsc -p tsconfig.build.json",
+				"build": "npm run build:ts",
+				"watch:ts": "tsc -p tsconfig.build.json --watch",
+				"watch": "npm run watch:ts",
+				"test:ts": "mocha --opts test/mocha.custom.opts",
+			`) : (`
+				"test:js": "mocha --opts test/mocha.custom.opts",
+			`)}
+			"test:package": "mocha test/testPackageFiles.js --exit",
+			"test:iobroker": "mocha test/testStartup.js --exit",
+			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package && npm run test:iobroker",
+			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
+			${useTSLint ? (`
+				"lint": "npm run lint:ts \\\"src/**/*.ts\\\"",
+				"lint:ts": "tslint",
+			`) : useESLint ? (`
+				"lint": "npm run lint:js",
+				"lint:js": "eslint",
+			`) : ""}
+		`) : ""}
 	},
 	${useNyc ? `"nyc": {
 		"include": [

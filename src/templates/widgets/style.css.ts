@@ -17,5 +17,5 @@ const templateFunction = (answers: Answers) => {
 	return template.trim();
 };
 
-templateFunction.customPath = (answers: Answers) => `widgets/${answers.adapterName}/style.css`;
+templateFunction.customPath = (answers: Answers) => `widgets/${answers.adapterName}/css/style.css`;
 export = templateFunction;
