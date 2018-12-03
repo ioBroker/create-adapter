@@ -1,53 +1,37 @@
-/**
- *
- * template adapter
- *
- *
- *  file io-package.json comments:
- *
- *  {
- *      "common": {
- *          "name":         "template",                  // name has to be set and has to be equal to adapters folder name and main file name excluding extension
- *          "version":      "0.0.0",                    // use "Semantic Versioning"! see http://semver.org/
- *          "title":        "Node.js template Adapter",  // Adapter title shown in User Interfaces
- *          "authors":  [                               // Array of authord
- *              "name <mail@template.com>"
- *          ]
- *          "desc":         "template adapter",          // Adapter description shown in User Interfaces. Can be a language object {de:"...",ru:"..."} or a string
- *          "platform":     "Javascript/Node.js",       // possible values "javascript", "javascript/Node.js" - more coming
- *          "mode":         "daemon",                   // possible values "daemon", "schedule", "subscribe"
- *          "schedule":     "0 0 * * *"                 // cron-style schedule. Only needed if mode=schedule
- *          "loglevel":     "info"                      // Adapters Log Level
- *      },
- *      "native": {                                     // the native object is available via adapter.config in your adapters code - use it for configuration
- *          "test1": true,
- *          "test2": 42
- *      }
- *  }
- *
- */
+import { Answers } from "../../lib/questions";
+
+export = (answers: Answers) => {
+
+	const useTypeScript = answers.language === "TypeScript";
+	if (!useTypeScript) return;
+
+	const template = `
+// The adapter-core module gives you access to the core ioBroker functions
+// you need to create an adapter
+import * as utils from "@iobroker/adapter-core";
+
+// Load your modules here, e.g.:
+// import * as fs from "fs";
 
 // Augment the adapter.config object with the actual types
+// TODO: delete this in the next version
 declare global {
 	namespace ioBroker {
 		interface AdapterConfig {
-			// TODO: strongly type the properties
+			// Define the shape of your options here (recommended)
+			option1: boolean;
+			option2: string;
+			// Or use a catch-all approach
 			[key: string]: any;
 		}
 	}
 }
 
-// The adapter-core module gives you access to the core ioBroker functions
-// you need to create an adapter
-import * as utils from "@iobroker/adapter-core";
-
-// you have to call the adapter function and pass a options object
-// name has to be set and has to be equal to adapters folder name and main file name excluding extension
-// adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
+// Create the adapter and define its methods
 const adapter = utils.adapter({
-	name: "template-ts",
+	name: "${answers.adapterName}",
 
-	// is called when databases are connected and adapter received configuration.
+	// The ready callback is called when databases are connected and adapter received configuration.
 	// start here!
 	ready: main, // Main method defined below for readability
 
@@ -65,10 +49,10 @@ const adapter = utils.adapter({
 	objectChange: (id, obj) => {
 		if (obj) {
 			// The object was changed
-			adapter.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
+			adapter.log.info(\`object \$\{id} changed: \$\{JSON.stringify(obj)}\`);
 		} else {
 			// The object was deleted
-			adapter.log.info(`object ${id} deleted`);
+			adapter.log.info(\`object \$\{id} deleted\`);
 		}
 	},
 
@@ -76,26 +60,26 @@ const adapter = utils.adapter({
 	stateChange: (id, state) => {
 		if (state) {
 			// The state was changed
-			adapter.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			adapter.log.info(\`state \$\{id} changed: \$\{state.val} (ack = \$\{state.ack})\`);
 		} else {
 			// The state was deleted
-			adapter.log.info(`state ${id} deleted`);
+			adapter.log.info(\`state \$\{id} deleted\`);
 		}
 	},
 
 	// Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
-	// requires the property to be configured in io-package.json
-	message: (obj) => {
-		if (typeof obj === "object" && obj.message) {
-			if (obj.command === "send") {
-				// e.g. send email or pushover or whatever
-				console.log("send command");
+	// requires "common.message" property to be set to true in io-package.json
+	// message: (obj) => {
+	// 	if (typeof obj === "object" && obj.message) {
+	// 		if (obj.command === "send") {
+	// 			// e.g. send email or pushover or whatever
+	// 			console.log("send command");
 
-				// Send response in callback if required
-				if (obj.callback) adapter.sendTo(obj.from, obj.command, "Message received", obj.callback);
-			}
-		}
-	},
+	// 			// Send response in callback if required
+	// 			if (obj.callback) adapter.sendTo(obj.from, obj.command, "Message received", obj.callback);
+	// 		}
+	// 	}
+	// },
 });
 
 function main() {
@@ -110,7 +94,6 @@ function main() {
 		Here a simple template for a boolean variable named "testVariable"
 		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
 	*/
-
 	adapter.setObject("testVariable", {
 		type: "state",
 		common: {
@@ -130,7 +113,6 @@ function main() {
 		setState examples
 		you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
 	*/
-
 	// the variable testVariable is set to true as command (ack=false)
 	adapter.setState("testVariable", true);
 
@@ -151,3 +133,6 @@ function main() {
 	});
 
 }
+`;
+	return template.trim();
+};

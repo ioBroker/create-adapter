@@ -1,6 +1,10 @@
 import { Answers } from "../lib/questions";
 
 const templateFunction = (answers: Answers) => {
+
+	const isAdapter = answers.features.indexOf("Adapter") > -1;
+	if (!isAdapter) return;
+
 	const template = `
 os:
   - linux
@@ -39,4 +43,6 @@ script:
 };
 
 templateFunction.customPath = ".travis.yml";
+// .travis.yml is always formatted with 2 spaces
+templateFunction.noReformat = true;
 export = templateFunction;

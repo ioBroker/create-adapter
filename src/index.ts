@@ -2,10 +2,11 @@ import { isArray } from "alcalzone-shared/typeguards";
 import { blueBright, red } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
+import * as os from "os";
 import * as path from "path";
 import * as yargs from "yargs";
 import { AnswerValue, Condition, questions } from "./lib/questions";
-import { enumFilesRecursiveSync, error, executeCommand, isWindows } from "./lib/tools";
+import { enumFilesRecursiveSync, error, executeCommand, indentWithSpaces, indentWithTabs, isWindows } from "./lib/tools";
 
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
@@ -77,6 +78,7 @@ async function ask() {
 interface File {
 	name: string;
 	content: string | Buffer;
+	noReformat: boolean;
 }
 
 async function createFiles(answers: Record<string, any>): Promise<File[]> {
@@ -99,17 +101,36 @@ async function createFiles(answers: Record<string, any>): Promise<File[]> {
 			return {
 				name: customPath,
 				content: templateResult instanceof Promise ? await templateResult : templateResult,
+				noReformat: templateFunction.noReformat === true,
 			};
 		}),
 	);
 	const necessaryFiles = files.filter(f => f.content != undefined) as File[];
-	return necessaryFiles;
+	return formatFiles(answers, necessaryFiles);
+}
+
+/** Formats files that are not explicitly forbidden to be formatted */
+function formatFiles(answers: Record<string, any>, files: File[]): File[] {
+	// Normalize indentation considering user preference
+	const indentation = answers.indentation === "Tab" ? indentWithTabs : indentWithSpaces;
+	// Remove multiple subsequent empty lines (can happen during template creation).
+	const emptyLines = (text: string) => {
+		return text && text
+			.replace(/\r\n/g, "\n")
+			.replace(/^(\s*\n){2,}/gm, "\n")
+			.replace(/\n/g, os.EOL)
+		;
+	};
+	const formatter = (text: string) => emptyLines(indentation(text));
+	return files.map(f => (f.noReformat || typeof f.content !== "string") ? f
+		: {...f, content: formatter(f.content)},
+	);
 }
 
 async function writeFiles(targetDir: string, files: File[]) {
 	// write the files and make sure the target dirs exist
 	for (const file of files) {
-		await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file === "string" ? "utf8" : undefined);
+		await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);
 	}
 }
 

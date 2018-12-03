@@ -1,6 +1,6 @@
 "use strict";
 const JSON5 = require("json5");
-module.exports = async (answers) => {
+const templateFunction = async (answers) => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     const isWidget = answers.features.indexOf("VIS widget") > -1;
     const useTypeScript = answers.language === "TypeScript";
@@ -123,3 +123,6 @@ module.exports = async (answers) => {
 }`;
     return JSON.stringify(JSON5.parse(template), null, 2);
 };
+// package.json is always formatted with 2 spaces
+templateFunction.noReformat = true;
+module.exports = templateFunction;

@@ -173,3 +173,15 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 		.replace(/\[fullname\]/g, answers.authorName)
 	;
 }
+
+/** Replaces 4-space indentation with tabs */
+export function indentWithTabs(text: string): string {
+	if (!text) return text;
+	return text.replace(/^( {4})+/gm, match => "\t".repeat(match.length / 4));
+}
+
+/** Replaces tab indentation with 4 spaces */
+export function indentWithSpaces(text: string): string {
+	if (!text) return text;
+	return text.replace(/^(\t)+/gm, match => " ".repeat(match.length * 4));
+}

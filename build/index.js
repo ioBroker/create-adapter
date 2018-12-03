@@ -4,6 +4,7 @@ const typeguards_1 = require("alcalzone-shared/typeguards");
 const ansi_colors_1 = require("ansi-colors");
 const enquirer_1 = require("enquirer");
 const fs = require("fs-extra");
+const os = require("os");
 const path = require("path");
 const yargs = require("yargs");
 const questions_1 = require("./lib/questions");
@@ -89,15 +90,31 @@ async function createFiles(answers) {
         return {
             name: customPath,
             content: templateResult instanceof Promise ? await templateResult : templateResult,
+            noReformat: templateFunction.noReformat === true,
         };
     }));
     const necessaryFiles = files.filter(f => f.content != undefined);
-    return necessaryFiles;
+    return formatFiles(answers, necessaryFiles);
+}
+/** Formats files that are not explicitly forbidden to be formatted */
+function formatFiles(answers, files) {
+    // Normalize indentation considering user preference
+    const indentation = answers.indentation === "Tab" ? tools_1.indentWithTabs : tools_1.indentWithSpaces;
+    // Remove multiple subsequent empty lines (can happen during template creation).
+    const emptyLines = (text) => {
+        return text && text
+            .replace(/\r\n/g, "\n")
+            .replace(/^(\s*\n){2,}/gm, "\n")
+            .replace(/\n/g, os.EOL);
+    };
+    const formatter = (text) => emptyLines(indentation(text));
+    return files.map(f => (f.noReformat || typeof f.content !== "string") ? f
+        : Object.assign({}, f, { content: formatter(f.content) }));
 }
 async function writeFiles(targetDir, files) {
     // write the files and make sure the target dirs exist
     for (const file of files) {
-        await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file === "string" ? "utf8" : undefined);
+        await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);
     }
 }
 async function main() {

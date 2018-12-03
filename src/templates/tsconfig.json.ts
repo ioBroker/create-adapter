@@ -3,31 +3,56 @@ import { Answers } from "../lib/questions";
 export = (answers: Answers) => {
 
 	const useTypeScript = answers.language === "TypeScript";
-	if (!useTypeScript) return;
+	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
+	if (!useTypeScript && !useTypeChecking) return;
 
 	const template = `
 {
 	"compileOnSave": true,
 	"compilerOptions": {
+		${useTypeChecking ? (`
+		"allowJs": true,
+		"checkJs": true,
+		`) : ""}
+		// do not compile anything, this file is just to configure type checking${useTypeScript ? (`
+		// the compilation is configured in tsconfig.build.json`) : ""}
 		"noEmit": true,
+		${useTypeScript ? (`
 		"noEmitOnError": true,
+		"outDir": "./build/",
+		"removeComments": false,`) : ""}
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"outDir": "./build/",
-		"removeComments": false,
+		// this is necessary for the automatic typing of the adapter config
+		"resolveJsonModule": true,
 
+		// Set this to false if you want to disable the very strict rules (not recommended)
 		"strict": true,
+		// Or enable some of those features for more fine-grained control
+		// "strictNullChecks": true,
+		// "strictPropertyInitialization": true,
+		// "strictBindCallApply": true,
+		// "noImplicitAny": true,
+		// "noUnusedLocals": true,
+		// "noUnusedParameters": true,
 
+		// Consider targetting es2017 or higher if you require the new NodeJS 8+ features
+		"target": "es2015",
+		${useTypeScript ? (`
 		"sourceMap": false,
 		"inlineSourceMap": false,
-		"target": "es6",
-		"watch": false
+		"watch": false`) : ""}
 	},
 	"include": [
+		${useTypeScript ? (`
 		"**/*.ts"
+		`) : (`
+		"**/*.js",
+		"**/*.d.ts"
+		`)}
 	],
 	"exclude": [
-		"build/**",
+		${useTypeScript ? `"build/**",` : ""}
 		"node_modules/**"
 	]
 }`;

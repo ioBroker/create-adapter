@@ -357,7 +357,6 @@ gulp.task('adminLanguages2words', function (done) {
     languages2words('./admin/');
     done();
 });
-
 `;
     return template.trim();
 };

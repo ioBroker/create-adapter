@@ -1,23 +1,29 @@
-import { Answers } from "../lib/questions";
-
-export = async (answers: Answers) => {
-
-	const useTypeScript = answers.language === "TypeScript";
-
-	let template: string;
-	if (useTypeScript) {
-		template = `
-// This is a fallback in case ioBroker does not find the compiled main.js
-require("./build/main.js");
-`;
-	} else {
-		template = `
+"use strict";
+module.exports = (answers) => {
+    const useTypeScript = answers.language === "TypeScript";
+    if (!useTypeScript)
+        return;
+    const template = `
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-const utils = require("@iobroker/adapter-core");
+import * as utils from "@iobroker/adapter-core";
 
 // Load your modules here, e.g.:
-// const fs = require("fs");
+// import * as fs from "fs";
+
+// Augment the adapter.config object with the actual types
+// TODO: delete this in the next version
+declare global {
+	namespace ioBroker {
+		interface AdapterConfig {
+			// Define the shape of your options here (recommended)
+			option1: boolean;
+			option2: string;
+			// Or use a catch-all approach
+			[key: string]: any;
+		}
+	}
+}
 
 // Create the adapter and define its methods
 const adapter = utils.adapter({
@@ -126,6 +132,5 @@ function main() {
 
 }
 `;
-	}
-	return template.trim();
+    return template.trim();
 };

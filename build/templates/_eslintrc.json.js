@@ -13,7 +13,7 @@ const templateFunction = (answers) => {
     "rules": {
         "indent": [
             "error",
-            4,
+            ${answers.indentation === "Tab" ? `"tab"` : "4"},
             {
                 "SwitchCase": 1
             }
@@ -23,7 +23,7 @@ const templateFunction = (answers) => {
         "prefer-const": "error",
         "quotes": [
             "error",
-            "single",
+            "double",
             {
                 "avoidEscape": true,
                 "allowTemplateLiterals": true

@@ -1,5 +1,8 @@
 "use strict";
 const templateFunction = (answers) => {
+    const isAdapter = answers.features.indexOf("Adapter") > -1;
+    if (!isAdapter)
+        return;
     const template = `
 os:
   - linux
@@ -37,4 +40,6 @@ script:
     return template.trim();
 };
 templateFunction.customPath = ".travis.yml";
+// .travis.yml is always formatted with 2 spaces
+templateFunction.noReformat = true;
 module.exports = templateFunction;

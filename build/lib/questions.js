@@ -94,6 +94,17 @@ exports.questions = [
     // 	initial: "no",
     // 	choices: ["yes", "no"],
     // },
+    {
+        condition: { name: "features", contains: "Adapter" },
+        type: "select",
+        name: "indentation",
+        message: "Do you prefer tab or space indentation?",
+        initial: "Tab",
+        choices: [
+            "Tab",
+            "Space (4)",
+        ],
+    },
     "",
     ansi_colors_1.underline("Almost done! Just a few administrative details..."),
     {

@@ -8,4 +8,5 @@ const templateFunction = (answers: Answers) => {
 };
 
 templateFunction.customPath = (answers: Answers) => `admin/${answers.adapterName}.png`;
+templateFunction.noReformat = true; // Don't format binary files
 export = templateFunction;

@@ -10,7 +10,7 @@ module.exports = (answers) => {
         "tslint:recommended"
     ],
     "rules": {
-        "indent": [true, "tabs", 4],
+        "indent": [true, "${answers.indentation === "Tab" ? "tabs" : "spaces"}", 4],
         "object-literal-sort-keys": false,
         "object-literal-shorthand": false,
         "array-type": [true, "array"],
@@ -28,7 +28,7 @@ module.exports = (answers) => {
         "no-bitwise": false,
         "max-classes-per-file": false,
         "quotemark": [true, "double", "avoid-escape"],
-        "no-console": false
+        "no-console": true
     }
 }
 `;

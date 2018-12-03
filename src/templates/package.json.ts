@@ -1,7 +1,7 @@
 import * as JSON5 from "json5";
 import { Answers } from "../lib/questions";
 
-export = async (answers: Answers) => {
+const templateFunction = async (answers: Answers) => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	const isWidget = answers.features.indexOf("VIS widget") > -1;
@@ -130,3 +130,7 @@ export = async (answers: Answers) => {
 }`;
 	return JSON.stringify(JSON5.parse(template), null, 2);
 };
+
+// package.json is always formatted with 2 spaces
+templateFunction.noReformat = true;
+export = templateFunction;
