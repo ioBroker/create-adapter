@@ -1,6 +1,7 @@
 "use strict";
 const templateFunction = (answers) => {
     const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
+    const useTypeScript = answers.language === "TypeScript";
     const template = `
 .git
 .idea
@@ -8,9 +9,10 @@ node_modules
 nbproject
 
 package-lock.json
-
+${useTypeScript ? (`
 # Sourcemaps
 maps/
+`) : ""}
 
 # npm package files
 iobroker.*.tgz

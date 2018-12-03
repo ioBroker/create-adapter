@@ -9,7 +9,8 @@ const templateFunction = (answers: Answers) => {
 {
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "mocha": true
     },
     "extends": "eslint:recommended",
     "rules": {

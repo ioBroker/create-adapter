@@ -16,6 +16,8 @@ const templateFunction = async (answers) => {
         // support adapter testing by default
         "@types/chai",
         "chai",
+        "@types/chai-as-promised",
+        "chai-as-promised",
         "@types/mocha",
         "mocha",
         "@types/sinon",
@@ -85,7 +87,7 @@ const templateFunction = async (answers) => {
 			`)}
 			"test:package": "mocha test/testPackageFiles.js --exit",
 			"test:iobroker": "mocha test/testStartup.js --exit",
-			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package && npm run test:iobroker",
+			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
 			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
 			${useTSLint ? (`
 				"lint": "npm run lint:ts \\\"src/**/*.ts\\\"",

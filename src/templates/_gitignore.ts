@@ -3,6 +3,7 @@ import { Answers } from "../lib/questions";
 const templateFunction = (answers: Answers) => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
+	const useTypeScript = answers.language === "TypeScript";
 
 	const template = `
 .git
@@ -11,9 +12,10 @@ node_modules
 nbproject
 
 package-lock.json
-
+${useTypeScript ? (`
 # Sourcemaps
 maps/
+`) : ""}
 
 # npm package files
 iobroker.*.tgz

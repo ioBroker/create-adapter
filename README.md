@@ -52,6 +52,8 @@ The following features did not make it into v1.0.0 and are planned for a later r
   * adapter title
   * keywords
   * short description
+- [ ] Automatically open the folder in your favorite editor
+- [ ] Scripts/Helpers for remote debugging
 
 ## Developing
 For developers of this package, there are a few things to know:
@@ -60,7 +62,7 @@ For developers of this package, there are a few things to know:
 * `npm run watch` keeps compiling incremental changes after a fresh build.
 * `src/templates` contains a bunch of templates, which are basically TypeScript files exporting a single method: 
   * This method accepts an object with the user's answers and returns a `string` or `Promise<string>` containing the output file.
-  * Setting the `customPath` property of that method allows you to override the output path of the file, either constant or depending on the user's answers (function).
+  * The last extension (`.ts`) is removed when creating the output file. Setting the `customPath` property of the template method allows you to override the output path of the file, either a constant or depending on the user's answers (function).
   * The outputted files are automatically formatted to have the correct indentation and multiple empty lines are removed. If you don't want this, set `noReformat` to true.
 
 * Publishing requires the `--access public` option.

@@ -31,8 +31,10 @@ tsconfig.*.json` : ""}
 ${useTSLint ? "tslint.json" : ""}
 ${useESLint ? ".eslintrc.json" : ""}
 
+${useTypeScript ? (`
 # Sourcemaps
 maps/
+`) : ""}
 
 # npm package files
 iobroker.*.tgz
