@@ -65,7 +65,7 @@ const adapter = utils.adapter({
 	// 	if (typeof obj === "object" && obj.message) {
 	// 		if (obj.command === "send") {
 	// 			// e.g. send email or pushover or whatever
-	// 			console.log("send command");
+	// 			adapter.log.info("send command");
 
 	// 			// Send response in callback if required
 	// 			if (obj.callback) adapter.sendTo(obj.from, obj.command, "Message received", obj.callback);
@@ -117,11 +117,11 @@ function main() {
 
 	// examples for the checkPassword/checkGroup functions
 	adapter.checkPassword("admin", "iobroker", (res) => {
-		console.log("check user admin pw ioboker: " + res);
+		adapter.log.info("check user admin pw ioboker: " + res);
 	});
 
 	adapter.checkGroup("admin", "admin", (res) => {
-		console.log("check group user admin group admin: " + res);
+		adapter.log.info("check group user admin group admin: " + res);
 	});
 
 }
