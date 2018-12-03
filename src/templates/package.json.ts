@@ -33,8 +33,6 @@ const templateFunction = async (answers: Answers) => {
 			"proxyquire",
 			// and NodeJS typings
 			"@types/node",
-			// and iobroker-core of course
-			"@iobroker/adapter-core",
 		] : [])
 		.concat(useTypeScript ? [
 			// enhance testing through TS tools
