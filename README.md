@@ -47,6 +47,11 @@ The following features did not make it into v1.0.0 and are planned for a later r
 - [ ] An extra tab for the admin UI (including React support)
 - [ ] Strongly typed `adapter.config` properties in TypeScript (they are supported in JS though!)
 - [ ] Package scripts for automatic semantic release of new versions
+- [ ] Choice of start mode
+- [ ] Ask for:
+  * adapter title
+  * keywords
+  * short description
 
 ## Developing
 For developers of this package, there are a few things to know:
