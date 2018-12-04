@@ -1,6 +1,6 @@
 import { bold, dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
-import { checkAdapterExistence, checkAuthorName, checkEmail, checkMinSelections, CheckResult, loadLicense, transformAdapterName } from "./actionsAndTransformers";
+import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, loadLicense, transformAdapterName } from "./actionsAndTransformers";
 
 // Sadly, Enquirer does not export the PromptOptions type
 // tslint:disable-next-line:ban-types
@@ -33,8 +33,16 @@ function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "typ
 	});
 }
 
+// tslint:disable-next-line:no-var-requires
+const ownVersion = require("../../package.json").version;
+
 export const questions: (Question | string)[] = [
-	green.bold("Welcome to the ioBroker adapter creator!"),
+	"",
+	green.bold("====================================================="),
+	green.bold(`   Welcome to the ioBroker adapter creator v${ownVersion}!`),
+	green.bold("====================================================="),
+	"",
+	gray(`You can cancel at any point by pressing Ctrl+C.`),
 	"",
 	underline("Let's get started with a few questions about your project!"),
 	{
@@ -42,7 +50,7 @@ export const questions: (Question | string)[] = [
 		name: "adapterName",
 		message: "Please enter the name of your project:",
 		resultTransform: transformAdapterName,
-		action: checkAdapterExistence,
+		action: checkAdapterName,
 	},
 	styledMultiselect({
 		name: "features",

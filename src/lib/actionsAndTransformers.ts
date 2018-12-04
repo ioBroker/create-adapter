@@ -1,3 +1,4 @@
+import { yellow } from "ansi-colors";
 import axios from "axios";
 import { executeCommand, isWindows } from "./tools";
 import { error } from "./tools";
@@ -11,15 +12,39 @@ export async function checkMinSelections(category: string, min: number, answers:
 	return "retry";
 }
 
-export async function checkAdapterExistence(name: string): Promise<CheckResult> {
+function isAdapterNameValid(name: string): boolean {
 	if (!checkName(name)) {
 		error("Please enter a valid name!");
-		return "retry";
+		return false;
 	}
+	const forbiddenChars = /[^a-z0-9\-_]/g;
+	if (forbiddenChars.test(name)) {
+		name = name.replace(forbiddenChars, "");
+		error(`The name may only consist of lowercase letters, numbers, "-" and "_"!`);
+		return false;
+	}
+	if (!/^[a-z]/.test(name)) {
+		error(`The name should start with a letter!`);
+		return false;
+	}
+	if (!/[a-z0-9]$/.test(name)) {
+		error(`The name should end with a letter or number!`);
+		return false;
+	}
+	return true;
+}
 
+async function checkAdapterExistence(name: string): Promise<boolean> {
 	const result = await executeCommand(isWindows ? "npm.cmd" : "npm", ["view", `iobroker.${name}`, "versions"], { stdout: "ignore", stderr: "ignore" });
 	if (result.exitCode === 0) {
 		error(`The adapter ioBroker.${name} already exists!`);
+		return false;
+	}
+	return true;
+}
+
+export async function checkAdapterName(name: string): Promise<CheckResult> {
+	if (!isAdapterNameValid(name) || !await checkAdapterExistence(name)) {
 		return "retry";
 	}
 	return true;
@@ -46,7 +71,12 @@ export async function checkEmail(email: string): Promise<CheckResult> {
 }
 
 export function transformAdapterName(name: string): string {
-	return name.replace(/^ioBroker\./i, "");
+	const startsWithIoBroker = /^ioBroker\./i;
+	if (startsWithIoBroker.test(name)) {
+		name = name.replace(startsWithIoBroker, "");
+		console.log(yellow(`You don't have to prefix the name with "ioBroker."`));
+	}
+	return name;
 }
 
 // Taken from https://api.github.com/licenses
@@ -60,7 +90,7 @@ const licenseUrls = {
 	"The Unlicense": "https://api.github.com/licenses/unlicense",
 };
 
-export async function loadLicense(shortName: keyof typeof licenseUrls): Promise<{id: string, name: string, text: string}> {
+export async function loadLicense(shortName: keyof typeof licenseUrls): Promise<{ id: string, name: string, text: string }> {
 	const response = await axios(licenseUrls[shortName]);
 	return {
 		id: response.data.spdx_id,

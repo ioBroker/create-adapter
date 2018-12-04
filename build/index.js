@@ -48,8 +48,7 @@ async function ask() {
                 // Ask the user for an answer
                 const answer = await enquirer_1.prompt(q);
                 // Cancel the process if necessary
-                const value = answer[q.name];
-                if (value == undefined) {
+                if (answer[q.name] == undefined) {
                     tools_1.error("Adapter creation canceled");
                     process.exit(1);
                 }
@@ -60,7 +59,7 @@ async function ask() {
                 }
                 // Test the result
                 if (q.action != undefined) {
-                    const testResult = await q.action(value);
+                    const testResult = await q.action(answer[q.name]);
                     if (!testResult)
                         process.exit(1);
                     if (testResult === "retry")
@@ -130,9 +129,11 @@ async function main() {
         console.log(ansi_colors_1.blueBright("[2/2] installing dependencies..."));
         await tools_1.executeCommand(tools_1.isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
         await tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["install", "--quiet"], { cwd: targetDir });
-        if (await fs.pathExists("npm-debug.log"))
-            await fs.remove("npm-debug.log");
     }
     console.log(ansi_colors_1.blueBright("All done! Have fun programming! ") + ansi_colors_1.red("♥"));
 }
 main();
+process.on("exit", () => {
+    if (fs.pathExistsSync("npm-debug.log"))
+        fs.removeSync("npm-debug.log");
+});

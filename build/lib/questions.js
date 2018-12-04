@@ -14,8 +14,15 @@ function styledMultiselect(ms) {
         },
     });
 }
+// tslint:disable-next-line:no-var-requires
+const ownVersion = require("../../package.json").version;
 exports.questions = [
-    ansi_colors_1.green.bold("Welcome to the ioBroker adapter creator!"),
+    "",
+    ansi_colors_1.green.bold("====================================================="),
+    ansi_colors_1.green.bold(`   Welcome to the ioBroker adapter creator v${ownVersion}!`),
+    ansi_colors_1.green.bold("====================================================="),
+    "",
+    ansi_colors_1.gray(`You can cancel at any point by pressing Ctrl+C.`),
     "",
     ansi_colors_1.underline("Let's get started with a few questions about your project!"),
     {
@@ -23,7 +30,7 @@ exports.questions = [
         name: "adapterName",
         message: "Please enter the name of your project:",
         resultTransform: actionsAndTransformers_1.transformAdapterName,
-        action: actionsAndTransformers_1.checkAdapterExistence,
+        action: actionsAndTransformers_1.checkAdapterName,
     },
     styledMultiselect({
         name: "features",
