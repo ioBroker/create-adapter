@@ -51,7 +51,8 @@ module.exports = (answers) => {
 	],
 	"exclude": [
 		${useTypeScript ? `"build/**",` : ""}
-		"node_modules/**"
+		"node_modules/**",
+		"admin/**"
 	]
 }`;
     return template.trim();
