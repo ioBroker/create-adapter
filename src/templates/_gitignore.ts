@@ -28,7 +28,8 @@ coverage
 
 ` : ""}
 # i18n intermediate files
-admin/i18n
+admin/i18n/flat.txt
+admin/i18n/*/flat.txt
 `;
 	return template.trim();
 };
