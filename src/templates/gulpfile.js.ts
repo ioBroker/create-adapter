@@ -378,10 +378,10 @@ gulp.task("updatePackages", function (done) {
 
 gulp.task("updateReadme", function (done) {
 	const readme = fs.readFileSync("README.md").toString();
-	const pos = readme.indexOf("## Changelog\n");
+	const pos = readme.indexOf("## Changelog\\n");
 	if (pos !== -1) {
-		const readmeStart = readme.substring(0, pos + "## Changelog\n".length);
-		const readmeEnd   = readme.substring(pos + "## Changelog\n".length);
+		const readmeStart = readme.substring(0, pos + "## Changelog\\n".length);
+		const readmeEnd   = readme.substring(pos + "## Changelog\\n".length);
 
 		if (readme.indexOf(version) === -1) {
 			const timestamp = new Date();
@@ -394,7 +394,7 @@ gulp.task("updateReadme", function (done) {
 				news += "* " + iopackage.common.news[pkg.version].en;
 			}
 
-			fs.writeFileSync("README.md", readmeStart + "### " + version + " (" + date + ")\n" + (news ? news + "\n\n" : "\n") + readmeEnd);
+			fs.writeFileSync("README.md", readmeStart + "### " + version + " (" + date + ")\\n" + (news ? news + "\\n\\n" : "\\n") + readmeEnd);
 		}
 	}
 	done();

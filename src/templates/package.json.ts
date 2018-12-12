@@ -16,7 +16,12 @@ const templateFunction = async (answers: Answers) => {
 		.map((dep) => `"${dep}": "^0.0.0"`)
 		;
 
-	const devDependencies = ["gulp"] // gulp is required for repo maintenance
+	const devDependencies = ([] as string[])
+		.concat([
+			// gulp is required for repo maintenance
+			"@types/gulp",
+			"gulp",
+		])
 		.concat(isAdapter ? [
 			// support adapter testing by default
 			"@types/chai",
