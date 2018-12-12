@@ -12,6 +12,11 @@ const templateFunction = async (answers) => {
         // generate dependency lines, the correct versions will be found later
         .map((dep) => `"${dep}": "^0.0.0"`);
     const devDependencies = []
+        .concat([
+        // gulp is required for repo maintenance
+        "@types/gulp",
+        "gulp",
+    ])
         .concat(isAdapter ? [
         // support adapter testing by default
         "@types/chai",

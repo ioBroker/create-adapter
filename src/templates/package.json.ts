@@ -14,9 +14,14 @@ const templateFunction = async (answers: Answers) => {
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
 		// generate dependency lines, the correct versions will be found later
 		.map((dep) => `"${dep}": "^0.0.0"`)
-	;
+		;
 
 	const devDependencies = ([] as string[])
+		.concat([
+			// gulp is required for repo maintenance
+			"@types/gulp",
+			"gulp",
+		])
 		.concat(isAdapter ? [
 			// support adapter testing by default
 			"@types/chai",
@@ -48,7 +53,7 @@ const templateFunction = async (answers: Answers) => {
 		.concat(useNyc ? ["nyc"] : [])
 		// generate dependency lines, the correct versions will be found later
 		.map((dep) => `"${dep}": "^0.0.0"`)
-	;
+		;
 
 	const template = `
 {
