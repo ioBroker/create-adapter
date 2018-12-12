@@ -9,6 +9,7 @@ const templateFunction = async (answers) => {
     const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
     const dependencies = []
         .concat(isAdapter ? ["@iobroker/adapter-core"] : [])
+        .sort()
         // generate dependency lines, the correct versions will be found later
         .map((dep) => `"${dep}": "^0.0.0"`);
     const devDependencies = []
@@ -46,6 +47,7 @@ const templateFunction = async (answers) => {
         .concat(useTSLint ? ["tslint"] : [])
         .concat(useESLint ? ["eslint"] : [])
         .concat(useNyc ? ["nyc"] : [])
+        .sort()
         // generate dependency lines, the correct versions will be found later
         .map((dep) => `"${dep}": "^0.0.0"`);
     const template = `

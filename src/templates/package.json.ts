@@ -12,6 +12,7 @@ const templateFunction = async (answers: Answers) => {
 
 	const dependencies = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
+		.sort()
 		// generate dependency lines, the correct versions will be found later
 		.map((dep) => `"${dep}": "^0.0.0"`)
 		;
@@ -51,6 +52,7 @@ const templateFunction = async (answers: Answers) => {
 		.concat(useTSLint ? ["tslint"] : [])
 		.concat(useESLint ? ["eslint"] : [])
 		.concat(useNyc ? ["nyc"] : [])
+		.sort()
 		// generate dependency lines, the correct versions will be found later
 		.map((dep) => `"${dep}": "^0.0.0"`)
 		;
