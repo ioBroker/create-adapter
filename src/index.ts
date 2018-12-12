@@ -10,6 +10,9 @@ import { enumFilesRecursiveSync, error, executeCommand, indentWithSpaces, indent
 
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
+type Awaited<T> = T extends Promise<infer U> ? U
+	: T extends PromiseLike<infer V> ? V
+	: T;
 
 function testCondition(condition: Condition | Condition[] | undefined, answers: Record<string, any>): boolean {
 	if (condition == undefined) return true;
@@ -133,27 +136,23 @@ async function writeFiles(targetDir: string, files: File[]) {
 	}
 }
 
-async function main() {
+(async function main() {
 	const answers = await ask();
+	const files = await createFiles(answers);
 
 	const rootDirName = path.basename(rootDir);
 	// make sure we are working in a directory called ioBroker.<adapterName>
 	const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
 		? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`)
 		;
-
-	console.log(blueBright("[1/2] creating files..."));
-	const files = await createFiles(answers);
 	await writeFiles(targetDir, files);
 
 	if (!yargs.argv.noInstall || !!yargs.argv.install) {
-		console.log(blueBright("[2/2] installing dependencies..."));
-		await executeCommand(isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
+		console.log(blueBright("Installing dependencies, please wait..."));
 		await executeCommand(isWindows ? "npm.cmd" : "npm", ["install", "--quiet"], { cwd: targetDir });
 	}
 	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
-}
-main();
+})();
 
 process.on("exit", () => {
 	if (fs.pathExistsSync("npm-debug.log")) fs.removeSync("npm-debug.log");

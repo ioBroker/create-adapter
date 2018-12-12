@@ -1,5 +1,4 @@
 node_modules/
-package-lock.json
 
 # compiled test-files
 *.test.js

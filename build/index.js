@@ -116,23 +116,21 @@ async function writeFiles(targetDir, files) {
         await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);
     }
 }
-async function main() {
+(async function main() {
     const answers = await ask();
+    const files = await createFiles(answers);
     const rootDirName = path.basename(rootDir);
     // make sure we are working in a directory called ioBroker.<adapterName>
     const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
         ? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`);
-    console.log(ansi_colors_1.blueBright("[1/2] creating files..."));
-    const files = await createFiles(answers);
     await writeFiles(targetDir, files);
     if (!yargs.argv.noInstall || !!yargs.argv.install) {
-        console.log(ansi_colors_1.blueBright("[2/2] installing dependencies..."));
+        console.log(ansi_colors_1.blueBright("Installing dependencies, please wait..."));
         await tools_1.executeCommand(tools_1.isWindows ? "npx.cmd" : "npx", ["npm-check-updates", "-u", "-s"], { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
         await tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["install", "--quiet"], { cwd: targetDir });
     }
     console.log(ansi_colors_1.blueBright("All done! Have fun programming! ") + ansi_colors_1.red("♥"));
-}
-main();
+})();
 process.on("exit", () => {
     if (fs.pathExistsSync("npm-debug.log"))
         fs.removeSync("npm-debug.log");
