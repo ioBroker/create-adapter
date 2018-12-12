@@ -11,7 +11,6 @@ const templateFunction = (answers: Answers) => {
 node_modules
 nbproject
 
-package-lock.json
 ${useTypeScript ? (`
 # Sourcemaps
 maps/

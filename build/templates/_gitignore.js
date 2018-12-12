@@ -8,7 +8,6 @@ const templateFunction = (answers) => {
 node_modules
 nbproject
 
-package-lock.json
 ${useTypeScript ? (`
 # Sourcemaps
 maps/
