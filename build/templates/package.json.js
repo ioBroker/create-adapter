@@ -11,7 +11,7 @@ const templateFunction = async (answers) => {
         .concat(isAdapter ? ["@iobroker/adapter-core"] : [])
         // generate dependency lines, the correct versions will be found later
         .map((dep) => `"${dep}": "^0.0.0"`);
-    const devDependencies = []
+    const devDependencies = ["gulp"] // gulp is required for repo maintenance
         .concat(isAdapter ? [
         // support adapter testing by default
         "@types/chai",
