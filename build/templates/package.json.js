@@ -12,7 +12,6 @@ const templateFunction = async (answers) => {
     const dependencyPromises = []
         .concat(isAdapter ? ["@iobroker/adapter-core"] : [])
         .sort()
-        // generate dependency lines, the correct versions will be found later
         .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchDependencyVersion(dep)}"`));
     const dependencies = await async_1.promiseSequence(dependencyPromises);
     const devDependencyPromises = []
@@ -51,7 +50,6 @@ const templateFunction = async (answers) => {
         .concat(useESLint ? ["eslint"] : [])
         .concat(useNyc ? ["nyc"] : [])
         .sort()
-        // generate dependency lines, the correct versions will be found later
         .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchDependencyVersion(dep)}"`));
     const devDependencies = await async_1.promiseSequence(devDependencyPromises);
     const template = `
