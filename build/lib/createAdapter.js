@@ -5,6 +5,7 @@ const fs = require("fs-extra");
 const os = require("os");
 const path = require("path");
 const tools_1 = require("./tools");
+const templateDir = path.join(__dirname, "../templates");
 function testCondition(condition, answers) {
     if (condition == undefined)
         return true;
@@ -26,7 +27,6 @@ function testCondition(condition, answers) {
 }
 exports.testCondition = testCondition;
 async function createFiles(answers) {
-    const templateDir = path.join(__dirname, "./templates");
     const files = await Promise.all(tools_1.enumFilesRecursiveSync(templateDir, (name, parentDir) => {
         const fullName = path.join(parentDir, name);
         const isDirectory = fs.statSync(fullName).isDirectory();

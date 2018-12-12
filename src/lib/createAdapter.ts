@@ -5,6 +5,8 @@ import * as path from "path";
 import { AnswerValue, Condition } from "./questions";
 import { enumFilesRecursiveSync, indentWithSpaces, indentWithTabs } from "./tools";
 
+const templateDir = path.join(__dirname, "../templates");
+
 export interface File {
 	name: string;
 	content: string | Buffer;
@@ -31,7 +33,6 @@ export function testCondition(condition: Condition | Condition[] | undefined, an
 }
 
 export async function createFiles(answers: Record<string, any>): Promise<File[]> {
-	const templateDir = path.join(__dirname, "./templates");
 	const files = await Promise.all(
 		enumFilesRecursiveSync(
 			templateDir,
