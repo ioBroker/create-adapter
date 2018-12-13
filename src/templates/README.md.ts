@@ -1,7 +1,8 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 import { formatLicense } from "../lib/tools";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const template = `
 # ioBroker.${answers.adapterName}
@@ -20,4 +21,4 @@ ${answers.license
 	|| "TODO: enter license text here"}
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

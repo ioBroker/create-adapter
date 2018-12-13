@@ -1,9 +1,9 @@
 import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
+import { TemplateFunction } from "../lib/createAdapter";
 import { fetchDependencyVersion } from "../lib/fetchVersions";
-import { Answers } from "../lib/questions";
 
-const templateFunction = async (answers: Answers) => {
+const templateFunction: TemplateFunction = async answers => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	const isWidget = answers.features.indexOf("VIS widget") > -1;

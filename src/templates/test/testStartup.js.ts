@@ -1,6 +1,6 @@
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const template = `
 /* jshint -W097 */// jshint strict:false
@@ -145,4 +145,4 @@ describe('Test ' + adapterShortName + ' adapter', function() {
 });
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

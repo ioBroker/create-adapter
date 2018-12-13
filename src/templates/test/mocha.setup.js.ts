@@ -1,6 +1,6 @@
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 
@@ -26,4 +26,4 @@ use(sinonChai);
 use(chaiAsPromised);
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

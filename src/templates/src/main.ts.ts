@@ -1,6 +1,6 @@
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 	if (!useTypeScript) return;
@@ -135,4 +135,4 @@ function main() {
 }
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

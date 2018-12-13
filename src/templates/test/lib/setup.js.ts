@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../../../lib/createAdapter";
 import { Answers } from "../../../lib/questions";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const template = `
 /* jshint -W097 */// jshint strict:false
@@ -733,4 +734,4 @@ if (typeof module !== undefined && module.parent) {
 }
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

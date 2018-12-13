@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
@@ -58,4 +59,4 @@ export = (answers: Answers) => {
 	]
 }`;
 	return template.trim();
-};
+}) as TemplateFunction;

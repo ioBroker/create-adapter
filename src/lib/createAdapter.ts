@@ -2,11 +2,17 @@ import { isArray } from "alcalzone-shared/typeguards";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
-import { AnswerValue, Condition } from "./questions";
+import { Answers, AnswerValue, Condition } from "./questions";
 import { enumFilesRecursiveSync, indentWithSpaces, indentWithTabs } from "./tools";
 
 const templateDir = path.join(__dirname, "../templates");
 
+type TemplateFunctionReturnType = string | Buffer | undefined;
+export interface TemplateFunction {
+	(answers: Answers): TemplateFunctionReturnType | Promise<TemplateFunctionReturnType>;
+	customPath?: string | ((answers: Answers) => string);
+	noReformat?: boolean;
+}
 export interface File {
 	name: string;
 	content: string | Buffer;
@@ -32,7 +38,7 @@ export function testCondition(condition: Condition | Condition[] | undefined, an
 	}
 }
 
-export async function createFiles(answers: Record<string, any>): Promise<File[]> {
+export async function createFiles(answers: Answers): Promise<File[]> {
 	const files = await Promise.all(
 		enumFilesRecursiveSync(
 			templateDir,
@@ -42,12 +48,12 @@ export async function createFiles(answers: Record<string, any>): Promise<File[]>
 				return isDirectory || /\.js$/.test(name);
 			},
 		).map(async (f) => {
-			const templateFunction = require(f);
+			const templateFunction: TemplateFunction = require(f);
 			const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
 				: typeof templateFunction.customPath === "string" ? templateFunction.customPath
 				: path.relative(templateDir, f).replace(/\.js$/i, "")
 			;
-			const templateResult = templateFunction(answers) as string | Buffer | undefined | Promise<string | Buffer | undefined>;
+			const templateResult = templateFunction(answers);
 			return {
 				name: customPath,
 				content: templateResult instanceof Promise ? await templateResult : templateResult,
@@ -60,7 +66,7 @@ export async function createFiles(answers: Record<string, any>): Promise<File[]>
 }
 
 /** Formats files that are not explicitly forbidden to be formatted */
-function formatFiles(answers: Record<string, any>, files: File[]): File[] {
+function formatFiles(answers: Answers, files: File[]): File[] {
 	// Normalize indentation considering user preference
 	const indentation = answers.indentation === "Tab" ? indentWithTabs : indentWithSpaces;
 	// Remove multiple subsequent empty lines (can happen during template creation).

@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 
-const templateFunction = (answers: Answers) => {
+const templateFunction: TemplateFunction = answers => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;

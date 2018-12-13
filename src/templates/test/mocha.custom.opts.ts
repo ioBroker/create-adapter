@@ -1,7 +1,7 @@
 import * as os from "os";
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 
@@ -16,4 +16,4 @@ export = (answers: Answers) => {
 	].filter(line => !!line).join(os.EOL);
 
 	return template.trim();
-};
+}) as TemplateFunction;

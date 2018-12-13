@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 
-const templateFunction = (answers: Answers) => {
+const templateFunction: TemplateFunction = answers => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	if (!isAdapter) return;

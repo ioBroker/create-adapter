@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 
-const templateFunction = (answers: Answers) => {
+const templateFunction: TemplateFunction = answers => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";

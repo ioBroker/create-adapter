@@ -1,9 +1,9 @@
 import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
-import { Answers } from "../lib/questions";
+import { TemplateFunction } from "../lib/createAdapter";
 import { translateText } from "../lib/tools";
 
-export = async (answers: Answers) => {
+export = (async answers => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	const isWidget = answers.features.indexOf("VIS widget") > -1;
@@ -92,4 +92,4 @@ export = async (answers: Answers) => {
 	],
 }`;
 	return JSON.stringify(JSON5.parse(template), null, 4);
-};
+}) as TemplateFunction;

@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
 	if (!useTSLint) return;
@@ -35,4 +36,4 @@ export = (answers: Answers) => {
 }
 `;
 	return template.trim();
-};
+}) as TemplateFunction;
