@@ -60,8 +60,8 @@ async function writeFiles(targetDir, files) {
         await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);
     }
 }
-/** CLI-specific functionality */
-async function mainCLI({ answers, files }) {
+/** CLI-specific functionality for creating the adapter directory */
+async function setupProject_CLI({ answers, files }) {
     const rootDirName = path.basename(rootDir);
     // make sure we are working in a directory called ioBroker.<adapterName>
     const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
@@ -81,7 +81,7 @@ ask()
         files: await createAdapter_1.createFiles(answers),
     };
 })
-    .then(mainCLI);
+    .then(setupProject_CLI);
 process.on("exit", () => {
     if (fs.pathExistsSync("npm-debug.log"))
         fs.removeSync("npm-debug.log");
