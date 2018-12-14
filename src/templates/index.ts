@@ -26,6 +26,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "test/mocha.setup.js.ts", templateFunction: require("./test/mocha.setup.js") },
 	{ name: "test/testPackageFiles.js.ts", templateFunction: require("./test/testPackageFiles.js") },
 	{ name: "test/testStartup.js.ts", templateFunction: require("./test/testStartup.js") },
+	{ name: "test/tsconfig.json.ts", templateFunction: require("./test/tsconfig.json") },
 	{ name: "tsconfig.build.json.ts", templateFunction: require("./tsconfig.build.json") },
 	{ name: "tsconfig.json.ts", templateFunction: require("./tsconfig.json") },
 	{ name: "tslint.json.ts", templateFunction: require("./tslint.json") },
