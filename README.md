@@ -1,7 +1,10 @@
-# create-adapter
+# <img src="adapter-creator.png" width="48" height="48" style="vertical-align: middle" />&nbsp;<span style="vertical-align: middle">ioBroker adapter creator</span>
+
 Command line utility to quickly create a new adapter or VIS widget for [ioBroker](https://github.com/ioBroker):
 
 <img src="docs/screenshot.png">
+
+[Changelog](CHANGELOG.md)
 
 <!--
 TODO: Setup testing and display badges

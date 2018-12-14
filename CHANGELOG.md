@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.0 (2018-12-14)
+* (AlCalzone) Refactor file creation to make it usable independently from CLI (#23)
+* (ldittmar81) Update icon (#28)
+* (AlCalzone) Sort and cleanup dependencies, check package-lock.json into git
+* (AlCalzone) Update `gulp` to v4 (#21) and fix ESLint errors in `gulpfile.js`
+* (AlCalzone) Declare `systemDictionary` in the admin files (#19)
+* (AlCalzone) Do not ignore all i18n intermediate files
+
 ## v1.0.2 (2018-12-04)
 * (AlCalzone) Check adapter name more strictly (#11)
 * (AlCalzone) Print adapter version on start (#10)
