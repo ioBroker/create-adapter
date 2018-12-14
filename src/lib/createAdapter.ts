@@ -40,7 +40,7 @@ export async function createFiles(answers: Answers): Promise<File[]> {
 		templateFiles.map(async ({name, templateFunction}) => {
 			const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
 				: typeof templateFunction.customPath === "string" ? templateFunction.customPath
-				: name.replace(/\.js$/i, "")
+				: name.replace(/\.ts$/i, "")
 			;
 			const templateResult = templateFunction(answers);
 			return {
