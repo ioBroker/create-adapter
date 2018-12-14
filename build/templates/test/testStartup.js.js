@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const template = `
 /* jshint -W097 */// jshint strict:false
 /*jslint node: true */
@@ -143,4 +143,4 @@ describe('Test ' + adapterShortName + ' adapter', function() {
 });
 `;
     return template.trim();
-};
+});

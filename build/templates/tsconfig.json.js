@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const useTypeScript = answers.language === "TypeScript";
     const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
     if (!useTypeScript && !useTypeChecking)
@@ -56,4 +56,4 @@ module.exports = (answers) => {
 	]
 }`;
     return template.trim();
-};
+});

@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const useJavaScript = answers.language === "JavaScript";
     if (!useJavaScript)
         return;
@@ -34,4 +34,4 @@ describe("module to test => function to test", () => {
 // ... more test suites => describe
 `;
     return template.trim();
-};
+});

@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = (answers) => {
+const templateFunction = answers => {
     const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
     if (!useESLint)
         return;

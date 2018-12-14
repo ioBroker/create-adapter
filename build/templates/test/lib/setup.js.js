@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const template = `
 /* jshint -W097 */// jshint strict:false
 /*jslint node: true */
@@ -731,4 +731,4 @@ if (typeof module !== undefined && module.parent) {
 }
 `;
     return template.trim();
-};
+});

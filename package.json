@@ -57,11 +57,12 @@
     "enquirer": "^2.1.0",
     "fs-extra": "^7.0.1",
     "json5": "^2.1.0",
-    "npm-check-updates": "^2.15.0",
     "yargs": "^12.0.5"
   },
   "scripts": {
-    "prebuild": "rimraf ./build",
+    "prebuild:linkTemplates": "node --require ts-node/register maintenance/generateTemplateIndex.ts",
+    "prebuild:cleanBuildDir": "rimraf ./build",
+    "prebuild": "npm run prebuild:cleanBuildDir && npm run prebuild:linkTemplates",
     "build": "tsc -p tsconfig.build.json",
     "watch": "tsc -p tsconfig.build.json --watch",
     "test:ts": "mocha",

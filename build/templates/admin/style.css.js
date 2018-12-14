@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     if (!isAdapter)
         return;
@@ -17,4 +17,4 @@ module.exports = (answers) => {
 
 `;
     return template.trim();
-};
+});

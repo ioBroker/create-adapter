@@ -1,6 +1,6 @@
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const template = `
 /* jshint -W097 */
@@ -96,4 +96,4 @@ describe('Test package.json and io-package.json', function() {
 });
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

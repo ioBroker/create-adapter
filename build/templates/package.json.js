@@ -1,5 +1,7 @@
 "use strict";
+const async_1 = require("alcalzone-shared/async");
 const JSON5 = require("json5");
+const fetchVersions_1 = require("../lib/fetchVersions");
 const templateFunction = async (answers) => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     const isWidget = answers.features.indexOf("VIS widget") > -1;
@@ -7,12 +9,12 @@ const templateFunction = async (answers) => {
     const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
     const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
     const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
-    const dependencies = []
+    const dependencyPromises = []
         .concat(isAdapter ? ["@iobroker/adapter-core"] : [])
         .sort()
-        // generate dependency lines, the correct versions will be found later
-        .map((dep) => `"${dep}": "^0.0.0"`);
-    const devDependencies = []
+        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchDependencyVersion(dep)}"`));
+    const dependencies = await async_1.promiseSequence(dependencyPromises);
+    const devDependencyPromises = []
         .concat([
         // gulp is required for repo maintenance
         "@types/gulp",
@@ -48,8 +50,8 @@ const templateFunction = async (answers) => {
         .concat(useESLint ? ["eslint"] : [])
         .concat(useNyc ? ["nyc"] : [])
         .sort()
-        // generate dependency lines, the correct versions will be found later
-        .map((dep) => `"${dep}": "^0.0.0"`);
+        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchDependencyVersion(dep)}"`));
+    const devDependencies = await async_1.promiseSequence(devDependencyPromises);
     const template = `
 {
 	"name": "iobroker.${answers.adapterName.toLowerCase()}",

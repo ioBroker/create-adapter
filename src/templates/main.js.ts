@@ -1,6 +1,6 @@
-import { Answers } from "../lib/questions";
+import { TemplateFunction } from "../lib/createAdapter";
 
-export = async (answers: Answers) => {
+export = (async answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 
@@ -128,4 +128,4 @@ function main() {
 `;
 	}
 	return template.trim();
-};
+}) as TemplateFunction;

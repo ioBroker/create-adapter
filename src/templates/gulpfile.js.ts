@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	if (!isAdapter) return;
@@ -403,4 +404,4 @@ gulp.task("updateReadme", function (done) {
 gulp.task("default", gulp.series("updatePackages", "updateReadme"));
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

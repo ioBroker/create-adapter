@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = (answers) => {
+const templateFunction = answers => {
     const isWidget = answers.features.indexOf("VIS widget") > -1;
     if (!isWidget)
         return;
@@ -145,5 +145,5 @@ const templateFunction = (answers) => {
 `;
     return template.trim();
 };
-templateFunction.customPath = (answers) => `widgets/${answers.adapterName}.html`;
+templateFunction.customPath = answers => `widgets/${answers.adapterName}.html`;
 module.exports = templateFunction;

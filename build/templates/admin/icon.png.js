@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = (answers) => {
+const templateFunction = answers => {
     // TODO: There must be a better way than this
     return Buffer.from([
         "iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAYAAADNkKWqAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4gwNCDgibC6JUgAAAAd0RVh0QXV0aG9yAKmuzEgAAAAMdEVYdERlc2NyaXB0aW9uABMJISMAAAAK",
@@ -539,6 +539,6 @@ const templateFunction = (answers) => {
         "zpBWycUvpxhiiAD8h0ecd+WYKIktK0pacB3GNAa5aUiwZw5ZEVRrj5YZmbkTC9EJdSc6peNwk4phy9JuoK2zGuzhI3JZv2EqEukt7OX7MlZa/Ja46C+GGP+/438Bj29nwUb2t64AAAAASUVORK5CYII=",
     ].join(""), "base64");
 };
-templateFunction.customPath = (answers) => `admin/${answers.adapterName}.png`;
+templateFunction.customPath = answers => `admin/${answers.adapterName}.png`;
 templateFunction.noReformat = true; // Don't format binary files
 module.exports = templateFunction;

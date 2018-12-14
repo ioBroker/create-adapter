@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = (answers) => {
+const templateFunction = answers => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     if (!isAdapter)
         return;
@@ -28,5 +28,5 @@ declare global {
 `;
     return template.trim();
 };
-templateFunction.customPath = (answers) => (answers.language === "TypeScript" ? "src/" : "") + "lib/adapter-config.d.ts";
+templateFunction.customPath = answers => (answers.language === "TypeScript" ? "src/" : "") + "lib/adapter-config.d.ts";
 module.exports = templateFunction;

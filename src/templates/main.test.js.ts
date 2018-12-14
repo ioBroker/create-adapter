@@ -1,6 +1,7 @@
+import { TemplateFunction } from "../lib/createAdapter";
 import { Answers } from "../lib/questions";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const useJavaScript = answers.language === "JavaScript";
 	if (!useJavaScript) return;
@@ -36,4 +37,4 @@ describe("module to test => function to test", () => {
 // ... more test suites => describe
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

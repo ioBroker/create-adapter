@@ -1,6 +1,6 @@
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-const templateFunction = (answers: Answers) => {
+const templateFunction: TemplateFunction = answers => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	if (!isAdapter) return;
@@ -31,5 +31,5 @@ declare global {
 	return template.trim();
 };
 
-templateFunction.customPath = (answers: Answers) => (answers.language === "TypeScript" ? "src/" : "") + "lib/adapter-config.d.ts";
+templateFunction.customPath = answers => (answers.language === "TypeScript" ? "src/" : "") + "lib/adapter-config.d.ts";
 export = templateFunction;

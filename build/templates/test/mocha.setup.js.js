@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const useTypeScript = answers.language === "TypeScript";
     const template = (useTypeScript ? `
 // Makes ts-node ignore warnings, so mocha --watch does work
@@ -23,4 +23,4 @@ use(sinonChai);
 use(chaiAsPromised);
 `;
     return template.trim();
-};
+});

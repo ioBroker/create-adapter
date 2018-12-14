@@ -1,5 +1,5 @@
 "use strict";
-module.exports = async (answers) => {
+module.exports = (async (answers) => {
     const useTypeScript = answers.language === "TypeScript";
     let template;
     if (useTypeScript) {
@@ -126,4 +126,4 @@ function main() {
 `;
     }
     return template.trim();
-};
+});

@@ -1,7 +1,9 @@
+import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
-import { Answers } from "../lib/questions";
+import { TemplateFunction } from "../lib/createAdapter";
+import { fetchDependencyVersion } from "../lib/fetchVersions";
 
-const templateFunction = async (answers: Answers) => {
+const templateFunction: TemplateFunction = async answers => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	const isWidget = answers.features.indexOf("VIS widget") > -1;
@@ -10,14 +12,14 @@ const templateFunction = async (answers: Answers) => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
 
-	const dependencies = ([] as string[])
+	const dependencyPromises = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
 		.sort()
-		// generate dependency lines, the correct versions will be found later
-		.map((dep) => `"${dep}": "^0.0.0"`)
+		.map((dep) => (async () => `"${dep}": "^${await fetchDependencyVersion(dep)}"`))
 		;
+	const dependencies = await promiseSequence<string>(dependencyPromises);
 
-	const devDependencies = ([] as string[])
+	const devDependencyPromises = ([] as string[])
 		.concat([
 			// gulp is required for repo maintenance
 			"@types/gulp",
@@ -53,9 +55,9 @@ const templateFunction = async (answers: Answers) => {
 		.concat(useESLint ? ["eslint"] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()
-		// generate dependency lines, the correct versions will be found later
-		.map((dep) => `"${dep}": "^0.0.0"`)
+		.map((dep) => (async () => `"${dep}": "^${await fetchDependencyVersion(dep)}"`))
 		;
+	const devDependencies = await promiseSequence<string>(devDependencyPromises);
 
 	const template = `
 {

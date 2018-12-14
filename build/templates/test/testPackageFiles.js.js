@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const template = `
 /* jshint -W097 */
 /* jshint strict:false */
@@ -94,4 +94,4 @@ describe('Test package.json and io-package.json', function() {
 });
 `;
     return template.trim();
-};
+});

@@ -1,6 +1,6 @@
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-const templateFunction = (answers: Answers) => {
+const templateFunction: TemplateFunction = answers => {
 
 	const isWidget = answers.features.indexOf("VIS widget") > -1;
 	if (!isWidget) return;
@@ -17,5 +17,5 @@ const templateFunction = (answers: Answers) => {
 	return template.trim();
 };
 
-templateFunction.customPath = (answers: Answers) => `widgets/${answers.adapterName}/css/style.css`;
+templateFunction.customPath = answers => `widgets/${answers.adapterName}/css/style.css`;
 export = templateFunction;

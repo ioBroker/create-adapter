@@ -1,6 +1,6 @@
-import { Answers } from "../../lib/questions";
+import { TemplateFunction } from "../../lib/createAdapter";
 
-export = (answers: Answers) => {
+export = (answers => {
 
 	const isAdapter = answers.features.indexOf("Adapter") > -1;
 	if (!isAdapter) return;
@@ -19,4 +19,4 @@ export = (answers: Answers) => {
 
 `;
 	return template.trim();
-};
+}) as TemplateFunction;

@@ -1,6 +1,6 @@
 "use strict";
 const os = require("os");
-module.exports = (answers) => {
+module.exports = (answers => {
     const useTypeScript = answers.language === "TypeScript";
     const template = [
         "--require test/mocha.setup.js",
@@ -12,4 +12,4 @@ module.exports = (answers) => {
         useTypeScript ? "src/**/*.test.ts" : "{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}",
     ].filter(line => !!line).join(os.EOL);
     return template.trim();
-};
+});

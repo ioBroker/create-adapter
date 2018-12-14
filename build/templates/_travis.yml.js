@@ -1,5 +1,5 @@
 "use strict";
-const templateFunction = (answers) => {
+const templateFunction = answers => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     if (!isAdapter)
         return;

@@ -2,7 +2,7 @@
 const objects_1 = require("alcalzone-shared/objects");
 const JSON5 = require("json5");
 const tools_1 = require("../lib/tools");
-module.exports = async (answers) => {
+module.exports = (async (answers) => {
     const isAdapter = answers.features.indexOf("Adapter") > -1;
     const isWidget = answers.features.indexOf("VIS widget") > -1;
     const useTypeScript = answers.language === "TypeScript";
@@ -78,4 +78,4 @@ module.exports = async (answers) => {
 	],
 }`;
     return JSON.stringify(JSON5.parse(template), null, 4);
-};
+});

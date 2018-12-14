@@ -1,6 +1,6 @@
 "use strict";
 const tools_1 = require("../lib/tools");
-module.exports = (answers) => {
+module.exports = (answers => {
     const template = `
 # ioBroker.${answers.adapterName}
 
@@ -18,4 +18,4 @@ ${answers.license
         || "TODO: enter license text here"}
 `;
     return template.trim();
-};
+});

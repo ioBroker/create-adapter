@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (answers) => {
+module.exports = (answers => {
     const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
     if (!useTSLint)
         return;
@@ -33,4 +33,4 @@ module.exports = (answers) => {
 }
 `;
     return template.trim();
-};
+});
