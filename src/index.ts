@@ -63,8 +63,8 @@ async function writeFiles(targetDir: string, files: File[]) {
 	}
 }
 
-/** CLI-specific functionality */
-async function mainCLI({ answers, files }: {
+/** CLI-specific functionality for creating the adapter directory */
+async function setupProject_CLI({ answers, files }: {
 	answers: Awaited<ReturnType<typeof ask>>,
 	files: Awaited<ReturnType<typeof createFiles>>,
 }) {
@@ -91,7 +91,7 @@ ask()
 			files: await createFiles(answers),
 		};
 	})
-	.then(mainCLI)
+	.then(setupProject_CLI)
 	;
 
 process.on("exit", () => {
