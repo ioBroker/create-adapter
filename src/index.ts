@@ -4,7 +4,7 @@ import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
 import { createFiles, File, testCondition } from "./lib/createAdapter";
-import { questions } from "./lib/questions";
+import { Answers, questions } from "./lib/questions";
 import { error, executeCommand, isWindows } from "./lib/tools";
 
 /** Where the output should be written */
@@ -53,7 +53,7 @@ async function ask() {
 			}
 		}
 	}
-	return answers;
+	return answers as Answers;
 }
 
 async function writeFiles(targetDir: string, files: File[]) {
