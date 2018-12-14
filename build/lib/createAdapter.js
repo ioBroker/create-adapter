@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeguards_1 = require("alcalzone-shared/typeguards");
-const fs = require("fs-extra");
 const os = require("os");
-const path = require("path");
+const templateFiles = require("../templates");
 const tools_1 = require("./tools");
-const templateDir = path.join(__dirname, "../templates");
 function testCondition(condition, answers) {
     if (condition == undefined)
         return true;
@@ -27,15 +25,10 @@ function testCondition(condition, answers) {
 }
 exports.testCondition = testCondition;
 async function createFiles(answers) {
-    const files = await Promise.all(tools_1.enumFilesRecursiveSync(templateDir, (name, parentDir) => {
-        const fullName = path.join(parentDir, name);
-        const isDirectory = fs.statSync(fullName).isDirectory();
-        return isDirectory || /\.js$/.test(name);
-    }).map(async (f) => {
-        const templateFunction = require(f);
+    const files = await Promise.all(templateFiles.map(async ({ name, templateFunction }) => {
         const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
             : typeof templateFunction.customPath === "string" ? templateFunction.customPath
-                : path.relative(templateDir, f).replace(/\.js$/i, "");
+                : name.replace(/\.js$/i, "");
         const templateResult = templateFunction(answers);
         return {
             name: customPath,

@@ -64,7 +64,7 @@ async function writeFiles(targetDir: string, files: File[]) {
 }
 
 /** CLI-specific functionality */
-async function mainCLI({answers, files}: {
+async function mainCLI({ answers, files }: {
 	answers: Awaited<ReturnType<typeof ask>>,
 	files: Awaited<ReturnType<typeof createFiles>>,
 }) {
@@ -92,7 +92,7 @@ ask()
 		};
 	})
 	.then(mainCLI)
-;
+	;
 
 process.on("exit", () => {
 	if (fs.pathExistsSync("npm-debug.log")) fs.removeSync("npm-debug.log");

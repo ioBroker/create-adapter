@@ -1,11 +1,8 @@
 import { isArray } from "alcalzone-shared/typeguards";
-import * as fs from "fs-extra";
 import * as os from "os";
-import * as path from "path";
+import * as templateFiles from "../templates";
 import { Answers, AnswerValue, Condition } from "./questions";
-import { enumFilesRecursiveSync, indentWithSpaces, indentWithTabs } from "./tools";
-
-const templateDir = path.join(__dirname, "../templates");
+import { indentWithSpaces, indentWithTabs } from "./tools";
 
 type TemplateFunctionReturnType = string | Buffer | undefined;
 export interface TemplateFunction {
@@ -40,18 +37,10 @@ export function testCondition(condition: Condition | Condition[] | undefined, an
 
 export async function createFiles(answers: Answers): Promise<File[]> {
 	const files = await Promise.all(
-		enumFilesRecursiveSync(
-			templateDir,
-			(name, parentDir) => {
-				const fullName = path.join(parentDir, name);
-				const isDirectory = fs.statSync(fullName).isDirectory();
-				return isDirectory || /\.js$/.test(name);
-			},
-		).map(async (f) => {
-			const templateFunction: TemplateFunction = require(f);
+		templateFiles.map(async ({name, templateFunction}) => {
 			const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
 				: typeof templateFunction.customPath === "string" ? templateFunction.customPath
-				: path.relative(templateDir, f).replace(/\.js$/i, "")
+				: name.replace(/\.js$/i, "")
 			;
 			const templateResult = templateFunction(answers);
 			return {
