@@ -2,49 +2,47 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ansi_colors_1 = require("ansi-colors");
 const axios_1 = require("axios");
-const tools_1 = require("./tools");
-const tools_2 = require("./tools");
+const fetchVersions_1 = require("./fetchVersions");
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 async function checkMinSelections(category, min, answers) {
     if (answers.length >= min)
         return true;
-    tools_2.error(`Please enter at least ${min} ${category}`);
-    return "retry";
+    return `Please enter at least ${min} ${category}`;
 }
 exports.checkMinSelections = checkMinSelections;
 function isAdapterNameValid(name) {
     if (!checkName(name)) {
-        tools_2.error("Please enter a valid name!");
-        return false;
+        return "Please enter a valid name!";
     }
     const forbiddenChars = /[^a-z0-9\-_]/g;
     if (forbiddenChars.test(name)) {
         name = name.replace(forbiddenChars, "");
-        tools_2.error(`The name may only consist of lowercase letters, numbers, "-" and "_"!`);
-        return false;
+        return `The name may only consist of lowercase letters, numbers, "-" and "_"!`;
     }
     if (!/^[a-z]/.test(name)) {
-        tools_2.error(`The name should start with a letter!`);
-        return false;
+        return `The name must start with a letter!`;
     }
     if (!/[a-z0-9]$/.test(name)) {
-        tools_2.error(`The name should end with a letter or number!`);
-        return false;
+        return `The name must end with a letter or number!`;
     }
     return true;
 }
 async function checkAdapterExistence(name) {
-    const result = await tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["view", `iobroker.${name}`, "versions"], { stdout: "ignore", stderr: "ignore" });
-    if (result.exitCode === 0) {
-        tools_2.error(`The adapter ioBroker.${name} already exists!`);
-        return false;
+    try {
+        await fetchVersions_1.fetchPackageVersion(`iobroker.${name}`);
+        return `The adapter ioBroker.${name} already exists!`;
     }
-    return true;
+    catch (e) {
+        return true;
+    }
 }
 async function checkAdapterName(name) {
-    if (!isAdapterNameValid(name) || !await checkAdapterExistence(name)) {
-        return "retry";
-    }
+    const validCheck = isAdapterNameValid(name);
+    if (typeof validCheck === "string")
+        return validCheck;
+    const existenceCheck = await checkAdapterExistence(name);
+    if (typeof existenceCheck === "string")
+        return existenceCheck;
     return true;
 }
 exports.checkAdapterName = checkAdapterName;
@@ -53,16 +51,14 @@ function checkName(name) {
 }
 async function checkAuthorName(name) {
     if (!checkName(name)) {
-        tools_2.error("Please enter a valid name!");
-        return "retry";
+        return "Please enter a valid name!";
     }
     return true;
 }
 exports.checkAuthorName = checkAuthorName;
 async function checkEmail(email) {
     if (!emailRegex.test(email)) {
-        tools_2.error("Please enter a valid email address!");
-        return "retry";
+        return "Please enter a valid email address!";
     }
     return true;
 }
