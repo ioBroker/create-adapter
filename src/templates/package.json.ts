@@ -1,7 +1,7 @@
 import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
 import { TemplateFunction } from "../lib/createAdapter";
-import { fetchDependencyVersion } from "../lib/fetchVersions";
+import { fetchPackageVersion } from "../lib/fetchVersions";
 
 const templateFunction: TemplateFunction = async answers => {
 
@@ -15,7 +15,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const dependencyPromises = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
 		.sort()
-		.map((dep) => (async () => `"${dep}": "^${await fetchDependencyVersion(dep)}"`))
+		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep)}"`))
 		;
 	const dependencies = await promiseSequence<string>(dependencyPromises);
 
@@ -55,7 +55,7 @@ const templateFunction: TemplateFunction = async answers => {
 		.concat(useESLint ? ["eslint"] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()
-		.map((dep) => (async () => `"${dep}": "^${await fetchDependencyVersion(dep)}"`))
+		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep)}"`))
 		;
 	const devDependencies = await promiseSequence<string>(devDependencyPromises);
 

@@ -1,0 +1,72 @@
+{
+	"common": {
+		"name": "test-adapter",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie"
+			}
+		},
+		"title": "test-adapter",
+		"titleLang": {
+			"en": "test-adapter",
+			"de": "test-adapter",
+			"ru": "test-adapter",
+			"pt": "test-adapter",
+			"nl": "test-adapter",
+			"fr": "test-adapter",
+			"it": "test-adapter",
+			"es": "test-adapter",
+			"pl": "test-adapter"
+		},
+		"desc": {
+			"en": "test-adapter",
+			"de": "test-adapter",
+			"ru": "test-adapter",
+			"pt": "test-adapter",
+			"nl": "test-adapter",
+			"fr": "test-adapter",
+			"it": "test-adapter",
+			"es": "test-adapter",
+			"pl": "test-adapter"
+		},
+		"authors": [
+			"Al Calzone <al@calzo.ne>"
+		],
+		"keywords": [
+			"ioBroker",
+			"template",
+			"Smart Home",
+			"home automation"
+		],
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "test-adapter.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-adapter/master/admin/test-adapter.png",
+		"readme": "https://github.com/AlCalzone/ioBroker.test-adapter/blob/master/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "general",
+		"materialize": true,
+		"dependencies": [
+			{
+				"admin": ">=3.0.0"
+			}
+		]
+	},
+	"native": {
+		"option1": true,
+		"option2": "42"
+	},
+	"objects": [],
+	"instanceObjects": []
+}

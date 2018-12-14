@@ -1,7 +1,6 @@
 node_modules/
 
 # compiled test-files
-*.test.js
 /.nyc_output
 coverage/
 

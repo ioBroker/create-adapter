@@ -1,5 +1,7 @@
 import { isArray } from "alcalzone-shared/typeguards";
+import * as fs from "fs-extra";
 import * as os from "os";
+import * as path from "path";
 import * as templateFiles from "../templates";
 import { Answers, AnswerValue, Condition } from "./questions";
 import { indentWithSpaces, indentWithTabs } from "./tools";
@@ -70,4 +72,11 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 	return files.map(f => (f.noReformat || typeof f.content !== "string") ? f
 		: {...f, content: formatter(f.content)},
 	);
+}
+
+export async function writeFiles(targetDir: string, files: File[]) {
+	// write the files and make sure the target dirs exist
+	for (const file of files) {
+		await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);
+	}
 }

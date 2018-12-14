@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ansi_colors_1 = require("ansi-colors");
 const actionsAndTransformers_1 = require("./actionsAndTransformers");
+const createAdapter_1 = require("./createAdapter");
 function styledMultiselect(ms) {
     return Object.assign({}, ms, {
         type: "multiselect",
@@ -16,7 +17,8 @@ function styledMultiselect(ms) {
 }
 // tslint:disable-next-line:no-var-requires
 const ownVersion = require("../../package.json").version;
-exports.questions = [
+/** All questions and the corresponding text lines */
+exports.questionsAndText = [
     "",
     ansi_colors_1.green.bold("====================================================="),
     ansi_colors_1.green.bold(`   Welcome to the ioBroker adapter creator v${ownVersion}!`),
@@ -152,3 +154,53 @@ exports.questions = [
     "",
     ansi_colors_1.underline("That's it. Please wait a minute while I get this working..."),
 ];
+/** Only the questions */
+exports.questions = exports.questionsAndText.filter(q => typeof q !== "string");
+function checkAnswers(answers) {
+    for (const q of exports.questions) {
+        const answer = answers[q.name];
+        const conditionFulfilled = createAdapter_1.testCondition(q.condition, answers);
+        if (conditionFulfilled && answer == undefined) {
+            // A required answer was not given
+            throw new Error(`Missing answer "${q.name}"!`);
+        }
+        else if (!conditionFulfilled && answer != undefined) {
+            // TODO: Find a fool-proof way to check for extraneous answers
+            if (exports.questions.filter(qq => qq.name === q.name).length > 0) {
+                // For now, don't enforce conditions for questions with multiple branches
+                continue;
+            }
+            // An extraneous answer was given
+            throw new Error(`Extraneous answer "${q.name}" given!`);
+        }
+    }
+}
+exports.checkAnswers = checkAnswers;
+async function formatAnswers(answers) {
+    for (const q of exports.questions) {
+        const conditionFulfilled = createAdapter_1.testCondition(q.condition, answers);
+        if (!conditionFulfilled)
+            continue;
+        // Apply an optional transformation
+        if (answers[q.name] != undefined && typeof q.resultTransform === "function") {
+            const transformed = q.resultTransform(answers[q.name]);
+            answers[q.name] = transformed instanceof Promise ? await transformed : transformed;
+        }
+    }
+    return answers;
+}
+exports.formatAnswers = formatAnswers;
+async function validateAnswers(answers) {
+    for (const q of exports.questions) {
+        const conditionFulfilled = createAdapter_1.testCondition(q.condition, answers);
+        if (!conditionFulfilled)
+            continue;
+        if (q.action == undefined)
+            continue;
+        const testResult = await q.action(answers[q.name]);
+        if (typeof testResult === "string") {
+            throw new Error(testResult);
+        }
+    }
+}
+exports.validateAnswers = validateAnswers;

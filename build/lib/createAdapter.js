@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeguards_1 = require("alcalzone-shared/typeguards");
+const fs = require("fs-extra");
 const os = require("os");
+const path = require("path");
 const templateFiles = require("../templates");
 const tools_1 = require("./tools");
 function testCondition(condition, answers) {
@@ -55,3 +57,10 @@ function formatFiles(answers, files) {
     return files.map(f => (f.noReformat || typeof f.content !== "string") ? f
         : Object.assign({}, f, { content: formatter(f.content) }));
 }
+async function writeFiles(targetDir, files) {
+    // write the files and make sure the target dirs exist
+    for (const file of files) {
+        await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);
+    }
+}
+exports.writeFiles = writeFiles;
