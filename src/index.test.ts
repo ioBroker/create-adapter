@@ -67,7 +67,7 @@ describe("adapter creation =>", () => {
 				authorEmail: "al@calzo.ne",
 				license: "MIT License" as any,
 			};
-			await expectSuccess("adapter_TS_TSLint_Tabs_MIT", answers);
+			await expectSuccess("adapter_TS_TSLint_Tabs_DoubleQuotes_MIT", answers);
 		});
 
 		it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {
@@ -83,7 +83,7 @@ describe("adapter creation =>", () => {
 				authorEmail: "al@calzo.ne",
 				license: "GNU LGPLv3" as any,
 			};
-			await expectSuccess("adapter_JS_ESLint_TypeChecking_Spaces_LGPLv3", answers);
+			await expectSuccess("adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
 		});
 
 	});
