@@ -1,5 +1,8 @@
 # Changelog
 
+## __WORK_IN_PROGRESS__
+* (AlCalzone) Allow choosing quote style in JavaScript (#34)
+
 ## v1.1.0 (2018-12-14)
 * (AlCalzone) Fix ESLint errors in test files
 * (AlCalzone) Refactor file creation to make it usable independently from CLI (#23)
