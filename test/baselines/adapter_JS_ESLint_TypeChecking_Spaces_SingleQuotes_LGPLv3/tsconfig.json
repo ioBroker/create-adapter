@@ -7,7 +7,7 @@
         // check JS files
         "allowJs": true,
         "checkJs": true,
-        
+
         "module": "commonjs",
         "moduleResolution": "node",
         // this is necessary for the automatic typing of the adapter config
@@ -25,14 +25,13 @@
 
         // Consider targetting es2017 or higher if you require the new NodeJS 8+ features
         "target": "es2015",
-        
+
     },
     "include": [
         "**/*.js",
         "**/*.d.ts"
     ],
     "exclude": [
-        
         "node_modules/**",
         "admin/**"
     ]

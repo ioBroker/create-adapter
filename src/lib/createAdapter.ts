@@ -61,14 +61,15 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 	// Normalize indentation considering user preference
 	const indentation = answers.indentation === "Tab" ? indentWithTabs : indentWithSpaces;
 	// Remove multiple subsequent empty lines (can happen during template creation).
-	const emptyLines = (text: string) => {
+	const removeEmptyLines = (text: string) => {
 		return text && text
 			.replace(/\r\n/g, "\n")
 			.replace(/^(\s*\n){2,}/gm, "\n")
 			.replace(/\n/g, os.EOL)
 		;
 	};
-	const formatter = (text: string) => emptyLines(indentation(text));
+	const trimWhitespaceLines = (text: string) => text && text.replace(/^[ \t]+$/gm, "");
+	const formatter = (text: string) => trimWhitespaceLines(removeEmptyLines(indentation(text)));
 	return files.map(f => {
 		if (f.noReformat || typeof f.content !== "string") return f;
 		// 1st step: Apply formatters that are valid for all files

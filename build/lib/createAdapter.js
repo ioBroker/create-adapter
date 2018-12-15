@@ -47,13 +47,14 @@ function formatFiles(answers, files) {
     // Normalize indentation considering user preference
     const indentation = answers.indentation === "Tab" ? tools_1.indentWithTabs : tools_1.indentWithSpaces;
     // Remove multiple subsequent empty lines (can happen during template creation).
-    const emptyLines = (text) => {
+    const removeEmptyLines = (text) => {
         return text && text
             .replace(/\r\n/g, "\n")
             .replace(/^(\s*\n){2,}/gm, "\n")
             .replace(/\n/g, os.EOL);
     };
-    const formatter = (text) => emptyLines(indentation(text));
+    const trimWhitespaceLines = (text) => text && text.replace(/^[ \t]+$/gm, "");
+    const formatter = (text) => trimWhitespaceLines(removeEmptyLines(indentation(text)));
     return files.map(f => {
         if (f.noReformat || typeof f.content !== "string")
             return f;

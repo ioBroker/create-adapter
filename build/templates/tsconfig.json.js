@@ -46,8 +46,8 @@ module.exports = (answers => {
 		"**/*.d.ts"
 	],
 	"exclude": [
-		${useTypeScript ? `"build/**",` : ""}
-		"node_modules/**",
+		${useTypeScript ? (`"build/**",
+		`) : ""}"node_modules/**",
 		"admin/**"
 	]
 }`;
