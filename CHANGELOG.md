@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK_IN_PROGRESS__
+* (AlCalzone) Enable resolveJsonModule for JS files (fixes #26)
 * (AlCalzone) Allow choosing quote style in JavaScript (#34)
 
 ## v1.1.0 (2018-12-14)

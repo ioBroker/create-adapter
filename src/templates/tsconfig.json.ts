@@ -11,13 +11,13 @@ export = (answers => {
 {
 	"compileOnSave": true,
 	"compilerOptions": {
-		${useTypeChecking ? (`
-		"allowJs": true,
-		"checkJs": true,
-		`) : ""}
 		// do not compile anything, this file is just to configure type checking${useTypeScript ? (`
 		// the compilation is configured in tsconfig.build.json`) : ""}
 		"noEmit": true,
+
+		// check JS files${useTypeScript ? ", but do not compile them => tsconfig.build.json" : ""}
+		"allowJs": true,
+		"checkJs": true,
 		${useTypeScript ? (`
 		"noEmitOnError": true,
 		"outDir": "./build/",
@@ -45,12 +45,8 @@ export = (answers => {
 		"watch": false`) : ""}
 	},
 	"include": [
-		${useTypeScript ? (`
-		"**/*.ts"
-		`) : (`
 		"**/*.js",
 		"**/*.d.ts"
-		`)}
 	],
 	"exclude": [
 		${useTypeScript ? `"build/**",` : ""}

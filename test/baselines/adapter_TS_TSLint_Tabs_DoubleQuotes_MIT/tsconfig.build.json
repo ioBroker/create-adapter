@@ -2,8 +2,9 @@
 	"extends": "./tsconfig.json",
 	// Modified config to only compile .ts-files in the src dir
 	"compilerOptions": {
+		"allowJs": false,
 		"noEmit": false,
-		"declaration": false,
+		"declaration": false
 	},
 	"include": [
 		"src/**/*.ts"

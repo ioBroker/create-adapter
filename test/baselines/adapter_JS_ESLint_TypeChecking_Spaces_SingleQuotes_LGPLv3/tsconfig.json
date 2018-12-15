@@ -1,12 +1,12 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        
-        "allowJs": true,
-        "checkJs": true,
-        
         // do not compile anything, this file is just to configure type checking
         "noEmit": true,
+
+        // check JS files
+        "allowJs": true,
+        "checkJs": true,
         
         "module": "commonjs",
         "moduleResolution": "node",
@@ -28,10 +28,8 @@
         
     },
     "include": [
-        
         "**/*.js",
         "**/*.d.ts"
-        
     ],
     "exclude": [
         
