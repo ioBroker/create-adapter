@@ -27,7 +27,7 @@ const templateFunction: TemplateFunction = answers => {
         "prefer-const": "error",
         "quotes": [
             "error",
-            "double",
+            "${typeof answers.quotes === "string" ? answers.quotes : "double"}",
             {
                 "avoidEscape": true,
                 "allowTemplateLiterals": true
