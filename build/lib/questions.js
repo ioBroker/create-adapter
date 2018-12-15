@@ -114,6 +114,20 @@ exports.questionsAndText = [
             "Space (4)",
         ],
     },
+    {
+        condition: [
+            { name: "features", contains: "Adapter" },
+            { name: "language", value: "JavaScript" },
+        ],
+        type: "select",
+        name: "quotes",
+        message: "Do you prefer double or single quotes?",
+        initial: "double",
+        choices: [
+            "double",
+            "single",
+        ],
+    },
     "",
     ansi_colors_1.underline("Almost done! Just a few administrative details..."),
     {

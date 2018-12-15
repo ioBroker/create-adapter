@@ -4,7 +4,7 @@ import * as os from "os";
 import * as path from "path";
 import * as templateFiles from "../templates";
 import { Answers, AnswerValue, Condition } from "./questions";
-import { indentWithSpaces, indentWithTabs } from "./tools";
+import { indentWithSpaces, indentWithTabs, jsFixQuotes } from "./tools";
 
 type TemplateFunctionReturnType = string | Buffer | undefined;
 export interface TemplateFunction {
@@ -69,9 +69,16 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 		;
 	};
 	const formatter = (text: string) => emptyLines(indentation(text));
-	return files.map(f => (f.noReformat || typeof f.content !== "string") ? f
-		: {...f, content: formatter(f.content)},
-	);
+	return files.map(f => {
+		if (f.noReformat || typeof f.content !== "string") return f;
+		// 1st step: Apply formatters that are valid for all files
+		f.content = formatter(f.content);
+		// 2nd step: Apply more specialized formatters
+		if (f.name.endsWith(".js") && answers.quotes != undefined) {
+			f.content = jsFixQuotes(f.content, answers.quotes);
+		}
+		return f;
+	});
 }
 
 export async function writeFiles(targetDir: string, files: File[]) {

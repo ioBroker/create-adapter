@@ -136,6 +136,20 @@ export const questionsAndText: (Question | string)[] = [
 			"Space (4)",
 		],
 	},
+	{
+		condition: [
+			{ name: "features", contains: "Adapter" },
+			{ name: "language", value: "JavaScript" }, // TODO: Add this to TypeScript aswell
+		],
+		type: "select",
+		name: "quotes",
+		message: "Do you prefer double or single quotes?",
+		initial: "double",
+		choices: [
+			"double",
+			"single",
+		],
+	},
 	"",
 	underline("Almost done! Just a few administrative details..."),
 	{
@@ -194,6 +208,7 @@ export interface Answers {
 	type?: string;
 	adminReact?: string;
 	indentation?: string;
+	quotes?: "single" | "double";
 }
 
 export function checkAnswers(answers: Partial<Answers>): void {

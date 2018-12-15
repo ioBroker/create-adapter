@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeguards_1 = require("alcalzone-shared/typeguards");
 const ansi_colors_1 = require("ansi-colors");
 const child_process_1 = require("child_process");
+const eslint_1 = require("eslint");
 const fs = require("fs-extra");
 const os = require("os");
 const path = require("path");
@@ -155,3 +156,26 @@ function indentWithSpaces(text) {
     return text.replace(/^(\t)+/gm, match => " ".repeat(match.length * 4));
 }
 exports.indentWithSpaces = indentWithSpaces;
+/** Formats a JS source file to use single quotes */
+function jsFixQuotes(sourceText, quotes) {
+    const linter = new eslint_1.Linter();
+    const result = linter.verifyAndFix(sourceText, {
+        env: {
+            es6: true,
+            node: true,
+            mocha: true,
+        },
+        rules: {
+            quotes: [
+                "error",
+                quotes,
+                {
+                    avoidEscape: true,
+                    allowTemplateLiterals: true,
+                },
+            ],
+        },
+    });
+    return result.output;
+}
+exports.jsFixQuotes = jsFixQuotes;

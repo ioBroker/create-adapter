@@ -54,8 +54,17 @@ function formatFiles(answers, files) {
             .replace(/\n/g, os.EOL);
     };
     const formatter = (text) => emptyLines(indentation(text));
-    return files.map(f => (f.noReformat || typeof f.content !== "string") ? f
-        : Object.assign({}, f, { content: formatter(f.content) }));
+    return files.map(f => {
+        if (f.noReformat || typeof f.content !== "string")
+            return f;
+        // 1st step: Apply formatters that are valid for all files
+        f.content = formatter(f.content);
+        // 2nd step: Apply more specialized formatters
+        if (f.name.endsWith(".js") && answers.quotes != undefined) {
+            f.content = tools_1.jsFixQuotes(f.content, answers.quotes);
+        }
+        return f;
+    });
 }
 async function writeFiles(targetDir, files) {
     // write the files and make sure the target dirs exist
