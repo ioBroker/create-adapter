@@ -1,6 +1,7 @@
 import { isArray, isObject } from "alcalzone-shared/typeguards";
 import { bold } from "ansi-colors";
 import { spawn, SpawnOptions } from "child_process";
+import { Linter } from "eslint";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
@@ -171,7 +172,7 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 	return licenseText
 		.replace(/\[year\]/g, new Date().getFullYear().toString())
 		.replace(/\[fullname\]/g, answers.authorName)
-	;
+		;
 }
 
 /** Replaces 4-space indentation with tabs */
@@ -184,4 +185,27 @@ export function indentWithTabs(text: string): string {
 export function indentWithSpaces(text: string): string {
 	if (!text) return text;
 	return text.replace(/^(\t)+/gm, match => " ".repeat(match.length * 4));
+}
+
+/** Formats a JS source file to use single quotes */
+export function jsFixQuotes(sourceText: string, quotes: "single" | "double"): string {
+	const linter = new Linter();
+	const result = linter.verifyAndFix(sourceText, {
+		env: {
+			es6: true,
+			node: true,
+			mocha: true,
+		},
+		rules: {
+			quotes: [
+				"error",
+				quotes,
+				{
+					avoidEscape: true,
+					allowTemplateLiterals: true,
+				},
+			],
+		},
+	});
+	return result.output;
 }

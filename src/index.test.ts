@@ -54,13 +54,14 @@ describe("adapter creation =>", () => {
 			);
 		});
 
-		it("Adapter, TypeScript, TSLint, Tabs, MIT License", async () => {
+		it("Adapter, TypeScript, TSLint, Tabs, Double quotes, MIT License", async () => {
 			const answers: Answers = {
 				adapterName: "test-adapter",
 				features: ["Adapter"],
 				language: "TypeScript",
 				tools: ["TSLint"],
 				indentation: "Tab",
+				quotes: "double",
 				authorName: "Al Calzone",
 				authorGithub: "AlCalzone",
 				authorEmail: "al@calzo.ne",
@@ -69,13 +70,14 @@ describe("adapter creation =>", () => {
 			await expectSuccess("adapter_TS_TSLint_Tabs_MIT", answers);
 		});
 
-		it("Adapter, JavaScript, ESLint, Spaces, LGPLv3", async () => {
+		it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {
 			const answers: Answers = {
 				adapterName: "test-adapter",
 				features: ["Adapter"],
 				language: "JavaScript",
 				tools: ["ESLint", "type checking"],
 				indentation: "Space (4)",
+				quotes: "single",
 				authorName: "Al Calzone",
 				authorGithub: "AlCalzone",
 				authorEmail: "al@calzo.ne",
