@@ -1,5 +1,5 @@
 /*global systemDictionary:true */
-'use strict';
+"use strict";
 
 systemDictionary = {
 	"test-adapter adapter settings": {
