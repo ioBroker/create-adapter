@@ -44,7 +44,14 @@ describe("adapter creation =>", () => {
 		this.timeout(60000);
 
 		before(async () => {
-			await fs.emptyDir(baselineDir);
+			// Clear the baselines dir, except for the README.md
+			await fs.mkdirp(baselineDir);
+			const files = await fs.readdir(baselineDir);
+			await Promise.all(
+				files
+					.filter(file => file !== "README.md")
+					.map(file => fs.remove(path.join(baselineDir, file))),
+			);
 		});
 
 		it("Adapter, TypeScript, TSLint, Tabs, MIT License", async () => {

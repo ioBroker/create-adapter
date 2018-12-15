@@ -1,0 +1,8 @@
+* text=auto
+
+# Images should be treated as binary
+# (binary is a macro for -text -diff)
+*.png     binary
+*.jpg     binary
+*.jpeg     binary
+*.gif     binary
