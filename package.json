@@ -1,6 +1,6 @@
 {
   "name": "@iobroker/create-adapter",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Command line utility to create customized ioBroker adapters",
   "keywords": [],
   "main": "build/index.js",
@@ -11,13 +11,13 @@
     "email": "d.griesel@gmx.net"
   },
   "license": "MIT",
-  "homepage": "https://github.com/AlCalzone/create-adapter#readme",
+  "homepage": "https://github.com/ioBroker/create-adapter#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlCalzone/create-adapter.git"
+    "url": "git+https://github.com/ioBroker/create-adapter.git"
   },
   "bugs": {
-    "url": "https://github.com/AlCalzone/create-adapter/issues"
+    "url": "https://github.com/ioBroker/create-adapter/issues"
   },
   "engines": {
     "node": ">=8.0.0"
