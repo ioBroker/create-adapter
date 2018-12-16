@@ -150,6 +150,14 @@ exports.questionsAndText = [
         action: actionsAndTransformers_1.checkEmail,
     },
     {
+        condition: { name: "cli", value: true },
+        type: "select",
+        name: "gitCommit",
+        message: "Initialize the GitHub repo automatically?",
+        initial: "no",
+        choices: ["yes", "no"],
+    },
+    {
         type: "select",
         name: "license",
         message: "Which license should be used for your project?",

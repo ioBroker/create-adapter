@@ -12,7 +12,7 @@ const tools_1 = require("./lib/tools");
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
 /** Asks a series of questions on the CLI */
 async function ask() {
-    let answers = {};
+    let answers = { cli: true };
     for (const q of questions_1.questionsAndText) {
         // Headlines
         if (typeof q === "string") {
@@ -63,6 +63,8 @@ function logProgress(message) {
 const installDependencies = !yargs.argv.noInstall || !!yargs.argv.install;
 /** Whether an initial build should be performed */
 let buildTypeScript;
+/** Whether the initial commit should be performed automatically */
+let gitCommit;
 /** CLI-specific functionality for creating the adapter directory */
 async function setupProject_CLI(answers, files) {
     const rootDirName = path.basename(rootDir);
@@ -78,6 +80,19 @@ async function setupProject_CLI(answers, files) {
             await tools_1.executeCommand(tools_1.isWindows ? "npm.cmd" : "npm", ["run", "build"], { cwd: targetDir, stdout: "ignore" });
         }
     }
+    if (gitCommit) {
+        logProgress("Initializing git repo");
+        // As described here: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
+        const gitCommandArgs = [
+            ["init"],
+            ["add", "."],
+            ["commit", "-m", `"Initial commit"`],
+            ["remote", "add", "origin", `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`],
+        ];
+        for (const args of gitCommandArgs) {
+            await tools_1.executeCommand("git", args, { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
+        }
+    }
     console.log();
     console.log(ansi_colors_1.blueBright("All done! Have fun programming! ") + ansi_colors_1.red("♥"));
 }
@@ -89,6 +104,9 @@ async function setupProject_CLI(answers, files) {
         if (buildTypeScript)
             maxSteps++;
     }
+    gitCommit = answers.gitCommit === "yes";
+    if (gitCommit)
+        maxSteps++;
     logProgress("Generating files");
     const files = await createAdapter_1.createFiles(answers);
     await setupProject_CLI(answers, files);

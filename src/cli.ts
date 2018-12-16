@@ -12,7 +12,7 @@ const rootDir = path.resolve(yargs.argv.target || process.cwd());
 
 /** Asks a series of questions on the CLI */
 async function ask() {
-	let answers: Record<string, any> = {};
+	let answers: Record<string, any> = {cli: true};
 	for (const q of questionsAndText) {
 		// Headlines
 		if (typeof q === "string") {
@@ -65,6 +65,8 @@ function logProgress(message: string) {
 const installDependencies = !yargs.argv.noInstall || !!yargs.argv.install;
 /** Whether an initial build should be performed */
 let buildTypeScript: boolean;
+/** Whether the initial commit should be performed automatically */
+let gitCommit: boolean;
 
 /** CLI-specific functionality for creating the adapter directory */
 async function setupProject_CLI(answers: Answers, files: File[]) {
@@ -84,6 +86,21 @@ async function setupProject_CLI(answers: Answers, files: File[]) {
 			await executeCommand(isWindows ? "npm.cmd" : "npm", ["run", "build"], { cwd: targetDir, stdout: "ignore" });
 		}
 	}
+
+	if (gitCommit) {
+		logProgress("Initializing git repo");
+		// As described here: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
+		const gitCommandArgs = [
+			["init"],
+			["add", "."],
+			["commit", "-m", `"Initial commit"`],
+			["remote", "add", "origin", `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`],
+		];
+		for (const args of gitCommandArgs) {
+			await executeCommand("git", args, { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
+		}
+	}
+
 	console.log();
 	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
 }
@@ -96,6 +113,8 @@ async function setupProject_CLI(answers: Answers, files: File[]) {
 		buildTypeScript = answers.language === "TypeScript";
 		if (buildTypeScript) maxSteps++;
 	}
+	gitCommit = answers.gitCommit === "yes";
+	if (gitCommit) maxSteps++;
 
 	logProgress("Generating files");
 	const files = await createFiles(answers);
