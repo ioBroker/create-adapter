@@ -55,8 +55,19 @@ async function ask() {
 	return answers as Answers;
 }
 
+let currentStep: number = 0;
+let maxSteps: number = 1;
+function logProgress(message: string) {
+	console.log(blueBright(`[${++currentStep}/${maxSteps}] ${message}...`));
+}
+
+/** Whether dependencies should be installed */
+const installDependencies = !yargs.argv.noInstall || !!yargs.argv.install;
+/** Whether an initial build should be performed */
+let buildTypeScript: boolean;
+
 /** CLI-specific functionality for creating the adapter directory */
-async function setupProject_CLI({ answers, files }: { answers: Answers, files: File[] }) {
+async function setupProject_CLI(answers: Answers, files: File[]) {
 	const rootDirName = path.basename(rootDir);
 	// make sure we are working in a directory called ioBroker.<adapterName>
 	const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
@@ -64,23 +75,33 @@ async function setupProject_CLI({ answers, files }: { answers: Answers, files: F
 		;
 	await writeFiles(targetDir, files);
 
-	if (!yargs.argv.noInstall || !!yargs.argv.install) {
-		console.log(blueBright("[2/2] Installing dependencies..."));
+	if (installDependencies) {
+		logProgress("Installing dependencies");
 		await executeCommand(isWindows ? "npm.cmd" : "npm", ["install", "--quiet"], { cwd: targetDir });
+
+		if (buildTypeScript) {
+			logProgress("Compiling TypeScript");
+			await executeCommand(isWindows ? "npm.cmd" : "npm", ["run", "build"], { cwd: targetDir, stdout: "ignore" });
+		}
 	}
+	console.log();
 	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
 }
 
-ask()
-	.then(async answers => {
-		console.log(blueBright("[1/2] Generating files..."));
-		return {
-			answers,
-			files: await createFiles(answers),
-		};
-	})
-	.then(setupProject_CLI)
-	;
+(async function main() {
+	const answers = await ask();
+
+	if (installDependencies) {
+		maxSteps++;
+		buildTypeScript = answers.language === "TypeScript";
+		if (buildTypeScript) maxSteps++;
+	}
+
+	logProgress("Generating files");
+	const files = await createFiles(answers);
+
+	await setupProject_CLI(answers, files);
+})();
 
 process.on("exit", () => {
 	if (fs.pathExistsSync("npm-debug.log")) fs.removeSync("npm-debug.log");

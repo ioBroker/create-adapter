@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK_IN_PROGRESS__
+* (AlCalzone) When using TypeScript, perform an initial build run (fixes #27)
 * (AlCalzone) When formatting files, clear lines with only whitespace (fixes #30)
 * (AlCalzone) Enable resolveJsonModule for JS files (fixes #26)
 * (AlCalzone) Allow choosing quote style in JavaScript (#34)

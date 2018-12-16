@@ -12,6 +12,7 @@ export = (answers => {
 	// Modified config to only compile .ts-files in the src dir
 	"compilerOptions": {
 		"allowJs": false,
+		"checkJs": false,
 		"noEmit": false,
 		"declaration": false
 	},
