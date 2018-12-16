@@ -172,6 +172,14 @@ export const questionsAndText: (Question | string)[] = [
 		action: checkEmail,
 	},
 	{
+		condition: { name: "cli", value: true },
+		type: "select",
+		name: "gitCommit",
+		message: "Initialize the GitHub repo automatically?",
+		initial: "no",
+		choices: ["yes", "no"],
+	},
+	{
 		type: "select",
 		name: "license",
 		message: "Which license should be used for your project?",
@@ -209,6 +217,7 @@ export interface Answers {
 	adminReact?: string;
 	indentation?: string;
 	quotes?: "single" | "double";
+	gitCommit?: "yes" | "no";
 }
 
 export function checkAnswers(answers: Partial<Answers>): void {
