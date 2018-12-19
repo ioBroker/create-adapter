@@ -18,25 +18,25 @@
 		"title": "Is used to test the creator",
 		"titleLang": {
 			"en": "Is used to test the creator",
-			"de": "Is used to test the creator",
-			"ru": "Is used to test the creator",
-			"pt": "Is used to test the creator",
-			"nl": "Is used to test the creator",
-			"fr": "Is used to test the creator",
-			"it": "Is used to test the creator",
-			"es": "Is used to test the creator",
-			"pl": "Is used to test the creator"
+			"de": "Dient zum Testen des Erstellers",
+			"ru": "Используется для проверки создателя",
+			"pt": "É usado para testar o criador",
+			"nl": "Wordt gebruikt om de maker te testen",
+			"fr": "Est utilisé pour tester le créateur",
+			"it": "È usato per testare il creatore",
+			"es": "Se utiliza para probar al creador.",
+			"pl": "Służy do testowania twórcy"
 		},
 		"desc": {
 			"en": "test-adapter",
-			"de": "test-adapter",
-			"ru": "test-adapter",
-			"pt": "test-adapter",
-			"nl": "test-adapter",
-			"fr": "test-adapter",
-			"it": "test-adapter",
-			"es": "test-adapter",
-			"pl": "test-adapter"
+			"de": "Testadapter",
+			"ru": "тест-адаптер",
+			"pt": "adaptador de teste",
+			"nl": "Test-adapter",
+			"fr": "adaptateur de test",
+			"it": "test-adattatore",
+			"es": "adaptador de prueba",
+			"pl": "adapter testowy"
 		},
 		"authors": [
 			"Al Calzone <al@calzo.ne>"

@@ -18,25 +18,25 @@
 		"title": "Is used to test the creator",
 		"titleLang": {
 			"en": "Is used to test the creator",
-			"de": "Is used to test the creator",
-			"ru": "Is used to test the creator",
-			"pt": "Is used to test the creator",
-			"nl": "Is used to test the creator",
-			"fr": "Is used to test the creator",
-			"it": "Is used to test the creator",
-			"es": "Is used to test the creator",
-			"pl": "Is used to test the creator"
+			"de": "Dient zum Testen des Erstellers",
+			"ru": "Используется для проверки создателя",
+			"pt": "É usado para testar o criador",
+			"nl": "Wordt gebruikt om de maker te testen",
+			"fr": "Est utilisé pour tester le créateur",
+			"it": "È usato per testare il creatore",
+			"es": "Se utiliza para probar al creador.",
+			"pl": "Służy do testowania twórcy"
 		},
 		"desc": {
 			"en": "This is a short description",
-			"de": "This is a short description",
-			"ru": "This is a short description",
-			"pt": "This is a short description",
-			"nl": "This is a short description",
-			"fr": "This is a short description",
-			"it": "This is a short description",
-			"es": "This is a short description",
-			"pl": "This is a short description"
+			"de": "Dies ist eine kurze Beschreibung",
+			"ru": "Это краткое описание",
+			"pt": "Esta é uma breve descrição",
+			"nl": "Dit is een korte beschrijving",
+			"fr": "Ceci est une courte description",
+			"it": "Questa è una breve descrizione",
+			"es": "Esta es una breve descripción.",
+			"pl": "To jest krótki opis"
 		},
 		"authors": [
 			"Al Calzone <al@calzo.ne>"
