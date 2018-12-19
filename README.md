@@ -52,9 +52,7 @@ The following features did not make it into v1.0.0 and are planned for a later r
 - [ ] Package scripts for automatic semantic release of new versions
 - [ ] Choice of start mode
 - [ ] Ask for:
-  * adapter title
   * keywords
-  * short description
 - [ ] Automatically open the folder in your favorite editor
 - [ ] Scripts/Helpers for remote debugging
 

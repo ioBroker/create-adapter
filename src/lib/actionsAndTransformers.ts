@@ -11,7 +11,7 @@ export async function checkMinSelections(category: string, min: number, answers:
 }
 
 function isAdapterNameValid(name: string): CheckResult {
-	if (!checkName(name)) {
+	if (!isNotEmpty(name)) {
 		return "Please enter a valid name!";
 	}
 	const forbiddenChars = /[^a-z0-9\-_]/g;
@@ -47,12 +47,22 @@ export async function checkAdapterName(name: string): Promise<CheckResult> {
 	return true;
 }
 
-function checkName(name: string): boolean {
-	return name != undefined && name.length > 0 && name.trim().length > 0;
+export function checkTitle(title: string): CheckResult {
+	if (!isNotEmpty(title)) {
+		return "Please enter a title!";
+	}
+	if (/iobroker|adapter/i.test(title)) {
+		return `The title must not contain the words "ioBroker" or "adapter"!`;
+	}
+	return true;
+}
+
+function isNotEmpty(answer: string): boolean {
+	return answer != undefined && answer.length > 0 && answer.trim().length > 0;
 }
 
 export async function checkAuthorName(name: string): Promise<CheckResult> {
-	if (!checkName(name)) {
+	if (!isNotEmpty(name)) {
 		return "Please enter a valid name!";
 	}
 	return true;
@@ -72,6 +82,12 @@ export function transformAdapterName(name: string): string {
 		console.log(yellow(`You don't have to prefix the name with "ioBroker."`));
 	}
 	return name;
+}
+
+export function transformDescription(description: string): string | undefined {
+	description = description.trim();
+	if (description.length === 0) return undefined;
+	return description;
 }
 
 // Taken from https://api.github.com/licenses

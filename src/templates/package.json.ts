@@ -10,7 +10,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
-	const useNyc = answers.tools && answers.tools.indexOf("Code coverage") > -1;
+	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 
 	const dependencyPromises = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
