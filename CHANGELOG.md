@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK_IN_PROGRESS__
+* (AlCalzone) Provide automatic translations for io-package fields (#39)
 * (AlCalzone) Ask the user for a title (mandatory) and a short description (optional) (#37)
 
 ## v1.2.0 (2018-12-16)
