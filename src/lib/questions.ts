@@ -1,12 +1,12 @@
 import { bold, dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
-import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, loadLicense, transformAdapterName } from "./actionsAndTransformers";
+import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, loadLicense, transformAdapterName, transformDescription } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
 
 // Sadly, Enquirer does not export the PromptOptions type
 // tslint:disable-next-line:ban-types
 type PromptOptions = Exclude<Parameters<typeof prompt>[0], Function | any[]>;
-type QuestionAction<T> = (value: T) => Promise<CheckResult>;
+type QuestionAction<T> = (value: T) => CheckResult | Promise<CheckResult>;
 // tslint:disable-next-line:interface-over-type-literal
 export type AnswerValue = string | boolean | number;
 export type Condition = { name: string } & (
@@ -16,8 +16,9 @@ export type Condition = { name: string } & (
 
 interface QuestionMeta {
 	condition?: Condition | Condition[];
-	resultTransform?: (val: AnswerValue | AnswerValue[]) => AnswerValue | AnswerValue[] | Promise<AnswerValue | AnswerValue[]>;
+	resultTransform?: (val: AnswerValue | AnswerValue[]) => AnswerValue | AnswerValue[] | undefined | Promise<AnswerValue | AnswerValue[] | undefined>;
 	action?: QuestionAction<AnswerValue | AnswerValue[]>;
+	optional?: boolean;
 }
 type Question = PromptOptions & QuestionMeta;
 
@@ -53,6 +54,20 @@ export const questionsAndText: (Question | string)[] = [
 		message: "Please enter the name of your project:",
 		resultTransform: transformAdapterName,
 		action: checkAdapterName,
+	},
+	{
+		type: "input",
+		name: "title",
+		message: "Which title should be shown in the admin UI?",
+		action: checkTitle,
+	},
+	{
+		type: "input",
+		name: "description",
+		message: "Please enter a short description:",
+		hint: "(optional)",
+		optional: true,
+		resultTransform: transformDescription,
 	},
 	styledMultiselect({
 		name: "features",
@@ -91,7 +106,7 @@ export const questionsAndText: (Question | string)[] = [
 		initial: [0],
 		choices: [
 			{ message: "TSLint", hint: "(recommended)" },
-			{ message: "Code coverage" },
+			{ message: "code coverage" },
 		],
 	}),
 
@@ -204,18 +219,18 @@ export const questions = questionsAndText.filter(q => typeof q !== "string") as 
 
 export interface Answers {
 	adapterName: string;
+	description?: string;
 	authorName: string;
 	authorEmail: string;
 	authorGithub: string;
-	description?: string;
-	language?: string;
-	tools?: string[];
-	features: string[];
+	language?: "JavaScript" | "TypeScript";
+	features: ("Adapter" | "VIS widget")[];
+	tools?: ("ESLint" | "TSLint" | "type checking" | "code coverage")[];
 	title?: string;
 	license: { id: string, name: string, text: string };
 	type?: string;
 	adminReact?: string;
-	indentation?: string;
+	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
 	gitCommit?: "yes" | "no";
 }
@@ -224,7 +239,7 @@ export function checkAnswers(answers: Partial<Answers>): void {
 	for (const q of questions) {
 		const answer = (answers as any)[q.name as string];
 		const conditionFulfilled = testCondition(q.condition, answers);
-		if (conditionFulfilled && answer == undefined) {
+		if (!q.optional && conditionFulfilled && answer == undefined) {
 			// A required answer was not given
 			throw new Error(`Missing answer "${q.name}"!`);
 		} else if (!conditionFulfilled && answer != undefined) {

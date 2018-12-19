@@ -11,7 +11,7 @@ async function checkMinSelections(category, min, answers) {
 }
 exports.checkMinSelections = checkMinSelections;
 function isAdapterNameValid(name) {
-    if (!checkName(name)) {
+    if (!isNotEmpty(name)) {
         return "Please enter a valid name!";
     }
     const forbiddenChars = /[^a-z0-9\-_]/g;
@@ -46,11 +46,21 @@ async function checkAdapterName(name) {
     return true;
 }
 exports.checkAdapterName = checkAdapterName;
-function checkName(name) {
-    return name != undefined && name.length > 0 && name.trim().length > 0;
+function checkTitle(title) {
+    if (!isNotEmpty(title)) {
+        return "Please enter a title!";
+    }
+    if (/iobroker|adapter/i.test(title)) {
+        return `The title must not contain the words "ioBroker" or "adapter"!`;
+    }
+    return true;
+}
+exports.checkTitle = checkTitle;
+function isNotEmpty(answer) {
+    return answer != undefined && answer.length > 0 && answer.trim().length > 0;
 }
 async function checkAuthorName(name) {
-    if (!checkName(name)) {
+    if (!isNotEmpty(name)) {
         return "Please enter a valid name!";
     }
     return true;
@@ -72,6 +82,13 @@ function transformAdapterName(name) {
     return name;
 }
 exports.transformAdapterName = transformAdapterName;
+function transformDescription(description) {
+    description = description.trim();
+    if (description.length === 0)
+        return undefined;
+    return description;
+}
+exports.transformDescription = transformDescription;
 // Taken from https://api.github.com/licenses
 const licenseUrls = {
     "GNU AGPLv3": "https://api.github.com/licenses/agpl-3.0",

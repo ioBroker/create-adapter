@@ -34,6 +34,20 @@ exports.questionsAndText = [
         resultTransform: actionsAndTransformers_1.transformAdapterName,
         action: actionsAndTransformers_1.checkAdapterName,
     },
+    {
+        type: "input",
+        name: "title",
+        message: "Which title should be shown in the admin UI?",
+        action: actionsAndTransformers_1.checkTitle,
+    },
+    {
+        type: "input",
+        name: "description",
+        message: "Please enter a short description:",
+        hint: "(optional)",
+        optional: true,
+        resultTransform: actionsAndTransformers_1.transformDescription,
+    },
     styledMultiselect({
         name: "features",
         message: "Which features should your project contain?",
@@ -71,7 +85,7 @@ exports.questionsAndText = [
         initial: [0],
         choices: [
             { message: "TSLint", hint: "(recommended)" },
-            { message: "Code coverage" },
+            { message: "code coverage" },
         ],
     }),
     // TODO: enable React (only TypeScript at the start)
@@ -182,7 +196,7 @@ function checkAnswers(answers) {
     for (const q of exports.questions) {
         const answer = answers[q.name];
         const conditionFulfilled = createAdapter_1.testCondition(q.condition, answers);
-        if (conditionFulfilled && answer == undefined) {
+        if (!q.optional && conditionFulfilled && answer == undefined) {
             // A required answer was not given
             throw new Error(`Missing answer "${q.name}"!`);
         }
