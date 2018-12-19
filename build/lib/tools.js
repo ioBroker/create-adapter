@@ -7,6 +7,8 @@ const eslint_1 = require("eslint");
 const fs = require("fs-extra");
 const os = require("os");
 const path = require("path");
+// @ts-ignore There are no typings for translate-google
+const translateGoogle = require("translate-google");
 function error(message) {
     console.error(ansi_colors_1.bold.red(message));
     console.error();
@@ -132,8 +134,13 @@ function copyFilesRecursiveSync(sourceDir, targetDir, predicate) {
 }
 exports.copyFilesRecursiveSync = copyFilesRecursiveSync;
 async function translateText(text, language) {
-    // TODO: implement
-    return text;
+    try {
+        return await translateGoogle(text, { from: "en", to: language });
+    }
+    catch (e) {
+        error(`Could not translate to "${language}": ${e}`);
+        return text;
+    }
 }
 exports.translateText = translateText;
 function formatLicense(licenseText, answers) {
