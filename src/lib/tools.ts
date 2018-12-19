@@ -5,6 +5,8 @@ import { Linter } from "eslint";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
+// @ts-ignore There are no typings for translate-google
+import * as translateGoogle from "translate-google";
 import { Answers } from "./questions";
 
 export function error(message: string) {
@@ -164,8 +166,12 @@ export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, pre
 }
 
 export async function translateText(text: string, language: string): Promise<string> {
-	// TODO: implement
-	return text;
+	try {
+		return await translateGoogle(text, {from: "en", to: language});
+	} catch (e) {
+		error(`Could not translate to "${language}": ${e}`);
+		return text;
+	}
 }
 
 export function formatLicense(licenseText: string, answers: Answers): string {
