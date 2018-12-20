@@ -9,7 +9,7 @@
 - [ ] Run the test suite with `npm test`
 - [ ] If there are baseline changes, review them and make a separate commit for them with the comment "accept baselines" if they are desired changes
 - [ ] Ensure the project builds with `npm run build` and include those artifacts aswell
-- [ ] Add your changes to `CHANGELOG.md` (referencing this PR or the issue fixed)
+- [ ] Add your changes to `CHANGELOG.md` (referencing this PR or the issue you fixed)
 
 **Description:**  
 add description here
