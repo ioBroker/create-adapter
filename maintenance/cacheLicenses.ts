@@ -1,6 +1,6 @@
 // Licenses are cached on build to prevent rate-limiting issues
 
-import { yellow } from "ansi-colors";
+import { green } from "ansi-colors";
 import axios from "axios";
 import * as fs from "fs-extra";
 import * as path from "path";
@@ -58,6 +58,6 @@ async function loadLicenses() {
 			;
 		await fs.writeFile(licenseCacheFile, templateContent, "utf8");
 	} else {
-		console.log(yellow(`Licenses are already cached. Run this with the parameter --force to update them`));
+		console.log(green(`Licenses are already cached. Run this with the parameter --force to update them`));
 	}
 })();

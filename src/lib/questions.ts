@@ -80,6 +80,8 @@ export const questionsAndText: (Question | string)[] = [
 		],
 		action: checkMinSelections.bind(undefined, "feature", 1),
 	}),
+	"",
+	underline("Nice! Let's get technical..."),
 	{
 		condition: { name: "features", contains: "Adapter" },
 		type: "select",

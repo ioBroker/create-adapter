@@ -59,6 +59,8 @@ exports.questionsAndText = [
         ],
         action: actionsAndTransformers_1.checkMinSelections.bind(undefined, "feature", 1),
     }),
+    "",
+    ansi_colors_1.underline("Nice! Let's get technical..."),
     {
         condition: { name: "features", contains: "Adapter" },
         type: "select",
