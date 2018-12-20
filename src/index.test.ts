@@ -37,6 +37,7 @@ async function expectFail(testName: string, answers: Partial<Answers>, message: 
 const baseAnswers: Answers = {
 	adapterName: "test-adapter",
 	title: "Is used to test the creator",
+	startMode: "daemon",
 	features: ["Adapter"],
 	language: "TypeScript",
 	tools: ["TSLint"],
@@ -156,6 +157,18 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess(
 					"description_empty_2",
+					answers,
+					file => file.name === "io-package.json",
+				);
+			});
+
+			it(`Start mode "schedule"`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					startMode: "schedule",
+				};
+				await expectSuccess(
+					"startMode_schedule",
 					answers,
 					file => file.name === "io-package.json",
 				);

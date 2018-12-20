@@ -53,7 +53,7 @@ module.exports = (async (answers) => {
 			"localLink": "%web_protocol%://%ip%:%web_port%/vis/edit.html",
 		`) : ""}
 		${isAdapter ? (`
-			"mode": "daemon",
+			"mode": "${answers.startMode || "daemon"}",
 			"type": "${answers.type || "general"}",
 		`) : isWidget ? (`
 			"onlyWWW": true,

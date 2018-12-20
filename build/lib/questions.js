@@ -62,6 +62,20 @@ exports.questionsAndText = [
     {
         condition: { name: "features", contains: "Adapter" },
         type: "select",
+        name: "startMode",
+        message: "When should the adapter be started?",
+        initial: "daemon",
+        choices: [
+            { message: "always", hint: ansi_colors_1.dim.gray("(recommended for most adapters)"), value: "daemon" },
+            { message: `when the ".alive" state is true`, value: "subscribe" },
+            { message: "depending on a schedule", value: "schedule" },
+            { message: "when the instance object changes", value: "once" },
+            { message: "never", value: "none" },
+        ],
+    },
+    {
+        condition: { name: "features", contains: "Adapter" },
+        type: "select",
         name: "language",
         message: "Which language do you want to use to code the adapter?",
         choices: [
