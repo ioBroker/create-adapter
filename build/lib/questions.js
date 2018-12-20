@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ansi_colors_1 = require("ansi-colors");
 const actionsAndTransformers_1 = require("./actionsAndTransformers");
 const createAdapter_1 = require("./createAdapter");
+const licenses_1 = require("./licenses");
 function styledMultiselect(ms) {
     return Object.assign({}, ms, {
         type: "multiselect",
@@ -185,7 +186,7 @@ exports.questionsAndText = [
             "MIT License",
             "The Unlicense",
         ],
-        resultTransform: actionsAndTransformers_1.loadLicense,
+        resultTransform: (value) => licenses_1.licenses[value],
     },
     "",
     ansi_colors_1.underline("That's it. Please wait a minute while I get this working..."),

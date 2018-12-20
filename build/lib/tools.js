@@ -2,19 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeguards_1 = require("alcalzone-shared/typeguards");
 const ansi_colors_1 = require("ansi-colors");
+const axios_1 = require("axios");
 const child_process_1 = require("child_process");
 const eslint_1 = require("eslint");
 const fs = require("fs-extra");
 const os = require("os");
 const path = require("path");
-// @ts-ignore There are no typings for translate-google
-const translateGoogle = require("translate-google");
 function error(message) {
     console.error(ansi_colors_1.bold.red(message));
     console.error();
 }
 exports.error = error;
 exports.isWindows = /^win/.test(os.platform());
+const isTesting = !!process.env.TESTING;
 function executeCommand(command, argsOrOptions, options) {
     let args;
     if (typeguards_1.isArray(argsOrOptions)) {
@@ -133,14 +133,24 @@ function copyFilesRecursiveSync(sourceDir, targetDir, predicate) {
     }
 }
 exports.copyFilesRecursiveSync = copyFilesRecursiveSync;
-async function translateText(text, language) {
+async function translateText(text, targetLang) {
+    if (isTesting)
+        return `Mock translation of '${text}' to '${targetLang}'`;
+    if (targetLang === "en")
+        return text;
     try {
-        return await translateGoogle(text, { from: "en", to: language });
+        const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
+        const response = await axios_1.default({ url, timeout: 5000 });
+        if (typeguards_1.isArray(response.data)) {
+            // we got a valid response
+            return response.data[0][0][0];
+        }
+        error(`Invalid response for translate request`);
     }
     catch (e) {
-        error(`Could not translate to "${language}": ${e}`);
-        return text;
+        error(`Could not translate to "${targetLang}": ${e}`);
     }
+    return text;
 }
 exports.translateText = translateText;
 function formatLicense(licenseText, answers) {

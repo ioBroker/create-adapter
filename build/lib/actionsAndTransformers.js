@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ansi_colors_1 = require("ansi-colors");
-const axios_1 = require("axios");
 const fetchVersions_1 = require("./fetchVersions");
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 async function checkMinSelections(category, min, answers) {
@@ -89,22 +88,3 @@ function transformDescription(description) {
     return description;
 }
 exports.transformDescription = transformDescription;
-// Taken from https://api.github.com/licenses
-const licenseUrls = {
-    "GNU AGPLv3": "https://api.github.com/licenses/agpl-3.0",
-    "GNU GPLv3": "https://api.github.com/licenses/gpl-3.0",
-    "GNU LGPLv3": "https://api.github.com/licenses/lgpl-3.0",
-    "Mozilla Public License 2.0": "https://api.github.com/licenses/mpl-2.0",
-    "Apache License 2.0": "https://api.github.com/licenses/apache-2.0",
-    "MIT License": "https://api.github.com/licenses/mit",
-    "The Unlicense": "https://api.github.com/licenses/unlicense",
-};
-async function loadLicense(shortName) {
-    const response = await axios_1.default(licenseUrls[shortName]);
-    return {
-        id: response.data.spdx_id,
-        name: response.data.name,
-        text: response.data.body,
-    };
-}
-exports.loadLicense = loadLicense;

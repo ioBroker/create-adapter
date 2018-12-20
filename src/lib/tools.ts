@@ -1,12 +1,11 @@
 import { isArray, isObject } from "alcalzone-shared/typeguards";
 import { bold } from "ansi-colors";
+import axios from "axios";
 import { spawn, SpawnOptions } from "child_process";
 import { Linter } from "eslint";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
-// @ts-ignore There are no typings for translate-google
-import * as translateGoogle from "translate-google";
 import { Answers } from "./questions";
 
 export function error(message: string) {
@@ -15,6 +14,7 @@ export function error(message: string) {
 }
 
 export const isWindows = /^win/.test(os.platform());
+const isTesting = !!process.env.TESTING;
 
 export interface ExecuteCommandOptions {
 	/** Whether the executed command should be logged to the stdout. Default: false */
@@ -165,13 +165,21 @@ export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, pre
 	}
 }
 
-export async function translateText(text: string, language: string): Promise<string> {
+export async function translateText(text: string, targetLang: string): Promise<string> {
+	if (isTesting) return `Mock translation of '${text}' to '${targetLang}'`;
+	if (targetLang === "en") return text;
 	try {
-		return await translateGoogle(text, {from: "en", to: language});
+		const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
+		const response = await axios({url, timeout: 5000});
+		if (isArray(response.data)) {
+			// we got a valid response
+			return response.data[0][0][0];
+		}
+		error(`Invalid response for translate request`);
 	} catch (e) {
-		error(`Could not translate to "${language}": ${e}`);
-		return text;
+		error(`Could not translate to "${targetLang}": ${e}`);
 	}
+	return text;
 }
 
 export function formatLicense(licenseText: string, answers: Answers): string {

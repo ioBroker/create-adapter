@@ -1,5 +1,8 @@
 // tslint:disable:object-literal-key-quotes
 
+// Disable API requests while testing
+process.env.TESTING = "true";
+
 import * as fs from "fs-extra";
 import * as path from "path";
 import { createAdapter } from "./index";
@@ -85,6 +88,7 @@ describe("adapter creation =>", () => {
 
 	});
 
+	// tslint:disable-next-line:space-before-function-paren
 	describe("generate baselines =>", function () {
 		this.timeout(60000);
 
