@@ -17,26 +17,26 @@
 		},
 		"title": "Is used to test the creator",
 		"titleLang": {
-			"en": "Is used to test the creator",
-			"de": "Dient zum Testen des Erstellers",
-			"ru": "Используется для проверки создателя",
-			"pt": "É usado para testar o criador",
-			"nl": "Wordt gebruikt om de maker te testen",
-			"fr": "Est utilisé pour tester le créateur",
-			"it": "È usato per testare il creatore",
-			"es": "Se utiliza para probar al creador.",
-			"pl": "Służy do testowania twórcy"
+			"en": "Mock translation of 'Is used to test the creator' to 'en'",
+			"de": "Mock translation of 'Is used to test the creator' to 'de'",
+			"ru": "Mock translation of 'Is used to test the creator' to 'ru'",
+			"pt": "Mock translation of 'Is used to test the creator' to 'pt'",
+			"nl": "Mock translation of 'Is used to test the creator' to 'nl'",
+			"fr": "Mock translation of 'Is used to test the creator' to 'fr'",
+			"it": "Mock translation of 'Is used to test the creator' to 'it'",
+			"es": "Mock translation of 'Is used to test the creator' to 'es'",
+			"pl": "Mock translation of 'Is used to test the creator' to 'pl'"
 		},
 		"desc": {
-			"en": "test-adapter",
-			"de": "Testadapter",
-			"ru": "тест-адаптер",
-			"pt": "adaptador de teste",
-			"nl": "Test-adapter",
-			"fr": "adaptateur de test",
-			"it": "test-adattatore",
-			"es": "adaptador de prueba",
-			"pl": "adapter testowy"
+			"en": "Mock translation of 'test-adapter' to 'en'",
+			"de": "Mock translation of 'test-adapter' to 'de'",
+			"ru": "Mock translation of 'test-adapter' to 'ru'",
+			"pt": "Mock translation of 'test-adapter' to 'pt'",
+			"nl": "Mock translation of 'test-adapter' to 'nl'",
+			"fr": "Mock translation of 'test-adapter' to 'fr'",
+			"it": "Mock translation of 'test-adapter' to 'it'",
+			"es": "Mock translation of 'test-adapter' to 'es'",
+			"pl": "Mock translation of 'test-adapter' to 'pl'"
 		},
 		"authors": [
 			"Al Calzone <al@calzo.ne>"

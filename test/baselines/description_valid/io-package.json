@@ -17,26 +17,26 @@
 		},
 		"title": "Is used to test the creator",
 		"titleLang": {
-			"en": "Is used to test the creator",
-			"de": "Dient zum Testen des Erstellers",
-			"ru": "Используется для проверки создателя",
-			"pt": "É usado para testar o criador",
-			"nl": "Wordt gebruikt om de maker te testen",
-			"fr": "Est utilisé pour tester le créateur",
-			"it": "È usato per testare il creatore",
-			"es": "Se utiliza para probar al creador.",
-			"pl": "Służy do testowania twórcy"
+			"en": "Mock translation of 'Is used to test the creator' to 'en'",
+			"de": "Mock translation of 'Is used to test the creator' to 'de'",
+			"ru": "Mock translation of 'Is used to test the creator' to 'ru'",
+			"pt": "Mock translation of 'Is used to test the creator' to 'pt'",
+			"nl": "Mock translation of 'Is used to test the creator' to 'nl'",
+			"fr": "Mock translation of 'Is used to test the creator' to 'fr'",
+			"it": "Mock translation of 'Is used to test the creator' to 'it'",
+			"es": "Mock translation of 'Is used to test the creator' to 'es'",
+			"pl": "Mock translation of 'Is used to test the creator' to 'pl'"
 		},
 		"desc": {
-			"en": "This is a short description",
-			"de": "Dies ist eine kurze Beschreibung",
-			"ru": "Это краткое описание",
-			"pt": "Esta é uma breve descrição",
-			"nl": "Dit is een korte beschrijving",
-			"fr": "Ceci est une courte description",
-			"it": "Questa è una breve descrizione",
-			"es": "Esta es una breve descripción.",
-			"pl": "To jest krótki opis"
+			"en": "Mock translation of 'This is a short description' to 'en'",
+			"de": "Mock translation of 'This is a short description' to 'de'",
+			"ru": "Mock translation of 'This is a short description' to 'ru'",
+			"pt": "Mock translation of 'This is a short description' to 'pt'",
+			"nl": "Mock translation of 'This is a short description' to 'nl'",
+			"fr": "Mock translation of 'This is a short description' to 'fr'",
+			"it": "Mock translation of 'This is a short description' to 'it'",
+			"es": "Mock translation of 'This is a short description' to 'es'",
+			"pl": "Mock translation of 'This is a short description' to 'pl'"
 		},
 		"authors": [
 			"Al Calzone <al@calzo.ne>"

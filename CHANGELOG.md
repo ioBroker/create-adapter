@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK_IN_PROGRESS__
+* (AlCalzone) Avoid running into API rate limitations while testing (#40)
 * (AlCalzone) Provide automatic translations for io-package fields (#39)
 * (AlCalzone) Ask the user for a title (mandatory) and a short description (optional) (#37)
 

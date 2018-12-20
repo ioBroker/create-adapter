@@ -89,23 +89,3 @@ export function transformDescription(description: string): string | undefined {
 	if (description.length === 0) return undefined;
 	return description;
 }
-
-// Taken from https://api.github.com/licenses
-const licenseUrls = {
-	"GNU AGPLv3": "https://api.github.com/licenses/agpl-3.0",
-	"GNU GPLv3": "https://api.github.com/licenses/gpl-3.0",
-	"GNU LGPLv3": "https://api.github.com/licenses/lgpl-3.0",
-	"Mozilla Public License 2.0": "https://api.github.com/licenses/mpl-2.0",
-	"Apache License 2.0": "https://api.github.com/licenses/apache-2.0",
-	"MIT License": "https://api.github.com/licenses/mit",
-	"The Unlicense": "https://api.github.com/licenses/unlicense",
-};
-
-export async function loadLicense(shortName: keyof typeof licenseUrls): Promise<{ id: string, name: string, text: string }> {
-	const response = await axios(licenseUrls[shortName]);
-	return {
-		id: response.data.spdx_id,
-		name: response.data.name,
-		text: response.data.body,
-	};
-}

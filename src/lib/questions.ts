@@ -1,7 +1,8 @@
 import { bold, dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
-import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, loadLicense, transformAdapterName, transformDescription } from "./actionsAndTransformers";
+import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
+import { licenses } from "./licenses";
 
 // Sadly, Enquirer does not export the PromptOptions type
 // tslint:disable-next-line:ban-types
@@ -208,7 +209,7 @@ export const questionsAndText: (Question | string)[] = [
 			"MIT License",
 			"The Unlicense",
 		],
-		resultTransform: loadLicense as any,
+		resultTransform: (value: string) => licenses[value] as any,
 	},
 	"",
 	underline("That's it. Please wait a minute while I get this working..."),
