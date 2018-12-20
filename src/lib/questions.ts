@@ -83,6 +83,20 @@ export const questionsAndText: (Question | string)[] = [
 	{
 		condition: { name: "features", contains: "Adapter" },
 		type: "select",
+		name: "startMode",
+		message: "When should the adapter be started?",
+		initial: "daemon",
+		choices: [
+			{ message: "always", hint: dim.gray("(recommended for most adapters)"), value: "daemon"},
+			{ message: `when the ".alive" state is true`, value: "subscribe"},
+			{ message: "depending on a schedule", value: "schedule"},
+			{ message: "when the instance object changes", value: "once"},
+			{ message: "never", value: "none"},
+		],
+	},
+	{
+		condition: { name: "features", contains: "Adapter" },
+		type: "select",
 		name: "language",
 		message: "Which language do you want to use to code the adapter?",
 		choices: [
@@ -234,6 +248,7 @@ export interface Answers {
 	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
 	gitCommit?: "yes" | "no";
+	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 }
 
 export function checkAnswers(answers: Partial<Answers>): void {
