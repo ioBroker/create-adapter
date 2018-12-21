@@ -5,8 +5,8 @@ import { translateText } from "../lib/tools";
 
 export = (async answers => {
 
-	const isAdapter = answers.features.indexOf("Adapter") > -1;
-	const isWidget = answers.features.indexOf("VIS widget") > -1;
+	const isAdapter = answers.features.indexOf("adapter") > -1;
+	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 
 	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl"];
@@ -73,7 +73,7 @@ export = (async answers => {
 			"onlyWWW": true,
 			"noConfig": true,
 			"singleton": true,
-			"type": "visualization-widgets",
+			"type": "${answers.type || "visualization-widgets"}",
 			"mode": "once",
 		`) : ""}
 		${isAdapter ? `"materialize": true,` : ""}

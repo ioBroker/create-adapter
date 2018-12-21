@@ -3,7 +3,7 @@ import { Answers } from "../lib/questions";
 
 export = (answers => {
 
-	const isAdapter = answers.features.indexOf("Adapter") > -1;
+	const isAdapter = answers.features.indexOf("adapter") > -1;
 	if (!isAdapter) return;
 
 	const template = `

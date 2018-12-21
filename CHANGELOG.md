@@ -1,5 +1,8 @@
 # Changelog
 
+## __WORK_IN_PROGRSS__
+* (AlCalzone) Add selection for adapter category (fixes #2)
+
 ## v1.3.0 (2018-12-20)
 * (AlCalzone) Add a start mode selection (fixes #6)
 * (AlCalzone) Avoid running into API rate limitations while testing (#40)

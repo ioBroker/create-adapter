@@ -16,6 +16,9 @@ function testCondition(condition, answers) {
         else if ("contains" in cond) {
             return answers[cond.name].indexOf(cond.contains) > -1;
         }
+        else if ("doesNotContain" in cond) {
+            return answers[cond.name].indexOf(cond.doesNotContain) === -1;
+        }
         return false;
     }
     if (typeguards_1.isArray(condition)) {

@@ -3,7 +3,7 @@ import { Answers } from "../lib/questions";
 
 const templateFunction: TemplateFunction = answers => {
 
-	const isAdapter = answers.features.indexOf("Adapter") > -1;
+	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;

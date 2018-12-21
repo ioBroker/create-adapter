@@ -38,7 +38,8 @@ const baseAnswers: Answers = {
 	adapterName: "test-adapter",
 	title: "Is used to test the creator",
 	startMode: "daemon",
-	features: ["Adapter"],
+	features: ["adapter"],
+	type: "general",
 	language: "TypeScript",
 	tools: ["TSLint"],
 	indentation: "Tab",
@@ -61,6 +62,11 @@ describe("adapter creation =>", () => {
 		it("no title", () => {
 			const { title, ...noTitle } = baseAnswers;
 			expectFail("incompleteAnswersNoTitle", noTitle, "Missing answer");
+		});
+
+		it("no type", () => {
+			const { type, ...noType } = baseAnswers;
+			expectFail("incompleteAnswersNoType", noType, "Missing answer");
 		});
 
 		it("empty title 1", () => {
@@ -169,6 +175,32 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess(
 					"startMode_schedule",
+					answers,
+					file => file.name === "io-package.json",
+				);
+			});
+
+			it(`Adapter with type "storage"`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["adapter"],
+					type: "storage",
+				};
+				await expectSuccess(
+					"type_storage",
+					answers,
+					file => file.name === "io-package.json",
+				);
+			});
+
+			it(`VIS with type "visualization-icons"`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["vis"],
+					type: "visualization-icons",
+				};
+				await expectSuccess(
+					"type_visualization-icons",
 					answers,
 					file => file.name === "io-package.json",
 				);
