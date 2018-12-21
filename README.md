@@ -29,6 +29,11 @@ After a short while, you will be asked a few questions. Afterwards all the neces
 
 ## Features
 * Choose between: ioBroker adapter, VIS widget or both
+* Ask for package metadata (with automatic translation):
+  * Title (mandatory)
+  * Short description (optional)
+  * Adapter start mode
+  * Adapter/VIS category
 * IntelliSense (auto completion and tooltips) in supporting editors based on the [ioBroker declaration files](https://www.npmjs.com/package/@types/iobroker)
 * JavaScript with the following optional tools:
   * [ESLint](https://github.com/eslint/eslint) for code quality
@@ -36,7 +41,8 @@ After a short while, you will be asked a few questions. Afterwards all the neces
 * Or TypeScript with the following optional tools:
   * [TSLint](https://github.com/palantir/tslint) for code quality
   * [nyc](https://github.com/istanbuljs/nyc) for code coverage
-* Choice between indentation: tabs or 4 spaces
+* Choose between indentation: tabs or 4 spaces
+* Choose your preferred quote style (JS only for now)
 * Predefined settings page for the admin UI
 * Choice of an OpenSource license and automatic creation of the license file
 * Built-in component tests using `mocha` & `chai` (with `chai-as-promised`), `sinon` (w/ `sinon-chai`) for:
@@ -50,7 +56,6 @@ The following features did not make it into v1.0.0 and are planned for a later r
 - [ ] An extra tab for the admin UI (including React support)
 - [ ] Strongly typed `adapter.config` properties in TypeScript (they are supported in JS though!)
 - [ ] Package scripts for automatic semantic release of new versions
-- [ ] Choice of start mode
 - [ ] Ask for:
   * keywords
 - [ ] Automatically open the folder in your favorite editor
