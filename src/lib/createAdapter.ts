@@ -26,6 +26,8 @@ export function testCondition(condition: Condition | Condition[] | undefined, an
 			return answers[cond.name] === cond.value;
 		} else if ("contains" in cond) {
 			return (answers[cond.name] as AnswerValue[]).indexOf(cond.contains) > -1;
+		} else if ("doesNotContain" in cond) {
+			return (answers[cond.name] as AnswerValue[]).indexOf(cond.doesNotContain) === -1;
 		}
 		return false;
 	}

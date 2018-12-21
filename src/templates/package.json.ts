@@ -5,8 +5,8 @@ import { fetchPackageVersion } from "../lib/fetchVersions";
 
 const templateFunction: TemplateFunction = async answers => {
 
-	const isAdapter = answers.features.indexOf("Adapter") > -1;
-	const isWidget = answers.features.indexOf("VIS widget") > -1;
+	const isAdapter = answers.features.indexOf("adapter") > -1;
+	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;

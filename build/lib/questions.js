@@ -49,20 +49,62 @@ exports.questionsAndText = [
         optional: true,
         resultTransform: actionsAndTransformers_1.transformDescription,
     },
+    "",
+    ansi_colors_1.underline("Nice! Let's get technical..."),
     styledMultiselect({
         name: "features",
         message: "Which features should your project contain?",
         initial: [0],
         choices: [
-            "Adapter",
-            "VIS widget",
+            { message: "Adapter", value: "adapter" },
+            { message: "Visualization", value: "vis" },
         ],
         action: actionsAndTransformers_1.checkMinSelections.bind(undefined, "feature", 1),
     }),
-    "",
-    ansi_colors_1.underline("Nice! Let's get technical..."),
     {
-        condition: { name: "features", contains: "Adapter" },
+        condition: { name: "features", contains: "adapter" },
+        type: "select",
+        name: "type",
+        message: "Which category does your adapter fall into?",
+        choices: [
+            { message: "Alarm / security         (Home, car, boat, ...)", value: "alarm" },
+            { message: "Calendars                (also schedules, etc. ...)", value: "date-and-time" },
+            { message: "Climate control          (A/C, Heaters, air filters, ...)", value: "climate-control" },
+            { message: "Communication protocols  (MQTT, ...)", value: "protocols" },
+            { message: "Data storage             (SQL/NoSQL, file storage, logging, ...)", value: "storage" },
+            { message: "Data transmission        (for other services via REST api, websockets, ...)", value: "communication" },
+            { message: "Garden                   (Mowers, watering, ...)", value: "garden" },
+            { message: "General purpose          (like admin, web, discovery, ...)", value: "general" },
+            { message: "Geo positioning          (transmission and receipt of position data)", value: "geoposition" },
+            { message: "Hardware                 (low-level, multi-purpose)", value: "hardware" },
+            { message: "Household devices        (Vacuums, kitchen, ...)", value: "household" },
+            { message: "Lighting control", value: "lighting" },
+            { message: "Logic                    (Scripts, rules, parsers, scenes, ...)", value: "logic" },
+            { message: "Messaging                (E-Mail, Telegram, WhatsApp, ...)", value: "messaging" },
+            { message: "Meters for energy, electricity, ...", value: "energy" },
+            { message: "Meters for water, gas, oil, ...", value: "metering" },
+            { message: "Miscellaneous data       (Import/export of contacts, gasoline prices, ...)", value: "misc-data" },
+            { message: "Miscellaneous utilities  (Data import/emport, backup, ...)", value: "utility" },
+            { message: "Multimedia               (TV, audio, remote controls, ...)", value: "multimedia" },
+            { message: "Network infrastructure   (Hardware, printers, phones, ...)", value: "infrastructure" },
+            { message: "Network utilities        (Ping, UPnP, network discovery, ...)", value: "network" },
+            { message: "Smart home systems       (3rd party, hardware and software)", value: "iot-systems" },
+            { message: "Visualizations           (VIS, MaterialUI, mobile views, ...)", value: "visualization" },
+            { message: "Weather                  (Forecast, air quality, statistics, ...)", value: "weather" },
+        ],
+    },
+    {
+        condition: { name: "features", doesNotContain: "adapter" },
+        type: "select",
+        name: "type",
+        message: "Which kind of visualization is this?",
+        choices: [
+            { message: "Icons for VIS", value: "visualization-icons" },
+            { message: "VIS widgets", value: "visualization-widgets" },
+        ],
+    },
+    {
+        condition: { name: "features", contains: "adapter" },
         type: "select",
         name: "startMode",
         message: "When should the adapter be started?",
@@ -76,7 +118,7 @@ exports.questionsAndText = [
         ],
     },
     {
-        condition: { name: "features", contains: "Adapter" },
+        condition: { name: "features", contains: "adapter" },
         type: "select",
         name: "language",
         message: "Which language do you want to use to code the adapter?",
@@ -108,7 +150,7 @@ exports.questionsAndText = [
     // TODO: enable React (only TypeScript at the start)
     // {
     // 	condition: [
-    // 		{ name: "features", contains: "Adapter" },
+    // 		{ name: "features", contains: "adapter" },
     // 		{ name: "language", value: "TypeScript" }, // TODO: enable React for JS through Babel
     // 	],
     // 	type: "select",
@@ -119,7 +161,7 @@ exports.questionsAndText = [
     // },
     // TODO: support admin tab
     // {
-    // 	condition: { name: "features", contains: "Adapter" },
+    // 	condition: { name: "features", contains: "adapter" },
     // 	type: "select",
     // 	name: "adminTab",
     // 	message: "Create a tab in the admin UI?",
@@ -135,7 +177,7 @@ exports.questionsAndText = [
     // 	choices: ["yes", "no"],
     // },
     {
-        condition: { name: "features", contains: "Adapter" },
+        condition: { name: "features", contains: "adapter" },
         type: "select",
         name: "indentation",
         message: "Do you prefer tab or space indentation?",
@@ -147,7 +189,7 @@ exports.questionsAndText = [
     },
     {
         condition: [
-            { name: "features", contains: "Adapter" },
+            { name: "features", contains: "adapter" },
             { name: "language", value: "JavaScript" },
         ],
         type: "select",

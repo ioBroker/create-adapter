@@ -1,6 +1,6 @@
 "use strict";
 const templateFunction = answers => {
-    const isWidget = answers.features.indexOf("VIS widget") > -1;
+    const isWidget = answers.features.indexOf("vis") > -1;
     if (!isWidget)
         return;
     const widgetName = answers.adapterName;
