@@ -1,8 +1,10 @@
 "use strict";
+const JSON5 = require("json5");
 const templateFunction = answers => {
     const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
     if (!useESLint)
         return;
+    const ecmaVersion = answers.ecmaVersion || 2015;
     const template = `
 {
     "env": {
@@ -34,10 +36,15 @@ const templateFunction = answers => {
             "error",
             "always"
         ]
-    }
+	},
+	${ecmaVersion > 2015 ? (`
+		"parserOptions": {
+			"ecmaVersion": ${ecmaVersion}
+		}
+	`) : ""}
 }
 `;
-    return template.trim();
+    return JSON.stringify(JSON5.parse(template), null, 4);
 };
 templateFunction.customPath = ".eslintrc.json";
 module.exports = templateFunction;

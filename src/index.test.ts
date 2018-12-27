@@ -122,6 +122,7 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
+					ecmaVersion: 2015,
 					tools: ["ESLint", "type checking"],
 					indentation: "Space (4)",
 					quotes: "single",
@@ -203,6 +204,20 @@ describe("adapter creation =>", () => {
 					"type_visualization-icons",
 					answers,
 					file => file.name === "io-package.json",
+				);
+			});
+
+			it(`JS with ES2017`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					language: "JavaScript",
+					ecmaVersion: 2017,
+					tools: ["ESLint", "type checking"],
+				};
+				await expectSuccess(
+					"JS_ES2017",
+					answers,
+					file => file.name === ".eslintrc.json",
 				);
 			});
 		});

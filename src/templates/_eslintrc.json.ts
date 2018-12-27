@@ -1,10 +1,12 @@
+import * as JSON5 from "json5";
 import { TemplateFunction } from "../lib/createAdapter";
-import { Answers } from "../lib/questions";
 
 const templateFunction: TemplateFunction = answers => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
+
+	const ecmaVersion = answers.ecmaVersion || 2015;
 
 	const template = `
 {
@@ -37,10 +39,15 @@ const templateFunction: TemplateFunction = answers => {
             "error",
             "always"
         ]
-    }
+	},
+	${ecmaVersion > 2015 ? (`
+		"parserOptions": {
+			"ecmaVersion": ${ecmaVersion}
+		}
+	`) : ""}
 }
 `;
-	return template.trim();
+	return JSON.stringify(JSON5.parse(template), null, 4);
 };
 
 templateFunction.customPath = ".eslintrc.json";
