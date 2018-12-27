@@ -1,7 +1,8 @@
 # Changelog
 
-## __WORK_IN_PROGRSS__
+## v1.4.0 (2018-12-27)
 * (AlCalzone) Add selection for adapter category (fixes #2)
+* (AlCalzone) Move ESLint to non-dev dependencies (fixes #44)
 
 ## v1.3.0 (2018-12-20)
 * (AlCalzone) Add a start mode selection (fixes #6)
