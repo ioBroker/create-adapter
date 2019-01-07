@@ -1,3 +1,2 @@
-// @ts-check
-const isCompactMode = !!module && !!module.parent;
+const isCompactMode = module && module.parent;
 module.exports = require("./build/main.js")(isCompactMode);
