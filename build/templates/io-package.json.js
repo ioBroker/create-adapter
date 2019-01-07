@@ -42,7 +42,7 @@ module.exports = (async (answers) => {
 			"home automation",
 		],
 		"platform": "Javascript/Node.js",
-		"main": "main.js",
+		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${answers.adapterName}.png",
 		"enabled": true,
 		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${answers.adapterName}.png",

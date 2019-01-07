@@ -2,16 +2,10 @@ import { TemplateFunction } from "../lib/createAdapter";
 
 export = (async answers => {
 
-	const useTypeScript = answers.language === "TypeScript";
+	const useJavaScript = answers.language === "JavaScript";
+	if (!useJavaScript) return;
 
-	let template: string;
-	if (useTypeScript) {
-		template = `
-const isCompactMode = module && module.parent;
-module.exports = require("./build/main.js")(isCompactMode);
-`;
-	} else {
-		template = `
+	const template = `
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
@@ -145,6 +139,5 @@ if (module && module.parent) {
 	startAdapter();
 }
 `;
-	}
 	return template.trim();
 }) as TemplateFunction;

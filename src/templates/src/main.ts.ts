@@ -143,15 +143,13 @@ function main() {
 	});
 }
 
-export = function run(isCompactMode: boolean) {
-	if (isCompactMode) {
-		// Export startAdapter in compact mode
-		return startAdapter;
-	} else {
-		// otherwise start the instance directly
-		startAdapter();
-	}
-};
+if (module && module.parent) {
+	// Export startAdapter in compact mode
+	module.exports = startAdapter;
+} else {
+	// otherwise start the instance directly
+	startAdapter();
+}
 `;
 	return template.trim();
 }) as TemplateFunction;

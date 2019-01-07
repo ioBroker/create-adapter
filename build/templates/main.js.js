@@ -1,15 +1,9 @@
 "use strict";
 module.exports = (async (answers) => {
-    const useTypeScript = answers.language === "TypeScript";
-    let template;
-    if (useTypeScript) {
-        template = `
-const isCompactMode = module && module.parent;
-module.exports = require("./build/main.js")(isCompactMode);
-`;
-    }
-    else {
-        template = `
+    const useJavaScript = answers.language === "JavaScript";
+    if (!useJavaScript)
+        return;
+    const template = `
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
@@ -143,6 +137,5 @@ if (module && module.parent) {
 	startAdapter();
 }
 `;
-    }
     return template.trim();
 });
