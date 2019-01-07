@@ -2,6 +2,7 @@
 
 ## __WORK_IN_PROGRESS__
 * (AlCalzone) Allow targeting newer ES version when using JS (fixes #43)
+* (AlCalzone) Support compact mode (coming in JS-Controller 2.0) (fixes #47)
 
 ## v1.4.0 (2018-12-27)
 * (AlCalzone) Add selection for adapter category (fixes #2)

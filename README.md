@@ -65,7 +65,7 @@ The following features did not make it into v1.0.0 and are planned for a later r
 For developers of this package, there are a few things to know:
 
 * `npm run build` creates a fresh build and deletes old build files. This is necessary when template files are renamed or deleted, as the compiled files will still be there.
-* `npm run watch` keeps compiling incremental changes after a fresh build.
+* `npm run watch` keeps compiling incremental changes whenever you save a source file.
 * `src/templates` contains a bunch of templates, which are basically TypeScript files exporting a single method: 
   * This method accepts an object with the user's answers and returns a `string` or `Promise<string>` containing the output file.
   * The last extension (`.ts`) is removed when creating the output file. Setting the `customPath` property of the template method allows you to override the output path of the file, either a constant or depending on the user's answers (function).
