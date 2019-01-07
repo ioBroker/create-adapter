@@ -1,6 +1,6 @@
 # Changelog
 
-## __WORK_IN_PROGRESS__
+## __WORK IN PROGRESS__
 * (AlCalzone) Allow targeting newer ES version when using JS (fixes #43)
 * (AlCalzone) Support compact mode (coming in JS-Controller 2.0) (fixes #47)
 
