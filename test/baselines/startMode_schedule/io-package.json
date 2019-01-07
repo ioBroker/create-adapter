@@ -48,7 +48,7 @@
 			"home automation"
 		],
 		"platform": "Javascript/Node.js",
-		"main": "build/main.js",
+		"main": "main.js",
 		"icon": "test-adapter.png",
 		"enabled": true,
 		"extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-adapter/master/admin/test-adapter.png",
