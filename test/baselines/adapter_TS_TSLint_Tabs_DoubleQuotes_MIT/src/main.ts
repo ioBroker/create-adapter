@@ -135,7 +135,7 @@ function main() {
 	});
 }
 
-if (module && module.parent) {
+if (module.parent) {
 	// Export startAdapter in compact mode
 	module.exports = startAdapter;
 } else {

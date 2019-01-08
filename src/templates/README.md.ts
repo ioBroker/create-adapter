@@ -1,5 +1,4 @@
 import { TemplateFunction } from "../lib/createAdapter";
-import { Answers } from "../lib/questions";
 import { formatLicense } from "../lib/tools";
 
 export = (answers => {

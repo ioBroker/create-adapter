@@ -15,7 +15,6 @@ function isAdapterNameValid(name) {
     }
     const forbiddenChars = /[^a-z0-9\-_]/g;
     if (forbiddenChars.test(name)) {
-        name = name.replace(forbiddenChars, "");
         return `The name may only consist of lowercase letters, numbers, "-" and "_"!`;
     }
     if (!/^[a-z]/.test(name)) {

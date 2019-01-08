@@ -6,7 +6,6 @@ const templateFunction: TemplateFunction = answers => {
 	if (!isWidget) return;
 
 	const widgetName = answers.adapterName;
-	const widgetNameCapitalized = widgetName[0].toUpperCase() + widgetName.slice(1);
 
 	const template = `
 /* Style your widget here */

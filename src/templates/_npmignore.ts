@@ -1,5 +1,4 @@
 import { TemplateFunction } from "../lib/createAdapter";
-import { Answers } from "../lib/questions";
 
 const templateFunction: TemplateFunction = answers => {
 

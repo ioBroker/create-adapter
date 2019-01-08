@@ -1,5 +1,5 @@
 import { isArray } from "alcalzone-shared/typeguards";
-import { bold, dim, gray, green, underline } from "ansi-colors";
+import { dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
@@ -306,7 +306,10 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 ];
 
 /** Only the questions */
-export const questions = questionsAndText.filter(q => typeof q !== "string") as Question[];
+export const questions = (questionsAndText.filter(q => typeof q !== "string") as (Question | QuestionGroup)[])
+	.map(q => isQuestionGroup(q) ? q.questions : [q])
+	.reduce((arr, next) => arr.concat(...next), [])
+;
 
 export interface Answers {
 	adapterName: string;

@@ -1,5 +1,4 @@
 import { yellow } from "ansi-colors";
-import axios from "axios";
 import { fetchPackageVersion } from "./fetchVersions";
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -16,7 +15,6 @@ function isAdapterNameValid(name: string): CheckResult {
 	}
 	const forbiddenChars = /[^a-z0-9\-_]/g;
 	if (forbiddenChars.test(name)) {
-		name = name.replace(forbiddenChars, "");
 		return `The name may only consist of lowercase letters, numbers, "-" and "_"!`;
 	}
 	if (!/^[a-z]/.test(name)) {
