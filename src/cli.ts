@@ -1,10 +1,10 @@
-import { blueBright, red } from "ansi-colors";
+import { blueBright, red, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
 import { createFiles, File, testCondition, writeFiles } from "./lib/createAdapter";
-import { Answers, questionsAndText } from "./lib/questions";
+import { Answers, isQuestionGroup, Question, questionsAndText } from "./lib/questions";
 import { error, executeCommand, isWindows } from "./lib/tools";
 
 /** Where the output should be written */
@@ -12,14 +12,9 @@ const rootDir = path.resolve(yargs.argv.target || process.cwd());
 
 /** Asks a series of questions on the CLI */
 async function ask() {
-	let answers: Record<string, any> = {cli: true};
-	for (const q of questionsAndText) {
-		// Headlines
-		if (typeof q === "string") {
-			console.log(q);
-			continue;
-		}
-		// actual questions
+	let answers: Record<string, any> = { cli: true };
+
+	async function askQuestion(q: Question) {
 		if (testCondition(q.condition, answers)) {
 			// Make properties dependent on previous answers
 			if (typeof q.initial === "function") {
@@ -50,6 +45,25 @@ async function ask() {
 				answers = { ...answers, ...answer };
 				break;
 			}
+		}
+	}
+
+	for (const entry of questionsAndText) {
+		if (typeof entry === "string") {
+			// Headlines
+			console.log(entry);
+		} else if (isQuestionGroup(entry)) {
+			// only print the headline if any of the questions are necessary
+			if (entry.questions.find(qq => testCondition(qq.condition, answers))) {
+				console.log();
+				console.log(underline(entry.headline));
+			}
+			for (const qq of entry.questions) {
+				await askQuestion(qq);
+			}
+		} else {
+			// actual questions
+			await askQuestion(entry);
 		}
 	}
 	return answers as Answers;

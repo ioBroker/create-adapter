@@ -1,3 +1,4 @@
+import { isArray } from "alcalzone-shared/typeguards";
 import { bold, dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
@@ -22,7 +23,18 @@ interface QuestionMeta {
 	action?: QuestionAction<AnswerValue | AnswerValue[]>;
 	optional?: boolean;
 }
-type Question = PromptOptions & QuestionMeta;
+export type Question = PromptOptions & QuestionMeta;
+export interface QuestionGroup {
+	headline: string;
+	questions: Question[];
+}
+export function isQuestionGroup(val: any): val is QuestionGroup {
+	if (val == undefined) return false;
+	if (typeof val.headline !== "string") return false;
+	if (!isArray(val.questions)) return false;
+	// For now we don't need any more specific tests
+	return true;
+}
 
 function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "type">>>(ms: T): T & { type: string } {
 	return Object.assign({}, ms, {
@@ -41,244 +53,253 @@ function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "typ
 const ownVersion = require("../../package.json").version;
 
 /** All questions and the corresponding text lines */
-export const questionsAndText: (Question | string)[] = [
+export const questionsAndText: (Question | QuestionGroup | string)[] = [
 	"",
 	green.bold("====================================================="),
 	green.bold(`   Welcome to the ioBroker adapter creator v${ownVersion}!`),
 	green.bold("====================================================="),
 	"",
 	gray(`You can cancel at any point by pressing Ctrl+C.`),
-	"",
-	underline("Let's get started with a few questions about your project!"),
 	{
-		type: "input",
-		name: "adapterName",
-		message: "Please enter the name of your project:",
-		resultTransform: transformAdapterName,
-		action: checkAdapterName,
-	},
-	{
-		type: "input",
-		name: "title",
-		message: "Which title should be shown in the admin UI?",
-		action: checkTitle,
-	},
-	{
-		type: "input",
-		name: "description",
-		message: "Please enter a short description:",
-		hint: "(optional)",
-		optional: true,
-		resultTransform: transformDescription,
-	},
-	"",
-	underline("Nice! Let's get technical..."),
-	styledMultiselect({
-		name: "features",
-		message: "Which features should your project contain?",
-		initial: [0],
-		choices: [
-			{ message: "Adapter", value: "adapter" },
-			{ message: "Visualization", value: "vis" },
-		],
-		action: checkMinSelections.bind(undefined, "feature", 1),
-	}),
-	{
-		condition: { name: "features", contains: "adapter" },
-		type: "select",
-		name: "type",
-		message: "Which category does your adapter fall into?",
-		choices: [
-			{ message: "Alarm / security         (Home, car, boat, ...)", value: "alarm" },
-			{ message: "Calendars                (also schedules, etc. ...)", value: "date-and-time" },
-			{ message: "Climate control          (A/C, Heaters, air filters, ...)", value: "climate-control" },
-			{ message: "Communication protocols  (MQTT, ...)", value: "protocols" },
-			{ message: "Data storage             (SQL/NoSQL, file storage, logging, ...)", value: "storage" },
-			{ message: "Data transmission        (for other services via REST api, websockets, ...)", value: "communication" },
-			{ message: "Garden                   (Mowers, watering, ...)", value: "garden" },
-			{ message: "General purpose          (like admin, web, discovery, ...)", value: "general" },
-			{ message: "Geo positioning          (transmission and receipt of position data)", value: "geoposition" },
-			{ message: "Hardware                 (low-level, multi-purpose)", value: "hardware" },
-			{ message: "Household devices        (Vacuums, kitchen, ...)", value: "household" },
-			{ message: "Lighting control", value: "lighting" },
-			{ message: "Logic                    (Scripts, rules, parsers, scenes, ...)", value: "logic" },
-			{ message: "Messaging                (E-Mail, Telegram, WhatsApp, ...)", value: "messaging" },
-			{ message: "Meters for energy, electricity, ...", value: "energy" },
-			{ message: "Meters for water, gas, oil, ...", value: "metering" },
-			{ message: "Miscellaneous data       (Import/export of contacts, gasoline prices, ...)", value: "misc-data" },
-			{ message: "Miscellaneous utilities  (Data import/emport, backup, ...)", value: "utility" },
-			{ message: "Multimedia               (TV, audio, remote controls, ...)", value: "multimedia" },
-			{ message: "Network infrastructure   (Hardware, printers, phones, ...)", value: "infrastructure" },
-			{ message: "Network utilities        (Ping, UPnP, network discovery, ...)", value: "network" },
-			{ message: "Smart home systems       (3rd party, hardware and software)", value: "iot-systems" },
-			{ message: "Visualizations           (VIS, MaterialUI, mobile views, ...)", value: "visualization" },
-			{ message: "Weather                  (Forecast, air quality, statistics, ...)", value: "weather" },
+		headline: "Let's get started with a few questions about your project!",
+		questions: [
+			{
+				type: "input",
+				name: "adapterName",
+				message: "Please enter the name of your project:",
+				resultTransform: transformAdapterName,
+				action: checkAdapterName,
+			},
+			{
+				type: "input",
+				name: "title",
+				message: "Which title should be shown in the admin UI?",
+				action: checkTitle,
+			},
+			{
+				type: "input",
+				name: "description",
+				message: "Please enter a short description:",
+				hint: "(optional)",
+				optional: true,
+				resultTransform: transformDescription,
+			},
 		],
 	},
 	{
-		condition: { name: "features", doesNotContain: "adapter" },
-		type: "select",
-		name: "type",
-		message: "Which kind of visualization is this?",
-		choices: [
-			{ message: "Icons for VIS", value: "visualization-icons" },
-			{ message: "VIS widgets", value: "visualization-widgets" },
-		],
-	},
-	{
-		condition: { name: "features", contains: "adapter" },
-		type: "select",
-		name: "startMode",
-		message: "When should the adapter be started?",
-		initial: "daemon",
-		choices: [
-			{ message: "always", hint: dim.gray("(recommended for most adapters)"), value: "daemon" },
-			{ message: `when the ".alive" state is true`, value: "subscribe" },
-			{ message: "depending on a schedule", value: "schedule" },
-			{ message: "when the instance object changes", value: "once" },
-			{ message: "never", value: "none" },
-		],
-	},
-	{
-		condition: { name: "features", contains: "adapter" },
-		type: "select",
-		name: "language",
-		message: "Which language do you want to use to code the adapter?",
-		choices: [
-			"JavaScript",
-			"TypeScript",
-		],
-	},
-	{
-		condition: { name: "language", value: "JavaScript" },
-		type: "select",
-		name: "ecmaVersion",
-		message: `Do you need async functions or String.pad{Start,End}`,
-		choices: [
-			{ message: "yes", value: 8 },
-			{ message: "no", value: 6 },
-		],
-	},
-	styledMultiselect({
-		condition: { name: "language", value: "JavaScript" },
-		name: "tools",
-		message: "Which of the following tools do you want to use?",
-		initial: [0, 1],
-		choices: [
-			{ message: "ESLint", hint: "(recommended)" },
-			{ message: "type checking", hint: "(recommended)" },
-		],
-	}),
-	styledMultiselect({
-		condition: { name: "language", value: "TypeScript" },
-		name: "tools",
-		message: "Which of the following tools do you want to use?",
-		initial: [0],
-		choices: [
-			{ message: "TSLint", hint: "(recommended)" },
-			{ message: "code coverage" },
-		],
-	}),
+		headline: "Nice! Let's get technical...",
+		questions: [
+			styledMultiselect({
+				name: "features",
+				message: "Which features should your project contain?",
+				initial: [0],
+				choices: [
+					{ message: "Adapter", value: "adapter" },
+					{ message: "Visualization", value: "vis" },
+				],
+				action: checkMinSelections.bind(undefined, "feature", 1),
+			}),
+			{
+				condition: { name: "features", contains: "adapter" },
+				type: "select",
+				name: "type",
+				message: "Which category does your adapter fall into?",
+				choices: [
+					{ message: "Alarm / security         (Home, car, boat, ...)", value: "alarm" },
+					{ message: "Calendars                (also schedules, etc. ...)", value: "date-and-time" },
+					{ message: "Climate control          (A/C, Heaters, air filters, ...)", value: "climate-control" },
+					{ message: "Communication protocols  (MQTT, ...)", value: "protocols" },
+					{ message: "Data storage             (SQL/NoSQL, file storage, logging, ...)", value: "storage" },
+					{ message: "Data transmission        (for other services via REST api, websockets, ...)", value: "communication" },
+					{ message: "Garden                   (Mowers, watering, ...)", value: "garden" },
+					{ message: "General purpose          (like admin, web, discovery, ...)", value: "general" },
+					{ message: "Geo positioning          (transmission and receipt of position data)", value: "geoposition" },
+					{ message: "Hardware                 (low-level, multi-purpose)", value: "hardware" },
+					{ message: "Household devices        (Vacuums, kitchen, ...)", value: "household" },
+					{ message: "Lighting control", value: "lighting" },
+					{ message: "Logic                    (Scripts, rules, parsers, scenes, ...)", value: "logic" },
+					{ message: "Messaging                (E-Mail, Telegram, WhatsApp, ...)", value: "messaging" },
+					{ message: "Meters for energy, electricity, ...", value: "energy" },
+					{ message: "Meters for water, gas, oil, ...", value: "metering" },
+					{ message: "Miscellaneous data       (Import/export of contacts, gasoline prices, ...)", value: "misc-data" },
+					{ message: "Miscellaneous utilities  (Data import/emport, backup, ...)", value: "utility" },
+					{ message: "Multimedia               (TV, audio, remote controls, ...)", value: "multimedia" },
+					{ message: "Network infrastructure   (Hardware, printers, phones, ...)", value: "infrastructure" },
+					{ message: "Network utilities        (Ping, UPnP, network discovery, ...)", value: "network" },
+					{ message: "Smart home systems       (3rd party, hardware and software)", value: "iot-systems" },
+					{ message: "Visualizations           (VIS, MaterialUI, mobile views, ...)", value: "visualization" },
+					{ message: "Weather                  (Forecast, air quality, statistics, ...)", value: "weather" },
+				],
+			},
+			{
+				condition: { name: "features", doesNotContain: "adapter" },
+				type: "select",
+				name: "type",
+				message: "Which kind of visualization is this?",
+				choices: [
+					{ message: "Icons for VIS", value: "visualization-icons" },
+					{ message: "VIS widgets", value: "visualization-widgets" },
+				],
+			},
+			{
+				condition: { name: "features", contains: "adapter" },
+				type: "select",
+				name: "startMode",
+				message: "When should the adapter be started?",
+				initial: "daemon",
+				choices: [
+					{ message: "always", hint: dim.gray("(recommended for most adapters)"), value: "daemon" },
+					{ message: `when the ".alive" state is true`, value: "subscribe" },
+					{ message: "depending on a schedule", value: "schedule" },
+					{ message: "when the instance object changes", value: "once" },
+					{ message: "never", value: "none" },
+				],
+			},
+			{
+				condition: { name: "features", contains: "adapter" },
+				type: "select",
+				name: "language",
+				message: "Which language do you want to use to code the adapter?",
+				choices: [
+					"JavaScript",
+					"TypeScript",
+				],
+			},
+			{
+				condition: { name: "language", value: "JavaScript" },
+				type: "select",
+				name: "ecmaVersion",
+				message: `Do you need async functions or String.pad{Start,End}`,
+				choices: [
+					{ message: "yes", value: 8 },
+					{ message: "no", value: 6 },
+				],
+			},
+			styledMultiselect({
+				condition: { name: "language", value: "JavaScript" },
+				name: "tools",
+				message: "Which of the following tools do you want to use?",
+				initial: [0, 1],
+				choices: [
+					{ message: "ESLint", hint: "(recommended)" },
+					{ message: "type checking", hint: "(recommended)" },
+				],
+			}),
+			styledMultiselect({
+				condition: { name: "language", value: "TypeScript" },
+				name: "tools",
+				message: "Which of the following tools do you want to use?",
+				initial: [0],
+				choices: [
+					{ message: "TSLint", hint: "(recommended)" },
+					{ message: "code coverage" },
+				],
+			}),
 
-	// TODO: enable React (only TypeScript at the start)
-	// {
-	// 	condition: [
-	// 		{ name: "features", contains: "adapter" },
-	// 		{ name: "language", value: "TypeScript" }, // TODO: enable React for JS through Babel
-	// 	],
-	// 	type: "select",
-	// 	name: "adminReact",
-	// 	message: "Use React for the Admin UI?",
-	// 	initial: "no",
-	// 	choices: ["yes", "no"],
-	// },
+			// TODO: enable React (only TypeScript at the start)
+			// {
+			// 	condition: [
+			// 		{ name: "features", contains: "adapter" },
+			// 		{ name: "language", value: "TypeScript" }, // TODO: enable React for JS through Babel
+			// 	],
+			// 	type: "select",
+			// 	name: "adminReact",
+			// 	message: "Use React for the Admin UI?",
+			// 	initial: "no",
+			// 	choices: ["yes", "no"],
+			// },
 
-	// TODO: support admin tab
-	// {
-	// 	condition: { name: "features", contains: "adapter" },
-	// 	type: "select",
-	// 	name: "adminTab",
-	// 	message: "Create a tab in the admin UI?",
-	// 	initial: "no",
-	// 	choices: ["yes", "no"],
-	// },
-	// {
-	// 	condition: { name: "adminTab", value: "yes" },
-	// 	type: "select",
-	// 	name: "tabReact",
-	// 	message: "Use React for the tab?",
-	// 	initial: "no",
-	// 	choices: ["yes", "no"],
-	// },
-	{
-		condition: { name: "features", contains: "adapter" },
-		type: "select",
-		name: "indentation",
-		message: "Do you prefer tab or space indentation?",
-		initial: "Tab",
-		choices: [
-			"Tab",
-			"Space (4)",
+			// TODO: support admin tab
+			// {
+			// 	condition: { name: "features", contains: "adapter" },
+			// 	type: "select",
+			// 	name: "adminTab",
+			// 	message: "Create a tab in the admin UI?",
+			// 	initial: "no",
+			// 	choices: ["yes", "no"],
+			// },
+			// {
+			// 	condition: { name: "adminTab", value: "yes" },
+			// 	type: "select",
+			// 	name: "tabReact",
+			// 	message: "Use React for the tab?",
+			// 	initial: "no",
+			// 	choices: ["yes", "no"],
+			// },
+			{
+				condition: { name: "features", contains: "adapter" },
+				type: "select",
+				name: "indentation",
+				message: "Do you prefer tab or space indentation?",
+				initial: "Tab",
+				choices: [
+					"Tab",
+					"Space (4)",
+				],
+			},
+			{
+				condition: [
+					{ name: "features", contains: "adapter" },
+					{ name: "language", value: "JavaScript" }, // TODO: Add this to TypeScript aswell
+				],
+				type: "select",
+				name: "quotes",
+				message: "Do you prefer double or single quotes?",
+				initial: "double",
+				choices: [
+					"double",
+					"single",
+				],
+			},
 		],
 	},
 	{
-		condition: [
-			{ name: "features", contains: "adapter" },
-			{ name: "language", value: "JavaScript" }, // TODO: Add this to TypeScript aswell
+		headline: "Almost done! Just a few administrative details...",
+		questions: [
+			{
+				type: "input",
+				name: "authorName",
+				message: "Please enter your name (or nickname):",
+				action: checkAuthorName,
+			},
+			{
+				type: "input",
+				name: "authorGithub",
+				message: "What's your name/org on GitHub?",
+				initial: (answers: Answers) => answers.authorName,
+				action: checkAuthorName,
+			},
+			{
+				type: "input",
+				name: "authorEmail",
+				message: "What's your email address?",
+				action: checkEmail,
+			},
+			{
+				condition: { name: "cli", value: true },
+				type: "select",
+				name: "gitCommit",
+				message: "Initialize the GitHub repo automatically?",
+				initial: "no",
+				choices: ["yes", "no"],
+			},
+			{
+				type: "select",
+				name: "license",
+				message: "Which license should be used for your project?",
+				initial: 5,
+				choices: [ // TODO: automate (GH#1)
+					"GNU AGPLv3",
+					"GNU GPLv3",
+					"GNU LGPLv3",
+					"Mozilla Public License 2.0",
+					"Apache License 2.0",
+					"MIT License",
+					"The Unlicense",
+				],
+				resultTransform: (value: string) => licenses[value] as any,
+			},
 		],
-		type: "select",
-		name: "quotes",
-		message: "Do you prefer double or single quotes?",
-		initial: "double",
-		choices: [
-			"double",
-			"single",
-		],
-	},
-	"",
-	underline("Almost done! Just a few administrative details..."),
-	{
-		type: "input",
-		name: "authorName",
-		message: "Please enter your name (or nickname):",
-		action: checkAuthorName,
-	},
-	{
-		type: "input",
-		name: "authorGithub",
-		message: "What's your name/org on GitHub?",
-		initial: (answers: Answers) => answers.authorName,
-		action: checkAuthorName,
-	},
-	{
-		type: "input",
-		name: "authorEmail",
-		message: "What's your email address?",
-		action: checkEmail,
-	},
-	{
-		condition: { name: "cli", value: true },
-		type: "select",
-		name: "gitCommit",
-		message: "Initialize the GitHub repo automatically?",
-		initial: "no",
-		choices: ["yes", "no"],
-	},
-	{
-		type: "select",
-		name: "license",
-		message: "Which license should be used for your project?",
-		initial: 5,
-		choices: [ // TODO: automate (GH#1)
-			"GNU AGPLv3",
-			"GNU GPLv3",
-			"GNU LGPLv3",
-			"Mozilla Public License 2.0",
-			"Apache License 2.0",
-			"MIT License",
-			"The Unlicense",
-		],
-		resultTransform: (value: string) => licenses[value] as any,
 	},
 	"",
 	underline("That's it. Please wait a minute while I get this working..."),

@@ -13,13 +13,7 @@ const rootDir = path.resolve(yargs.argv.target || process.cwd());
 /** Asks a series of questions on the CLI */
 async function ask() {
     let answers = { cli: true };
-    for (const q of questions_1.questionsAndText) {
-        // Headlines
-        if (typeof q === "string") {
-            console.log(q);
-            continue;
-        }
-        // actual questions
+    async function askQuestion(q) {
         if (createAdapter_1.testCondition(q.condition, answers)) {
             // Make properties dependent on previous answers
             if (typeof q.initial === "function") {
@@ -50,6 +44,26 @@ async function ask() {
                 answers = Object.assign({}, answers, answer);
                 break;
             }
+        }
+    }
+    for (const entry of questions_1.questionsAndText) {
+        if (typeof entry === "string") {
+            // Headlines
+            console.log(entry);
+        }
+        else if (questions_1.isQuestionGroup(entry)) {
+            // only print the headline if any of the questions are necessary
+            if (entry.questions.find(qq => createAdapter_1.testCondition(qq.condition, answers))) {
+                console.log();
+                console.log(ansi_colors_1.underline(entry.headline));
+            }
+            for (const qq of entry.questions) {
+                await askQuestion(qq);
+            }
+        }
+        else {
+            // actual questions
+            await askQuestion(entry);
         }
     }
     return answers;
