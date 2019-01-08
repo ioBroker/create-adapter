@@ -1,5 +1,5 @@
 import { isArray } from "alcalzone-shared/typeguards";
-import { bold, dim, gray, green, underline } from "ansi-colors";
+import { dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
