@@ -281,7 +281,9 @@ exports.questionsAndText = [
     ansi_colors_1.underline("That's it. Please wait a minute while I get this working..."),
 ];
 /** Only the questions */
-exports.questions = exports.questionsAndText.filter(q => typeof q !== "string");
+exports.questions = exports.questionsAndText.filter(q => typeof q !== "string")
+    .map(q => isQuestionGroup(q) ? q.questions : [q])
+    .reduce((arr, next) => arr.concat(...next), []);
 function checkAnswers(answers) {
     for (const q of exports.questions) {
         const answer = answers[q.name];

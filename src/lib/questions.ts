@@ -306,7 +306,10 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 ];
 
 /** Only the questions */
-export const questions = questionsAndText.filter(q => typeof q !== "string") as Question[];
+export const questions = (questionsAndText.filter(q => typeof q !== "string") as (Question | QuestionGroup)[])
+	.map(q => isQuestionGroup(q) ? q.questions : [q])
+	.reduce((arr, next) => arr.concat(...next), [])
+;
 
 export interface Answers {
 	adapterName: string;
