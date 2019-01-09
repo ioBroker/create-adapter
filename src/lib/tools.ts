@@ -6,6 +6,7 @@ import { Linter } from "eslint";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
+import * as ts from "typescript";
 import { Answers } from "./questions";
 
 export function error(message: string) {
@@ -202,7 +203,7 @@ export function indentWithSpaces(text: string): string {
 }
 
 /** Formats a JS source file to use single quotes */
-export function jsFixQuotes(sourceText: string, quotes: "single" | "double"): string {
+export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark): string {
 	const linter = new Linter();
 	const result = linter.verifyAndFix(sourceText, {
 		env: {
@@ -222,4 +223,42 @@ export function jsFixQuotes(sourceText: string, quotes: "single" | "double"): st
 		},
 	});
 	return result.output;
+}
+
+export enum Quotemark {
+	"single" = "'",
+	"double" = '"',
+}
+
+/** Formats a TS source file to use single quotes */
+export function tsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark): string {
+	const newQuotes = Quotemark[quotes];
+	const oldQuotes = Quotemark[quotes === "double" ? "single" : "double"];
+	// create an AST from the source code, this step is unnecessary if you already have a SourceFile object
+	const sourceFile = ts.createSourceFile("fixQuotes.ts", sourceText, ts.ScriptTarget.Latest);
+	let resultString = "";
+	let lastPos = 0;
+
+	// visit each immediate child node of SourceFile
+	ts.forEachChild(sourceFile, function cb(node) {
+		if (node.kind === ts.SyntaxKind.StringLiteral && sourceText[node.end - 1] === oldQuotes) {
+			// we found a string with the wrong quote style
+			const start = node.getStart(sourceFile); // get the position of the opening quotes (this is different from 'node.pos' as it skips all whitespace and comments)
+			const rawContent = sourceText.slice(start + 1, node.end - 1); // get the actual contents of the string
+			resultString += sourceText.slice(lastPos, start) + newQuotes + escapeQuotes(rawContent, newQuotes, oldQuotes) + newQuotes;
+			lastPos = node.end;
+		} else {
+			// recurse deeper down the AST visiting the immediate children of the current node
+			ts.forEachChild(node, cb);
+		}
+
+	});
+	resultString += sourceText.slice(lastPos);
+
+	return resultString;
+}
+
+/** Escape new quotes within the string, unescape the old quotes. */
+function escapeQuotes(str: string, newQuotes: Quotemark, oldQuotes: Quotemark) {
+	return str.replace(new RegExp(newQuotes, "g"), `\\${newQuotes}`).replace(new RegExp(`\\\\${oldQuotes}`, "g"), oldQuotes);
 }

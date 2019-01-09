@@ -214,10 +214,7 @@ exports.questionsAndText = [
                 ],
             },
             {
-                condition: [
-                    { name: "features", contains: "adapter" },
-                    { name: "language", value: "JavaScript" },
-                ],
+                condition: { name: "features", contains: "adapter" },
                 type: "select",
                 name: "quotes",
                 message: "Do you prefer double or single quotes?",

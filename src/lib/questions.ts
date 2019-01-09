@@ -238,10 +238,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				],
 			},
 			{
-				condition: [
-					{ name: "features", contains: "adapter" },
-					{ name: "language", value: "JavaScript" }, // TODO: Add this to TypeScript aswell
-				],
+				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "quotes",
 				message: "Do you prefer double or single quotes?",
