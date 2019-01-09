@@ -20,7 +20,7 @@ export type Condition = { name: string } & (
 interface QuestionMeta {
 	condition?: Condition | Condition[];
 	resultTransform?: (val: AnswerValue | AnswerValue[]) => AnswerValue | AnswerValue[] | undefined | Promise<AnswerValue | AnswerValue[] | undefined>;
-	action?: QuestionAction<AnswerValue | AnswerValue[]>;
+	action?: QuestionAction<undefined | AnswerValue | AnswerValue[]>;
 	optional?: boolean;
 }
 export type Question = PromptOptions & QuestionMeta;
@@ -37,7 +37,7 @@ export function isQuestionGroup(val: any): val is QuestionGroup {
 }
 
 function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "type">>>(ms: T): T & { type: string } {
-	return Object.assign({}, ms, {
+	return Object.assign({} as Question, ms, {
 		type: "multiselect",
 		hint: gray("(<space> to select, <return> to submit)"),
 		symbols: {
@@ -319,7 +319,7 @@ export interface Answers {
 	tools?: ("ESLint" | "TSLint" | "type checking" | "code coverage")[];
 	ecmaVersion?: 2015 | 2017;
 	title?: string;
-	license: { id: string, name: string, text: string };
+	license?: { id: string, name: string, text: string };
 	type: string;
 	adminReact?: string;
 	indentation?: "Tab" | "Space (4)";

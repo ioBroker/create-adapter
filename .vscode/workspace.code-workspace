@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "D:\\create-adapter-1"
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+		"files.exclude": {
+			"**/.*": true,
+			"**/node_modules/": true,
+			"**/build/": true
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"EditorConfig.EditorConfig",
+			"dbaeumer.vscode-eslint",
+			"eg2.tslint",
+			"eamodio.toggle-excluded-files",
+			"wayou.vscode-todo-highlight"
+		]
+	}
+}

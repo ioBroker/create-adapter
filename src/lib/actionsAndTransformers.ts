@@ -45,7 +45,7 @@ export async function checkAdapterName(name: string): Promise<CheckResult> {
 	return true;
 }
 
-export function checkTitle(title: string): CheckResult {
+export function checkTitle(title?: string): CheckResult {
 	if (!isNotEmpty(title)) {
 		return "Please enter a title!";
 	}
@@ -55,11 +55,11 @@ export function checkTitle(title: string): CheckResult {
 	return true;
 }
 
-function isNotEmpty(answer: string): boolean {
+function isNotEmpty(answer?: string): answer is string {
 	return answer != undefined && answer.length > 0 && answer.trim().length > 0;
 }
 
-export async function checkAuthorName(name: string): Promise<CheckResult> {
+export async function checkAuthorName(name?: string): Promise<CheckResult> {
 	if (!isNotEmpty(name)) {
 		return "Please enter a valid name!";
 	}
