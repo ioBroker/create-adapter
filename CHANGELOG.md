@@ -1,5 +1,8 @@
 # Changelog
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Allow choosing quote style in TypeScript (fixes #33)
+
 ## 1.5.0 (2019-01-07)
 * (AlCalzone) Allow targeting newer ES version when using JS (fixes #43)
 * (AlCalzone) Support compact mode (coming in JS-Controller 2.0) (fixes #47)
