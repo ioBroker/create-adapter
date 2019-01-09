@@ -55,7 +55,7 @@ export function executeCommand(command: string, argsOrOptions?: string[] | Parti
 		args = argsOrOptions;
 	} else if (isObject(argsOrOptions)) {
 		// no args were given
-		options = argsOrOptions as Partial<ExecuteCommandOptions>;
+		options = argsOrOptions;
 	}
 	if (options == null) options = {};
 	if (args == null) args = [];

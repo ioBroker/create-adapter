@@ -1,17 +1,21 @@
 {
 	"compileOnSave": true,
 	"compilerOptions": {
+		"plugins": [
+			{
+				"name": "@fimbul/mithotyn",
+				"displayErrorsAsWarnings": true
+			}
+		],
 		"noEmit": true,
 		"noEmitOnError": true,
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"outDir": "./build/",
 		"removeComments": false,
-
 		"strict": true,
 		"strictFunctionTypes": false,
 		"resolveJsonModule": true,
-
 		"sourceMap": false,
 		"inlineSourceMap": false,
 		"target": "es2017",
