@@ -42,10 +42,10 @@ After a short while, you will be asked a few questions. Afterwards all the neces
   * [TSLint](https://github.com/palantir/tslint) for code quality
   * [nyc](https://github.com/istanbuljs/nyc) for code coverage
 * Choose between indentation: tabs or 4 spaces
-* Choose your preferred quote style (JS only for now)
+* Choose your preferred quote style
 * Predefined settings page for the admin UI
 * Choice of an OpenSource license and automatic creation of the license file
-* Built-in component tests using `mocha` & `chai` (with `chai-as-promised`), `sinon` (w/ `sinon-chai`) for:
+* Built-in component tests using `mocha` & `chai` (with `chai-as-promised`), `sinon` (with `sinon-chai`) for:
   * Correctly defined package files
   * and your own tests...
 * Automated testing using Travis CI

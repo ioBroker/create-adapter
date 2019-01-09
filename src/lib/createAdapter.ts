@@ -4,7 +4,7 @@ import * as os from "os";
 import * as path from "path";
 import * as templateFiles from "../templates";
 import { Answers, AnswerValue, Condition } from "./questions";
-import { indentWithSpaces, indentWithTabs, jsFixQuotes } from "./tools";
+import { indentWithSpaces, indentWithTabs, jsFixQuotes, tsFixQuotes } from "./tools";
 
 type TemplateFunctionReturnType = string | Buffer | undefined;
 export interface TemplateFunction {
@@ -77,8 +77,9 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 		// 1st step: Apply formatters that are valid for all files
 		f.content = formatter(f.content);
 		// 2nd step: Apply more specialized formatters
-		if (f.name.endsWith(".js") && answers.quotes != undefined) {
-			f.content = jsFixQuotes(f.content, answers.quotes);
+		if (answers.quotes != undefined) {
+			if (f.name.endsWith(".js")) f.content = jsFixQuotes(f.content, answers.quotes);
+			else if (f.name.endsWith(".ts")) f.content = tsFixQuotes(f.content, answers.quotes);
 		}
 		return f;
 	});

@@ -29,7 +29,7 @@ export = (answers => {
         "arrow-parens": false,
         "no-bitwise": false,
         "max-classes-per-file": false,
-        "quotemark": [true, "double", "avoid-escape"],
+        "quotemark": [true, "${typeof answers.quotes === "string" ? answers.quotes : "double"}", "avoid-escape"],
         "no-console": true
     }
 }

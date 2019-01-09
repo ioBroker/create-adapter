@@ -220,6 +220,23 @@ describe("adapter creation =>", () => {
 					file => file.name === ".eslintrc.json",
 				);
 			});
+
+			it(`TS with single quotes`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					quotes: "single",
+				};
+				await expectSuccess(
+					"TS_SingleQuotes",
+					answers,
+					file => {
+						return (
+							file.name.endsWith(".ts")
+							&& !file.name.endsWith(".d.ts")
+						) || file.name === "tslint.json";
+					},
+				);
+			});
 		});
 
 	});

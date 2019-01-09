@@ -8,6 +8,7 @@ const eslint_1 = require("eslint");
 const fs = require("fs-extra");
 const os = require("os");
 const path = require("path");
+const ts = require("typescript");
 function error(message) {
     console.error(ansi_colors_1.bold.red(message));
     console.error();
@@ -196,3 +197,38 @@ function jsFixQuotes(sourceText, quotes) {
     return result.output;
 }
 exports.jsFixQuotes = jsFixQuotes;
+var Quotemark;
+(function (Quotemark) {
+    Quotemark["single"] = "'";
+    Quotemark["double"] = "\"";
+})(Quotemark = exports.Quotemark || (exports.Quotemark = {}));
+/** Formats a TS source file to use single quotes */
+function tsFixQuotes(sourceText, quotes) {
+    const newQuotes = Quotemark[quotes];
+    const oldQuotes = Quotemark[quotes === "double" ? "single" : "double"];
+    // create an AST from the source code, this step is unnecessary if you already have a SourceFile object
+    const sourceFile = ts.createSourceFile("fixQuotes.ts", sourceText, ts.ScriptTarget.Latest);
+    let resultString = "";
+    let lastPos = 0;
+    // visit each immediate child node of SourceFile
+    ts.forEachChild(sourceFile, function cb(node) {
+        if (node.kind === ts.SyntaxKind.StringLiteral && sourceText[node.end - 1] === oldQuotes) {
+            // we found a string with the wrong quote style
+            const start = node.getStart(sourceFile); // get the position of the opening quotes (this is different from 'node.pos' as it skips all whitespace and comments)
+            const rawContent = sourceText.slice(start + 1, node.end - 1); // get the actual contents of the string
+            resultString += sourceText.slice(lastPos, start) + newQuotes + escapeQuotes(rawContent, newQuotes, oldQuotes) + newQuotes;
+            lastPos = node.end;
+        }
+        else {
+            // recurse deeper down the AST visiting the immediate children of the current node
+            ts.forEachChild(node, cb);
+        }
+    });
+    resultString += sourceText.slice(lastPos);
+    return resultString;
+}
+exports.tsFixQuotes = tsFixQuotes;
+/** Escape new quotes within the string, unescape the old quotes. */
+function escapeQuotes(str, newQuotes, oldQuotes) {
+    return str.replace(new RegExp(newQuotes, "g"), `\\${newQuotes}`).replace(new RegExp(`\\\\${oldQuotes}`, "g"), oldQuotes);
+}

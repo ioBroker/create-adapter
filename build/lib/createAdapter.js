@@ -64,8 +64,11 @@ function formatFiles(answers, files) {
         // 1st step: Apply formatters that are valid for all files
         f.content = formatter(f.content);
         // 2nd step: Apply more specialized formatters
-        if (f.name.endsWith(".js") && answers.quotes != undefined) {
-            f.content = tools_1.jsFixQuotes(f.content, answers.quotes);
+        if (answers.quotes != undefined) {
+            if (f.name.endsWith(".js"))
+                f.content = tools_1.jsFixQuotes(f.content, answers.quotes);
+            else if (f.name.endsWith(".ts"))
+                f.content = tools_1.tsFixQuotes(f.content, answers.quotes);
         }
         return f;
     });
