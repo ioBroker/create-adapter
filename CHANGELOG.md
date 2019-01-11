@@ -2,6 +2,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Allow choosing quote style in TypeScript (fixes #33)
+* (AlCalzone) Ensure JS files contain `"use strict";` (fixes #53)
 
 ## 1.5.0 (2019-01-07)
 * (AlCalzone) Allow targeting newer ES version when using JS (fixes #43)
