@@ -1,3 +1,5 @@
+"use strict";
+
 // Makes ts-node ignore warnings, so mocha --watch does work
 process.env.TS_NODE_IGNORE_WARNINGS = "TRUE";
 // Sets the correct tsconfig for testing
