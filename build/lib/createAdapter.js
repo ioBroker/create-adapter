@@ -30,11 +30,13 @@ function testCondition(condition, answers) {
 }
 exports.testCondition = testCondition;
 async function createFiles(answers) {
+    const creatorVersion = require("../../package.json").version;
+    const answersWithMeta = Object.assign({}, answers, { creatorVersion });
     const files = await Promise.all(templateFiles.map(async ({ name, templateFunction }) => {
-        const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
+        const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answersWithMeta)
             : typeof templateFunction.customPath === "string" ? templateFunction.customPath
                 : name.replace(/\.ts$/i, "");
-        const templateResult = templateFunction(answers);
+        const templateResult = templateFunction(answersWithMeta);
         return {
             name: customPath,
             content: templateResult instanceof Promise ? await templateResult : templateResult,
