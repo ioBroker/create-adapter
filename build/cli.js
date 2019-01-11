@@ -25,7 +25,7 @@ async function ask() {
                 // Cancel the process if necessary
                 if (answer[q.name] == undefined) {
                     tools_1.error("Adapter creation canceled");
-                    process.exit(1);
+                    return process.exit(1);
                 }
                 // Apply an optional transformation
                 if (typeof q.resultTransform === "function") {

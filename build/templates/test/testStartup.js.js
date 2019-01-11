@@ -1,6 +1,8 @@
 "use strict";
 module.exports = (answers => {
     const template = `
+"use strict";
+
 const expect = require("chai").expect;
 const setup  = require("./lib/setup");
 

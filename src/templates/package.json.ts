@@ -69,7 +69,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"email": "${answers.authorEmail}",
 	},
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
-	"license": "${answers.license.id}",
+	"license": "${answers.license!.id}",
 	"keywords": [
 		"ioBroker",
 		"template",

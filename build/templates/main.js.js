@@ -4,6 +4,8 @@ module.exports = (async (answers) => {
     if (!useJavaScript)
         return;
     const template = `
+"use strict";
+
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");

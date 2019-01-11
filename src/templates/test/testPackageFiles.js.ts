@@ -3,6 +3,8 @@ import { TemplateFunction } from "../../lib/createAdapter";
 export = (answers => {
 
 	const template = `
+"use strict";
+
 const expect = require("chai").expect;
 const fs     = require("fs");
 
