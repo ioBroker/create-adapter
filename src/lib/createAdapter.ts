@@ -6,10 +6,14 @@ import * as templateFiles from "../templates";
 import { Answers, AnswerValue, Condition } from "./questions";
 import { indentWithSpaces, indentWithTabs, jsFixQuotes, tsFixQuotes } from "./tools";
 
+interface AnswersMeta {
+	creatorVersion: string;
+}
+
 type TemplateFunctionReturnType = string | Buffer | undefined;
 export interface TemplateFunction {
-	(answers: Answers): TemplateFunctionReturnType | Promise<TemplateFunctionReturnType>;
-	customPath?: string | ((answers: Answers) => string);
+	(answers: Answers & AnswersMeta): TemplateFunctionReturnType | Promise<TemplateFunctionReturnType>;
+	customPath?: string | ((answers: Answers & AnswersMeta) => string);
 	noReformat?: boolean;
 }
 export interface File {
@@ -40,13 +44,18 @@ export function testCondition(condition: Condition | Condition[] | undefined, an
 }
 
 export async function createFiles(answers: Answers): Promise<File[]> {
+	const creatorVersion: string = require("../../package.json").version;
+	const answersWithMeta: Answers & AnswersMeta = {
+		...answers,
+		creatorVersion,
+	};
 	const files = await Promise.all(
 		templateFiles.map(async ({name, templateFunction}) => {
-			const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answers)
+			const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answersWithMeta)
 				: typeof templateFunction.customPath === "string" ? templateFunction.customPath
 				: name.replace(/\.ts$/i, "")
 			;
-			const templateResult = templateFunction(answers);
+			const templateResult = templateFunction(answersWithMeta);
 			return {
 				name: customPath,
 				content: templateResult instanceof Promise ? await templateResult : templateResult,
