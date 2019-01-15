@@ -24,6 +24,7 @@ const templateFunction: TemplateFunction = async answers => {
 			// gulp is required for repo maintenance
 			"@types/gulp",
 			"gulp",
+                        "@vitalets/google-translate-api",
 		])
 		.concat(isAdapter ? [
 			// support adapter testing by default
