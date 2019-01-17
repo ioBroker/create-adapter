@@ -165,16 +165,16 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 					"TypeScript",
 				],
 			},
-			{
-				condition: { name: "language", value: "JavaScript" },
-				type: "select",
-				name: "ecmaVersion",
-				message: `Do you need async functions or String.pad{Start,End}`,
-				choices: [
-					{ message: "yes", value: 8 },
-					{ message: "no", value: 6 },
-				],
-			},
+			// {
+			// 	condition: { name: "language", value: "JavaScript" },
+			// 	type: "select",
+			// 	name: "ecmaVersion",
+			// 	message: `Do you need async functions or String.pad{Start,End}`,
+			// 	choices: [
+			// 		{ message: "yes", value: 8 },
+			// 		{ message: "no", value: 6 },
+			// 	],
+			// },
 			styledMultiselect({
 				condition: { name: "language", value: "JavaScript" },
 				name: "tools",
@@ -317,7 +317,7 @@ export interface Answers {
 	language?: "JavaScript" | "TypeScript";
 	features: ("adapter" | "vis")[];
 	tools?: ("ESLint" | "TSLint" | "type checking" | "code coverage")[];
-	ecmaVersion?: 2015 | 2017;
+	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
 	license?: { id: string, name: string, text: string };
 	type: string;

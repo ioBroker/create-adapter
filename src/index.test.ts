@@ -122,7 +122,6 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
-					ecmaVersion: 2015,
 					tools: ["ESLint", "type checking"],
 					indentation: "Space (4)",
 					quotes: "single",
@@ -223,15 +222,15 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it(`JS with ES2017`, async () => {
+			it(`JS with ES2018`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
-					ecmaVersion: 2017,
+					ecmaVersion: 2018,
 					tools: ["ESLint", "type checking"],
 				};
 				await expectSuccess(
-					"JS_ES2017",
+					"JS_ES2018",
 					answers,
 					file => file.name === ".eslintrc.json",
 				);

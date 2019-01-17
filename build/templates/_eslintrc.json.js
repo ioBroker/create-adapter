@@ -4,16 +4,13 @@ const templateFunction = answers => {
     const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
     if (!useESLint)
         return;
-    const ecmaVersion = answers.ecmaVersion || 2015;
+    const ecmaVersion = answers.ecmaVersion || 2017;
     const template = `
 {
     "env": {
         "es6": true,
         "node": true,
         "mocha": true
-    },
-    "parserOptions": {
-        "ecmaVersion": 8
     },
     "extends": "eslint:recommended",
     "rules": {

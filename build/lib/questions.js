@@ -143,16 +143,16 @@ exports.questionsAndText = [
                     "TypeScript",
                 ],
             },
-            {
-                condition: { name: "language", value: "JavaScript" },
-                type: "select",
-                name: "ecmaVersion",
-                message: `Do you need async functions or String.pad{Start,End}`,
-                choices: [
-                    { message: "yes", value: 8 },
-                    { message: "no", value: 6 },
-                ],
-            },
+            // {
+            // 	condition: { name: "language", value: "JavaScript" },
+            // 	type: "select",
+            // 	name: "ecmaVersion",
+            // 	message: `Do you need async functions or String.pad{Start,End}`,
+            // 	choices: [
+            // 		{ message: "yes", value: 8 },
+            // 		{ message: "no", value: 6 },
+            // 	],
+            // },
             styledMultiselect({
                 condition: { name: "language", value: "JavaScript" },
                 name: "tools",
