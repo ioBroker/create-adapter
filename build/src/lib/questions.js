@@ -76,6 +76,17 @@ exports.questionsAndText = [
                 ],
                 action: actionsAndTransformers_1.checkMinSelections.bind(undefined, "feature", 1),
             }),
+            styledMultiselect({
+                condition: { name: "features", contains: "adapter" },
+                name: "adminFeatures",
+                message: "Which additional features should be available in the admin?",
+                hint: "(optional)",
+                initial: [],
+                choices: [
+                    { message: "An extra tab", value: "tab" },
+                    { message: "Custom options for states", value: "custom" },
+                ],
+            }),
             {
                 condition: { name: "features", contains: "adapter" },
                 type: "select",

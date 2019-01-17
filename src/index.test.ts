@@ -39,6 +39,7 @@ const baseAnswers: Answers = {
 	title: "Is used to test the creator",
 	startMode: "daemon",
 	features: ["adapter"],
+	adminFeatures: [],
 	type: "general",
 	language: "TypeScript",
 	tools: ["TSLint"],
@@ -111,9 +112,10 @@ describe("adapter creation =>", () => {
 		});
 
 		describe("full adapter dir =>", () => {
-			it("Adapter, TypeScript, TSLint, Tabs, Double quotes, MIT License", async () => {
+			it("Adapter (w/ custom), TypeScript, TSLint, Tabs, Double quotes, MIT License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
+					adminFeatures: ["custom"],
 				};
 				await expectSuccess("adapter_TS_TSLint_Tabs_DoubleQuotes_MIT", answers);
 			});
