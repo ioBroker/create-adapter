@@ -122,13 +122,28 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
-					ecmaVersion: 2015,
 					tools: ["ESLint", "type checking"],
 					indentation: "Space (4)",
 					quotes: "single",
 					license: "GNU LGPLv3" as any,
 				};
 				await expectSuccess("adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
+			});
+
+			it("Widget", async () => {
+				const answers: Answers = {
+					adapterName: "test-widget",
+					title: "Is used to test the creator",
+					features: ["vis"],
+					type: "visualization-widgets",
+					indentation: "Tab",
+					quotes: "double",
+					authorName: "Al Calzone",
+					authorGithub: "AlCalzone",
+					authorEmail: "al@calzo.ne",
+					license: "MIT License" as any,
+				};
+				await expectSuccess("vis_Widget", answers);
 			});
 		});
 
@@ -207,15 +222,15 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it(`JS with ES2017`, async () => {
+			it(`JS with ES2018`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
-					ecmaVersion: 2017,
+					ecmaVersion: 2018,
 					tools: ["ESLint", "type checking"],
 				};
 				await expectSuccess(
-					"JS_ES2017",
+					"JS_ES2018",
 					answers,
 					file => file.name === ".eslintrc.json",
 				);

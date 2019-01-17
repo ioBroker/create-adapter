@@ -9,7 +9,7 @@ export = (async answers => {
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 
-	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl"];
+	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
 
 	const title: string = answers.title || answers.adapterName;
 	const titleLang = JSON.stringify(
@@ -40,7 +40,8 @@ export = (async answers => {
 				"fr": "Première version",
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie"
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
 			}
 		},
 		"title": "${answers.title || answers.adapterName}",

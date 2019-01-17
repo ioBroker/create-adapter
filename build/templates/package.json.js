@@ -19,6 +19,7 @@ const templateFunction = async (answers) => {
         // gulp is required for repo maintenance
         "@types/gulp",
         "gulp",
+        "axios",
     ])
         .concat(isAdapter ? [
         // support adapter testing by default
