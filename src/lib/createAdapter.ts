@@ -50,11 +50,11 @@ export async function createFiles(answers: Answers): Promise<File[]> {
 		creatorVersion,
 	};
 	const files = await Promise.all(
-		templateFiles.map(async ({name, templateFunction}) => {
+		templateFiles.map(async ({ name, templateFunction }) => {
 			const customPath = typeof templateFunction.customPath === "function" ? templateFunction.customPath(answersWithMeta)
 				: typeof templateFunction.customPath === "string" ? templateFunction.customPath
-				: name.replace(/\.ts$/i, "")
-			;
+					: name.replace(/\.ts$/i, "")
+				;
 			const templateResult = templateFunction(answersWithMeta);
 			return {
 				name: customPath,
@@ -77,7 +77,7 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 			.replace(/\r\n/g, "\n")
 			.replace(/^(\s*\n){2,}/gm, "\n")
 			.replace(/\n/g, os.EOL)
-		;
+			;
 	};
 	const trimWhitespaceLines = (text: string) => text && text.replace(/^[ \t]+$/gm, "");
 	const formatter = (text: string) => trimWhitespaceLines(removeEmptyLines(indentation(text)));
@@ -99,4 +99,10 @@ export async function writeFiles(targetDir: string, files: File[]) {
 	for (const file of files) {
 		await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);
 	}
+}
+
+export async function readFile(file: string, relativeTo: string, binary: boolean = false): Promise<string | Buffer> {
+	const absolutePath = path.join(relativeTo, file);
+	if (binary) return fs.readFile(absolutePath);
+	else return fs.readFile(absolutePath, "utf8");
 }

@@ -10,6 +10,8 @@ const allTemplateFiles = enumFilesRecursiveSync(
 	(name, parentDir) => {
 		// Don't include the index file
 		if (name === "index.ts" && parentDir === templateDir) return false;
+		// Don't include *.raw.* files
+		if (/\.raw\./.test(name)) return false;
 		// But include all directories and .ts-files in /templates
 		const fullName = path.join(parentDir, name);
 		const isDirectory = fs.statSync(fullName).isDirectory();

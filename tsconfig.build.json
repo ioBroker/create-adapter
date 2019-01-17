@@ -11,6 +11,6 @@
 	],
 	"exclude": [
 		"src/**/*.test.ts",
-		"templates/**/*.raw.ts"
+		"templates/**/*.raw.*"
 	]
 }

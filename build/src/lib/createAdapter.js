@@ -82,3 +82,7 @@ async function writeFiles(targetDir, files) {
     }
 }
 exports.writeFiles = writeFiles;
+async function readFile(file, relativeTo) {
+    return fs.readFile(path.join(relativeTo, file));
+}
+exports.readFile = readFile;

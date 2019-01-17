@@ -1,6 +1,6 @@
 import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
-import { TemplateFunction } from "../src/lib/createAdapter";
+import { readFile, TemplateFunction } from "../src/lib/createAdapter";
 import { fetchPackageVersion } from "../src/lib/fetchVersions";
 
 const templateFunction: TemplateFunction = async answers => {

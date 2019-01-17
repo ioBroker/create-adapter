@@ -1,4 +1,4 @@
-import { TemplateFunction } from "../../src/lib/createAdapter";
+import { readFile, TemplateFunction } from "../../src/lib/createAdapter";
 
 export = (answers => {
 
@@ -6,14 +6,5 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
-	const template = `
-{
-	"extends": "../tsconfig.json",
-	"include": [
-		"./**/*.d.ts",
-		"./**/*.js"
-	]
-}
-`;
-	return template.trim();
+	return readFile("tsconfig.raw.json", __dirname);
 }) as TemplateFunction;

@@ -1,4 +1,4 @@
-import { TemplateFunction } from "../../src/lib/createAdapter";
+import { readFile, TemplateFunction } from "../../src/lib/createAdapter";
 
 export = (answers => {
 
@@ -6,8 +6,5 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
-	const template = `
-declare let systemDictionary: Record<string, Record<string, string>>;
-`;
-	return template.trim();
+	return readFile("admin.raw.d.ts", __dirname);
 }) as TemplateFunction;

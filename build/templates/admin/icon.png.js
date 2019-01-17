@@ -1,7 +1,6 @@
 "use strict";
-const fs = require("fs-extra");
-const path = require("path");
-const templateFunction = () => fs.readFile(path.join(__dirname, "../../../adapter-creator.png"));
+const createAdapter_1 = require("../../src/lib/createAdapter");
+const templateFunction = () => createAdapter_1.readFile("../../adapter-creator.png", __dirname);
 templateFunction.customPath = answers => `admin/${answers.adapterName}.png`;
 templateFunction.noReformat = true; // Don't format binary files
 module.exports = templateFunction;
