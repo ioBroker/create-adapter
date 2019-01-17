@@ -3,7 +3,7 @@ import * as os from "os";
 import * as path from "path";
 import { enumFilesRecursiveSync } from "../src/lib/tools";
 
-const templateDir = path.join(__dirname, "../src/templates");
+const templateDir = path.join(__dirname, "../templates");
 
 const allTemplateFiles = enumFilesRecursiveSync(
 	templateDir,
@@ -36,7 +36,7 @@ const indexContent = `
 // and contains references to all defined templates.
 // Do not edit it by hand or your changes will be lost!
 
-import { TemplateFunction } from "../lib/createAdapter";
+import { TemplateFunction } from "../src/lib/createAdapter";
 
 const templates: { name: string, templateFunction: TemplateFunction }[] = [
 ${templatePaths.join(os.EOL)}
@@ -44,4 +44,4 @@ ${templatePaths.join(os.EOL)}
 export = templates;
 `.trimLeft();
 
-fs.writeFileSync(path.resolve(__dirname, "../src/templates", "index.ts"), indexContent);
+fs.writeFileSync(path.resolve(__dirname, "../templates", "index.ts"), indexContent);

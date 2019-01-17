@@ -2,9 +2,9 @@ import { isArray } from "alcalzone-shared/typeguards";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
-import * as templateFiles from "../templates";
+import * as templateFiles from "../../templates";
 import { Answers, AnswerValue, Condition } from "./questions";
-import { indentWithSpaces, indentWithTabs, jsFixQuotes, tsFixQuotes } from "./tools";
+import { getOwnVersion, indentWithSpaces, indentWithTabs, jsFixQuotes, tsFixQuotes } from "./tools";
 
 interface AnswersMeta {
 	creatorVersion: string;
@@ -44,7 +44,7 @@ export function testCondition(condition: Condition | Condition[] | undefined, an
 }
 
 export async function createFiles(answers: Answers): Promise<File[]> {
-	const creatorVersion: string = require("../../package.json").version;
+	const creatorVersion: string = getOwnVersion();
 	const answersWithMeta: Answers & AnswersMeta = {
 		...answers,
 		creatorVersion,

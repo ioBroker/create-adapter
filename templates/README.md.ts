@@ -1,8 +1,10 @@
-"use strict";
-const tools_1 = require("../src/lib/tools");
-module.exports = (answers => {
-    const adapterNameLowerCase = answers.adapterName.toLowerCase();
-    const template = `
+import { TemplateFunction } from "../src/lib/createAdapter";
+import { formatLicense } from "../src/lib/tools";
+
+export = (answers => {
+
+	const adapterNameLowerCase = answers.adapterName.toLowerCase();
+	const template = `
 <h1>
 	<img src="https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/admin/${answers.adapterName}.png" width="64"/>
 	ioBroker.${answers.adapterName}
@@ -29,9 +31,9 @@ ${answers.description || "Describe your project here"}
 
 ## License
 ${answers.license
-        && answers.license.text
-        && tools_1.formatLicense(answers.license.text, answers)
-        || "TODO: enter license text here"}
+	&& answers.license.text
+	&& formatLicense(answers.license.text, answers)
+	|| "TODO: enter license text here"}
 `;
-    return template.trim();
-});
+	return template.trim();
+}) as TemplateFunction;

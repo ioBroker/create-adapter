@@ -1,17 +1,31 @@
-"use strict";
-const objects_1 = require("alcalzone-shared/objects");
-const JSON5 = require("json5");
-const tools_1 = require("../src/lib/tools");
-module.exports = (async (answers) => {
-    const isAdapter = answers.features.indexOf("adapter") > -1;
-    const isWidget = answers.features.indexOf("vis") > -1;
-    const useTypeScript = answers.language === "TypeScript";
-    const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
-    const title = answers.title || answers.adapterName;
-    const titleLang = JSON.stringify(objects_1.composeObject(await Promise.all(languages.map(async (lang) => [lang, await tools_1.translateText(title, lang)]))));
-    const description = answers.description || answers.adapterName;
-    const descriptionLang = JSON.stringify(objects_1.composeObject(await Promise.all(languages.map(async (lang) => [lang, await tools_1.translateText(description, lang)]))));
-    const template = `
+import { composeObject } from "alcalzone-shared/objects";
+import * as JSON5 from "json5";
+import { TemplateFunction } from "../src/lib/createAdapter";
+import { translateText } from "../src/lib/tools";
+
+export = (async answers => {
+
+	const isAdapter = answers.features.indexOf("adapter") > -1;
+	const isWidget = answers.features.indexOf("vis") > -1;
+	const useTypeScript = answers.language === "TypeScript";
+
+	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
+
+	const title: string = answers.title || answers.adapterName;
+	const titleLang = JSON.stringify(
+		composeObject(await Promise.all(
+			languages.map(async lang => [lang, await translateText(title, lang)] as [string, string]),
+		)),
+	);
+
+	const description: string = answers.description || answers.adapterName;
+	const descriptionLang = JSON.stringify(
+		composeObject(await Promise.all(
+			languages.map(async lang => [lang, await translateText(description, lang)] as [string, string]),
+		)),
+	);
+
+	const template = `
 {
 	"common": {
 		"name": "${answers.adapterName}",
@@ -78,5 +92,5 @@ module.exports = (async (answers) => {
 	"instanceObjects": [
 	],
 }`;
-    return JSON.stringify(JSON5.parse(template), null, 4);
-});
+	return JSON.stringify(JSON5.parse(template), null, 4);
+}) as TemplateFunction;
