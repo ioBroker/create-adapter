@@ -1,4 +1,19 @@
-# ioBroker.test-adapter
+<h1>
+    <img src="https://github.com/AlCalzone/ioBroker.test-adapter/blob/master/admin/test-adapter.png" width="64"/>
+    ioBroker.test-adapter
+</h1>
+
+[![NPM version](http://img.shields.io/npm/v/iobroker.test-adapter.svg)](https://www.npmjs.com/package/iobroker.test-adapter)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.test-adapter.svg)](https://www.npmjs.com/package/iobroker.test-adapter)
+[![Dependency Status](https://img.shields.io/david/AlCalzone/iobroker.test-adapter.svg)](https://david-dm.org/AlCalzone/iobroker.test-adapter)
+[![Known Vulnerabilities](https://snyk.io/test/github/AlCalzone/ioBroker.test-adapter/badge.svg)](https://snyk.io/test/github/AlCalzone/ioBroker.test-adapter)
+
+[![NPM](https://nodei.co/npm/iobroker.test-adapter.png?downloads=true)](https://nodei.co/npm/iobroker.test-adapter/)
+
+**Tests:** Linux/Mac: [![Travis-CI](http://img.shields.io/travis/AlCalzone/ioBroker.test-adapter/master.svg)](https://travis-ci.org/AlCalzone/ioBroker.test-adapter)
+Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/AlCalzone/ioBroker.test-adapter?branch=master&svg=true)](https://ci.appveyor.com/project/AlCalzone/ioBroker-test-adapter/)
+
+## test-adapter adapter for ioBroker
 
 Describe your project here
 
