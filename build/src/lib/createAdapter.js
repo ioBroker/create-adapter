@@ -82,7 +82,11 @@ async function writeFiles(targetDir, files) {
     }
 }
 exports.writeFiles = writeFiles;
-async function readFile(file, relativeTo) {
-    return fs.readFile(path.join(relativeTo, file));
+async function readFile(file, relativeTo, binary = false) {
+    const absolutePath = path.join(relativeTo, file);
+    if (binary)
+        return fs.readFile(absolutePath);
+    else
+        return fs.readFile(absolutePath, "utf8");
 }
 exports.readFile = readFile;

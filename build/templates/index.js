@@ -4,7 +4,6 @@
 // Do not edit it by hand or your changes will be lost!
 const templates = [
     { name: "admin/admin.d.ts.ts", templateFunction: require("./admin/admin.d.ts") },
-    { name: "admin/admin.raw.d.ts", templateFunction: require("./admin/admin.raw.d") },
     { name: "admin/icon.png.ts", templateFunction: require("./admin/icon.png") },
     { name: "admin/index_m.html.ts", templateFunction: require("./admin/index_m.html") },
     { name: "admin/style.css.ts", templateFunction: require("./admin/style.css") },
@@ -19,9 +18,7 @@ const templates = [
     { name: "main.test.js.ts", templateFunction: require("./main.test.js") },
     { name: "package.json.ts", templateFunction: require("./package.json") },
     { name: "README.md.ts", templateFunction: require("./README.md") },
-    { name: "src/lib/tools.raw.ts", templateFunction: require("./src/lib/tools.raw") },
     { name: "src/lib/tools.ts.ts", templateFunction: require("./src/lib/tools.ts") },
-    { name: "src/main.test.raw.ts", templateFunction: require("./src/main.test.raw") },
     { name: "src/main.test.ts.ts", templateFunction: require("./src/main.test.ts") },
     { name: "src/main.ts.ts", templateFunction: require("./src/main.ts") },
     { name: "test/lib/setup.js.ts", templateFunction: require("./test/lib/setup.js") },
