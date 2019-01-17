@@ -1,7 +1,7 @@
 "use strict";
 const async_1 = require("alcalzone-shared/async");
 const JSON5 = require("json5");
-const fetchVersions_1 = require("../lib/fetchVersions");
+const fetchVersions_1 = require("../src/lib/fetchVersions");
 const templateFunction = async (answers) => {
     const isAdapter = answers.features.indexOf("adapter") > -1;
     const isWidget = answers.features.indexOf("vis") > -1;

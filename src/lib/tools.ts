@@ -265,3 +265,15 @@ export function tsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 function escapeQuotes(str: string, newQuotes: Quotemark, oldQuotes: Quotemark) {
 	return str.replace(new RegExp(newQuotes, "g"), `\\${newQuotes}`).replace(new RegExp(`\\\\${oldQuotes}`, "g"), oldQuotes);
 }
+
+export function getOwnVersion(): string {
+	for (const jsonPath of [
+		"../../package.json",
+		"../../../package.json",
+	]) {
+		try {
+			return require(jsonPath).version;
+		} catch (e) { /* OK */ }
+	}
+	return "unknown";
+}

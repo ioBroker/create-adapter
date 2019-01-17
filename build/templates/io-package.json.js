@@ -1,7 +1,7 @@
 "use strict";
 const objects_1 = require("alcalzone-shared/objects");
 const JSON5 = require("json5");
-const tools_1 = require("../lib/tools");
+const tools_1 = require("../src/lib/tools");
 module.exports = (async (answers) => {
     const isAdapter = answers.features.indexOf("adapter") > -1;
     const isWidget = answers.features.indexOf("vis") > -1;

@@ -1,20 +1,8 @@
 "use strict";
+const createAdapter_1 = require("../../src/lib/createAdapter");
 module.exports = (answers => {
     const isAdapter = answers.features.indexOf("adapter") > -1;
     if (!isAdapter)
         return;
-    const template = `
-/* You can delete those if you want. I just found them very helpful */
-* {
-	box-sizing: border-box
-}
-.m {
-	/* Don't cut off dropdowns! */
-	overflow: initial;
-}
-
-/* Add your styles here */
-
-`;
-    return template.trim();
+    return createAdapter_1.readFile("style.raw.css", __dirname);
 });

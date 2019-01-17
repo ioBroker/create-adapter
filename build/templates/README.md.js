@@ -1,5 +1,5 @@
 "use strict";
-const tools_1 = require("../lib/tools");
+const tools_1 = require("../src/lib/tools");
 module.exports = (answers => {
     const adapterNameLowerCase = answers.adapterName.toLowerCase();
     const template = `

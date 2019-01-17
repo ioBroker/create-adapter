@@ -6,9 +6,11 @@
 		"declaration": false,
 	},
 	"include": [
-		"src/**/*.ts"
+		"src/**/*.ts",
+		"templates/**/*.ts"
 	],
 	"exclude": [
-		"src/**/*.test.ts"
+		"src/**/*.test.ts",
+		"templates/**/*.raw.*"
 	]
 }

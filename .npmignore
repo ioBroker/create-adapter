@@ -1,4 +1,4 @@
-.git*
+.*
 *.njsproj
 *.sln
 tsconfig.json
@@ -7,6 +7,7 @@ tslint.json
 test/
 tests/
 src/
+templates/
 build/**/*.map
 iobroker-create-adapter-*.tgz
 .vs*/
@@ -14,6 +15,3 @@ iobroker-create-adapter-*.tgz
 obj/
 coverage/
 maintenance/
-.travis.yml
-.circleci/
-.editorconfig

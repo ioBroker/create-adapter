@@ -4,6 +4,7 @@ import { prompt } from "enquirer";
 import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
 import { licenses } from "./licenses";
+import { getOwnVersion } from "./tools";
 
 // Sadly, Enquirer does not export the PromptOptions type
 // tslint:disable-next-line:ban-types
@@ -49,14 +50,11 @@ function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "typ
 	});
 }
 
-// tslint:disable-next-line:no-var-requires
-const ownVersion = require("../../package.json").version;
-
 /** All questions and the corresponding text lines */
 export const questionsAndText: (Question | QuestionGroup | string)[] = [
 	"",
 	green.bold("====================================================="),
-	green.bold(`   Welcome to the ioBroker adapter creator v${ownVersion}!`),
+	green.bold(`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`),
 	green.bold("====================================================="),
 	"",
 	gray(`You can cancel at any point by pressing Ctrl+C.`),

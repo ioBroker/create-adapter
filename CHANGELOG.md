@@ -7,6 +7,7 @@
 * (ldittmar) Add zh-cn (chinese) language
 * (jogibear9988) Add translation to gulp
 * (ldittbar) Improve README.md (#25)
+* (AlCalzone) Allow editing static templates in separate files with the correct extension (#62)
 
 ## 1.5.0 (2019-01-07)
 * (AlCalzone) Allow targeting newer ES version when using JS (fixes #43)
