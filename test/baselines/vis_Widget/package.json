@@ -1,0 +1,33 @@
+{
+  "name": "iobroker.test-widget",
+  "version": "0.0.1",
+  "description": "test-widget",
+  "author": {
+    "name": "Al Calzone",
+    "email": "al@calzo.ne"
+  },
+  "homepage": "https://github.com/AlCalzone/ioBroker.test-widget",
+  "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "template",
+    "Smart Home",
+    "home automation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlCalzone/ioBroker.test-widget"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/gulp": "^4.0.5",
+    "axios": "^0.18.0",
+    "gulp": "^4.0.0"
+  },
+  "main": "widgets/test-widget.html",
+  "scripts": {},
+  "bugs": {
+    "url": "https://github.com/AlCalzone/ioBroker.test-widget/issues"
+  },
+  "readmeFilename": "README.md"
+}

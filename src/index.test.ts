@@ -130,6 +130,22 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess("adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
 			});
+
+			it("Widget", async () => {
+				const answers: Answers = {
+					adapterName: "test-widget",
+					title: "Is used to test the creator",
+					features: ["vis"],
+					type: "visualization-widgets",
+					indentation: "Tab",
+					quotes: "double",
+					authorName: "Al Calzone",
+					authorGithub: "AlCalzone",
+					authorEmail: "al@calzo.ne",
+					license: "MIT License" as any,
+				};
+				await expectSuccess("vis_Widget", answers);
+			});
 		});
 
 		describe("Single-file component tests =>", () => {
