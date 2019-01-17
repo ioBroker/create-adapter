@@ -106,3 +106,11 @@ export async function readFile(file: string, relativeTo: string, binary: boolean
 	if (binary) return fs.readFile(absolutePath);
 	else return fs.readFile(absolutePath, "utf8");
 }
+
+/**
+ * Reads a file that resides on the root dir. After compilation, this is one folder higher than at build time
+ */
+export async function readFileFromRootDir(file: string, relativeTo: string, binary: boolean = false): Promise<string | Buffer> {
+	if (await fs.pathExists(path.join(relativeTo, file))) return readFile(file, relativeTo, binary);
+	else return readFile(path.join("..", file), relativeTo, binary);
+}
