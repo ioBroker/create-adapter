@@ -12,6 +12,9 @@ const templateFunction = answers => {
         "node": true,
         "mocha": true
     },
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
     "extends": "eslint:recommended",
     "rules": {
         "indent": [

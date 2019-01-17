@@ -5,6 +5,8 @@ export = (answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	if (!isAdapter) return;
 
+	const useTypeScript = answers.language === "TypeScript";
+
 	const template = `
 "use strict";
 const gulp = require("gulp");
@@ -14,7 +16,7 @@ const iopackage = require("./io-package.json");
 const version = (pkg && pkg.version) ? pkg.version : iopackage.common.version;
 const fileName = "words.js";
 const EMPTY = "";
-const translate = require('@vitalets/google-translate-api');
+const translate = require("${useTypeScript ? "./build/lib/tools" : "./lib/tools"}").translateText;
 const languages = {
     en: {},
     de: {},
@@ -352,11 +354,6 @@ function languages2words(src) {
     writeWordJs(bigOne, src);
 }
 
-async function translateText(text, lang) {
-    let res = await translate(text, {to: lang, from: 'en'});
-    return res.text;
-}
-
 async function translateNotExisting(obj, baseText) {
     let t = obj['en'];
     if (!t) {
@@ -366,7 +363,7 @@ async function translateNotExisting(obj, baseText) {
     if (t) {
         for (let l in languages) {
             if (!obj[l]) {
-                obj[l] = await translateText(t, l);
+                obj[l] = await translate(t, l);
             }
         }
     }
@@ -467,7 +464,7 @@ gulp.task('translate', async function (done) {
                 }
                 for (let t in enTranslations) {
                     if (!existing[t]) {
-                        existing[t] = await translateText(enTranslations[t], l);
+                        existing[t] = await translate(enTranslations[t], l);
                     }
                 }
                 if (!fs.existsSync('./admin/i18n/' + l + '/')) {

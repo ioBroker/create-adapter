@@ -183,6 +183,9 @@ function jsFixQuotes(sourceText, quotes) {
             node: true,
             mocha: true,
         },
+        parserOptions: {
+            ecmaVersion: 8,
+        },
         rules: {
             quotes: [
                 "error",

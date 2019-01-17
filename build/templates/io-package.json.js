@@ -27,7 +27,7 @@ module.exports = (async (answers) => {
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
 				"pl": "Pierwsze wydanie",
-                                "zh-cn": "首次出版"
+				"zh-cn": "首次出版"
 			}
 		},
 		"title": "${answers.title || answers.adapterName}",

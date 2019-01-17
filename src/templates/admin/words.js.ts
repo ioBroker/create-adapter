@@ -20,7 +20,7 @@ systemDictionary = {
 		"it": "Impostazioni dell'adattatore per ${answers.adapterName}",
 		"es": "Ajustes del adaptador para ${answers.adapterName}",
 		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
-                "zh-cn": "${answers.adapterName}的适配器设置"
+		"zh-cn": "${answers.adapterName}的适配器设置"
 	},
 	"option 1 description": {
 		"en": "Option 1 is cool",
@@ -32,7 +32,7 @@ systemDictionary = {
 		"it": "L'opzione 1 è cool",
 		"es": "La opción 1 es genial",
 		"pl": "Opcja 1 jest fajna",
-                "zh-cn": "选项1很酷"
+		"zh-cn": "选项1很酷"
 	},
 	"option 2 description": {
 		"en": "Option 2 is not",
@@ -44,7 +44,7 @@ systemDictionary = {
 		"it": "L'opzione 2 no",
 		"es": "La opción 2 no es",
 		"pl": "Opcja 2 nie jest",
-                "zh-cn": "选项2不是"
+		"zh-cn": "选项2不是"
 	}
 };
 `;
