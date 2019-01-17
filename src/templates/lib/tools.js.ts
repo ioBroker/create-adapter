@@ -13,7 +13,7 @@ const axios = require("axios");
  * @param {any} it The variable to test
  * @returns {it is Record<string, any>}
  */
-export function isObject(it) {
+function isObject(it) {
 	// This is necessary because:
 	// typeof null === 'object'
 	// typeof [] === 'object'
@@ -26,7 +26,7 @@ export function isObject(it) {
  * @param {any} it The variable to test
  * @returns {it is any[]}
  */
-export function isArray(it) {
+function isArray(it) {
 	if (Array.isArray != null) return Array.isArray(it);
 	return Object.prototype.toString.call(it) === "[object Array]";
 }
@@ -37,7 +37,7 @@ export function isArray(it) {
  * @param {string}targetLang The target languate
  * @returns {Promise<string>}
  */
-export async function translateText(text, targetLang) {
+async function translateText(text, targetLang) {
 	if (targetLang === "en") return text;
 	try {
 		const url = \`http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=\${targetLang}&dt=t&q=\${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8\`;
@@ -52,6 +52,12 @@ export async function translateText(text, targetLang) {
 	}
 	return text;
 }
+
+module.exports = {
+	isArray,
+	isObject,
+	translateText
+};
 `;
 	return template.trim();
 }) as TemplateFunction;
