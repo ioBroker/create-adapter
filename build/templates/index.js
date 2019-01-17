@@ -4,6 +4,7 @@
 // Do not edit it by hand or your changes will be lost!
 const templates = [
     { name: "admin/admin.d.ts.ts", templateFunction: require("./admin/admin.d.ts") },
+    { name: "admin/custom_m.html.ts", templateFunction: require("./admin/custom_m.html") },
     { name: "admin/icon.png.ts", templateFunction: require("./admin/icon.png") },
     { name: "admin/index_m.html.ts", templateFunction: require("./admin/index_m.html") },
     { name: "admin/style.css.ts", templateFunction: require("./admin/style.css") },

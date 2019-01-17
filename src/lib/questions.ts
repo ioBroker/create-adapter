@@ -97,6 +97,17 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				],
 				action: checkMinSelections.bind(undefined, "feature", 1),
 			}),
+			styledMultiselect({
+				condition: { name: "features", contains: "adapter" },
+				name: "adminFeatures",
+				message: "Which additional features should be available in the admin?",
+				hint: "(optional)",
+				initial: [],
+				choices: [
+					{ message: "An extra tab", value: "tab" },
+					{ message: "Custom options for states", value: "custom" },
+				],
+			}),
 			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
@@ -314,6 +325,7 @@ export interface Answers {
 	authorGithub: string;
 	language?: "JavaScript" | "TypeScript";
 	features: ("adapter" | "vis")[];
+	adminFeatures?: ("tab" | "custom")[];
 	tools?: ("ESLint" | "TSLint" | "type checking" | "code coverage")[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
