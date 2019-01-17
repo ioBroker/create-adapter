@@ -112,10 +112,10 @@ describe("adapter creation =>", () => {
 		});
 
 		describe("full adapter dir =>", () => {
-			it("Adapter (w/ custom), TypeScript, TSLint, Tabs, Double quotes, MIT License", async () => {
+			it("Adapter (w/ custom and tab), TypeScript, TSLint, Tabs, Double quotes, MIT License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					adminFeatures: ["custom"],
+					adminFeatures: ["custom", "tab"],
 				};
 				await expectSuccess("adapter_TS_TSLint_Tabs_DoubleQuotes_MIT", answers);
 			});
