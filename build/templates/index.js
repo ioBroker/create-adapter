@@ -8,6 +8,7 @@ const templates = [
     { name: "admin/icon.png.ts", templateFunction: require("./admin/icon.png") },
     { name: "admin/index_m.html.ts", templateFunction: require("./admin/index_m.html") },
     { name: "admin/style.css.ts", templateFunction: require("./admin/style.css") },
+    { name: "admin/tab_m.html.ts", templateFunction: require("./admin/tab_m.html") },
     { name: "admin/tsconfig.json.ts", templateFunction: require("./admin/tsconfig.json") },
     { name: "admin/words.js.ts", templateFunction: require("./admin/words.js") },
     { name: "gulpfile.js.ts", templateFunction: require("./gulpfile.js") },

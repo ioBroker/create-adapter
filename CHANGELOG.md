@@ -10,6 +10,7 @@
 * (AlCalzone) Allow editing static templates in separate files with the correct extension (#62)
 * (ldittmar) Merge translations of VIS and admin, fix gulpfile template (#63)
 * (ldittmar & AlCalzone) Support custom_m.html (fixes #61)
+* (ldittmar & AlCalzone) Support admin tab (fixes #14)
 
 ## 1.5.0 (2019-01-07)
 * (AlCalzone) Allow targeting newer ES version when using JS (fixes #43)
