@@ -60,6 +60,24 @@
 		"mode": "daemon",
 		"type": "general",
 		"materialize": true,
+		"materializeTab": true,
+		"adminTab": {
+			"singleton": true,
+			"name": {
+				"en": "Mock translation of 'Is used to test the creator' to 'en'",
+				"de": "Mock translation of 'Is used to test the creator' to 'de'",
+				"ru": "Mock translation of 'Is used to test the creator' to 'ru'",
+				"pt": "Mock translation of 'Is used to test the creator' to 'pt'",
+				"nl": "Mock translation of 'Is used to test the creator' to 'nl'",
+				"fr": "Mock translation of 'Is used to test the creator' to 'fr'",
+				"it": "Mock translation of 'Is used to test the creator' to 'it'",
+				"es": "Mock translation of 'Is used to test the creator' to 'es'",
+				"pl": "Mock translation of 'Is used to test the creator' to 'pl'",
+				"zh-cn": "Mock translation of 'Is used to test the creator' to 'zh-cn'"
+			},
+			"link": "",
+			"fa-icon": "info"
+		},
 		"supportCustoms": true,
 		"dependencies": [
 			{
