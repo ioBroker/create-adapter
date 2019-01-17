@@ -7,6 +7,7 @@ module.exports = (async (answers) => {
     const isWidget = answers.features.indexOf("vis") > -1;
     const useTypeScript = answers.language === "TypeScript";
     const supportCustom = answers.adminFeatures && answers.adminFeatures.indexOf("custom") > -1;
+    const supportTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
     const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
     const title = answers.title || answers.adapterName;
     const titleLang = JSON.stringify(objects_1.composeObject(await Promise.all(languages.map(async (lang) => [lang, await tools_1.translateText(title, lang)]))));
@@ -65,6 +66,15 @@ module.exports = (async (answers) => {
 			"mode": "once",
 		`) : ""}
 		${isAdapter ? `"materialize": true,` : ""}
+		${supportTab ? (`
+		"materializeTab": true,
+		"adminTab": {
+			"singleton": true,
+			"name": ${titleLang},
+			"link": "",
+			"fa-icon": "info",
+		},
+		`) : ""}
 		${supportCustom ? `"supportCustoms": true,` : ""}
 		"dependencies": [
 			${isAdapter ? `{ "admin": ">=3.0.0" },` : ""}
