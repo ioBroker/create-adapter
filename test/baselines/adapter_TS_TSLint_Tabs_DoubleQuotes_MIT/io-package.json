@@ -12,7 +12,8 @@
 				"fr": "Première version",
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie"
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
 			}
 		},
 		"title": "Is used to test the creator",
@@ -25,7 +26,8 @@
 			"fr": "Mock translation of 'Is used to test the creator' to 'fr'",
 			"it": "Mock translation of 'Is used to test the creator' to 'it'",
 			"es": "Mock translation of 'Is used to test the creator' to 'es'",
-			"pl": "Mock translation of 'Is used to test the creator' to 'pl'"
+			"pl": "Mock translation of 'Is used to test the creator' to 'pl'",
+			"zh-cn": "Mock translation of 'Is used to test the creator' to 'zh-cn'"
 		},
 		"desc": {
 			"en": "Mock translation of 'test-adapter' to 'en'",
@@ -36,7 +38,8 @@
 			"fr": "Mock translation of 'test-adapter' to 'fr'",
 			"it": "Mock translation of 'test-adapter' to 'it'",
 			"es": "Mock translation of 'test-adapter' to 'es'",
-			"pl": "Mock translation of 'test-adapter' to 'pl'"
+			"pl": "Mock translation of 'test-adapter' to 'pl'",
+			"zh-cn": "Mock translation of 'test-adapter' to 'zh-cn'"
 		},
 		"authors": [
 			"Al Calzone <al@calzo.ne>"

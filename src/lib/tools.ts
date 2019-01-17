@@ -171,7 +171,7 @@ export async function translateText(text: string, targetLang: string): Promise<s
 	if (targetLang === "en") return text;
 	try {
 		const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
-		const response = await axios({url, timeout: 5000});
+		const response = await axios({ url, timeout: 5000 });
 		if (isArray(response.data)) {
 			// we got a valid response
 			return response.data[0][0][0];
@@ -210,6 +210,9 @@ export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 			es6: true,
 			node: true,
 			mocha: true,
+		},
+		parserOptions: {
+			ecmaVersion: 8,
 		},
 		rules: {
 			quotes: [
