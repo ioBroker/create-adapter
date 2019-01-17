@@ -1,4 +1,5 @@
 'use strict';
+
 const gulp = require('gulp');
 const fs = require('fs');
 const pkg = require('./package.json');
@@ -52,25 +53,8 @@ function readWordJs(src) {
             words = fs.readFileSync(src + fileName).toString();
         }
 
-        const lines = words.split(/\r\n|\r|\n/g);
-        let i = 0;
-        while (!lines[i].match(/^systemDictionary = {/)) {
-            i++;
-        }
-        lines.splice(0, i);
-
-        // remove last empty lines
-        i = lines.length - 1;
-        while (!lines[i]) {
-            i--;
-        }
-        if (i < lines.length - 1) {
-            lines.splice(i + 1);
-        }
-
-        lines[0] = lines[0].replace('systemDictionary = ', '');
-        lines[lines.length - 1] = lines[lines.length - 1].trim().replace(/};$/, '}');
-        words = lines.join('\n');
+        words = words.substring(words.indexOf('{'), words.length);
+        words = words.substring(0, words.lastIndexOf(';'));
         const resultFunc = new Function('return ' + words + ';');
 
         return resultFunc();

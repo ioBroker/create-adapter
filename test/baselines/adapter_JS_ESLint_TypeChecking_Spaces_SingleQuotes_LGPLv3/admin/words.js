@@ -2,6 +2,7 @@
 'use strict';
 
 systemDictionary = {
+
     'test-adapter adapter settings': {
         'en': 'Adapter settings for test-adapter',
         'de': 'Adaptereinstellungen für test-adapter',
@@ -38,4 +39,5 @@ systemDictionary = {
         'pl': 'Opcja 2 nie jest',
         'zh-cn': '选项2不是'
     }
+
 };
