@@ -1,6 +1,6 @@
 {
   "name": "@iobroker/create-adapter",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Command line utility to create customized ioBroker adapters",
   "keywords": [],
   "main": "build/index.js",

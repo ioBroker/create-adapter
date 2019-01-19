@@ -1,6 +1,6 @@
 # Changelog
 
-## __WORK IN PROGRESS__
+## 1.6.1 (2019-01-19)
 * (AlCalzone) Fix "cannot find module `typescript`"
 
 ## 1.6.0 (2019-01-17)
