@@ -70,5 +70,27 @@ For developers of this package, there are a few things to know:
   * This method accepts an object with the user's answers and returns a `string` or `Promise<string>` containing the output file.
   * The last extension (`.ts`) is removed when creating the output file. Setting the `customPath` property of the template method allows you to override the output path of the file, either a constant or depending on the user's answers (function).
   * The outputted files are automatically formatted to have the correct indentation and multiple empty lines are removed. If you don't want this, set `noReformat` to true.
-* Publishing requires the `--access public` option.
 * Test your changes with `npm test` and/or write relevant tests. For a couple of representative combination of answers, baseline adapter directories are generated. If those baselines are changed as a result of your changes, please review if those changes are desired.
+
+## Publishing
+Do not publish directly using `npm`. Instead create a new release with the release script `npm run release ...`. This creates a tag on github, performs a test run on TravisCI and after a successful build automatically publishes to npm.
+
+You can semantically increase the version and publish it by using
+```bash
+npm run release [<releaseType> [<postfix>]] [-- --dry]
+```
+(preferably) or set a specific version by using
+```bash
+npm run release <version> [-- --dry]
+```
+The option `-- --dry` (don't forget the first pair of dashes) performs a dry run without updating files.
+The available release types are:
+* `major`
+* `premajor`
+* `minor`
+* `preminor`
+* `patch`
+* `prepatch`
+* `prerelease`
+
+and the `pre-...` versions allow you to append a postfix like `-beta`.

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Try to execute the creator -> start npx, wait 90s and check the exit code
-timeout 90 npx .
+# Try to execute the creator -> start npx, wait 60s and check the exit code
+timeout 60 npx .
 
 # It should be 124 (timeout has passed)
 if [[ $? -eq 124 ]]; then

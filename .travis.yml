@@ -11,12 +11,6 @@ env:
     - secure: DEfXuBWNAvru3+/2UOLJH0ea4BX/Wzr8hLVvcRmZv5usbNhgn0lmnGXySWSA5HuutQddQanTxBo9fAzVh7RejdBshHxN77WuwHQFstC2igVhNWafTF9jPlOIFHgqT0Cc8Kc9EKhUB1r6FcWwtixtaFRuhisumU2dS/jPiMJZx9ekO9hoUyZA1Ka0eu8oextFWPNS0MDgUOWZEAgOBFsRTwuQAcDM/nTMlmoFfiM9k4BSvQ5IdlmCkZgEwVUXNqHWh/Ic6QGMkE51lGaka46jEu0QLGvljTLPFzDsaCpknBa9+lpxFUmfR6LqOkKbXW3W+xef9tiJEFYh8iSZleNXodYnt3AmhNGtbEb0/8IEQrjfkxPR5gK6qNfNDyYE82qyYwTv1jS4sHNJwspAHnf0L0WuM4JHI8Gx3qdZpic1t/FmEJFZOWZd1UZ8GP6gJe2CUt+5MdDGeU4omstJR83EJcnEJHR8tqpC21Fww/gSxb1sLra4UX4QcndSfo1WZUXiF2+7rqNs0821PkYFOSczeJ49GrWGaUlJ6G9fI9x5PDDHVgEdJmc/KhG32jCTs002h465hjCLiXAKfTVYsYR/y4U0Y/BPzap3jiTXHfEOs/7WQN2LwmbfOiRj5zZWWq5x9NijMHonFKlpMo/0BQYhL0t2wNs1WFZ7HqwhfWqFwzU=
     - secure: cThAmdUjaGkRxwRA4mOuTUsfUVHJ1jBqOW3x/tdCysF7hd6qp/YSWVl/6DWF3IWGiII3U9oVTVEzTATcRHn9z2Hyi6jHiOD62Yqab8x8nA1IVzzTMT1AnPqDHb1VC0gVfdiHDzYLAJWxv+pQvmcN/Z0kvIVR4CqoQPpTQtFN8xJEDxYCN2c6jdB3I5MPfKKmsRfb05ZHDbTCxSJVmCJTcr+aXBzM67AoKNHgTwQn2TJqlQlKnJRC0zjyFKzLYGQZ51GyDhqgUE8qlhsdXyaaBaHJxiKWnGT/3XWNvJaynVy1TAvWIQqtH/vSWj6DVwYAzOIBaYuRbjuwCj1RJoL23c/xqW+WhEoocxwtGZirWS6SAl0+woPeX1FJGz34dirvs8wIs4PdNtaSdTx6IHQRh8p0UeCd5kAsD8tKhH3+cAj6hjzIC5ticEWmYviYK4QvR4ftj0S37QXxGhXoWjFKNy03xIACUyF1XYspK58gSCdtZfGw5Q2aR+qJnFO+YczNA4SgQ+Nrol40zuSePduKdCWQRCr63TBUo9qMHt1tJ7xNuIBbNL/S973KZiDU70R4tFqAIrec98ZckT8ll8BQgnMp8AwHiwkZyIH2lmZT34RiDlQ33s4f42OaFAQuknY3dG/u5sFn7qfGL+9rOGsZtyGbMZgVhzm4Ros87SMVVHI=
 
-# Build only the master branch and versioned tags (created by npm run release ...)
-branches:
-  only:
-  - master
-  - /^v.*/
-
 install:
   - npm ci
 script:
@@ -34,8 +28,9 @@ script:
 
 jobs:
   include:
-    - stage: deploy
-      if: tag IS present # Only deploy on versioned tags (created by npm run release ...)
+    - # Only deploy on versioned tags (created by npm run release ...)
+      if: (tag =~ /^v[0-9]+\.[0-9]+\.[0-9]+/)
+      stage: deploy
       node_js: "8"
       install: npm ci
       script: npm run build
@@ -44,6 +39,8 @@ jobs:
         provider: npm
         email: $NPM_EMAIL
         api_key: $NPM_API_KEY
+        on:
+          tags: true # This must be true or tags won't be released
 
 notifications:
   email: false
