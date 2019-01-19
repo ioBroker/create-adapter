@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - '8'
+  - '10'
+  - '11'
+os:
+  - linux
+install:
+  - npm ci
+script:
+  # First run a normal test pass
+  - npm test
+
+  # Then test on a production environment
+  # Therefore build the project
+  - npm run build
+  # Remove all dev dependencies
+  - npm ci --only=production
+  # Run the test script. We need to do it in another script to test the exit code
+  - chmod +x test/travis_test.sh
+  - test/travis_test.sh
+
+notifications:
+  email: false
