@@ -33,10 +33,10 @@ jobs:
       stage: deploy
       node_js: "8"
       install: npm ci
-      script: npm run build
-      skip_cleanup: true
+      # script: npm run build # Unnecessary, this is done by prepublish
       deploy:
         provider: npm
+        skip_cleanup: true
         email: $NPM_EMAIL
         api_key: $NPM_API_KEY
         on:
