@@ -40,7 +40,7 @@ function lang2data(lang, isFlat) {
 			if (isFlat) {
 				str += (lang[w] === "" ? (isFlat[w] || w) : lang[w]) + "\\n";
 			} else {
-				const key = '  "' + w.replace(/"/g, '\\\\"') + '": ';
+				const key = '    "' + w.replace(/"/g, '\\\\"') + '": ';
 				str += key + '"' + lang[w].replace(/"/g, '\\\\"') + '",\\n';
 			}
 		}
