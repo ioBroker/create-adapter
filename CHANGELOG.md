@@ -1,5 +1,8 @@
 # Changelog
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Use `files` in `package.json` instead of `.npmignore` to avoid excluding templates.
+
 ## 1.6.1 (2019-01-19)
 * (AlCalzone) Fix "cannot find module `typescript`"
 

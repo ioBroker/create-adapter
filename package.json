@@ -6,6 +6,10 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "bin": "./bin/create-adapter.js",
+  "files": [
+    "/bin",
+    "/build"
+  ],
   "author": {
     "name": "AlCalzone",
     "email": "d.griesel@gmx.net"
