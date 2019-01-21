@@ -5,6 +5,10 @@ node_js:
   - '11'
 os:
   - linux
+branches:
+  only:
+  - master
+  - /^v.*$/
 
 env:
   global:
