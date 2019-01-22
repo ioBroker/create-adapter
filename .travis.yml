@@ -27,7 +27,7 @@ script:
   # Remove all dev dependencies
   - npm ci --only=production
   # Run the test script. We need to do it in another script to test the exit code
-  - bash test/travis/test.sh
+  - bash travis/test.sh
 
 jobs:
   include:
