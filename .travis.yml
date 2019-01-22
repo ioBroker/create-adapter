@@ -27,8 +27,7 @@ script:
   # Remove all dev dependencies
   - npm ci --only=production
   # Run the test script. We need to do it in another script to test the exit code
-  - chmod +x test/travis_test.sh
-  - test/travis_test.sh
+  - bash test/travis/test.sh
 
 jobs:
   include:
@@ -45,6 +44,17 @@ jobs:
         api_key: $NPM_API_KEY
         on:
           tags: true # This must be true or tags won't be released
+    - # Update the ioBroker.template repo always (for now)
+      stage: deploy
+      node_js: "8"
+      install: npm ci
+      script: skip
+      deploy:
+        provider: script
+        script: bash travis/update_templates.sh
+        on:
+          tags: true
+          all_branches: true
 
 notifications:
   email: false

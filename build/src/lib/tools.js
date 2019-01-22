@@ -134,24 +134,33 @@ function copyFilesRecursiveSync(sourceDir, targetDir, predicate) {
     }
 }
 exports.copyFilesRecursiveSync = copyFilesRecursiveSync;
+const translationCache = new Map();
 async function translateText(text, targetLang) {
-    if (isTesting)
-        return `Mock translation of '${text}' to '${targetLang}'`;
-    if (targetLang === "en")
-        return text;
-    try {
-        const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
-        const response = await axios_1.default({ url, timeout: 5000 });
-        if (typeguards_1.isArray(response.data)) {
-            // we got a valid response
-            return response.data[0][0][0];
+    async function doTranslateText() {
+        if (isTesting)
+            return `Mock translation of '${text}' to '${targetLang}'`;
+        if (targetLang === "en")
+            return text;
+        try {
+            const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
+            const response = await axios_1.default({ url, timeout: 5000 });
+            if (typeguards_1.isArray(response.data)) {
+                // we got a valid response
+                return response.data[0][0][0];
+            }
+            error(`Invalid response for translate request`);
         }
-        error(`Invalid response for translate request`);
+        catch (e) {
+            error(`Could not translate to "${targetLang}": ${e}`);
+        }
+        return text;
     }
-    catch (e) {
-        error(`Could not translate to "${targetLang}": ${e}`);
-    }
-    return text;
+    if (!translationCache.has(targetLang))
+        translationCache.set(targetLang, new Map());
+    const langCache = translationCache.get(targetLang);
+    if (!langCache.has(text))
+        langCache.set(text, await doTranslateText());
+    return langCache.get(text);
 }
 exports.translateText = translateText;
 function formatLicense(licenseText, answers) {

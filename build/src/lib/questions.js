@@ -325,12 +325,14 @@ async function formatAnswers(answers) {
     return answers;
 }
 exports.formatAnswers = formatAnswers;
-async function validateAnswers(answers) {
+async function validateAnswers(answers, disableValidation = []) {
     for (const q of exports.questions) {
         const conditionFulfilled = createAdapter_1.testCondition(q.condition, answers);
         if (!conditionFulfilled)
             continue;
         if (q.action == undefined)
+            continue;
+        if (disableValidation.indexOf(q.name) > -1)
             continue;
         const testResult = await q.action(answers[q.name]);
         if (typeof testResult === "string") {
