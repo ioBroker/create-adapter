@@ -22,4 +22,4 @@ git remote rm origin
 git remote add origin https://AlCalzone:${GITHUB_TOKEN}@github.com/AlCalzone/ioBroker.template.git
 git add -A
 git commit -m "Update templates to creator version v$OWN_VERSION"
-git push
+git push --set-upstream origin master

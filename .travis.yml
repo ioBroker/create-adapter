@@ -20,7 +20,7 @@ install:
   - npm ci
 script:
   # First run a normal test pass
-  - npm test
+  - TESTING=true npm test
 
   # Then test on a production environment
   # Therefore build the project
