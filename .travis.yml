@@ -52,9 +52,9 @@ jobs:
       deploy:
         provider: script
         script: bash travis/update_templates.sh
-        on:
-          tags: true
-          all_branches: true
+        # on:
+        #   tags: true
+        #   all_branches: true
 
 notifications:
   email: false
