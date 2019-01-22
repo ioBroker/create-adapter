@@ -3,6 +3,8 @@
 # Try to execute the creator -> start npx, wait 60s and check the exit code
 timeout 30 npx .
 
+# TODO: Test the console output
+
 # It should be 124 (timeout has passed)
 if [[ $? -eq 124 ]]; then
 	exit 0
