@@ -51,6 +51,7 @@ jobs:
       script: skip
       deploy:
         provider: script
+        skip_cleanup: true
         script: bash travis/update_templates.sh
         # on:
         #   tags: true
