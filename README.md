@@ -45,6 +45,10 @@ After a short while, you will be asked a few questions. Afterwards all the neces
   * [nyc](https://github.com/istanbuljs/nyc) for code coverage
 * Choose between indentation: tabs or 4 spaces
 * Choose your preferred quote style
+* Integration in the ioBroker admin UI:
+  * Settings page
+  * An extra tab (optional)
+  * Custom datapoint-specific options (optional)
 * Predefined settings page for the admin UI
 * Choice of an OpenSource license and automatic creation of the license file
 * Built-in component tests using `mocha` & `chai` (with `chai-as-promised`), `sinon` (with `sinon-chai`) for:
@@ -55,7 +59,6 @@ After a short while, you will be asked a few questions. Afterwards all the neces
 ## Roadmap
 The following features did not make it into v1.0.0 and are planned for a later release:
 - [ ] [React](https://reactjs.org/) as an alternative to plain HTML+CSS for the admin UI (some predefined helpful methods included)
-- [ ] An extra tab for the admin UI (including React support)
 - [ ] Strongly typed `adapter.config` properties in TypeScript (they are supported in JS though!)
 - [ ] Package scripts for automatic semantic release of new versions
 - [ ] Ask for:
@@ -68,7 +71,7 @@ For developers of this package, there are a few things to know:
 
 * `npm run build` creates a fresh build and deletes old build files. This is necessary when template files are renamed or deleted, as the compiled files will still be there.
 * `npm run watch` keeps compiling incremental changes whenever you save a source file.
-* `src/templates` contains a bunch of templates, which are basically TypeScript files exporting a single method: 
+* The directory `/templates` contains a bunch of templates, which are basically TypeScript files exporting a single method: 
   * This method accepts an object with the user's answers and returns a `string` or `Promise<string>` containing the output file.
   * The last extension (`.ts`) is removed when creating the output file. Setting the `customPath` property of the template method allows you to override the output path of the file, either a constant or depending on the user's answers (function).
   * The outputted files are automatically formatted to have the correct indentation and multiple empty lines are removed. If you don't want this, set `noReformat` to true.
