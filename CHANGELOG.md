@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.6.2 (2019-01-21)
+## __WORK IN PROGRESS__
 * (AlCalzone) Use `files` in `package.json` instead of `.npmignore` to avoid excluding templates.
 
 ## 1.6.1 (2019-01-19)
