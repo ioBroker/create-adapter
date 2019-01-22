@@ -4,15 +4,17 @@ Command line utility to quickly create a new adapter or VIS widget for [ioBroker
 
 <img src="docs/screenshot.png">
 
-[Changelog](CHANGELOG.md)
-
-<!--
-TODO: Setup testing and display badges
-[![node](https://img.shields.io/node/v/@iobroker/create-adapter.svg) ![npm](https://img.shields.io/npm/v/@iobroker/create-adapter.svg)](https://www.npmjs.com/package/@iobroker/create-adapter)
-
-[![Build Status](https://img.shields.io/circleci/project/github/AlCalzone/create-adapter.svg)](https://circleci.com/gh/AlCalzone/create-adapter)
-[![Coverage Status](https://img.shields.io/coveralls/github/AlCalzone/create-adapter.svg)](https://coveralls.io/github/AlCalzone/create-adapter)
--->
+[
+	![node](https://img.shields.io/node/v/@iobroker/create-adapter.svg)
+	![npm](https://img.shields.io/npm/v/@iobroker/create-adapter.svg)
+](https://www.npmjs.com/package/@iobroker/create-adapter)
+[
+	![Build Status](https://img.shields.io/travis/ioBroker/create-adapter/master.svg)
+](https://travis-ci.org/ioBroker/create-adapter)
+![License](https://img.shields.io/npm/l/@iobroker/create-adapter.svg)
+[
+	![Changelog](https://img.shields.io/badge/read-Changelog-blue.svg)
+](CHANGELOG.md)
 
 ## Prerequisites
 Any computer with NodeJS in version 8 or higher and npm 6 or higher.
