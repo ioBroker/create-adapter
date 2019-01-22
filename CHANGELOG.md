@@ -1,5 +1,8 @@
 # Changelog
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Automatically create the template repo on release
+
 ## 1.6.3 (2019-01-22)
 * (AlCalzone) Use `files` in `package.json` instead of `.npmignore` to avoid excluding templates.
 

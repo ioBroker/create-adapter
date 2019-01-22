@@ -1,0 +1,91 @@
+import { blue, green } from "ansi-colors";
+import * as fs from "fs-extra";
+import * as path from "path";
+import { createAdapter } from "../src";
+import { writeFiles } from "../src/lib/createAdapter";
+import { Answers } from "../src/lib/questions";
+
+const outDir = path.join(process.cwd(), "ioBroker.template");
+
+async function generateTemplates(templateName: string, answers: Answers) {
+	const files = await createAdapter(answers, ["adapterName", "title"]);
+
+	const testDir = path.join(outDir, templateName);
+	await fs.emptyDir(testDir);
+	await writeFiles(testDir, files);
+}
+
+/* Define the desired templates here */
+
+const baseAnswers = {
+	adapterName: "template",
+	description: "Template for adapter development",
+	authorName: "Author",
+	authorGithub: "Author",
+	authorEmail: "author@mail.com",
+	license: "MIT License" as any,
+} as Answers;
+
+const adapterAnswers: Answers = {
+	...baseAnswers,
+	startMode: "daemon",
+	features: ["adapter"],
+	type: "general",
+	adminFeatures: ["custom", "tab"],
+};
+
+const templates: Record<string, Answers> = {
+	JavaScript: {
+		...adapterAnswers,
+		language: "JavaScript",
+		title: "Template (JavaScript)",
+		tools: ["ESLint", "type checking"],
+		indentation: "Space (4)",
+		quotes: "single",
+	},
+	TypeScript: {
+		...adapterAnswers,
+		language: "TypeScript",
+		title: "Template (TypeScript)",
+		tools: ["TSLint", "code coverage"],
+		indentation: "Tab",
+		quotes: "double",
+	},
+	JavaScriptVIS: {
+		...adapterAnswers,
+		features: ["adapter", "vis"],
+		language: "JavaScript",
+		title: "Template (JavaScript with VIS)",
+		tools: ["ESLint", "type checking"],
+		indentation: "Space (4)",
+		quotes: "single",
+	},
+	TypeScriptVIS: {
+		...adapterAnswers,
+		features: ["adapter", "vis"],
+		language: "TypeScript",
+		title: "Template (TypeScript with VIS)",
+		tools: ["TSLint", "code coverage"],
+		indentation: "Tab",
+		quotes: "double",
+	},
+	VIS: {
+		...baseAnswers,
+		features: ["vis"],
+		title: "Template (VIS only)",
+		type: "visualization-widgets",
+	},
+};
+
+(async () => {
+	console.log();
+	console.log(green("Creating templates"));
+	console.log(green("=================="));
+	const keys = Object.keys(templates);
+	for (let i = 0; i < keys.length; i++) {
+		const tplName = keys[i];
+		console.log();
+		console.log(blue(`[${i + 1}/${keys.length}] `) + tplName);
+		await generateTemplates(tplName, templates[tplName]);
+	}
+})();

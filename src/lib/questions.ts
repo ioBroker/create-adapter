@@ -371,11 +371,12 @@ export async function formatAnswers(answers: Record<string, any>): Promise<Recor
 	return answers;
 }
 
-export async function validateAnswers(answers: Answers): Promise<void> {
+export async function validateAnswers(answers: Answers, disableValidation: (keyof Answers)[] = []): Promise<void> {
 	for (const q of questions) {
 		const conditionFulfilled = testCondition(q.condition, answers);
 		if (!conditionFulfilled) continue;
 		if (q.action == undefined) continue;
+		if (disableValidation.indexOf(q.name as keyof Answers) > -1) continue;
 
 		const testResult = await q.action(answers[q.name as keyof Answers] as any);
 		if (typeof testResult === "string") {
