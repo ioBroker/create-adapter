@@ -16,6 +16,10 @@ node --require ts-node/register create_templates.ts
 
 # Commit the changes
 cd ioBroker.template
+git config --global user.email "d.griesel@gmx.net"
+git config --global user.name "Al Calzone"
+git remote rm origin
+git remote add origin https://AlCalzone:${GITHUB_TOKEN}@github.com/AlCalzone/ioBroker.template.git
 git add -A
 git commit -m "Update templates to creator version v$OWN_VERSION"
 git push
