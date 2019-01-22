@@ -8,6 +8,10 @@ export = (answers => {
 	const useTypeScript = answers.language === "TypeScript";
 
 	const template = `
+/*!
+ * ioBroker gulpfile
+ * Date: 2019-01-22
+ */
 "use strict";
 
 const gulp = require("gulp");
@@ -462,7 +466,7 @@ gulp.task('translate', async function (done) {
 	fs.writeFileSync('io-package.json', JSON.stringify(iopackage, null, 4));
 });
 
-gulp.task("translateAndUpdateWordsJS", gulp.series("translate", "adminLanguages2words"));
+gulp.task("translateAndUpdateWordsJS", gulp.series("translate", "adminLanguages2words", "adminWords2languages"));
 
 gulp.task("default", gulp.series("updatePackages", "updateReadme"));
 `;
