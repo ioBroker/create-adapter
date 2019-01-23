@@ -59,6 +59,7 @@
 		"loglevel": "info",
 		"mode": "daemon",
 		"type": "general",
+		"compact": true,
 		"materialize": true,
 		"materializeTab": true,
 		"adminTab": {
