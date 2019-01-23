@@ -1,8 +1,5 @@
 "use strict";
 module.exports = (answers => {
-    const isAdapter = answers.features.indexOf("adapter") > -1;
-    if (!isAdapter)
-        return;
     const useTypeScript = answers.language === "TypeScript";
     const template = `
 "use strict";
