@@ -25,4 +25,5 @@ git commit -m "Update templates to creator version v$OWN_VERSION"
 git push --set-upstream origin master
 
 # Create PR in the ioBroker repo
+cd ..
 node --require ts-node/register create_pullrequest.ts
