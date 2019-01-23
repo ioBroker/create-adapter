@@ -21,7 +21,7 @@ git config --global user.name "Al Calzone"
 git remote rm origin
 git remote add origin https://AlCalzone:${GITHUB_TOKEN}@github.com/AlCalzone/ioBroker.template.git
 git add -A
-git commit -m "Update templates to creator version v$OWN_VERSION"
+git commit -m "Update templates to creator version v$OWN_VERSION" || { echo "No need to update"; exit 0 }
 git push --set-upstream origin master
 
 # Create PR in the ioBroker repo
