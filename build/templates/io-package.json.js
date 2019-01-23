@@ -58,6 +58,7 @@ module.exports = (async (answers) => {
 		${isAdapter ? (`
 			"mode": "${answers.startMode || "daemon"}",
 			"type": "${answers.type || "general"}",
+			"compact": true,
 		`) : isWidget ? (`
 			"onlyWWW": true,
 			"noConfig": true,
