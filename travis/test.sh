@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Try to execute the creator -> start npx, wait 15s and check the exit code
-timeout 15 npx .
+# Try to execute the creator -> start npx, wait 15s (max. 30s) and check the exit code
+timeout -k 15 15 npx .
 
 # TODO: Test the console output
 
