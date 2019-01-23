@@ -5,7 +5,7 @@ set -e
 # Make sure the paths we reference are relative to this script
 cd "${BASH_SOURCE%/*}" || exit
 
-OWN_VERSION=$(node -e "console.log(require('../package.json').version)")
+export OWN_VERSION=$(node -e "console.log(require('../package.json').version)")
 
 # Clone the template repo
 rm -rf ioBroker.template
@@ -23,3 +23,6 @@ git remote add origin https://AlCalzone:${GITHUB_TOKEN}@github.com/AlCalzone/ioB
 git add -A
 git commit -m "Update templates to creator version v$OWN_VERSION"
 git push --set-upstream origin master
+
+# Create PR in the ioBroker repo
+node --require ts-node/register create_pullrequest.ts
