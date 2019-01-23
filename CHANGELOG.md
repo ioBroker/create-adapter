@@ -3,6 +3,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) Automatically create the template repo on release
 * (AlCalzone) Always create `gulpfile.js`, even in VIS-only templates (fixes #75)
+* (AlCalzone) Add `"compact": true` to `io-package.json` in adapter mode (fixes #47)
 
 ## 1.6.3 (2019-01-22)
 * (AlCalzone) Use `files` in `package.json` instead of `.npmignore` to avoid excluding templates.
