@@ -59,6 +59,7 @@
 		"loglevel": "info",
 		"mode": "schedule",
 		"type": "general",
+		"compact": true,
 		"materialize": true,
 		"dependencies": [
 			{

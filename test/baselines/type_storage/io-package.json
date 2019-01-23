@@ -59,6 +59,7 @@
 		"loglevel": "info",
 		"mode": "daemon",
 		"type": "storage",
+		"compact": true,
 		"materialize": true,
 		"dependencies": [
 			{
