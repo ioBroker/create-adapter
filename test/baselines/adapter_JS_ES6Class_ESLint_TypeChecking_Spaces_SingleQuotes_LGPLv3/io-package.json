@@ -1,0 +1,76 @@
+{
+    "common": {
+        "name": "test-adapter",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Is used to test the creator",
+        "titleLang": {
+            "en": "Mock translation of 'Is used to test the creator' to 'en'",
+            "de": "Mock translation of 'Is used to test the creator' to 'de'",
+            "ru": "Mock translation of 'Is used to test the creator' to 'ru'",
+            "pt": "Mock translation of 'Is used to test the creator' to 'pt'",
+            "nl": "Mock translation of 'Is used to test the creator' to 'nl'",
+            "fr": "Mock translation of 'Is used to test the creator' to 'fr'",
+            "it": "Mock translation of 'Is used to test the creator' to 'it'",
+            "es": "Mock translation of 'Is used to test the creator' to 'es'",
+            "pl": "Mock translation of 'Is used to test the creator' to 'pl'",
+            "zh-cn": "Mock translation of 'Is used to test the creator' to 'zh-cn'"
+        },
+        "desc": {
+            "en": "Mock translation of 'test-adapter' to 'en'",
+            "de": "Mock translation of 'test-adapter' to 'de'",
+            "ru": "Mock translation of 'test-adapter' to 'ru'",
+            "pt": "Mock translation of 'test-adapter' to 'pt'",
+            "nl": "Mock translation of 'test-adapter' to 'nl'",
+            "fr": "Mock translation of 'test-adapter' to 'fr'",
+            "it": "Mock translation of 'test-adapter' to 'it'",
+            "es": "Mock translation of 'test-adapter' to 'es'",
+            "pl": "Mock translation of 'test-adapter' to 'pl'",
+            "zh-cn": "Mock translation of 'test-adapter' to 'zh-cn'"
+        },
+        "authors": [
+            "Al Calzone <al@calzo.ne>"
+        ],
+        "keywords": [
+            "ioBroker",
+            "template",
+            "Smart Home",
+            "home automation"
+        ],
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "test-adapter.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-adapter/master/admin/test-adapter.png",
+        "readme": "https://github.com/AlCalzone/ioBroker.test-adapter/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "general",
+        "compact": true,
+        "materialize": true,
+        "dependencies": [
+            {
+                "admin": ">=3.0.0"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}

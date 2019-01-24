@@ -1,5 +1,5 @@
 <h1>
-	<img src="https://github.com/AlCalzone/ioBroker.test-adapter/blob/master/admin/test-adapter.png" width="64"/>
+	<img src="admin/test-adapter.png" width="64"/>
 	ioBroker.test-adapter
 </h1>
 
