@@ -1,7 +1,7 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
-* (AlCalzone & jogibear9988) Add ES6 class support for the main file (in JS)
+* (AlCalzone & jogibear9988) Add ES6 class support for the main file
 
 ## 1.7.0 (2019-01-23)
 * (AlCalzone) Automatically create the template repo on release
