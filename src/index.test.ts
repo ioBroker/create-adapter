@@ -45,6 +45,7 @@ const baseAnswers: Answers = {
 	tools: ["TSLint"],
 	indentation: "Tab",
 	quotes: "double",
+	es6class: "no",
 	authorName: "Al Calzone",
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
@@ -120,6 +121,14 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_TSLint_Tabs_DoubleQuotes_MIT", answers);
 			});
 
+			it("Adapter, TypeScript (ES6 class), TSLint, Tabs, Double quotes, MIT License", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					es6class: "yes",
+				};
+				await expectSuccess("adapter_TS_ES6Class_TSLint_Tabs_DoubleQuotes_MIT", answers);
+			});
+
 			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {
 				const answers: Answers = {
 					...baseAnswers,
@@ -130,6 +139,19 @@ describe("adapter creation =>", () => {
 					license: "GNU LGPLv3" as any,
 				};
 				await expectSuccess("adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
+			});
+
+			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, LGPLv3", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					language: "JavaScript",
+					tools: ["ESLint", "type checking"],
+					indentation: "Space (4)",
+					quotes: "single",
+					es6class: "yes",
+					license: "GNU LGPLv3" as any,
+				};
+				await expectSuccess("adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
 			});
 
 			it("Widget", async () => {

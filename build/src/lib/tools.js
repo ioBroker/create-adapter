@@ -193,7 +193,7 @@ function jsFixQuotes(sourceText, quotes) {
             mocha: true,
         },
         parserOptions: {
-            ecmaVersion: 8,
+            ecmaVersion: 2018,
         },
         rules: {
             quotes: [
@@ -257,3 +257,14 @@ function getOwnVersion() {
     return "unknown";
 }
 exports.getOwnVersion = getOwnVersion;
+function capitalize(name) {
+    return name[0].toUpperCase() + name.slice(1);
+}
+exports.capitalize = capitalize;
+function kebabCaseToUpperCamelCase(name) {
+    return name.split(/[_\-]/)
+        .filter(part => part.length > 0)
+        .map(capitalize)
+        .join("");
+}
+exports.kebabCaseToUpperCamelCase = kebabCaseToUpperCamelCase;
