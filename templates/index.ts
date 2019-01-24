@@ -24,6 +24,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "package.json.ts", templateFunction: require("./package.json") },
 	{ name: "README.md.ts", templateFunction: require("./README.md") },
 	{ name: "src/lib/tools.ts.ts", templateFunction: require("./src/lib/tools.ts") },
+	{ name: "src/main.es6.ts", templateFunction: require("./src/main.es6") },
 	{ name: "src/main.test.ts.ts", templateFunction: require("./src/main.test.ts") },
 	{ name: "src/main.ts.ts", templateFunction: require("./src/main.ts") },
 	{ name: "test/lib/setup.js.ts", templateFunction: require("./test/lib/setup.js") },

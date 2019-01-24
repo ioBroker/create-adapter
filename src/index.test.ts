@@ -121,6 +121,14 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_TSLint_Tabs_DoubleQuotes_MIT", answers);
 			});
 
+			it("Adapter, TypeScript (ES6 class), TSLint, Tabs, Double quotes, MIT License", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					es6class: "yes",
+				};
+				await expectSuccess("adapter_TS_ES6Class_TSLint_Tabs_DoubleQuotes_MIT", answers);
+			});
+
 			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {
 				const answers: Answers = {
 					...baseAnswers,

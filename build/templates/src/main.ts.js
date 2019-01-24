@@ -1,7 +1,8 @@
 "use strict";
 module.exports = (answers => {
     const useTypeScript = answers.language === "TypeScript";
-    if (!useTypeScript)
+    const useES6Class = answers.es6class === "yes";
+    if (!useTypeScript || useES6Class)
         return;
     const template = `
 /*
