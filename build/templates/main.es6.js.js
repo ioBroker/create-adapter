@@ -106,7 +106,7 @@ class ${className} extends utils.Adapter {
 	/**
 	 * Is called if a subscribed object changes
 	 * @param {string} id
-	 * @param {ioBroker.Object} obj
+	 * @param {ioBroker.Object | null | undefined} obj
 	 */
 	onObjectChange(id, obj) {
 		if (obj) {
@@ -121,7 +121,7 @@ class ${className} extends utils.Adapter {
 	/**
 	 * Is called if a subscribed state changes
 	 * @param {string} id
-	 * @param {ioBroker.State} state
+	 * @param {ioBroker.State | null | undefined} state
 	 */
 	onStateChange(id, state) {
 		if (state) {
@@ -154,6 +154,9 @@ class ${className} extends utils.Adapter {
 
 if (module.parent) {
 	// Export the constructor in compact mode
+	/**
+	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+	 */
 	module.exports = (options) => new ${className}(options);
 } else {
 	// otherwise start the instance directly

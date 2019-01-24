@@ -193,7 +193,7 @@ function jsFixQuotes(sourceText, quotes) {
             mocha: true,
         },
         parserOptions: {
-            ecmaVersion: 8,
+            ecmaVersion: 2018,
         },
         rules: {
             quotes: [
