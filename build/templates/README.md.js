@@ -4,7 +4,7 @@ module.exports = (answers => {
     const adapterNameLowerCase = answers.adapterName.toLowerCase();
     const template = `
 <h1>
-	<img src="https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/admin/${answers.adapterName}.png" width="64"/>
+	<img src="admin/${answers.adapterName}.png" width="64"/>
 	ioBroker.${answers.adapterName}
 </h1>
 

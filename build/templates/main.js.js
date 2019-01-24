@@ -1,7 +1,8 @@
 "use strict";
 module.exports = (async (answers) => {
     const useJavaScript = answers.language === "JavaScript";
-    if (!useJavaScript)
+    const useES6Class = answers.es6class === "yes";
+    if (!useJavaScript || useES6Class)
         return;
     const template = `
 "use strict";

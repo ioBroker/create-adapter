@@ -220,7 +220,7 @@ export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 			mocha: true,
 		},
 		parserOptions: {
-			ecmaVersion: 8,
+			ecmaVersion: 2018,
 		},
 		rules: {
 			quotes: [
@@ -284,4 +284,16 @@ export function getOwnVersion(): string {
 		} catch (e) { /* OK */ }
 	}
 	return "unknown";
+}
+
+export function capitalize(name: string): string {
+	return name[0].toUpperCase() + name.slice(1);
+}
+
+export function kebabCaseToUpperCamelCase(name: string): string {
+	return name.split(/[_\-]/)
+		.filter(part => part.length > 0)
+		.map(capitalize)
+		.join("")
+	;
 }

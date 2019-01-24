@@ -16,6 +16,7 @@ const templates = [
     { name: "lib/adapter-config.d.ts.ts", templateFunction: require("./lib/adapter-config.d.ts") },
     { name: "lib/tools.js.ts", templateFunction: require("./lib/tools.js") },
     { name: "LICENSE.ts", templateFunction: require("./LICENSE") },
+    { name: "main.es6.js.ts", templateFunction: require("./main.es6.js") },
     { name: "main.js.ts", templateFunction: require("./main.js") },
     { name: "main.test.js.ts", templateFunction: require("./main.test.js") },
     { name: "package.json.ts", templateFunction: require("./package.json") },

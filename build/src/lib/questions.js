@@ -234,6 +234,17 @@ exports.questionsAndText = [
                     "single",
                 ],
             },
+            {
+                condition: { name: "features", contains: "adapter" },
+                type: "select",
+                name: "es6class",
+                message: "How should the main adapter file be structured?",
+                initial: "yes",
+                choices: [
+                    { message: "As an ES6 class", hint: "(recommended)", value: "yes" },
+                    { message: "With some methods", hint: "(like legacy code)", value: "no" },
+                ],
+            },
         ],
     },
     {

@@ -7,9 +7,9 @@
 	"settings": {
 		"typescript.tsdk": "node_modules\\typescript\\lib",
 		"files.exclude": {
-			"**/.*": false,
-			"**/node_modules/": false,
-			"**/build/": false
+			"**/.*": true,
+			"**/node_modules/": true,
+			"**/build/": true
 		}
 	},
 	"extensions": {

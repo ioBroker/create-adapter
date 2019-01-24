@@ -3,7 +3,8 @@ import { readFile, TemplateFunction } from "../src/lib/createAdapter";
 export = (async answers => {
 
 	const useJavaScript = answers.language === "JavaScript";
-	if (!useJavaScript) return;
+	const useES6Class = answers.es6class === "yes";
+	if (!useJavaScript || useES6Class) return;
 
 	const template = `
 "use strict";

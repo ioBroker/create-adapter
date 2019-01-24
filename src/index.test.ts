@@ -45,6 +45,7 @@ const baseAnswers: Answers = {
 	tools: ["TSLint"],
 	indentation: "Tab",
 	quotes: "double",
+	es6class: "no",
 	authorName: "Al Calzone",
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
@@ -130,6 +131,19 @@ describe("adapter creation =>", () => {
 					license: "GNU LGPLv3" as any,
 				};
 				await expectSuccess("adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
+			});
+
+			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, LGPLv3", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					language: "JavaScript",
+					tools: ["ESLint", "type checking"],
+					indentation: "Space (4)",
+					quotes: "single",
+					es6class: "yes",
+					license: "GNU LGPLv3" as any,
+				};
+				await expectSuccess("adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
 			});
 
 			it("Widget", async () => {
