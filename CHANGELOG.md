@@ -1,6 +1,6 @@
 # Changelog
 
-## __WORK IN PROGRESS__
+## 1.8.0 (2019-01-24)
 * (AlCalzone & jogibear9988) Add ES6 class support for the main file
 
 ## 1.7.0 (2019-01-23)
