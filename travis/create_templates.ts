@@ -10,9 +10,9 @@ const outDir = path.join(process.cwd(), "ioBroker.template");
 async function generateTemplates(templateName: string, answers: Answers) {
 	const files = await createAdapter(answers, ["adapterName", "title"]);
 
-	const testDir = path.join(outDir, templateName);
-	await fs.emptyDir(testDir);
-	await writeFiles(testDir, files);
+	const templateDir = path.join(outDir, templateName);
+	await fs.emptyDir(templateDir);
+	await writeFiles(templateDir, files);
 }
 
 /* Define the desired templates here */
@@ -30,6 +30,7 @@ const adapterAnswers: Answers = {
 	...baseAnswers,
 	startMode: "daemon",
 	features: ["adapter"],
+	es6class: "yes",
 	type: "general",
 	adminFeatures: ["custom", "tab"],
 };
@@ -79,8 +80,18 @@ const templates: Record<string, Answers> = {
 
 (async () => {
 	console.log();
+	console.log(green("Removing old templates"));
+	console.log(green("======================"));
+	const directories = (await fs.readdir(outDir))
+		.filter(entry => !/^\./.test(entry)) // Don't delete dotfiles/dotdirs
+		.map(entry => path.join(outDir, entry))
+		.filter(entry => fs.statSync(entry).isDirectory())
+	;
+	await Promise.all(directories.map(dir => fs.remove(dir)));
+
+	console.log();
 	console.log(green("Creating templates"));
-	console.log(green("=================="));
+	console.log(green("======================"));
 	const keys = Object.keys(templates);
 	for (let i = 0; i < keys.length; i++) {
 		const tplName = keys[i];
@@ -89,3 +100,8 @@ const templates: Record<string, Answers> = {
 		await generateTemplates(tplName, templates[tplName]);
 	}
 })();
+
+// Make sure errors fail the build
+process.on("unhandledRejection", (e) => {
+	throw e;
+});
