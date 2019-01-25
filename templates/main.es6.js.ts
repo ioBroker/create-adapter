@@ -30,7 +30,7 @@ class ${className} extends utils.Adapter {
 	 */
 	constructor(options) {
 		Object.assign(options, {
-			name: "${answers.adapterName}",
+			name: "${answers.adapterName}"
 		});
 		super(options);
 		// After the super call, overwrite the methods on the options object
@@ -39,7 +39,7 @@ class ${className} extends utils.Adapter {
 			objectChange: this.onObjectChange,
 			stateChange: this.onStateChange,
 			// message: this.onMessage,
-			unload: this.onUnload,
+			unload: this.onUnload
 		});
 	}
 
