@@ -28,7 +28,7 @@ const options: AxiosRequestConfig = {
 		createPrResponse = e.response;
 		console.error(red(`PR creation failed with code ${createPrResponse.status}:
 ${createPrResponse.statusText}
-${createPrResponse.data}`));
+${JSON.stringify(createPrResponse.data, null, 4)}`));
 		return process.exit(1);
 	}
 
