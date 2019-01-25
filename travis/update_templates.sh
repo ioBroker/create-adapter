@@ -20,13 +20,16 @@ git config --global user.email "d.griesel@gmx.net"
 git config --global user.name "Al Calzone"
 git remote rm origin
 git remote add origin https://AlCalzone:${GITHUB_TOKEN}@github.com/AlCalzone/ioBroker.template.git
+# Create a new branch for these changes, so the PR creation succeeds later
+export BRANCH_NAME="update-templates-to-$OWN_VERSION"
+git checkout -b $BRANCH_NAME
 git add -A
 git commit -m "Update templates to creator version v$OWN_VERSION" || NO_UPDATE=true
 if [ "$NO_UPDATE" = "true" ]; then
 	echo "Nothing to update"
 	exit 0
 fi
-git push --set-upstream origin master
+git push -u origin $BRANCH_NAME
 
 # Create PR in the ioBroker repo
 cd ..

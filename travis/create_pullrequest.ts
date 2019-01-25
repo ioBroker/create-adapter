@@ -20,7 +20,7 @@ const options: AxiosRequestConfig = {
 			data: {
 				title: `Update templates to creator version v${process.env.OWN_VERSION}`,
 				body: `This PR updates the templates to the latest version of @ioBroker/create-adapter.`,
-				head: "AlCalzone:master",
+				head: `AlCalzone:${process.env.BRANCH_NAME}`,
 				base: "master",
 			},
 		});
