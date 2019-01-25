@@ -110,6 +110,11 @@ async function setupProject_CLI(answers, files) {
     console.log();
     console.log(ansi_colors_1.blueBright("All done! Have fun programming! ") + ansi_colors_1.red("♥"));
 }
+// Enable CI testing without stalling
+if (process.env.TEST_STARTUP) {
+    console.log(ansi_colors_1.green("Startup test succeeded - exiting..."));
+    throw process.exit(0);
+}
 (async function main() {
     const answers = await ask();
     if (installDependencies) {

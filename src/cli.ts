@@ -1,4 +1,4 @@
-import { blueBright, red, underline } from "ansi-colors";
+import { blueBright, red, underline, green } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
@@ -117,6 +117,12 @@ async function setupProject_CLI(answers: Answers, files: File[]) {
 
 	console.log();
 	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
+}
+
+// Enable CI testing without stalling
+if (process.env.TEST_STARTUP) {
+	console.log(green("Startup test succeeded - exiting..."));
+	throw process.exit(0);
 }
 
 (async function main() {

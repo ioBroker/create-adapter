@@ -27,8 +27,9 @@ script:
   - npm run build
   # Remove all dev dependencies
   - npm ci --only=production
-  # Run the test script. We need to do it in another script to test the exit code
-  - bash travis/test.sh
+  # Test if the CLI starts up without any errors
+  - TEST_STARTUP=true npx .
+  # TODO: Test the console output
 
 jobs:
   include:
