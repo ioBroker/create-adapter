@@ -9,7 +9,7 @@ export OWN_VERSION=$(node -e "console.log(require('../package.json').version)")
 
 # Clone the template repo
 rm -rf ioBroker.template
-git clone https://github.com/AlCalzone/ioBroker.template
+git clone https://github.com/ioBroker/ioBroker.template
 
 # Create all templates
 node --require ts-node/register create_templates.ts
