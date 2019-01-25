@@ -29,15 +29,18 @@ class ${className} extends utils.Adapter {
 	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
 	 */
 	constructor(options) {
-		super({
-			...options,
+		Object.assign(options, {
 			name: "${answers.adapterName}",
 		});
-		this.on("ready", this.onReady);
-		this.on("objectChange", this.onObjectChange);
-		this.on("stateChange", this.onStateChange);
-		// this.on("message", this.onMessage);
-		this.on("unload", this.onUnload);
+		super(options);
+		// After the super call, overwrite the methods on the options object
+		Object.assign(options, {
+			ready: this.onReady,
+			objectChange: this.onObjectChange,
+			stateChange: this.onStateChange,
+			// message: this.onMessage,
+			unload: this.onUnload,
+		});
 	}
 
 	/**
