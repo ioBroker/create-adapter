@@ -1,5 +1,8 @@
 # Changelog
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Avoid using events in the ES6 class constructors
+
 ## 1.8.0 (2019-01-24)
 * (AlCalzone & jogibear9988) Add ES6 class support for the main file
 
