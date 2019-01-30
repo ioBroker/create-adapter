@@ -18,7 +18,7 @@ const iopackage = require("./io-package.json");
 const version = (pkg && pkg.version) ? pkg.version : iopackage.common.version;
 const fileName = "words.js";
 const EMPTY = "";
-const translate = require("${useTypeScript ? "./build/lib / tools" : "./lib/tools"}").translateText;
+const translate = require("${useTypeScript ? "./build/lib/tools" : "./lib/tools"}").translateText;
 const languages = {
     en: {},
     de: {},
