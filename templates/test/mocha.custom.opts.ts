@@ -1,5 +1,5 @@
 import * as os from "os";
-import { readFile, TemplateFunction } from "../../src/lib/createAdapter";
+import { TemplateFunction } from "../../src/lib/createAdapter";
 
 export = (answers => {
 
