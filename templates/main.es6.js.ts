@@ -1,4 +1,4 @@
-import { readFile, TemplateFunction } from "../src/lib/createAdapter";
+import { TemplateFunction } from "../src/lib/createAdapter";
 import { kebabCaseToUpperCamelCase } from "../src/lib/tools";
 
 const templateFunction: TemplateFunction = async answers => {

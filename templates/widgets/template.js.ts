@@ -1,4 +1,4 @@
-import { readFile, TemplateFunction } from "../../src/lib/createAdapter";
+import { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 

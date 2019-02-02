@@ -1,6 +1,6 @@
 import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
-import { readFile, TemplateFunction } from "../src/lib/createAdapter";
+import { TemplateFunction } from "../src/lib/createAdapter";
 import { translateText } from "../src/lib/tools";
 
 export = (async answers => {
