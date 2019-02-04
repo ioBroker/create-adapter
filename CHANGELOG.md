@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+* (ldittmar) Yandex Translator added to gulpfile. Use `gulp translateAndUpdateWordsJS --yandex YANDEXTRANSLATORAPIKEY` (#84)
+
 ## 1.8.0 (2019-01-24)
 * (AlCalzone & jogibear9988) Add ES6 class support for the main file
 
@@ -20,7 +23,7 @@
 * (AlCalzone) Print the creator version in the main file header (fixes #52)
 * (ldittmar) Add zh-cn (chinese) language
 * (jogibear9988) Add translation to gulp
-* (ldittbar) Improve README.md (#25)
+* (ldittmar) Improve README.md (#25)
 * (AlCalzone) Allow editing static templates in separate files with the correct extension (#62)
 * (ldittmar) Merge translations of VIS and admin, fix gulpfile template (#63)
 * (ldittmar & AlCalzone) Support custom_m.html (fixes #61)
