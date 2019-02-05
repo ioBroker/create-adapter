@@ -42,7 +42,6 @@ async function translateText(text, targetLang) {
     } catch (e) {
         throw new Error(`Could not translate to "${targetLang}": ${e}`);
     }
-    return text;
 }
 
 module.exports = {
