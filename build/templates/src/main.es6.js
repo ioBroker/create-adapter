@@ -38,14 +38,14 @@ class ${className} extends utils.Adapter {
 		Object.assign(options, {
 			name: "${answers.adapterName}",
 		});
-		super(options);
+		super(options as ioBroker.AdapterOptions);
 		// After the super call, overwrite the methods on the options object
 		Object.assign(options, {
-			ready: this.onReady,
-			objectChange: this.onObjectChange,
-			stateChange: this.onStateChange,
-			// message: this.onMessage,
-			unload: this.onUnload,
+			ready: this.onReady.bind(this),
+			objectChange: this.onObjectChange.bind(this),
+			stateChange: this.onStateChange.bind(this),
+			// message: this.onMessage.bind(this),
+			unload: this.onUnload.bind(this),
 		});
 	}
 
