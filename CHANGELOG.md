@@ -1,6 +1,8 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
+* (ldittmar) Added Yandex translator to gulpfile.js (#84).  
+To use it, append `--yandex <yandex_api_key>` to the gulp command.
 * (AlCalzone) Add license to io-package.json (fixes #88)
 
 ## 1.8.0 (2019-01-24)
@@ -23,7 +25,7 @@
 * (AlCalzone) Print the creator version in the main file header (fixes #52)
 * (ldittmar) Add zh-cn (chinese) language
 * (jogibear9988) Add translation to gulp
-* (ldittbar) Improve README.md (#25)
+* (ldittmar) Improve README.md (#25)
 * (AlCalzone) Allow editing static templates in separate files with the correct extension (#62)
 * (ldittmar) Merge translations of VIS and admin, fix gulpfile template (#63)
 * (ldittmar & AlCalzone) Support custom_m.html (fixes #61)
