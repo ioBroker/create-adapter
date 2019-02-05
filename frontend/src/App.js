@@ -9,6 +9,9 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 
 import Comm from './Comm';
 
@@ -25,14 +28,22 @@ const styles = theme => ({
         right: 20
     },
 	textInputs: {
-        width: 'calc(100% - 40px)'
+        width: '100%'
     },
+	selectType: {
+		marginTop: 15
+	},
     buttonCheck: {
         marginLeft: 10,
         marginRight: 20,
     },
 	page: {
     	padding: 20
+	},
+	typeDesc: {
+		fontSize: 10,
+		fontStyle: 'italic',
+		paddingLeft: 10
 	},
     body: {
 
@@ -89,39 +100,34 @@ class App extends Component {
 			step: 0,
 			answers: {
 				"cli": false,
-				"adapterName": "adaptername",
-				"title": "My Tests",
-				"description": "User tries to test adapter creator",
-				"features": [
-					"adapter"
-				],
-				"adminFeatures": [],
-				"type": "date-and-time",
-				"startMode": "daemon",
-				"language": "JavaScript",
-				"tools": [
+				"adapterName": window.localStorage.getItem('adapterName') || "adaptername",
+				"title": window.localStorage.getItem('title') || "My Tests",
+				"description": window.localStorage.getItem('description') || "User tries to test adapter creator",
+				"features": window.localStorage.getItem('features') ? JSON.parse(window.localStorage.getItem('features')) : ["adapter"],
+				"adminFeatures": window.localStorage.getItem('adminFeatures') ? JSON.parse(window.localStorage.getItem('adminFeatures')) : [],
+				"type": window.localStorage.getItem('type') || '',
+				"startMode": window.localStorage.getItem('startMode') || "daemon",
+				"language": window.localStorage.getItem('language') || "JavaScript",
+				"tools": window.localStorage.getItem('tools') ? JSON.parse(window.localStorage.getItem('tools')) : [
 					"ESLint",
 					"type checking"
 				],
-				"indentation": "Space (4)",
-				"quotes": "single",
-				"es6class": "no",
-				"authorName": "Bluefox",
-				"authorGithub": "GermanBluefox",
-				"authorEmail": "dogafox@gmail.com",
-				"gitCommit": "no",
-				"license": {
-					"id": "MIT",
-					"name": "MIT License",
-					"text":
-						"MIT License\n\nCopyright (c) [year] [fullname]\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FORA PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
-				}
+				"indentation": window.localStorage.getItem('indentation') || "Space (4)",
+				"quotes": window.localStorage.getItem('quotes') || "single",
+				"es6class": window.localStorage.getItem('es6class') || "no",
+				"authorName": window.localStorage.getItem('authorName') || "Bluefox",
+				"authorGithub": window.localStorage.getItem('authorGithub') || "GermanBluefox",
+				"authorEmail": window.localStorage.getItem('authorEmail') || "dogafox@gmail.com",
+				"gitCommit": window.localStorage.getItem('gitCommit') || "no",
+				"license": window.localStorage.getItem('license') || "MIT License"
 			}
         };
 
         this.checkers = [
         	this.checkTitle,
         	this.checkAdapterName,
+        	this.checkType,
+
 		];
 
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -144,6 +150,7 @@ class App extends Component {
 			error: null,
 			requesting: true
 		});
+
         Comm.create(this.state.answers, (err, blob) => {
             if (err) {
                 this.setState({
@@ -188,8 +195,14 @@ class App extends Component {
 		return false;
 	}
 
+	// returns true if adapter name is invalid
+	checkType(text) {
+		text = text || this.state.answers.type;
+		return !isNotEmpty(text);
+	}
+
 	checkAllValid() {
-    	return !this.checkers.find(func => !func.call(this));
+    	return !this.checkers.find(func => func.call(this));
 	}
 
 	updateAnswers(attr, value, _result, i) {
@@ -198,6 +211,7 @@ class App extends Component {
 			_result = JSON.parse(JSON.stringify(this.state.answers));
 			this.updateAnswers(parts, value, _result, 0);
 			this.setState({answers: _result});
+			window.localStorage.setItem(attr, typeof value === 'object' ? JSON.stringify(value): value.toString());
 		} else {
 			if (attr.length - 1 === i) {
 				_result[attr[i]] = value;
@@ -207,13 +221,31 @@ class App extends Component {
 		}
 	}
 
+	parseTypeText(text) {
+    	const m = text.match(/\(([^)]+)/);
+    	if (m) {
+    		return [text.replace('(' + m[1] + ')', '').trim(), (<span className={this.props.classes.typeDesc}>{m[1]}</span>)]
+		} else {
+    		return text;
+		}
+	}
+
 	renderType() {
-		return (<Select
-			value={this.state.answers.type}
-			onChange={e => this.updateAnswers('type', e.target.value)}
-		>
-			{ADAPTER_TYPES.map(type => (<MenuItem value={type.value}>{type.message}</MenuItem>))}
-		</Select>);
+		return (<FormControl className={this.props.classes.selectType + ' ' + this.props.classes.textInputs}>
+			<InputLabel shrink htmlFor="age-label-placeholder">
+				Type
+			</InputLabel>
+			<Select
+				disabled={this.state.requesting}
+				error={this.checkType()}
+				value={this.state.answers.type}
+				onChange={e => this.updateAnswers('type', e.target.value)}
+			>
+				(<MenuItem value="">Please select</MenuItem>)
+				{ADAPTER_TYPES.map(type => (<MenuItem value={type.value}>{this.parseTypeText(type.message)}</MenuItem>))}
+			</Select>
+			<FormHelperText>Select adapter type</FormHelperText>
+		</FormControl>);
 	}
 
     renderStep0() {
@@ -221,7 +253,8 @@ class App extends Component {
 
     	return [
 			(<TextField
-				error={!this.checkAdapterName()}
+				error={this.checkAdapterName()}
+				disabled={this.state.requesting}
 				label="Adapter name"
 				className={this.props.classes.adapterName + ' ' + this.props.classes.textInputs}
 				value={this.state.answers.adapterName}
@@ -231,6 +264,7 @@ class App extends Component {
 			/>),
 			(<TextField
 				error={!!titleError}
+				disabled={this.state.requesting}
 				label="Adapter title"
 				className={this.props.classes.title + ' ' + this.props.classes.textInputs}
 				value={this.state.answers.title}
@@ -240,7 +274,8 @@ class App extends Component {
 			/>),
 			(<TextField
 				label="Description"
-				error={isNotEmpty(this.state.answers.description)}
+				disabled={this.state.requesting}
+				error={!isNotEmpty(this.state.answers.description)}
 				className={this.props.classes.title + ' ' + this.props.classes.textInputs}
 				value={this.state.answers.description}
 				onChange={e => this.updateAnswers('description', e.target.value)}
@@ -260,7 +295,7 @@ class App extends Component {
                         {
                             this.state.requesting ?
                                 (<CircularProgress className={this.props.classes.buttonCheck} color="secondary" />) :
-                                (<Fab className={this.props.classes.buttonCheck} size="small" color="secondary" disabled={!this.checkAllValid()} onClick={() => this.onCreate()} aria-label="Check"><CheckIcon /></Fab>)
+                                (<Fab className={this.props.classes.buttonCheck} size="small" color="secondary" variant="extended"  disabled={!this.checkAllValid()} onClick={() => this.onCreate()} aria-label="Check"><CheckIcon />Generate</Fab>)
                         }
                     </Toolbar>
                 </AppBar>

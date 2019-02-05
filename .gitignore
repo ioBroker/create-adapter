@@ -14,3 +14,5 @@ iobroker-create-adapter-*.tgz
 !/lambda/package.json
 !/lambda/test.js
 /.idea
+/frontend/config.json
+/frontend/build

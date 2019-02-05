@@ -84,6 +84,7 @@ exports.handler = async (event) => {
 	}
 	// Check all answers
 	questions.checkAnswers(answers);
+	answers = await questions.formatAnswers(answers);
 	await questions.validateAnswers(answers, []);
 
 	// Create adapter directory
