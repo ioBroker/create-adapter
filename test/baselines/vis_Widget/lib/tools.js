@@ -19,24 +19,23 @@ function isObject(it) {
  * @returns {it is any[]}
  */
 function isArray(it) {
-	if (Array.isArray != null)
-		return Array.isArray(it);
+	if (typeof Array.isArray === "function") return Array.isArray(it);
 	return Object.prototype.toString.call(it) === "[object Array]";
 }
 
 /**
- * Choose the right tranalation API
+ * Translates text to the target language. Automatically chooses the right translation API.
  * @param {string} text The text to translate
  * @param {string} targetLang The target languate
- * @param {string} yandex api key
+ * @param {string} [yandexApiKey] The yandex API key. You can create one for free at https://translate.yandex.com/developers
  * @returns {Promise<string>}
  */
-async function translateText(text, targetLang, yandex) {
+async function translateText(text, targetLang, yandexApiKey) {
 	if (targetLang === "en") {
 		return text;
 	}
-	if (yandex) {
-		return await translateYandex(text, targetLang, yandex);
+	if (yandexApiKey) {
+		return await translateYandex(text, targetLang, yandexApiKey);
 	} else {
 		return await translateGoogle(text, targetLang);
 	}
@@ -46,15 +45,15 @@ async function translateText(text, targetLang, yandex) {
  * Translates text with Yandex API
  * @param {string} text The text to translate
  * @param {string} targetLang The target languate
- * @param {string} yandex api key
+ * @param {string} [apiKey] The yandex API key. You can create one for free at https://translate.yandex.com/developers
  * @returns {Promise<string>}
  */
-async function translateYandex(text, targetLang, yandex) {
+async function translateYandex(text, targetLang, apiKey) {
 	if (targetLang === "zh-cn") {
 		targetLang = "zh";
 	}
 	try {
-		const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandex}&text=${encodeURIComponent(text)}&lang=en-${targetLang}`;
+		const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${apiKey}&text=${encodeURIComponent(text)}&lang=en-${targetLang}`;
 		const response = await axios({url, timeout: 15000});
 		if (response.data && response.data["text"]) {
 			return response.data["text"][0];

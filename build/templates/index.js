@@ -39,6 +39,7 @@ const templates = [
     { name: "widgets/template.js.ts", templateFunction: require("./widgets/template.js") },
     { name: "_eslintrc.json.ts", templateFunction: require("./_eslintrc.json") },
     { name: "_gitignore.ts", templateFunction: require("./_gitignore") },
+    { name: "_issue_template/bug_report.md.ts", templateFunction: require("./_issue_template/bug_report.md") },
     { name: "_npmignore.ts", templateFunction: require("./_npmignore") },
     { name: "_travis.yml.ts", templateFunction: require("./_travis.yml") },
 ];
