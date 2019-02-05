@@ -50,6 +50,7 @@
             "Smart Home",
             "home automation"
         ],
+        "license": "LGPL-3.0",
         "platform": "Javascript/Node.js",
         "main": "main.js",
         "icon": "test-adapter.png",

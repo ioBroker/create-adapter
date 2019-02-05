@@ -39,5 +39,4 @@ export async function translateText(text: string, targetLang: string): Promise<s
 	} catch (e) {
 		throw new Error(`Could not translate to "${targetLang}": ${e}`);
 	}
-	return text;
 }

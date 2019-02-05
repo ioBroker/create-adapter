@@ -3,6 +3,7 @@
 ## __WORK IN PROGRESS__
 * (ldittmar) Added Yandex translator to gulpfile.js (#84).  
 To use it, append `--yandex <yandex_api_key>` to the gulp command.
+* (AlCalzone) Add license to io-package.json (fixes #88)
 
 ## 1.8.0 (2019-01-24)
 * (AlCalzone & jogibear9988) Add ES6 class support for the main file
