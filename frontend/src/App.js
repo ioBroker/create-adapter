@@ -30,6 +30,10 @@ const styles = theme => ({
         top: 0,
         right: 20
     },
+	optional: {
+		fontSize: 10,
+		color: '#4d4d4d'
+	},
 	textInputs: {
         width: '100%'
     },
@@ -41,7 +45,8 @@ const styles = theme => ({
         marginRight: 20,
     },
 	page: {
-    	padding: 20
+    	paddingLeft: 20,
+    	paddingRight: 20
 	},
 	typeDesc: {
 		fontSize: 10,
@@ -132,11 +137,11 @@ class App extends Component {
 			}
         };
 
-        this.checkers = [
-        	this.checkTitle,
-        	this.checkAdapterName,
-        	this.checkType,
-
+        this.steps = [
+			{name: 'Name and icons',     render: this.renderStepNames,      optional: false, checkers: [this.checkTitle, this.checkAdapterName, this.checkType]},
+			{name: 'Running properties', render: this.renderStepProperties, optional: false},
+			{name: 'Settings',           render: this.renderStepSettings,   optional: false},
+			{name: 'Generate',           render: this.renderStepGenerate,   optional: false}
 		];
 
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -189,7 +194,7 @@ class App extends Component {
     // returns true if adapter name is invalid
     checkAdapterName(text) {
     	text = text || this.state.answers.adapterName;
-		return !!text.match(/[^-a-z0-9]/);
+		return !text || !!text.match(/[^-a-z0-9]/);
 	}
 
 	// returns true if adapter title is invalid
@@ -208,10 +213,6 @@ class App extends Component {
 	checkType(text) {
 		text = text || this.state.answers.type;
 		return !isNotEmpty(text);
-	}
-
-	checkAllValid() {
-    	return !this.checkers.find(func => func.call(this));
 	}
 
 	updateAnswers(attr, value, _result, i) {
@@ -257,7 +258,7 @@ class App extends Component {
 		</FormControl>);
 	}
 
-    renderStep0() {
+	renderStepNames() {
     	const titleError = this.checkTitle();
 
     	return [
@@ -295,12 +296,36 @@ class App extends Component {
 		];
 	}
 
-	getSteps() {
-		return ['Name and description', 'Working process', 'Features'];
+	renderStepProperties() {
+		return 'What is an ad group anyways?';
 	}
 
-	isStepOptional() {
-		return false;
+	renderStepSettings() {
+		return 'This is the bit I really care about!';
+	}
+
+	renderStepGenerate() {
+		return 'You are ready to generate the template.';
+	}
+
+	checkStepNames() {
+		return true;
+	}
+
+	checkStepProperties() {
+		return true;
+	}
+
+	checkStepSettings() {
+		return true;
+	}
+
+	getSteps() {
+		return this.steps.map(page => page.name);
+	}
+
+	isStepOptional(index) {
+		return this.steps[index].optional;
 	}
 
 	handleNext() {
@@ -341,9 +366,7 @@ class App extends Component {
 	};
 
 	handleReset() {
-		this.setState({
-			activeStep: 0,
-		});
+		this.setState({activeStep: 0});
 	};
 
 	isStepSkipped(step) {
@@ -351,27 +374,24 @@ class App extends Component {
 	}
 
 	getStepContent(step) {
-		switch (step) {
-			case 0:
-				return this.renderStep0();
-			case 1:
-				return 'What is an ad group anyways?';
-			case 2:
-				return 'This is the bit I really care about!';
-			default:
-				return 'Unknown step';
-		}
+		return this.steps[step].render.call(this);
 	}
 
 	renderNextButton(steps) {
 		if (this.state.activeStep === steps.length - 1) {
 			return this.state.requesting ?
 				(<CircularProgress className={this.props.classes.buttonCheck} color="secondary" />) :
-				(<Fab className={this.props.classes.buttonCheck} size="small" color="secondary" variant="extended"  disabled={!this.checkAllValid()} onClick={() => this.onCreate()} aria-label="Check"><CheckIcon />Generate</Fab>);
+				(<Fab className={this.props.classes.buttonCheck} size="small" color="secondary" variant="extended" onClick={() => this.onCreate()} aria-label="Check"><CheckIcon />Generate</Fab>);
 		} else {
+			const isEnabled = this.steps[this.state.activeStep].checkers ?
+				!this.steps[this.state.activeStep].checkers.find(checker =>
+					checker.call(this)) :
+				true;
+
 			return (<Button
 				variant="contained"
 				color="primary"
+				disabled={!isEnabled}
 				onClick={() => this.handleNext()}
 				className={this.props.classes.button}
 			>
@@ -395,7 +415,7 @@ class App extends Component {
 						const props = {};
 						const labelProps = {};
 						if (this.isStepOptional(index)) {
-							labelProps.optional = <caption>Optional</caption>;
+							labelProps.optional = <caption className={this.props.classes.optional}>Optional</caption>;
 						}
 						if (this.isStepSkipped(index)) {
 							props.completed = false;
@@ -407,43 +427,32 @@ class App extends Component {
 						);
 					})}
 				</Stepper>
-				<div  className={this.props.classes.page}>
-					{this.state.activeStep === steps.length ? (
+				<div className={this.props.classes.page}>
+					<div>
+						<p className={this.props.classes.instructions}>{this.getStepContent(this.state.activeStep)}</p>
 						<div>
-							<p className={this.props.classes.instructions}>
-								All steps completed - you&apos;re finished
-							</p>
-							<Button onClick={() => this.handleReset()} className={this.props.classes.button}>
-								Reset
+							<Button
+								disabled={this.state.activeStep === 0 || this.state.requesting}
+								onClick={() => this.handleBack()}
+								className={this.props.classes.button}
+							>
+								Back
 							</Button>
-						</div>
-					) : (
-						<div>
-							<p className={this.props.classes.instructions}>{this.getStepContent(this.state.activeStep)}</p>
-							<div>
+							{this.isStepOptional(this.state.activeStep) && (
 								<Button
-									disabled={this.state.activeStep === 0 || this.state.requesting}
-									onClick={() => this.handleBack()}
+									disabled={this.state.requesting}
+									variant="contained"
+									color="primary"
+									onClick={() => this.handleSkip()}
 									className={this.props.classes.button}
 								>
-									Back
+									Skip
 								</Button>
-								{this.isStepOptional(this.state.activeStep) && (
-									<Button
-										disabled={this.state.requesting}
-										variant="contained"
-										color="primary"
-										onClick={() => this.handleSkip()}
-										className={this.props.classes.button}
-									>
-										Skip
-									</Button>
-								)}
-								{this.renderNextButton(steps)}
+							)}
+							{this.renderNextButton(steps)}
 
-							</div>
 						</div>
-					)}
+					</div>
 				</div>
             </div>
         );
