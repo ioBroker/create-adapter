@@ -7,23 +7,26 @@ import Fab from '@material-ui/core/Fab';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
 
 import Comm from './Comm';
 
 import CheckIcon from '@material-ui/icons/DoneOutlined';
-import ErrorIcon from '@material-ui/icons/Cancel';
-import WarningIcon from '@material-ui/icons/Announcement';
 
 const NARROW_WIDTH = 500;
 
 const styles = theme => ({
     toolbarTitle: {
-        position: 'absolute',
+    	paddingLeft: 20,
+        position: 'relative',
+		fontSize: 16,
         top: 0,
         right: 20
     },
@@ -97,7 +100,8 @@ class App extends Component {
             requesting: false,
             error: null,
             screenWidth: window.innerWidth,
-			step: 0,
+			activeStep: 0,
+			skipped: new Set(),
 			answers: {
 				"cli": false,
 				"adapterName": window.localStorage.getItem('adapterName') || "adaptername",
@@ -120,6 +124,7 @@ class App extends Component {
 				"authorEmail": window.localStorage.getItem('authorEmail') || "dogafox@gmail.com",
 				"gitCommit": window.localStorage.getItem('gitCommit') || "no",
 				"license": window.localStorage.getItem('license') || "MIT License",
+
 				"icon": "data:image/png;base64,",
 				"parameters": [
 					//{name: "value", type: "string"}
@@ -290,22 +295,156 @@ class App extends Component {
 		];
 	}
 
-    render() {
+	getSteps() {
+		return ['Name and description', 'Working process', 'Features'];
+	}
+
+	isStepOptional() {
+		return false;
+	}
+
+	handleNext() {
+		const { activeStep } = this.state;
+		let { skipped } = this.state;
+		if (this.isStepSkipped(activeStep)) {
+			skipped = new Set(skipped.values());
+			skipped.delete(activeStep);
+		}
+		this.setState({
+			activeStep: activeStep + 1,
+			skipped,
+		});
+	};
+
+	handleBack() {
+		this.setState(state => ({
+			activeStep: state.activeStep - 1,
+		}));
+	};
+
+	handleSkip() {
+		const { activeStep } = this.state;
+		if (!this.isStepOptional(activeStep)) {
+			// You probably want to guard against something like this,
+			// it should never occur unless someone's actively trying to break something.
+			throw new Error("You can't skip a step that isn't optional.");
+		}
+
+		this.setState(state => {
+			const skipped = new Set(state.skipped.values());
+			skipped.add(activeStep);
+			return {
+				activeStep: state.activeStep + 1,
+				skipped,
+			};
+		});
+	};
+
+	handleReset() {
+		this.setState({
+			activeStep: 0,
+		});
+	};
+
+	isStepSkipped(step) {
+		return this.state.skipped.has(step);
+	}
+
+	getStepContent(step) {
+		switch (step) {
+			case 0:
+				return this.renderStep0();
+			case 1:
+				return 'What is an ad group anyways?';
+			case 2:
+				return 'This is the bit I really care about!';
+			default:
+				return 'Unknown step';
+		}
+	}
+
+	renderNextButton(steps) {
+		if (this.state.activeStep === steps.length - 1) {
+			return this.state.requesting ?
+				(<CircularProgress className={this.props.classes.buttonCheck} color="secondary" />) :
+				(<Fab className={this.props.classes.buttonCheck} size="small" color="secondary" variant="extended"  disabled={!this.checkAllValid()} onClick={() => this.onCreate()} aria-label="Check"><CheckIcon />Generate</Fab>);
+		} else {
+			return (<Button
+				variant="contained"
+				color="primary"
+				onClick={() => this.handleNext()}
+				className={this.props.classes.button}
+			>
+				Next
+			</Button>)
+		}
+	}
+
+	render() {
+		const steps = this.getSteps();
+
         return (
             <div className={this.props.classes.body}>
                 <AppBar position="static" color="primary">
                     <Toolbar>
                         {this.state.screenWidth > NARROW_WIDTH ? (<h4 className={this.props.classes.toolbarTitle}>Adapter creator</h4>) : null}
-                        {
-                            this.state.requesting ?
-                                (<CircularProgress className={this.props.classes.buttonCheck} color="secondary" />) :
-                                (<Fab className={this.props.classes.buttonCheck} size="small" color="secondary" variant="extended"  disabled={!this.checkAllValid()} onClick={() => this.onCreate()} aria-label="Check"><CheckIcon />Generate</Fab>)
-                        }
                     </Toolbar>
                 </AppBar>
-                <div className={this.props.classes.page}>
-					{this.state.step === 0 ? this.renderStep0() : null}
-                </div>
+				<Stepper activeStep={this.state.activeStep}>
+					{steps.map((label, index) => {
+						const props = {};
+						const labelProps = {};
+						if (this.isStepOptional(index)) {
+							labelProps.optional = <caption>Optional</caption>;
+						}
+						if (this.isStepSkipped(index)) {
+							props.completed = false;
+						}
+						return (
+							<Step key={label} {...props}>
+								<StepLabel {...labelProps}>{label}</StepLabel>
+							</Step>
+						);
+					})}
+				</Stepper>
+				<div  className={this.props.classes.page}>
+					{this.state.activeStep === steps.length ? (
+						<div>
+							<p className={this.props.classes.instructions}>
+								All steps completed - you&apos;re finished
+							</p>
+							<Button onClick={() => this.handleReset()} className={this.props.classes.button}>
+								Reset
+							</Button>
+						</div>
+					) : (
+						<div>
+							<p className={this.props.classes.instructions}>{this.getStepContent(this.state.activeStep)}</p>
+							<div>
+								<Button
+									disabled={this.state.activeStep === 0 || this.state.requesting}
+									onClick={() => this.handleBack()}
+									className={this.props.classes.button}
+								>
+									Back
+								</Button>
+								{this.isStepOptional(this.state.activeStep) && (
+									<Button
+										disabled={this.state.requesting}
+										variant="contained"
+										color="primary"
+										onClick={() => this.handleSkip()}
+										className={this.props.classes.button}
+									>
+										Skip
+									</Button>
+								)}
+								{this.renderNextButton(steps)}
+
+							</div>
+						</div>
+					)}
+				</div>
             </div>
         );
     }
