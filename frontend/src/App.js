@@ -119,7 +119,11 @@ class App extends Component {
 				"authorGithub": window.localStorage.getItem('authorGithub') || "GermanBluefox",
 				"authorEmail": window.localStorage.getItem('authorEmail') || "dogafox@gmail.com",
 				"gitCommit": window.localStorage.getItem('gitCommit') || "no",
-				"license": window.localStorage.getItem('license') || "MIT License"
+				"license": window.localStorage.getItem('license') || "MIT License",
+				"icon": "data:image/png;base64,",
+				"parameters": [
+					//{name: "value", type: "string"}
+				]
 			}
         };
 
