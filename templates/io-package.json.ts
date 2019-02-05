@@ -1,6 +1,6 @@
 import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
-import { readFile, TemplateFunction } from "../src/lib/createAdapter";
+import { TemplateFunction } from "../src/lib/createAdapter";
 import { translateText } from "../src/lib/tools";
 
 export = (async answers => {
@@ -58,6 +58,7 @@ export = (async answers => {
 			"Smart Home",
 			"home automation",
 		],
+		"license": "${answers.license!.id}",
 		"platform": "Javascript/Node.js",
 		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${answers.adapterName}.png",

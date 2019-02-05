@@ -1,4 +1,4 @@
-import { readFile, TemplateFunction } from "../src/lib/createAdapter";
+import { TemplateFunction } from "../src/lib/createAdapter";
 import { formatLicense } from "../src/lib/tools";
 
 export = (answers => {
