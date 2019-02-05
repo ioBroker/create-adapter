@@ -58,6 +58,7 @@ export = (async answers => {
 			"Smart Home",
 			"home automation",
 		],
+		"license": "${answers.license!.id}",
 		"platform": "Javascript/Node.js",
 		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${answers.adapterName}.png",
