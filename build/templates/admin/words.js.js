@@ -1,25 +1,28 @@
 "use strict";
-module.exports = (answers => {
+const tools_1 = require("../../src/lib/tools");
+module.exports = (async (answers) => {
     const isAdapter = answers.features.indexOf("adapter") > -1;
     const isWidget = answers.features.indexOf("vis") > -1;
-    const template = `
-/*global systemDictionary:true */
-'use strict';
-
-systemDictionary = {
-	${isAdapter ? (`
-	"${answers.adapterName} adapter settings": {
-		"en": "Adapter settings for ${answers.adapterName}",
-		"de": "Adaptereinstellungen für ${answers.adapterName}",
-		"ru": "Настройки адаптера для ${answers.adapterName}",
-		"pt": "Configurações do adaptador para ${answers.adapterName}",
-		"nl": "Adapterinstellingen voor ${answers.adapterName}",
-		"fr": "Paramètres d'adaptateur pour ${answers.adapterName}",
-		"it": "Impostazioni dell'adattatore per ${answers.adapterName}",
-		"es": "Ajustes del adaptador para ${answers.adapterName}",
-		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
-		"zh-cn": "${answers.adapterName}的适配器设置"
-	},
+    let words = "";
+    // generate native parameters
+    if (answers.parameters) {
+        const parts = await Promise.all(answers.parameters.map(async (param) => `
+	"${param.title}": {
+		"en": "${param.title}",
+		"de": "${await tools_1.translateText(param.title, "de")}",
+		"ru": "${await tools_1.translateText(param.title, "ru")}",
+		"pt": "${await tools_1.translateText(param.title, "pt")}",
+		"nl": "${await tools_1.translateText(param.title, "nl")}",
+		"fr": "${await tools_1.translateText(param.title, "fr")}",
+		"it": "${await tools_1.translateText(param.title, "it")}",
+		"es": "${await tools_1.translateText(param.title, "es")}",
+		"pl": "${await tools_1.translateText(param.title, "pl")}",
+		"zh-cn": "${await tools_1.translateText(param.title, "zh-cn")}"
+	}`));
+        words = parts.join(",\n");
+    }
+    else {
+        words = `
 	"option 1 description": {
 		"en": "Option 1 is cool",
 		"de": "Option 1 ist cool",
@@ -43,7 +46,27 @@ systemDictionary = {
 		"es": "La opción 2 no es",
 		"pl": "Opcja 2 nie jest",
 		"zh-cn": "选项2不是"
-	}${isWidget ? "," : ""}
+	}`;
+    }
+    const template = `
+/*global systemDictionary:true */
+'use strict';
+
+systemDictionary = {
+	${isAdapter ? (`
+	"${answers.adapterName} adapter settings": {
+		"en": "Adapter settings for ${answers.adapterName}",
+		"de": "Adaptereinstellungen für ${answers.adapterName}",
+		"ru": "Настройки адаптера для ${answers.adapterName}",
+		"pt": "Configurações do adaptador para ${answers.adapterName}",
+		"nl": "Adapterinstellingen voor ${answers.adapterName}",
+		"fr": "Paramètres d'adaptateur pour ${answers.adapterName}",
+		"it": "Impostazioni dell'adattatore per ${answers.adapterName}",
+		"es": "Ajustes del adaptador para ${answers.adapterName}",
+		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
+		"zh-cn": "${answers.adapterName}的适配器设置"
+	},
+	${words}${isWidget ? "," : ""}
 	`) : ""}
 	${isWidget ? (`
 	"myColor": {

@@ -2,6 +2,14 @@
 const async_1 = require("alcalzone-shared/async");
 const JSON5 = require("json5");
 const fetchVersions_1 = require("../src/lib/fetchVersions");
+async function safeReadVersion(dep) {
+    try {
+        return await fetchVersions_1.fetchPackageVersion(dep);
+    }
+    catch (e) {
+        return "0.0.0";
+    }
+}
 const templateFunction = async (answers) => {
     const isAdapter = answers.features.indexOf("adapter") > -1;
     const isWidget = answers.features.indexOf("vis") > -1;
@@ -12,7 +20,7 @@ const templateFunction = async (answers) => {
     const dependencyPromises = []
         .concat(isAdapter ? ["@iobroker/adapter-core"] : [])
         .sort()
-        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchPackageVersion(dep)}"`));
+        .map((dep) => (async () => `"${dep}": "^${await safeReadVersion(dep)}"`));
     const dependencies = await async_1.promiseSequence(dependencyPromises);
     const devDependencyPromises = []
         .concat([
@@ -51,7 +59,7 @@ const templateFunction = async (answers) => {
         .concat(useESLint ? ["eslint"] : [])
         .concat(useNyc ? ["nyc"] : [])
         .sort()
-        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchPackageVersion(dep)}"`));
+        .map((dep) => (async () => `"${dep}": "^${await safeReadVersion(dep)}"`));
     const devDependencies = await async_1.promiseSequence(devDependencyPromises);
     const template = `
 {

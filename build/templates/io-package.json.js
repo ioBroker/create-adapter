@@ -13,6 +13,54 @@ module.exports = (async (answers) => {
     const titleLang = JSON.stringify(objects_1.composeObject(await Promise.all(languages.map(async (lang) => [lang, await tools_1.translateText(title, lang)]))));
     const description = answers.description || answers.adapterName;
     const descriptionLang = JSON.stringify(objects_1.composeObject(await Promise.all(languages.map(async (lang) => [lang, await tools_1.translateText(description, lang)]))));
+    let native = "";
+    // generate native parameters
+    if (answers.parameters) {
+        const params = {};
+        answers.parameters.forEach(param => {
+            if (param.type === "checkbox") {
+                params[param.name] = !!param.def;
+            }
+            else if (param.type === "number") {
+                params[param.name] = parseFloat(param.def);
+            }
+            else {
+                params[param.name] = param.def;
+            }
+        });
+        native = JSON.stringify(params, null, 2);
+    }
+    else {
+        native = JSON.stringify({
+            option1: true,
+            option2: "42",
+        }, null, 2);
+    }
+    let connection = "";
+    if (answers.connection === "yes") {
+        connection = `{
+      	"_id":  "info",
+      	"type": "channel",
+      	"common": {
+      	  "name": "Information"
+      	},
+      	"native": {}
+    },
+    {
+      	"_id":  "info.connection",
+      	"type": "state",
+      	"common": {
+      	  "role":  "indicator.connected",
+      	  "name":  "If connected to device or service",
+      	  "type":  "boolean",
+      	  "read":  true,
+      	  "write": false,
+      	  "def":   false
+      	},
+      	"native": {}
+    }
+`;
+    }
     const template = `
 {
 	"common": {
@@ -83,14 +131,11 @@ module.exports = (async (answers) => {
 			${isWidget ? `"vis",` : ""}
 		],
 	},
-	"native": {
-		"option1": true,
-		"option2": "42"
-	},
+	"native": ${native},
 	"objects": [
 	],
 	"instanceObjects": [
-	],
+${connection}],
 }`;
     return JSON.stringify(JSON5.parse(template), null, 4);
 });

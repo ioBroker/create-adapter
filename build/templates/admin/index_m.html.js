@@ -4,6 +4,49 @@ module.exports = (answers => {
     if (!isAdapter)
         return;
     const useReact = answers.adminReact === "yes";
+    let parameters;
+    // generate parameters on the web page
+    if (answers.parameters) {
+        parameters = "";
+        answers.parameters.forEach(param => {
+            if (param.type === "checkbox") {
+                parameters += `
+					<div class="col s6 input-field">
+						<input type="checkbox" class="value" id="${param.name}" />
+						<span for="${param.name}" class="translate">${param.title}</span>
+					</div>`;
+            }
+            else if (param.type === "select" && param.options) {
+                let options = "";
+                param.options.forEach(opt => options += `<option value="${opt.value}">${opt.text}</option>`);
+                parameters += `
+					<div class="col s6 input-field">
+						<select class="value" id="${param.name}">
+							${options}
+						</select>
+						<label for="${param.name}" class="translate">${param.title}</label>
+					</div>`;
+            }
+            else {
+                parameters += `
+					<div class="col s6 input-field">
+						<input type="${param.type || "text"}" class="value" id="${param.name}" />
+						<label for="${param.name}" class="translate">${param.title}</label>
+					</div>`;
+            }
+        });
+    }
+    else {
+        parameters = `
+			<div class="col s6 input-field">
+				<input type="checkbox" class="value" id="option1" />
+				<label for="option1" class="translate">option 1 description</label>
+			</div>
+			<div class="col s6 input-field">
+				<input type="text" class="value" id="option2" />
+				<label for="option2" class="translate">option 2 description</label>
+			</div>`;
+    }
     const template = `
 <html>
 
@@ -72,20 +115,14 @@ ${useReact ? "" : (`
 <body>
 
 	<div class="m adapter-container">
-
-		<!-- Put your content here -->
-		<h1 class="translate">${answers.adapterName} adapter settings</h1>
-
-		<!-- For example two columns with settings: -->
 		<div class="row">
-			<div class="col s6 input-field">
-				<input type="checkbox" class="value" id="option1" />
-				<label for="option1" class="translate">option 1 description</label>
+			<div class="col s12 m4 l2">
+				<img src="${answers.adapterName}.png" class="logo">
 			</div>
-			<div class="col s6 input-field">
-				<input type="text" class="value" id="option2" />
-				<label for="option2" class="translate">option 2 description</label>
-			</div>
+		</div>
+		<!-- For example columns with settings: -->
+		<div class="row">
+			${parameters}
 		</div>
 
 	</div>

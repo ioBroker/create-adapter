@@ -6,17 +6,17 @@ const questions = require("./src/lib/questions");
 /** Where the output should be written */
 const rootDirName = "/tmp";
 
-function deleteFolderRecursive(dirPath, _notRoot) {
+function deleteFolderRecursive(dirPath, delRootDir, _notRoot) {
 	if (fs.existsSync(dirPath)) {
 		fs.readdirSync(dirPath).forEach(file => {
 			const curPath = dirPath + "/" + file;
 			if (fs.lstatSync(curPath).isDirectory()) { // recurse
-				deleteFolderRecursive(curPath, true);
+				deleteFolderRecursive(curPath, delRootDir, true);
 			} else { // delete file
 				fs.unlinkSync(curPath);
 			}
 		});
-		_notRoot && fs.rmdirSync(dirPath);
+		(delRootDir || _notRoot) && fs.rmdirSync(dirPath);
 	}
 }
 
@@ -81,7 +81,7 @@ exports.handler = async (event) => {
 		fs.mkdirSync(rootDirName);
 	} else {
 		// clean dir
-		deleteFolderRecursive(rootDirName);
+		deleteFolderRecursive(rootDirName, false);
 		if (!fs.existsSync(rootDirName)) {
 			fs.mkdirSync(rootDirName);
 		}
@@ -106,10 +106,10 @@ exports.handler = async (event) => {
 	const base64 = fs.readFileSync(fileName).toString("base64");
 
 	try {
-		deleteFolderRecursive(`${rootDirName}/ioBroker.${answers.adapterName}`);
+		deleteFolderRecursive(`${rootDirName}/ioBroker.${answers.adapterName}`, true);
 		fs.unlinkSync(fileName);
 	} catch (e) {
-		console.error('Cannot delete: ' + e);
+		console.error("Cannot delete: " + e);
 	}
 
 	return {

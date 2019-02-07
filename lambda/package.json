@@ -11,5 +11,8 @@
 		"json5": "^2.1.0",
 		"axios": "^0.18.0",
 		"alcalzone-shared": "^1.4.0"
-	}
+	},
+  "script": {
+    "build": "node build"
+  }
 }

@@ -23,7 +23,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
