@@ -114,6 +114,9 @@ const templateFunction: TemplateFunction = async answers => {
 				"lint": "npm run lint:js",
 				"lint:js": "eslint",
 			`) : ""}
+		`) : isWidget ? (`
+			"test:package": "mocha test/package --exit",
+			"test": "npm run test:package",
 		`) : ""}
 	},
 	${useNyc ? `"nyc": {
