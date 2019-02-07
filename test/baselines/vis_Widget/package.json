@@ -20,12 +20,16 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@iobroker/testing": "^1.0.4",
     "@types/gulp": "^4.0.5",
     "axios": "^0.18.0",
     "gulp": "^4.0.0"
   },
   "main": "widgets/test-widget.html",
-  "scripts": {},
+  "scripts": {
+    "test:package": "mocha test/package --exit",
+    "test": "npm run test:package"
+  },
   "bugs": {
     "url": "https://github.com/AlCalzone/ioBroker.test-widget/issues"
   },

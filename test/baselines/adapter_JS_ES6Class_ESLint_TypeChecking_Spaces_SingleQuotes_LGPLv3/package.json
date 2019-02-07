@@ -22,6 +22,7 @@
     "@iobroker/adapter-core": "^1.0.3"
   },
   "devDependencies": {
+    "@iobroker/testing": "^1.0.4",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/gulp": "^4.0.5",
@@ -43,8 +44,9 @@
   "main": "main.js",
   "scripts": {
     "test:js": "mocha --opts test/mocha.custom.opts",
-    "test:package": "mocha test/testPackageFiles.js --exit",
-    "test:iobroker": "mocha test/testStartup.js --exit",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
     "lint": "npm run lint:js",
     "lint:js": "eslint"
