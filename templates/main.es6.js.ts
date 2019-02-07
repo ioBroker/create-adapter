@@ -9,6 +9,27 @@ const templateFunction: TemplateFunction = async answers => {
 
 	const className = kebabCaseToUpperCamelCase(answers.adapterName);
 
+	let configs = "";
+
+	if (answers.parameters) {
+		answers.parameters.forEach(param => {
+			configs += `		this.log.info("config ${param.name}: " + adapter.config.${param.name});\n`;
+		});
+	} else {
+		configs = `
+		this.log.info("config option1: " + adapter.config.option1);
+		this.log.info("config option2: " + adapter.config.option2);
+`;
+	}
+
+	let connection = "";
+	if (answers.connection === "yes") {
+		connection = `
+		// Reset connection state at start
+		this.setState("info.connection", false, true);
+`;
+	}
+
 	const template = `
 "use strict";
 
@@ -48,9 +69,9 @@ class ${className} extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.info("config test1: " + this.config.option1);
-		this.log.info("config test1: " + this.config.option2);
+${configs}
 
+${connection}
 		/*
 		For every state in the system there has to be also an object of type state
 		Here a simple template for a boolean variable named "testVariable"

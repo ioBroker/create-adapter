@@ -67,6 +67,13 @@ class Comm {
             cb && cb(error);
         }
     }
+
+    static getAdapterNames(cb) {
+		fetch('https://raw.githubusercontent.com/ioBroker/ioBroker.repositories/master/sources-dist.json')
+			.then(res => res.json())
+			.then(data => cb && cb(Object.keys(data)))
+			.catch(e => console.error(e));
+	}
 }
 
 export default Comm;

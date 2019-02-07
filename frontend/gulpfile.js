@@ -10,7 +10,7 @@ const mime = require('mime');
 
 const BUCKET_NAME = process.env.AWS_BACKET_NAME || 'adaptercreator';
 const SRC = '../frontend';
-const distributionId = process.env.AWS_DISTRIBUTION_ID || '';
+const distributionId = process.env.AWS_DISTRIBUTION_ID || 'E2GSBLKDSMNFRS';
 
 function uploadOneFile(root, fileName, cb) {
     // Read in the file, convert it to base64, store to S3

@@ -8,6 +8,7 @@ import { Answers, isQuestionGroup, Question, questionsAndText } from "./lib/ques
 import { error, executeCommand, isWindows } from "./lib/tools";
 
 /** Where the output should be written */
+// @ts-ignore
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
 
 /** Asks a series of questions on the CLI */

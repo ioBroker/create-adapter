@@ -3,6 +3,14 @@ import * as JSON5 from "json5";
 import { TemplateFunction } from "../src/lib/createAdapter";
 import { fetchPackageVersion } from "../src/lib/fetchVersions";
 
+async function safeReadVersion(dep: string) {
+	try {
+		return await fetchPackageVersion(dep);
+	} catch (e) {
+		return "0.0.0";
+	}
+}
+
 const templateFunction: TemplateFunction = async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
@@ -15,7 +23,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const dependencyPromises = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
 		.sort()
-		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep)}"`))
+		.map((dep) => (async () => `"${dep}": "^${await safeReadVersion(dep)}"`))
 		;
 	const dependencies = await promiseSequence<string>(dependencyPromises);
 
@@ -56,7 +64,7 @@ const templateFunction: TemplateFunction = async answers => {
 		.concat(useESLint ? ["eslint"] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()
-		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep)}"`))
+		.map((dep) => (async () => `"${dep}": "^${await safeReadVersion(dep)}"`))
 		;
 	const devDependencies = await promiseSequence<string>(devDependencyPromises);
 
