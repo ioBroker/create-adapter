@@ -25,6 +25,8 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/gulp",
 			"gulp",
 			"axios",
+			// testing is always required
+			"@iobroker/testing",
 		])
 		.concat(isAdapter ? [
 			// support adapter testing by default
@@ -100,8 +102,9 @@ const templateFunction: TemplateFunction = async answers => {
 			`) : (`
 				"test:js": "mocha --opts test/mocha.custom.opts",
 			`)}
-			"test:package": "mocha test/testPackageFiles.js --exit",
-			"test:iobroker": "mocha test/testStartup.js --exit",
+			"test:package": "mocha test/package --exit",
+			"test:unit": "mocha test/unit --exit",
+			"test:integration": "mocha test/integration --exit",
 			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
 			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
 			${useTSLint ? (`
