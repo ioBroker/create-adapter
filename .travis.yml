@@ -21,6 +21,8 @@ install:
 script:
   # First run a normal test pass
   - TESTING=true npm test
+  # Also make sure that the template creation does not fail
+  - bash travis/test_template_creation.sh
 
   # Then test on a production environment
   # Therefore build the project
