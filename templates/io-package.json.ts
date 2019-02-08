@@ -26,53 +26,6 @@ export = (async answers => {
 			languages.map(async lang => [lang, await translateText(description, lang)] as [string, string]),
 		)),
 	);
-	let native = "";
-
-	// generate native parameters
-	if (answers.parameters) {
-		const params: any = {};
-		answers.parameters.forEach(param => {
-			if (param.type === "checkbox") {
-				params[param.name] = !!param.def;
-			} else if (param.type === "number") {
-				params[param.name] = parseFloat(param.def);
-			} else {
-				params[param.name] = param.def;
-			}
-		});
-		native = JSON.stringify(params, null, 2);
-	} else {
-		native = JSON.stringify({
-			option1: true,
-			option2: "42",
-		}, null, 2);
-	}
-
-	let connection = "";
-	if (answers.connection === "yes") {
-		connection = `{
-      	"_id":  "info",
-      	"type": "channel",
-      	"common": {
-      	  "name": "Information"
-      	},
-      	"native": {}
-    },
-    {
-      	"_id":  "info.connection",
-      	"type": "state",
-      	"common": {
-      	  "role":  "indicator.connected",
-      	  "name":  "If connected to device or service",
-      	  "type":  "boolean",
-      	  "read":  true,
-      	  "write": false,
-      	  "def":   false
-      	},
-      	"native": {}
-    }
-`;
-	}
 
 	const template = `
 {
@@ -144,11 +97,14 @@ export = (async answers => {
 			${isWidget ? `"vis",` : ""}
 		],
 	},
-	"native": ${native},
+	"native": {
+		"option1": true,
+		"option2": "42"
+	},
 	"objects": [
 	],
 	"instanceObjects": [
-${connection}],
+	],
 }`;
 	return JSON.stringify(JSON5.parse(template), null, 4);
 }) as TemplateFunction;

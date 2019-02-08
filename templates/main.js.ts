@@ -6,27 +6,6 @@ export = (async answers => {
 	const useES6Class = answers.es6class === "yes";
 	if (!useJavaScript || useES6Class) return;
 
-	let configs = "";
-
-	if (answers.parameters) {
-		answers.parameters.forEach(param => {
-			configs += `	adapter.log.info("config ${param.name}: " + adapter.config.${param.name});\n`;
-		});
-	} else {
-		configs = `
-	adapter.log.info("config option1: " + adapter.config.option1);
-	adapter.log.info("config option2: " + adapter.config.option2);
-`;
-	}
-
-	let connection = "";
-	if (answers.connection === "yes") {
-		connection = `
-	// Reset connection state at start
-	adapter.setState("info.connection", false, true);
-`;
-	}
-
 	const template = `
 "use strict";
 
@@ -112,9 +91,9 @@ function main() {
 
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
-${configs}
+	adapter.log.info("config test1: " + adapter.config.option1);
+	adapter.log.info("config test1: " + adapter.config.option2);
 
-${connection}	
 	/*
 		For every state in the system there has to be also an object of type state
 		Here a simple template for a boolean variable named "testVariable"

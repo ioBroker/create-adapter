@@ -7,18 +7,14 @@ async function fetchPackageVersion(pckg) {
         return versionCache.get(pckg);
     const packageVersion = encodeURIComponent(pckg);
     const url = `https://registry.npmjs.org/-/package/${packageVersion}/dist-tags`;
-    let response;
-    try {
-        response = await axios_1.default({ url, timeout: 5000 });
-        if (response.status === 200) {
-            const version = response.data.latest;
-            versionCache.set(pckg, version);
-            return version;
-        }
+    const response = await axios_1.default({ url, timeout: 5000 });
+    if (response.status === 200) {
+        const version = response.data.latest;
+        versionCache.set(pckg, version);
+        return version;
     }
-    catch (e) {
-        throw new Error(`Failed to fetch the version for ${pckg} (${e})`);
+    else {
+        throw new Error(`Failed to fetch the version for ${pckg} (${response.status})`);
     }
-    throw new Error(`Failed to fetch the version for ${pckg} (${response && response.status})`);
 }
 exports.fetchPackageVersion = fetchPackageVersion;

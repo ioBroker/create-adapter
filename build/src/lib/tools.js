@@ -143,17 +143,7 @@ async function translateText(text, targetLang) {
             return text;
         try {
             const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
-            const options = { url, timeout: 5000, proxy: null };
-            if (process.env.https_proxy || process.env.HTTPS_PROXY) {
-                const port = (process.env.https_proxy || process.env.HTTPS_PROXY || "").match(/:(\d+)\/?$/);
-                // @ts-ignore
-                options.proxy = {
-                    host: (process.env.https_proxy || process.env.HTTPS_PROXY || "").replace(/^https?:\/\//, "").replace(/:\d*\/?$/, ""),
-                    port: port ? parseInt(port[1], 10) : 443,
-                };
-            }
-            // @ts-ignore
-            const response = await axios_1.default(options);
+            const response = await axios_1.default({ url, timeout: 5000 });
             if (typeguards_1.isArray(response.data)) {
                 // we got a valid response
                 return response.data[0][0][0];
@@ -175,8 +165,8 @@ async function translateText(text, targetLang) {
 exports.translateText = translateText;
 function formatLicense(licenseText, answers) {
     return licenseText
-        .replace(/\[year]/g, new Date().getFullYear().toString())
-        .replace(/\[fullname]/g, answers.authorName);
+        .replace(/\[year\]/g, new Date().getFullYear().toString())
+        .replace(/\[fullname\]/g, answers.authorName);
 }
 exports.formatLicense = formatLicense;
 /** Replaces 4-space indentation with tabs */

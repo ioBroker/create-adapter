@@ -9,7 +9,6 @@ const createAdapter_1 = require("./lib/createAdapter");
 const questions_1 = require("./lib/questions");
 const tools_1 = require("./lib/tools");
 /** Where the output should be written */
-// @ts-ignore
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
 /** Asks a series of questions on the CLI */
 async function ask() {

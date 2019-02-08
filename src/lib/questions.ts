@@ -204,13 +204,6 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 					{ message: "code coverage" },
 				],
 			}),
-			{
-				condition: { name: "features", contains: "adapter" },
-				type: "select",
-				name: "connection",
-				message: `Do you have connection state indicator (To some device or some service)?`,
-				choices: ["no", "yes"],
-			},
 
 			// TODO: enable React (only TypeScript at the start)
 			// {
@@ -355,15 +348,6 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitCommit?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
-	icon?: string;
-	parameters?: {
-		name: string,
-		title: string,
-		def: any,
-		type: "text" | "number" | "checkbox" | "select",
-		options?: { value: string, text: string }[],
-	}[];
-	connection?: "yes" | "no";
 }
 
 export function checkAnswers(answers: Partial<Answers>): void {

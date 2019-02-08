@@ -7,12 +7,3 @@ coverage/
 # npm packet files
 iobroker-create-adapter-*.tgz
 /nbproject
-
-# lambda files
-/lambda
-!/lambda/index.js
-!/lambda/package.json
-!/lambda/test.js
-/.idea
-/frontend/config.json
-/frontend/build

@@ -183,13 +183,6 @@ exports.questionsAndText = [
                     { message: "code coverage" },
                 ],
             }),
-            {
-                condition: { name: "features", contains: "adapter" },
-                type: "select",
-                name: "connection",
-                message: `Do you have connection state indicator (To some device or some service)?`,
-                choices: ["no", "yes"],
-            },
             // TODO: enable React (only TypeScript at the start)
             // {
             // 	condition: [
