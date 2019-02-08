@@ -11,4 +11,4 @@ mkdir ioBroker.template
 trap 'rm -rf ioBroker.template' EXIT
 
 # Test the template creation
-node --require ts-node/register create_templates.ts
+TESTING=true node --require ts-node/register create_templates.ts
