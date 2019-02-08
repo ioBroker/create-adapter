@@ -12,7 +12,7 @@ const templateFunction = async (answers) => {
     const dependencyPromises = []
         .concat(isAdapter ? ["@iobroker/adapter-core"] : [])
         .sort()
-        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchPackageVersion(dep)}"`));
+        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchPackageVersion(dep, "0.0.0")}"`));
     const dependencies = await async_1.promiseSequence(dependencyPromises);
     const devDependencyPromises = []
         .concat([

@@ -15,7 +15,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const dependencyPromises = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
 		.sort()
-		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep)}"`))
+		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
 		;
 	const dependencies = await promiseSequence<string>(dependencyPromises);
 

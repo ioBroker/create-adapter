@@ -2,19 +2,32 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const versionCache = new Map();
-async function fetchPackageVersion(pckg) {
-    if (versionCache.has(pckg))
-        return versionCache.get(pckg);
-    const packageVersion = encodeURIComponent(pckg);
+/**
+ * Returns the latest version of an npm package
+ * @param packageName The npm package name
+ * @param fallbackVersion The fallback version to return in case anything goes wrong. If this is set, no error is thrown.
+ */
+async function fetchPackageVersion(packageName, fallbackVersion) {
+    if (versionCache.has(packageName))
+        return versionCache.get(packageName);
+    const packageVersion = encodeURIComponent(packageName);
     const url = `https://registry.npmjs.org/-/package/${packageVersion}/dist-tags`;
-    const response = await axios_1.default({ url, timeout: 5000 });
-    if (response.status === 200) {
-        const version = response.data.latest;
-        versionCache.set(pckg, version);
-        return version;
+    let response;
+    try {
+        response = await axios_1.default({ url, timeout: 5000 });
     }
-    else {
-        throw new Error(`Failed to fetch the version for ${pckg} (${response.status})`);
+    catch (e) {
+        if (fallbackVersion)
+            return fallbackVersion;
+        throw new Error(`Failed to fetch the version for ${packageName} (${e})`);
     }
+    if (response.status !== 200) {
+        if (fallbackVersion)
+            return fallbackVersion;
+        throw new Error(`Failed to fetch the version for ${packageName} (${response.status})`);
+    }
+    const version = response.data.latest;
+    versionCache.set(packageName, version);
+    return version;
 }
 exports.fetchPackageVersion = fetchPackageVersion;
