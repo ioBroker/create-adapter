@@ -82,6 +82,14 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				optional: true,
 				resultTransform: transformDescription,
 			},
+			{
+				condition: { name: "cli", value: false },
+				type: "web_upload" as any,
+				name: "icon",
+				message: "Upload an icon",
+				hint: "(optional)",
+				optional: true,
+			},
 		],
 	},
 	{
@@ -348,6 +356,8 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitCommit?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
+	/** An icon in binary or some string-encoded format */
+	icon?: string | Buffer;
 }
 
 export function checkAnswers(answers: Partial<Answers>): void {

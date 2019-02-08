@@ -61,6 +61,14 @@ exports.questionsAndText = [
                 optional: true,
                 resultTransform: actionsAndTransformers_1.transformDescription,
             },
+            {
+                condition: { name: "cli", value: false },
+                type: "web_upload",
+                name: "icon",
+                message: "Upload an icon",
+                hint: "(optional)",
+                optional: true,
+            },
         ],
     },
     {
