@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
+* (AlCalzone & bluefox) Add an indicator for the connection state (fixes #94)
 * (AlCalzone & bluefox) Allow passing a custom icon as base64 or a Buffer (fixes #96)
 * (bluefox) Use icon with a flat logo
 * (AlCalzone & bluefox) Use HTTPS proxy when defined as an env variable (fixes #95)

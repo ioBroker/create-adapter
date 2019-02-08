@@ -39,6 +39,7 @@ const baseAnswers: Answers = {
 	title: "Is used to test the creator",
 	startMode: "daemon",
 	features: ["adapter"],
+	connectionIndicator: "no",
 	adminFeatures: [],
 	type: "general",
 	language: "TypeScript",
@@ -276,6 +277,23 @@ describe("adapter creation =>", () => {
 					},
 				);
 			});
+
+			it(`Connection indicator`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					connectionIndicator: "yes",
+				};
+				await expectSuccess(
+					"connectionIndicator_yes",
+					answers,
+					file => (
+						file.name.endsWith("main.ts")
+						|| file.name.endsWith("main.js")
+						|| file.name === "io-package.json"
+					),
+				);
+			});
+
 		});
 
 	});

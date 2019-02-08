@@ -55,6 +55,12 @@ class ${className} extends utils.Adapter {
 	private async onReady() {
 		// Initialize your adapter here
 
+
+${answers.connectionIndicator === "yes" ? `
+		// Reset the connection indicator during startup
+		this.setState("info.connection", false, true);
+` : ""}
+
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
 		this.log.info("config test1: " + this.config.option1);

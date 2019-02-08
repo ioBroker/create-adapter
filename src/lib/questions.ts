@@ -175,6 +175,15 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
+				name: "connectionIndicator",
+				message: `Do you want to indicate the connection state?`,
+				hint: "(To some device or some service)",
+				initial: "no",
+				choices: ["yes", "no"],
+			},
+			{
+				condition: { name: "features", contains: "adapter" },
+				type: "select",
 				name: "language",
 				message: "Which language do you want to use to code the adapter?",
 				choices: [
@@ -356,6 +365,7 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitCommit?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
+	connectionIndicator?: "yes" | "no";
 	/** An icon in binary or some string-encoded format */
 	icon?: string | Buffer;
 }

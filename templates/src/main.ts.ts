@@ -99,6 +99,11 @@ function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}) {
 
 function main() {
 
+${answers.connectionIndicator === "yes" ? `
+	// Reset the connection indicator during startup
+	this.setState("info.connection", false, true);
+` : ""}
+
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
 	adapter.log.info("config test1: " + adapter.config.option1);
