@@ -104,6 +104,27 @@ export = (async answers => {
 	"objects": [
 	],
 	"instanceObjects": [
+		${answers.connectionIndicator === "yes" ? `{
+			"_id":  "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		},` : ""}
 	],
 }`;
 	return JSON.stringify(JSON5.parse(template), null, 4);

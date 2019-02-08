@@ -154,6 +154,15 @@ exports.questionsAndText = [
             {
                 condition: { name: "features", contains: "adapter" },
                 type: "select",
+                name: "connectionIndicator",
+                message: `Do you want to indicate the connection state?`,
+                hint: "(To some device or some service)",
+                initial: "no",
+                choices: ["yes", "no"],
+            },
+            {
+                condition: { name: "features", contains: "adapter" },
+                type: "select",
                 name: "language",
                 message: "Which language do you want to use to code the adapter?",
                 choices: [
