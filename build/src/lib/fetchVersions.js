@@ -13,7 +13,7 @@ async function fetchPackageVersion(packageName, fallbackVersion) {
         return versionCache.get(packageName);
     const packageVersion = encodeURIComponent(packageName);
     const url = `https://registry.npmjs.org/-/package/${packageVersion}/dist-tags`;
-    let options = { url, timeout: 5000 };
+    let options = { url, timeout: tools_1.getRequestTimeout() };
     // If an https-proxy is defined as an env variable, use it
     options = tools_1.applyHttpsProxy(options);
     const response = await axios_1.default(options);

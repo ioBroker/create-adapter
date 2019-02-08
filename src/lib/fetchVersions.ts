@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { applyHttpsProxy } from "./tools";
+import { applyHttpsProxy, getRequestTimeout } from "./tools";
 
 const versionCache = new Map<string, string>();
 
@@ -14,7 +14,7 @@ export async function fetchPackageVersion(packageName: string, fallbackVersion?:
 	const packageVersion = encodeURIComponent(packageName);
 	const url = `https://registry.npmjs.org/-/package/${packageVersion}/dist-tags`;
 
-	let options: AxiosRequestConfig = {url, timeout: 5000};
+	let options: AxiosRequestConfig = {url, timeout: getRequestTimeout()};
 	// If an https-proxy is defined as an env variable, use it
 	options = applyHttpsProxy(options);
 
