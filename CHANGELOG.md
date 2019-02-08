@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
+* (AlCalzone) Use HTTPS proxy when defined as an env variable (fixes #95)
 * (AlCalzone) Use @iobroker/testing for testing (fixes #89)
 * (AlCalzone & foxriver76) Add issue templates for github (fixes #85)
 * (ldittmar) Add Yandex translator to gulpfile.js (#84).  
