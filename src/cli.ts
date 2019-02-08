@@ -1,4 +1,4 @@
-import { blueBright, red, underline, green } from "ansi-colors";
+import { blueBright, green, red, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
