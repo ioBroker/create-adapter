@@ -30,7 +30,7 @@ const adapterAnswers: Answers = {
 	...baseAnswers,
 	startMode: "daemon",
 	features: ["adapter"],
-	// connectionIndicator: "no",
+	connectionIndicator: "no",
 	es6class: "yes",
 	type: "general",
 	adminFeatures: ["custom", "tab"],
