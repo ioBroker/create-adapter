@@ -1,11 +1,12 @@
 import { green, red } from "ansi-colors";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { getRequestTimeout } from "../src/lib/tools";
 
 const options: AxiosRequestConfig = {
 	headers: {
 		Authorization: `token ${process.env.GITHUB_TOKEN}`,
 	},
-	timeout: 5000,
+	timeout: getRequestTimeout(),
 	method: "POST",
 };
 

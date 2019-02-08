@@ -162,7 +162,7 @@ async function translateText(text, targetLang) {
             return text;
         try {
             const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
-            let options = { url, timeout: 5000 };
+            let options = { url, timeout: getRequestTimeout() };
             // If an https-proxy is defined as an env variable, use it
             options = applyHttpsProxy(options);
             const response = await axios_1.default(options);
@@ -292,3 +292,13 @@ function kebabCaseToUpperCamelCase(name) {
         .join("");
 }
 exports.kebabCaseToUpperCamelCase = kebabCaseToUpperCamelCase;
+function getRequestTimeout() {
+    let ret;
+    if (process.env.REQUEST_TIMEOUT) {
+        ret = parseInt(process.env.REQUEST_TIMEOUT, 10);
+    }
+    if (ret == undefined || Number.isNaN(ret))
+        return 5000;
+    return ret;
+}
+exports.getRequestTimeout = getRequestTimeout;

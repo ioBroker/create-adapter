@@ -6,7 +6,7 @@ import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
 import { License } from "../src/lib/licenses";
-import { applyHttpsProxy } from "../src/lib/tools";
+import { applyHttpsProxy, getRequestTimeout } from "../src/lib/tools";
 
 // Taken from https://api.github.com/licenses
 const licenseUrls = {
@@ -25,7 +25,7 @@ const licenseCacheFile = path.resolve(__dirname, "../src/lib/", "licenses.ts");
 
 async function loadLicense(shortName: keyof typeof licenseUrls): Promise<License> {
 	try {
-		let options: AxiosRequestConfig = { url: licenseUrls[shortName], timeout: 5000 };
+		let options: AxiosRequestConfig = { url: licenseUrls[shortName], timeout: getRequestTimeout() };
 		// If an https-proxy is defined as an env variable, use it
 		options = applyHttpsProxy(options);
 

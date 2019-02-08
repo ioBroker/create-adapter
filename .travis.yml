@@ -19,6 +19,8 @@ env:
 install:
   - npm ci
 script:
+  # Avoid failing tests because of slow network
+  - export REQUEST_TIMEOUT=20000
   # First run a normal test pass
   - TESTING=true npm test
   # Also make sure that the template creation does not fail
