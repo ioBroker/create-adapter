@@ -53,7 +53,7 @@ const templateFunction = async (answers) => {
         .concat(useESLint ? ["eslint"] : [])
         .concat(useNyc ? ["nyc"] : [])
         .sort()
-        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchPackageVersion(dep)}"`));
+        .map((dep) => (async () => `"${dep}": "^${await fetchVersions_1.fetchPackageVersion(dep, "0.0.0")}"`));
     const devDependencies = await async_1.promiseSequence(devDependencyPromises);
     const template = `
 {
