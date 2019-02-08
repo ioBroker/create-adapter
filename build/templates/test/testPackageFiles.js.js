@@ -1,5 +1,0 @@
-"use strict";
-const createAdapter_1 = require("../../src/lib/createAdapter");
-module.exports = (answers => {
-    return createAdapter_1.readFile("testPackageFiles.raw.js", __dirname);
-});

@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
+* (AlCalzone) Use @iobroker/testing for testing (fixes #89)
 * (AlCalzone & foxriver76) Add issue templates for github (fixes #85)
 * (ldittmar) Add Yandex translator to gulpfile.js (#84).  
 To use it, append `--yandex <yandex_api_key>` to the gulp command.
