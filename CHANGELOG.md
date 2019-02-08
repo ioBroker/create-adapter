@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
+* (AlCalzone) Respect REQUEST_TIMEOUT env variable when determining request timeout
 * (AlCalzone) Test the template creation on every CI run
 * (AlCalzone & bluefox) Add an indicator for the connection state (fixes #94)
 * (AlCalzone & bluefox) Allow passing a custom icon as base64 or a Buffer (fixes #96)
