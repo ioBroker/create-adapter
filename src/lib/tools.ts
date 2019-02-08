@@ -1,12 +1,13 @@
 import { isArray, isObject } from "alcalzone-shared/typeguards";
 import { bold } from "ansi-colors";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { spawn, SpawnOptions } from "child_process";
 import { Linter } from "eslint";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
 import * as ts from "typescript";
+import * as nodeUrl from "url";
 import { Answers } from "./questions";
 
 export function error(message: string) {
@@ -166,6 +167,24 @@ export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, pre
 	}
 }
 
+/**
+ * Adds https proxy options to an axios request if they were defined as an env variable
+ * @param options The options object passed to axios
+ */
+export function applyHttpsProxy(options: AxiosRequestConfig): AxiosRequestConfig {
+	const proxy: string | undefined = process.env.https_proxy || process.env.HTTPS_PROXY;
+	if (proxy) {
+		const proxyUrl = nodeUrl.parse(proxy);
+		if (proxyUrl.hostname) {
+			options.proxy = {
+				host: proxyUrl.hostname,
+				port: proxyUrl.port ? parseInt(proxyUrl.port, 10) : 443,
+			};
+		}
+	}
+	return options;
+}
+
 const translationCache = new Map<string, Map<string, string>>();
 
 export async function translateText(text: string, targetLang: string): Promise<string> {
@@ -174,7 +193,12 @@ export async function translateText(text: string, targetLang: string): Promise<s
 		if (targetLang === "en") return text;
 		try {
 			const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
-			const response = await axios({ url, timeout: 5000 });
+			let options: AxiosRequestConfig = { url, timeout: 5000 };
+
+			// If an https-proxy is defined as an env variable, use it
+			options = applyHttpsProxy(options);
+
+			const response = await axios(options);
 			if (isArray(response.data)) {
 				// we got a valid response
 				return response.data[0][0][0];
@@ -185,8 +209,11 @@ export async function translateText(text: string, targetLang: string): Promise<s
 		}
 		return text;
 	}
+
+	// Try to read the translation from the translation cache
 	if (!translationCache.has(targetLang)) translationCache.set(targetLang, new Map());
 	const langCache = translationCache.get(targetLang)!;
+	// or fall back to an online translation
 	if (!langCache.has(text)) langCache.set(text, await doTranslateText());
 	return langCache.get(text)!;
 }
@@ -295,5 +322,5 @@ export function kebabCaseToUpperCamelCase(name: string): string {
 		.filter(part => part.length > 0)
 		.map(capitalize)
 		.join("")
-	;
+		;
 }
