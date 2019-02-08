@@ -67,6 +67,9 @@ The following features did not make it into v1.0.0 and are planned for a later r
 - [ ] Scripts/Helpers for remote debugging
 
 ## Developing
+First of all: **DO NOT** push changes to `master` directly! Just don't. Every change should be done through PRs, which have a template with a checklist to fill out.
+This makes sure that `master` always works and every change is documented.
+
 For developers of this package, there are a few things to know:
 
 * `npm run build` creates a fresh build and deletes old build files. This is necessary when template files are renamed or deleted, as the compiled files will still be there.
