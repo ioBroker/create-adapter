@@ -17,16 +17,6 @@ async function fetchPackageVersion(packageName, fallbackVersion) {
     // If an https-proxy is defined as an env variable, use it
     options = tools_1.applyHttpsProxy(options);
     const response = await axios_1.default(options);
-    if (response.status === 200) {
-        const version = response.data.latest;
-        versionCache.set(pckg, version);
-        return version;
-    }
-    catch (e) {
-        if (fallbackVersion)
-            return fallbackVersion;
-        throw new Error(`Failed to fetch the version for ${packageName} (${e})`);
-    }
     if (response.status !== 200) {
         if (fallbackVersion)
             return fallbackVersion;
