@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
+* (bluefox) Use icon with a flat logo
 * (AlCalzone & bluefox) Use HTTPS proxy when defined as an env variable (fixes #95)
 * (bluefox) Provide `fetchPackageVersions` with a fallback in case of errors (fixes #93)
 * (AlCalzone) Use @iobroker/testing for testing (fixes #89)
