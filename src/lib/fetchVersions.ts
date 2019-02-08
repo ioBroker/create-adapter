@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+import { applyHttpsProxy } from "./tools";
 
 const versionCache = new Map<string, string>();
 
@@ -13,13 +14,11 @@ export async function fetchPackageVersion(packageName: string, fallbackVersion?:
 	const packageVersion = encodeURIComponent(packageName);
 	const url = `https://registry.npmjs.org/-/package/${packageVersion}/dist-tags`;
 
-	let response;
-	try {
-		response = await axios({ url, timeout: 5000 });
-	} catch (e) {
-		if (fallbackVersion) return fallbackVersion;
-		throw new Error(`Failed to fetch the version for ${packageName} (${e})`);
-	}
+	let options: AxiosRequestConfig = {url, timeout: 5000};
+	// If an https-proxy is defined as an env variable, use it
+	options = applyHttpsProxy(options);
+
+	const response = await axios(options);
 	if (response.status !== 200) {
 		if (fallbackVersion) return fallbackVersion;
 		throw new Error(`Failed to fetch the version for ${packageName} (${response.status})`);

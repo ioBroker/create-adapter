@@ -1,11 +1,12 @@
 // Licenses are cached on build to prevent rate-limiting issues
 
 import { green } from "ansi-colors";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
 import { License } from "../src/lib/licenses";
+import { applyHttpsProxy } from "../src/lib/tools";
 
 // Taken from https://api.github.com/licenses
 const licenseUrls = {
@@ -24,7 +25,11 @@ const licenseCacheFile = path.resolve(__dirname, "../src/lib/", "licenses.ts");
 
 async function loadLicense(shortName: keyof typeof licenseUrls): Promise<License> {
 	try {
-		const response = await axios(licenseUrls[shortName]);
+		let options: AxiosRequestConfig = { url: licenseUrls[shortName], timeout: 5000 };
+		// If an https-proxy is defined as an env variable, use it
+		options = applyHttpsProxy(options);
+
+		const response = await axios(options);
 		return {
 			id: response.data.spdx_id,
 			name: response.data.name,
