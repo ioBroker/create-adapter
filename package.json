@@ -80,9 +80,10 @@
     "build": "tsc -p tsconfig.build.json",
     "postbuild": "copyfiles \"templates/**/*.raw.*\" build",
     "watch": "tsc -p tsconfig.build.json --watch",
-    "test:ts": "mocha",
+    "test:ts": "mocha src/**/*.test.ts",
+    "test:baselines": "mocha src/**/*.test.ts",
     "pretest": "npm run linkTemplates",
-    "test": "npm run test:ts",
+    "test": "npm run test:ts && npm run test:baselines",
     "coverage": "node_modules/.bin/nyc npm run test:ts",
     "coveralls": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls -v",
     "show-coverage": "npm run coverage && start ./coverage/index.html",
@@ -93,13 +94,14 @@
     "prepublishOnly": "npm run build"
   },
   "nyc": {
-    "all": true,
+    "all": false,
     "include": [
       "src/**/*.ts"
     ],
     "exclude": [
       "build/**",
-      "src/**/*.test.ts"
+      "src/**/*.test.ts",
+      "src/**/*.d.ts"
     ],
     "extension": [
       ".ts"
