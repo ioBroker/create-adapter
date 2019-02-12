@@ -81,7 +81,7 @@
     "postbuild": "copyfiles \"templates/**/*.raw.*\" build",
     "watch": "tsc -p tsconfig.build.json --watch",
     "test:ts": "mocha src/**/*.test.ts",
-    "test:baselines": "mocha src/**/*.test.ts",
+    "test:baselines": "mocha test/create-adapter.test.ts",
     "pretest": "npm run linkTemplates",
     "test": "npm run test:ts && npm run test:baselines",
     "test:watch": "mocha src/**/*.test.ts --watch",
