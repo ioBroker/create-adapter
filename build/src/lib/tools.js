@@ -278,6 +278,7 @@ function getOwnVersion() {
         }
         catch (e) { /* OK */ }
     }
+    /* istanbul ignore next */
     return "unknown";
 }
 exports.getOwnVersion = getOwnVersion;

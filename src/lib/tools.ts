@@ -310,6 +310,7 @@ export function getOwnVersion(): string {
 			return require(jsonPath).version;
 		} catch (e) { /* OK */ }
 	}
+	/* istanbul ignore next */
 	return "unknown";
 }
 

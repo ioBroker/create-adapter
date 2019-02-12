@@ -1,7 +1,7 @@
 // tslint:disable: no-unused-expression
 
 import { expect } from "chai";
-import { capitalize, indentWithSpaces, indentWithTabs, jsFixQuotes, kebabCaseToUpperCamelCase, tsFixQuotes } from "./tools";
+import { capitalize, formatLicense, getOwnVersion, indentWithSpaces, indentWithTabs, jsFixQuotes, kebabCaseToUpperCamelCase, tsFixQuotes } from "./tools";
 
 describe("tools/error()", () => {
 	it.skip("TODO: Cannot test this because console.log should not be stubbed");
@@ -145,6 +145,41 @@ describe("tools/kebabCaseToUpperCamelCase()", () => {
 
 		for (const { original, expected } of tests) {
 			expect(kebabCaseToUpperCamelCase(original)).to.equal(expected);
+		}
+	});
+});
+
+describe("tools/getOwnVersion()", () => {
+	it("should return the version defined in package.json", () => {
+		const expected = require("../../package.json").version;
+		expect(getOwnVersion()).to.equal(expected);
+	});
+});
+
+describe("tools/formatLicense()", () => {
+	const answers = {authorName: "John Doe"};
+
+	it("should replace [year] with the current year", () => {
+		const curYear = new Date().getFullYear().toString();
+		const tests = [
+			{original: "[year]", expected: curYear},
+			{original: "Copyright © [year]", expected: `Copyright © ${curYear}`},
+			{original: "[year] [year] [year]", expected: `${curYear} ${curYear} ${curYear}`},
+		];
+
+		for (const { original, expected } of tests) {
+			expect(formatLicense(original, answers as any)).to.equal(expected);
+		}
+	});
+
+	it("should replace [fullname] with the author's name", () => {
+		const tests = [
+			{original: "[fullname]", expected: answers.authorName},
+			{original: "[fullname] [fullname] [fullname]", expected: `${answers.authorName} ${answers.authorName} ${answers.authorName}`},
+		];
+
+		for (const { original, expected } of tests) {
+			expect(formatLicense(original, answers as any)).to.equal(expected);
 		}
 	});
 });

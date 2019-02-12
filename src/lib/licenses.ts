@@ -2,6 +2,9 @@
 // tslint:disable:object-literal-key-quotes
 // tslint:disable:trailing-comma
 
+// Since this is auto-generated, we will not unit-test this file
+// istanbul ignore
+
 export interface License {
 	id: string;
 	name: string;
