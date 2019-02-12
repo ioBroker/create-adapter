@@ -3,9 +3,12 @@ node_modules/
 # Project files
 /nbproject
 
+# Build output
+/build
+
 # compiled test-files
 /.nyc_output
-coverage/
+/coverage
 
 # npm packet files
 iobroker-create-adapter-*.tgz
