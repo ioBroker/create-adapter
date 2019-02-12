@@ -84,6 +84,7 @@
     "test:baselines": "mocha src/**/*.test.ts",
     "pretest": "npm run linkTemplates",
     "test": "npm run test:ts && npm run test:baselines",
+    "test:watch": "mocha src/**/*.test.ts --watch",
     "coverage": "node_modules/.bin/nyc npm run test:ts",
     "coveralls": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls -v",
     "show-coverage": "npm run coverage && start ./coverage/index.html",
@@ -94,14 +95,15 @@
     "prepublishOnly": "npm run build"
   },
   "nyc": {
-    "all": false,
+    "all": true,
     "include": [
       "src/**/*.ts"
     ],
     "exclude": [
       "build/**",
       "src/**/*.test.ts",
-      "src/**/*.d.ts"
+      "**/*.d.ts",
+      "test/**"
     ],
     "extension": [
       ".ts"
