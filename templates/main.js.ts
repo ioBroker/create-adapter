@@ -1,10 +1,13 @@
 import { TemplateFunction } from "../src/lib/createAdapter";
+import { AdapterSettings, getDefaultAnswer } from "../src/lib/questions";
 
 export = (async answers => {
 
 	const useJavaScript = answers.language === "JavaScript";
 	const useES6Class = answers.es6class === "yes";
 	if (!useJavaScript || useES6Class) return;
+
+	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 
 	const template = `
 "use strict";
@@ -96,8 +99,7 @@ ${answers.connectionIndicator === "yes" ? `
 
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
-	adapter.log.info("config test1: " + adapter.config.option1);
-	adapter.log.info("config test1: " + adapter.config.option2);
+${adapterSettings.map(s => `\tadapter.log.info("config ${s.key}: " + adapter.config.${s.key});`).join("\n")}
 
 	/*
 		For every state in the system there has to be also an object of type state

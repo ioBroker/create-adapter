@@ -1,4 +1,24 @@
 import { TemplateFunction } from "../../src/lib/createAdapter";
+import { AdapterSettings, getDefaultAnswer } from "../../src/lib/questions";
+
+function generateSettingsDiv(settings: AdapterSettings) {
+	if (settings.inputType === "select" && settings.options) {
+		const options = settings.options.map(opt => `
+					<option value="${opt.value}">${opt.text}</option>\n`);
+		return `
+			<div class="col s6 input-field">
+				<select class="value" id="${settings.key}">${options}
+				</select>
+				<label for="${settings.key}" class="translate">${settings.label || settings.key}</label>
+			</div>`;
+	} else {
+		return `
+			<div class="col s6 input-field">
+				<input type="${settings.inputType || "text"}" class="value" id="${settings.key}" />
+				<label for="${settings.key}" class="translate">${settings.label || settings.key}</label>
+			</div>`;
+	}
+}
 
 export = (answers => {
 
@@ -6,6 +26,8 @@ export = (answers => {
 	if (!isAdapter) return;
 
 	const useReact = answers.adminReact === "yes";
+
+	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 
 	const template = `
 <html>
@@ -76,19 +98,16 @@ ${useReact ? "" : (`
 
 	<div class="m adapter-container">
 
-		<!-- Put your content here -->
-		<h1 class="translate">${answers.adapterName} adapter settings</h1>
-
-		<!-- For example two columns with settings: -->
 		<div class="row">
-			<div class="col s6 input-field">
-				<input type="checkbox" class="value" id="option1" />
-				<label for="option1" class="translate">option 1 description</label>
+			<div class="col s12 m4 l2">
+				<img src="${answers.adapterName}.png" class="logo">
 			</div>
-			<div class="col s6 input-field">
-				<input type="text" class="value" id="option2" />
-				<label for="option2" class="translate">option 2 description</label>
-			</div>
+		</div>
+
+		<!-- Put your content here -->
+
+		<!-- For example columns with settings: -->
+		<div class="row">${adapterSettings.map(generateSettingsDiv).join("\n")}
 		</div>
 
 	</div>
