@@ -97,6 +97,7 @@ describe("fetchVersions()", () => {
 
 	it("the request object should contain a default timeout of 5000ms", async () => {
 		returnVersion("1.2.3");
+		setProcessEnv("REQUEST_TIMEOUT", undefined);
 		await fetchPackageVersion(getRandomPackageName());
 
 		axiosMock.should.have.been.called;
@@ -135,6 +136,15 @@ describe("fetchVersions()", () => {
 
 		const callArg = axiosMock.getCall(0).args[0];
 		expect(callArg.proxy.port).to.equal(443);
+	});
+
+	it("if the proxy has no valid hostname, it should not be used", async () => {
+		returnVersion("1.2.3");
+		setProcessEnv("HTTPS_PROXY", "/bar:80");
+		await fetchPackageVersion(getRandomPackageName());
+
+		const callArg = axiosMock.getCall(0).args[0];
+		expect(callArg.proxy).to.be.undefined;
 	});
 
 });
