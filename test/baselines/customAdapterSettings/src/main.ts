@@ -15,8 +15,8 @@ declare global {
 	namespace ioBroker {
 		interface AdapterConfig {
 			// Define the shape of your options here (recommended)
-			option1: boolean;
-			option2: string;
+			prop1: number;
+			prop2: boolean;
 			// Or use a catch-all approach
 			[key: string]: any;
 		}
@@ -90,13 +90,10 @@ function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}) {
 
 function main() {
 
-	// Reset the connection indicator during startup
-	this.setState("info.connection", false, true);
-
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
-	adapter.log.info("config option1: " + adapter.config.option1);
-	adapter.log.info("config option2: " + adapter.config.option2);
+	adapter.log.info("config prop1: " + adapter.config.prop1);
+	adapter.log.info("config prop2: " + adapter.config.prop2);
 
 	/*
 		For every state in the system there has to be also an object of type state

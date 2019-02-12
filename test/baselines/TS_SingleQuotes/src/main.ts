@@ -92,8 +92,8 @@ function main() {
 
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
-	adapter.log.info('config test1: ' + adapter.config.option1);
-	adapter.log.info('config test1: ' + adapter.config.option2);
+	adapter.log.info('config option1: ' + adapter.config.option1);
+	adapter.log.info('config option2: ' + adapter.config.option2);
 
 	/*
 		For every state in the system there has to be also an object of type state
