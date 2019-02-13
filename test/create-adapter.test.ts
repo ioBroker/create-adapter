@@ -5,9 +5,9 @@ process.env.TESTING = "true";
 
 import * as fs from "fs-extra";
 import * as path from "path";
-import { createAdapter } from "./index";
-import { File, writeFiles } from "./lib/createAdapter";
-import { Answers } from "./lib/questions";
+import { createAdapter } from "../src/index";
+import { File, writeFiles } from "../src/lib/createAdapter";
+import { Answers } from "../src/lib/questions";
 
 const baselineDir = path.join(__dirname, "../test/baselines");
 

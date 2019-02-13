@@ -80,9 +80,11 @@
     "build": "tsc -p tsconfig.build.json",
     "postbuild": "copyfiles \"templates/**/*.raw.*\" build",
     "watch": "tsc -p tsconfig.build.json --watch",
-    "test:ts": "mocha",
+    "test:ts": "mocha src/**/*.test.ts",
+    "test:baselines": "mocha test/create-adapter.test.ts",
     "pretest": "npm run linkTemplates",
-    "test": "npm run test:ts",
+    "test": "npm run test:ts && npm run test:baselines",
+    "test:watch": "mocha src/**/*.test.ts --watch",
     "coverage": "node_modules/.bin/nyc npm run test:ts",
     "coveralls": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls -v",
     "show-coverage": "npm run coverage && start ./coverage/index.html",
@@ -99,14 +101,12 @@
     ],
     "exclude": [
       "build/**",
-      "src/**/*.test.ts"
+      "src/**/*.test.ts",
+      "**/*.d.ts",
+      "test/**"
     ],
     "extension": [
       ".ts"
-    ],
-    "require": [
-      "ts-node/register",
-      "source-map-support/register"
     ],
     "reporter": [
       "text-summary",
