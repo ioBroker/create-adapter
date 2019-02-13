@@ -1,6 +1,7 @@
 # Changelog
 
 ## __WORK IN PROGRESS__
+* (AlCalzone) Add the ability to pin package versions in the template `package.json`
 * (AlCalzone & bluefox) Add the possibility to specify adapter config and generate options page (not on the CLI) (fixes #97)
 * (AlCalzone) The `build` dir is no longer necessary on GitHub
 * (AlCalzone) Respect `REQUEST_TIMEOUT` env variable when determining request timeout
