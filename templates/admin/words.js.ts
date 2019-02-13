@@ -42,7 +42,7 @@ systemDictionary = ${formatJsonString(`{
 		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
 		"zh-cn": "${answers.adapterName}的适配器设置"
 	},
-	${translatedSettingsJson}
+	${translatedSettingsJson},
 	`) : ""}
 	${isWidget ? (`
 	"myColor": {
