@@ -1,35 +1,3 @@
-import { TemplateFunction } from "../../src/lib/createAdapter";
-import { AdapterSettings, getDefaultAnswer } from "../../src/lib/questions";
-
-function generateSettingsDiv(settings: AdapterSettings) {
-	if (settings.inputType === "select" && settings.options) {
-		const options = settings.options.map(opt => `
-					<option value="${opt.value}">${opt.text}</option>\n`);
-		return `
-			<div class="col s6 input-field">
-				<select class="value" id="${settings.key}">${options}
-				</select>
-				<label for="${settings.key}" class="translate">${settings.label || settings.key}</label>
-			</div>`;
-	} else {
-		return `
-			<div class="col s6 input-field">
-				<input type="${settings.inputType || "text"}" class="value" id="${settings.key}" />
-				<label for="${settings.key}" class="translate">${settings.label || settings.key}</label>
-			</div>`;
-	}
-}
-
-export = (answers => {
-
-	const isAdapter = answers.features.indexOf("adapter") > -1;
-	if (!isAdapter) return;
-
-	const useReact = answers.adminReact === "yes";
-
-	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
-
-	const template = `
 <html>
 
 <head>
@@ -49,7 +17,6 @@ export = (answers => {
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script type="text/javascript" src="words.js"></script>
 
-${useReact ? "" : (`
 	<script type="text/javascript">
 		// This will be called by the admin adapter when the settings page loads
 		function load(settings, onChange) {
@@ -91,7 +58,7 @@ ${useReact ? "" : (`
 			callback(obj);
 		}
 	</script>
-`)}
+
 </head>
 
 <body>
@@ -100,14 +67,23 @@ ${useReact ? "" : (`
 
 		<div class="row">
 			<div class="col s12 m4 l2">
-				<img src="${answers.adapterName}.png" class="logo">
+				<img src="test-adapter.png" class="logo">
 			</div>
 		</div>
 
 		<!-- Put your content here -->
 
 		<!-- For example columns with settings: -->
-		<div class="row">${adapterSettings.map(generateSettingsDiv).join("\n")}
+		<div class="row">
+			<div class="col s6 input-field">
+				<input type="number" class="value" id="prop1" />
+				<label for="prop1" class="translate">Property 1</label>
+			</div>
+
+			<div class="col s6 input-field">
+				<input type="checkbox" class="value" id="prop2" />
+				<label for="prop2" class="translate">Property 2</label>
+			</div>
 		</div>
 
 	</div>
@@ -115,6 +91,3 @@ ${useReact ? "" : (`
 </body>
 
 </html>
-`;
-	return template.trim();
-}) as TemplateFunction;

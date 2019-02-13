@@ -1,10 +1,13 @@
 import { TemplateFunction } from "../../src/lib/createAdapter";
+import { AdapterSettings, getDefaultAnswer } from "../../src/lib/questions";
 
 export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 	const useES6Class = answers.es6class === "yes";
 	if (!useTypeScript || useES6Class) return;
+
+	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 
 	const template = `
 /*
@@ -24,8 +27,7 @@ declare global {
 	namespace ioBroker {
 		interface AdapterConfig {
 			// Define the shape of your options here (recommended)
-			option1: boolean;
-			option2: string;
+${adapterSettings.map(s => `\t\t\t${s.key}: ${typeof s.defaultValue};`).join("\n")}
 			// Or use a catch-all approach
 			[key: string]: any;
 		}
@@ -106,8 +108,7 @@ ${answers.connectionIndicator === "yes" ? `
 
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
-	adapter.log.info("config test1: " + adapter.config.option1);
-	adapter.log.info("config test1: " + adapter.config.option2);
+${adapterSettings.map(s => `\tadapter.log.info("config ${s.key}: " + adapter.config.${s.key});`).join("\n")}
 
 	/*
 		For every state in the system there has to be also an object of type state

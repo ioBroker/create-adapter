@@ -1,4 +1,5 @@
 import { TemplateFunction } from "../src/lib/createAdapter";
+import { AdapterSettings, getDefaultAnswer } from "../src/lib/questions";
 import { kebabCaseToUpperCamelCase } from "../src/lib/tools";
 
 const templateFunction: TemplateFunction = async answers => {
@@ -8,6 +9,7 @@ const templateFunction: TemplateFunction = async answers => {
 	if (!useJavaScript || !useES6Class) return;
 
 	const className = kebabCaseToUpperCamelCase(answers.adapterName);
+	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 
 	const template = `
 "use strict";
@@ -53,8 +55,7 @@ ${answers.connectionIndicator === "yes" ? `
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.info("config test1: " + this.config.option1);
-		this.log.info("config test1: " + this.config.option2);
+${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.${s.key});`).join("\n")}
 
 		/*
 		For every state in the system there has to be also an object of type state
