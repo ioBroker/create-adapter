@@ -14,7 +14,7 @@ function generateSettingsDiv(settings: AdapterSettings) {
 	} else {
 		return `
 			<div class="col s6 input-field">
-				<input type="${settings.inputType || "text"}" class="value" id="${settings.key}" />
+				<input type="${settings.inputType}" class="value" id="${settings.key}" />
 				<label for="${settings.key}" class="translate">${settings.label || settings.key}</label>
 			</div>`;
 	}

@@ -3,16 +3,28 @@
 import { expect } from "chai";
 import * as proxyquireModule from "proxyquire";
 import { stub } from "sinon";
+import { getPackageName } from "./packageVersions";
 
 const axiosMock = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
-const { fetchPackageVersion } = proxyquire<typeof import ("./fetchVersions")>("./fetchVersions", {
+// tslint:disable-next-line: whitespace
+const { fetchPackageVersion } = proxyquire<typeof import("./packageVersions")>("./packageVersions", {
 	axios: {
 		default: axiosMock,
 	},
 });
 
+function returnVersions(versions: string[]) {
+	const ret: any = {
+		status: 200,
+		data: { versions: {} },
+	};
+	for (const version of versions) {
+		ret.data.versions[version] = null;
+	}
+	axiosMock.resolves(ret);
+}
 function returnVersion(version: string) {
 	axiosMock.resolves({
 		status: 200,
@@ -45,7 +57,21 @@ function resetProcessEnv() {
 	}
 }
 
-describe("fetchVersions()", () => {
+describe("packageVersions/getPackageName()", () => {
+	it("returns the name from a package@version specifier", () => {
+		const tests = [
+			{ nameAndVersion: "", expected: "" },
+			{ nameAndVersion: "foobar", expected: "foobar" },
+			{ nameAndVersion: "foobar@1.2.3", expected: "foobar" },
+			{ nameAndVersion: "@scope/foobar@4.5.6", expected: "@scope/foobar" },
+		];
+		for (const { nameAndVersion, expected } of tests) {
+			getPackageName(nameAndVersion).should.equal(expected);
+		}
+	});
+});
+
+describe.only("packageVersions/fetchPackageVersions()", () => {
 
 	beforeEach(() => {
 		axiosMock.reset();
@@ -145,6 +171,20 @@ describe("fetchVersions()", () => {
 
 		const callArg = axiosMock.getCall(0).args[0];
 		expect(callArg.proxy).to.be.undefined;
+	});
+
+	it("if the package name has a version specifier, return the latest version matching it", async () => {
+		returnVersions([
+			"0.1.5",
+			"1.2.3",
+			"1.3.5",
+			"1.2.4",
+			"1.1.1",
+			"2.3.4",
+		]);
+		await fetchPackageVersion(getRandomPackageName() + "@1").should.become("1.3.5");
+		await fetchPackageVersion(getRandomPackageName() + "@~1.2").should.become("1.2.4");
+		await fetchPackageVersion(getRandomPackageName() + "@2").should.become("2.3.4");
 	});
 
 });

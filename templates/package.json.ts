@@ -1,7 +1,7 @@
 import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { fetchPackageVersion } from "../src/lib/fetchVersions";
+import { fetchPackageVersion, getPackageName } from "../src/lib/packageVersions";
 
 const templateFunction: TemplateFunction = async answers => {
 
@@ -43,7 +43,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/proxyquire",
 			"proxyquire",
 			// and NodeJS typings
-			"@types/node",
+			"@types/node@10",
 		] : [])
 		.concat(useTypeScript ? [
 			// enhance testing through TS tools
@@ -58,7 +58,7 @@ const templateFunction: TemplateFunction = async answers => {
 		.concat(useESLint ? ["eslint"] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()
-		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
+		.map((dep) => (async () => `"${getPackageName(dep)}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
 		;
 	const devDependencies = await promiseSequence<string>(devDependencyPromises);
 
