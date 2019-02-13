@@ -294,6 +294,26 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it(`Custom adapter settings`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adapterSettings: [
+						{key: "prop1", inputType: "number", label: "Property 1", defaultValue: 5},
+						{key: "prop2", inputType: "checkbox", label: "Property 2", defaultValue: true},
+					],
+				};
+				await expectSuccess(
+					"customAdapterSettings",
+					answers,
+					file => (
+						file.name.endsWith("main.ts")
+						|| file.name.endsWith("main.js")
+						|| file.name === "io-package.json"
+						|| file.name.endsWith("index_m.html")
+					),
+				);
+			});
+
 		});
 
 	});

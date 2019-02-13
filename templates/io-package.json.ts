@@ -2,6 +2,7 @@ import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
 import { TemplateFunction } from "../src/lib/createAdapter";
 import { translateText } from "../src/lib/tools";
+import { AdapterSettings, getDefaultAnswer } from "../src/lib/questions";
 
 export = (async answers => {
 
@@ -26,6 +27,12 @@ export = (async answers => {
 			languages.map(async lang => [lang, await translateText(description, lang)] as [string, string]),
 		)),
 	);
+
+	const allSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
+	const adapterSettings: Record<string, any> = {};
+	for (const setting of allSettings) {
+		adapterSettings[setting.key] = setting.defaultValue;
+	}
 
 	const template = `
 {
@@ -97,10 +104,7 @@ export = (async answers => {
 			${isWidget ? `"vis",` : ""}
 		],
 	},
-	"native": {
-		"option1": true,
-		"option2": "42"
-	},
+	"native": ${JSON.stringify(adapterSettings)},
 	"objects": [
 	],
 	"instanceObjects": [

@@ -1,42 +1,40 @@
-import { TemplateFunction } from "../src/lib/createAdapter";
-import { AdapterSettings, getDefaultAnswer } from "../src/lib/questions";
-
-export = (async answers => {
-
-	const useJavaScript = answers.language === "JavaScript";
-	const useES6Class = answers.es6class === "yes";
-	if (!useJavaScript || useES6Class) return;
-
-	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
-
-	const template = `
-"use strict";
-
 /*
- * Created with @iobroker/create-adapter v${answers.creatorVersion}
+ * Created with @iobroker/create-adapter v1.8.0
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-const utils = require("@iobroker/adapter-core");
+import * as utils from "@iobroker/adapter-core";
 
 // Load your modules here, e.g.:
-// const fs = require("fs");
+// import * as fs from "fs";
 
-/**
- * The adapter instance
- * @type {ioBroker.Adapter}
- */
-let adapter;
+// Augment the adapter.config object with the actual types
+// TODO: delete this in the next version
+declare global {
+	namespace ioBroker {
+		interface AdapterConfig {
+			// Define the shape of your options here (recommended)
+			prop1: number;
+			prop2: boolean;
+			// Or use a catch-all approach
+			[key: string]: any;
+		}
+	}
+}
+
+let adapter: ioBroker.Adapter;
 
 /**
  * Starts the adapter instance
- * @param {Partial<ioBroker.AdapterOptions>} [options]
  */
-function startAdapter(options) {
+function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}) {
 	// Create the adapter and define its methods
-	return adapter = utils.adapter(Object.assign({}, options, {
-		name: "${answers.adapterName}",
+	return adapter = utils.adapter({
+		// Default options
+		...options,
+		// custom options
+		name: "test-adapter",
 
 		// The ready callback is called when databases are connected and adapter received configuration.
 		// start here!
@@ -56,10 +54,10 @@ function startAdapter(options) {
 		objectChange: (id, obj) => {
 			if (obj) {
 				// The object was changed
-				adapter.log.info(\`object \$\{id} changed: \$\{JSON.stringify(obj)}\`);
+				adapter.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
 			} else {
 				// The object was deleted
-				adapter.log.info(\`object \$\{id} deleted\`);
+				adapter.log.info(`object ${id} deleted`);
 			}
 		},
 
@@ -67,10 +65,10 @@ function startAdapter(options) {
 		stateChange: (id, state) => {
 			if (state) {
 				// The state was changed
-				adapter.log.info(\`state \$\{id} changed: \$\{state.val} (ack = \$\{state.ack})\`);
+				adapter.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 			} else {
 				// The state was deleted
-				adapter.log.info(\`state \$\{id} deleted\`);
+				adapter.log.info(`state ${id} deleted`);
 			}
 		},
 
@@ -87,19 +85,15 @@ function startAdapter(options) {
 		// 		}
 		// 	}
 		// },
-	}));
+	});
 }
 
 function main() {
 
-${answers.connectionIndicator === "yes" ? `
-	// Reset the connection indicator during startup
-	this.setState("info.connection", false, true);
-` : ""}
-
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
-${adapterSettings.map(s => `\tadapter.log.info("config ${s.key}: " + adapter.config.${s.key});`).join("\n")}
+	adapter.log.info("config prop1: " + adapter.config.prop1);
+	adapter.log.info("config prop2: " + adapter.config.prop2);
 
 	/*
 		For every state in the system there has to be also an object of type state
@@ -152,6 +146,3 @@ if (module.parent) {
 	// otherwise start the instance directly
 	startAdapter();
 }
-`;
-	return template.trim();
-}) as TemplateFunction;

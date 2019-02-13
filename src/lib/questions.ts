@@ -182,6 +182,17 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				choices: ["yes", "no"],
 			},
 			{
+				condition: [
+					{ name: "features", contains: "adapter" },
+					{ name: "cli", value: false },
+				],
+				type: "web_unknown" as any, // TODO: give this a good type
+				name: "adapterSettings",
+				message: "Define the settings for the adapter",
+				hint: "(optional)",
+				optional: true,
+			},
+			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "language",
@@ -345,6 +356,31 @@ export const questions = (questionsAndText.filter(q => typeof q !== "string") as
 	.reduce((arr, next) => arr.concat(...next), [])
 	;
 
+export interface BaseAdapterSettings<T> {
+	key: string;
+	label?: string;
+	defaultValue?: T;
+}
+export interface StringAdapterSettings extends BaseAdapterSettings<string> {
+	inputType: "text";
+}
+export interface NumberAdapterSettings extends BaseAdapterSettings<number> {
+	inputType: "number";
+}
+export interface BooleanAdapterSettings extends BaseAdapterSettings<boolean> {
+	inputType: "checkbox";
+}
+export interface SelectAdapterSettings extends BaseAdapterSettings<string> {
+	inputType: "select";
+	options: { value: string, text: string }[];
+}
+export type AdapterSettings =
+	| StringAdapterSettings
+	| NumberAdapterSettings
+	| BooleanAdapterSettings
+	| SelectAdapterSettings
+	;
+
 export interface Answers {
 	adapterName: string;
 	description?: string;
@@ -368,6 +404,8 @@ export interface Answers {
 	connectionIndicator?: "yes" | "no";
 	/** An icon in binary or some string-encoded format */
 	icon?: string | Buffer;
+	/** An array of predefined adapter options */
+	adapterSettings?: AdapterSettings[];
 }
 
 export function checkAnswers(answers: Partial<Answers>): void {
@@ -414,5 +452,19 @@ export async function validateAnswers(answers: Answers, disableValidation: (keyo
 		if (typeof testResult === "string") {
 			throw new Error(testResult);
 		}
+	}
+}
+
+export function getDefaultAnswer<T extends keyof Answers>(key: T): Answers[T] | undefined {
+	if (key === "adapterSettings") {
+		return [{
+			key: "option1",
+			defaultValue: true,
+			inputType: "checkbox",
+		}, {
+			key: "option2",
+			defaultValue: "42",
+			inputType: "text",
+		}];
 	}
 }
