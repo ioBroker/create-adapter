@@ -4,6 +4,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { spawn, SpawnOptions } from "child_process";
 import { Linter } from "eslint";
 import * as fs from "fs-extra";
+import * as JSON5 from "json5";
 import * as os from "os";
 import * as path from "path";
 import * as ts from "typescript";
@@ -235,6 +236,15 @@ export function indentWithTabs(text: string): string {
 export function indentWithSpaces(text: string): string {
 	if (!text) return text;
 	return text.replace(/^(\t)+/gm, match => " ".repeat(match.length * 4));
+}
+
+/** Normalizes formatting of a JSON string */
+export function formatJsonString(json: string, indentation: "Tab" | "Space (4)"): string {
+	return JSON.stringify(
+		JSON5.parse(json),
+		null,
+		indentation === "Tab" ? "\t" : 4,
+	);
 }
 
 /** Formats a JS source file to use single quotes */

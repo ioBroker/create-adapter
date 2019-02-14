@@ -71,7 +71,7 @@ describe("packageVersions/getPackageName()", () => {
 	});
 });
 
-describe.only("packageVersions/fetchPackageVersions()", () => {
+describe("packageVersions/fetchPackageVersions()", () => {
 
 	beforeEach(() => {
 		axiosMock.reset();

@@ -2,7 +2,6 @@
 "use strict";
 
 systemDictionary = {
-
 	"myColor": {
 		"en": "myColor",
 		"de": "meineColor",
@@ -16,16 +15,16 @@ systemDictionary = {
 		"zh-cn": "我的颜色"
 	},
 	"myColor_tooltip": {
-		"en": "Description of\x0AmyColor",
-		"de": "Beschreibung von\x0AmyColor",
-		"ru": "Описание\x0AmyColor",
-		"pt": "Descrição de\x0AmyColor",
-		"nl": "Beschrijving van\x0AmyColor",
-		"fr": "Description de\x0AmyColor",
-		"it": "Descrizione di\x0AmyColor",
-		"es": "Descripción de\x0AmyColor",
-		"pl": "Opis\x0AmyColor",
-		"zh-cn": "\x0AmyColor的描述"
+		"en": "Description of\nmyColor",
+		"de": "Beschreibung von\nmyColor",
+		"ru": "Описание\nmyColor",
+		"pt": "Descrição de\nmyColor",
+		"nl": "Beschrijving van\nmyColor",
+		"fr": "Description de\nmyColor",
+		"it": "Descrizione di\nmyColor",
+		"es": "Descripción de\nmyColor",
+		"pl": "Opis\nmyColor",
+		"zh-cn": "\nmyColor的描述"
 	},
 	"htmlText": {
 		"en": "htmlText",
@@ -75,5 +74,4 @@ systemDictionary = {
 		"pl": "Instancja",
 		"zh-cn": "例"
 	}
-
 };

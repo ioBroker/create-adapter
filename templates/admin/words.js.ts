@@ -1,15 +1,34 @@
 import { TemplateFunction } from "../../src/lib/createAdapter";
+import { AdapterSettings, getDefaultAnswer } from "../../src/lib/questions";
+import { formatJsonString, translateText } from "../../src/lib/tools";
 
-export = (answers => {
+export = (async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
+
+	// Automatically translate all settings
+	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
+	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
+	const translatedSettings: Record<string, Record<string, string>> = {};
+	for (const setting of adapterSettings) {
+		translatedSettings[setting.key] = {};
+		for (const lang of languages) {
+			translatedSettings[setting.key][lang] = await translateText(setting.label || setting.key, lang);
+		}
+	}
+	const translatedSettingsJson = Object.keys(translatedSettings)
+		.map(key => {
+			return `"${key}": ${JSON.stringify(translatedSettings[key], null, 4)}`;
+		})
+		.join(",\n")
+	;
 
 	const template = `
 /*global systemDictionary:true */
 'use strict';
 
-systemDictionary = {
+systemDictionary = ${formatJsonString(`{
 	${isAdapter ? (`
 	"${answers.adapterName} adapter settings": {
 		"en": "Adapter settings for ${answers.adapterName}",
@@ -23,30 +42,7 @@ systemDictionary = {
 		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
 		"zh-cn": "${answers.adapterName}的适配器设置"
 	},
-	"option 1 description": {
-		"en": "Option 1 is cool",
-		"de": "Option 1 ist cool",
-		"ru": "Вариант 1 - это круто",
-		"pt": "Opção 1 é legal",
-		"nl": "Optie 1 is cool",
-		"fr": "L'option 1 est cool",
-		"it": "L'opzione 1 è cool",
-		"es": "La opción 1 es genial",
-		"pl": "Opcja 1 jest fajna",
-		"zh-cn": "选项1很酷"
-	},
-	"option 2 description": {
-		"en": "Option 2 is not",
-		"de": "Option 2 nicht",
-		"ru": "Вариант 2 не",
-		"pt": "A opção 2 não é",
-		"nl": "Optie 2 is dat niet",
-		"fr": "L'option 2 n'est pas",
-		"it": "L'opzione 2 no",
-		"es": "La opción 2 no es",
-		"pl": "Opcja 2 nie jest",
-		"zh-cn": "选项2不是"
-	}${isWidget ? "," : ""}
+	${translatedSettingsJson},
 	`) : ""}
 	${isWidget ? (`
 	"myColor": {
@@ -122,7 +118,7 @@ systemDictionary = {
 		"zh-cn": "例"
 	}
 	`) : ""}
-};
+}`, answers.indentation || "Tab")};
 `;
 	return template.trim();
 }) as TemplateFunction;

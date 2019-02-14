@@ -9,7 +9,7 @@ const fetchPackageVersion = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
 const { checkAdapterName } = proxyquire<typeof import ("./actionsAndTransformers")>("./actionsAndTransformers", {
-	"./fetchVersions": {
+	"./packageVersions": {
 		fetchPackageVersion,
 	},
 });
