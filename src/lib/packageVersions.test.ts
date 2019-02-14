@@ -263,5 +263,4 @@ describe("packageVersions/fetchPackageVersion(specific)", () => {
 		expect(axiosMock.getCall(0).args[0].url).to.include(encodeURIComponent("bar-baz"));
 	});
 
-
 });

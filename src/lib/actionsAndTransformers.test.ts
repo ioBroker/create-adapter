@@ -1,14 +1,16 @@
 // tslint:disable: no-unused-expression
 
-import { checkMinSelections } from "./actionsAndTransformers";
-
+import { expect } from "chai";
 import * as proxyquireModule from "proxyquire";
 import { stub } from "sinon";
+
+import { checkAuthorName, checkEmail, checkMinSelections, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
 
 const fetchPackageVersion = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
-const { checkAdapterName } = proxyquire<typeof import ("./actionsAndTransformers")>("./actionsAndTransformers", {
+// tslint:disable-next-line: whitespace
+const { checkAdapterName } = proxyquire<typeof import("./actionsAndTransformers")>("./actionsAndTransformers", {
 	"./packageVersions": {
 		fetchPackageVersion,
 	},
@@ -84,5 +86,100 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 	it("should return true otherwise", async () => {
 		fetchPackageVersion.rejects("404");
 		await checkAdapterName("foo").should.become(true);
+	});
+});
+
+describe("actionsAndTransformers/checkAuthorName()", () => {
+	it("should not accept empty names", async () => {
+		const forbidden = [
+			"", " ", "\t",
+		];
+		for (const name of forbidden) {
+			const result = await checkAuthorName(name);
+			result.should.be.a("string").and.match(/Please enter/);
+		}
+	});
+	it("should return true otherwise", async () => {
+		await checkAuthorName("Foo").should.become(true);
+	});
+});
+
+describe("actionsAndTransformers/checkEmail()", () => {
+	it("should only accept valid email addresses", async () => {
+		const forbidden = [
+			"", " ", "foo@", "bar.de", "foo@bar@baz.de",
+		];
+		for (const name of forbidden) {
+			const result = await checkEmail(name);
+			result.should.be.a("string").and.match(/Please enter/);
+		}
+	});
+	it("should return true for valid email addresses", async () => {
+		await checkEmail("test.user@fake-mail.com").should.become(true);
+	});
+});
+
+describe("actionsAndTransformers/transformAdapterName()", () => {
+	it(`should remove leading "ioBroker." from the adapter name`, () => {
+		const tests = [
+			{ original: "ioBroker.test-adapter", expected: "test-adapter" },
+			{ original: "iobroker.test-adapter", expected: "test-adapter" },
+			{ original: "ioBrokertest", expected: "ioBrokertest" },
+			{ original: "iobrokertest", expected: "iobrokertest" },
+		];
+
+		for (const { original, expected } of tests) {
+			transformAdapterName(original).should.equal(expected);
+		}
+	});
+});
+
+describe("actionsAndTransformers/transformDescription()", () => {
+	it(`should remove leading and trailing spaces`, () => {
+		const tests = [
+			{ original: "This is a description", expected: "This is a description" },
+			{ original: "  This is also a description\t", expected: "This is also a description" },
+		];
+
+		for (const { original, expected } of tests) {
+			expect(transformDescription(original)).to.equal(expected);
+		}
+	});
+
+	it(`should return undefined for empty descriptions`, () => {
+		const tests = [
+			{ original: " \t ", expected: undefined },
+			{ original: "\n\n\r\t", expected: undefined },
+		];
+
+		for (const { original, expected } of tests) {
+			expect(transformDescription(original)).to.equal(expected);
+		}
+	});
+});
+
+describe("actionsAndTransformers/checkTitle()", () => {
+	it("should not accept empty titles", async () => {
+		const forbidden = [
+			"", " ", "\t",
+		];
+		for (const name of forbidden) {
+			const result = await checkTitle(name);
+			result.should.be.a("string").and.match(/Please enter/);
+		}
+	});
+
+	it("should return an error if the title contains iobroker or adapter", async () => {
+		const forbidden = [
+			"iobroker adapter", "adapter test foo", "this is for iobroker",
+		];
+		for (const name of forbidden) {
+			const result = await checkTitle(name);
+			result.should.be.a("string").and.match(/must not/);
+		}
+	});
+
+	it("should return true otherwise", async () => {
+		checkTitle("foo").should.equal(true);
 	});
 });
