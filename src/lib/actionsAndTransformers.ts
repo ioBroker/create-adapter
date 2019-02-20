@@ -87,3 +87,13 @@ export function transformDescription(description: string): string | undefined {
 	if (description.length === 0) return undefined;
 	return description;
 }
+
+export function transformKeywords(keywords: string): string[] | undefined {
+	const keywordsArray = keywords.trim()
+		.split(",")
+		.map(k => k.trim())
+		.filter(k => !!k)
+	;
+	if (keywordsArray.length === 0) return undefined;
+	return keywordsArray;
+}

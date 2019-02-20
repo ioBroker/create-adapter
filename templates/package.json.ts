@@ -2,6 +2,7 @@ import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
 import { TemplateFunction } from "../src/lib/createAdapter";
 import { fetchPackageVersion, getPackageName } from "../src/lib/packageVersions";
+import { getDefaultAnswer } from "../src/lib/questions";
 
 const templateFunction: TemplateFunction = async answers => {
 
@@ -73,12 +74,7 @@ const templateFunction: TemplateFunction = async answers => {
 	},
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
 	"license": "${answers.license!.id}",
-	"keywords": [
-		"ioBroker",
-		"template",
-		"Smart Home",
-		"home automation",
-	],
+	"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
