@@ -314,6 +314,18 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it(`Different keywords`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					keywords: "this, adapter,uses,   different , keywords" as any,
+				};
+				await expectSuccess(
+					"keywords",
+					answers,
+					file => file.name.endsWith("package.json"),
+				);
+			});
+
 		});
 
 	});

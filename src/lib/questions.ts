@@ -1,7 +1,7 @@
 import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
-import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
+import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription, transformKeywords } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
 import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
@@ -81,6 +81,14 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformDescription,
+			},
+			{
+				type: "input",
+				name: "keywords",
+				message: "Enter some keywords (separated by commas) to describe your project:",
+				hint: "(optional)",
+				optional: true,
+				resultTransform: transformKeywords,
 			},
 			{
 				condition: { name: "cli", value: false },
@@ -384,6 +392,7 @@ export type AdapterSettings =
 export interface Answers {
 	adapterName: string;
 	description?: string;
+	keywords?: string[];
 	authorName: string;
 	authorEmail: string;
 	authorGithub: string;
@@ -466,5 +475,12 @@ export function getDefaultAnswer<T extends keyof Answers>(key: T): Answers[T] | 
 			defaultValue: "42",
 			inputType: "text",
 		}];
+	} else if (key === "keywords") {
+		return [
+			"ioBroker",
+			"template",
+			"Smart Home",
+			"home automation",
+		];
 	}
 }
