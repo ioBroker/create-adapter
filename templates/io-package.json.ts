@@ -1,8 +1,8 @@
 import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { translateText } from "../src/lib/tools";
 import { AdapterSettings, getDefaultAnswer } from "../src/lib/questions";
+import { translateText } from "../src/lib/tools";
 
 export = (async answers => {
 
@@ -59,12 +59,7 @@ export = (async answers => {
 		"authors": [
 			"${answers.authorName} <${answers.authorEmail}>"
 		],
-		"keywords": [
-			"ioBroker",
-			"template",
-			"Smart Home",
-			"home automation",
-		],
+		"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 		"license": "${answers.license!.id}",
 		"platform": "Javascript/Node.js",
 		"main": "${useTypeScript ? "build/" : ""}main.js",
