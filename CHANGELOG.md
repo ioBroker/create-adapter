@@ -1,5 +1,8 @@
 # Changelog
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Add more unit tests
+
 ## 1.9.0 (2019-02-14)
 * (AlCalzone) Add the ability to pin package versions in the template `package.json`
 * (AlCalzone & bluefox) Automatically translate settings labels in words.js (fixes #98)
