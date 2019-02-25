@@ -1,6 +1,6 @@
 # Changelog
 
-## __WORK IN PROGRESS__
+## 1.10.0 (2019-02-25)
 * (AlCalzone) Add more unit tests
 * (AlCalzone) Add the possibility to specify keywords (fixes #3)
 * (AlCalzone) Bind event handlers in the ES6 templates to the class instance
