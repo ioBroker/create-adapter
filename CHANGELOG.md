@@ -2,6 +2,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Add the possibility to specify keywords (fixes #3)
+* (AlCalzone) Bind event handlers in the ES6 templates to the class instance
 
 ## 1.9.0 (2019-02-14)
 * (AlCalzone) Add the ability to pin package versions in the template `package.json`
