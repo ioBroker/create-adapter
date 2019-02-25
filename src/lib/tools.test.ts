@@ -1,7 +1,7 @@
 // tslint:disable: no-unused-expression
 
 import { expect } from "chai";
-import { capitalize, formatLicense, getOwnVersion, indentWithSpaces, indentWithTabs, jsFixQuotes, kebabCaseToUpperCamelCase, tsFixQuotes } from "./tools";
+import { capitalize, formatJsonString, formatLicense, getOwnVersion, indentWithSpaces, indentWithTabs, jsFixQuotes, kebabCaseToUpperCamelCase, tsFixQuotes } from "./tools";
 
 describe("tools/error()", () => {
 	it.skip("TODO: Cannot test this because console.log should not be stubbed");
@@ -157,14 +157,14 @@ describe("tools/getOwnVersion()", () => {
 });
 
 describe("tools/formatLicense()", () => {
-	const answers = {authorName: "John Doe"};
+	const answers = { authorName: "John Doe" };
 
 	it("should replace [year] with the current year", () => {
 		const curYear = new Date().getFullYear().toString();
 		const tests = [
-			{original: "[year]", expected: curYear},
-			{original: "Copyright © [year]", expected: `Copyright © ${curYear}`},
-			{original: "[year] [year] [year]", expected: `${curYear} ${curYear} ${curYear}`},
+			{ original: "[year]", expected: curYear },
+			{ original: "Copyright © [year]", expected: `Copyright © ${curYear}` },
+			{ original: "[year] [year] [year]", expected: `${curYear} ${curYear} ${curYear}` },
 		];
 
 		for (const { original, expected } of tests) {
@@ -174,12 +174,29 @@ describe("tools/formatLicense()", () => {
 
 	it("should replace [fullname] with the author's name", () => {
 		const tests = [
-			{original: "[fullname]", expected: answers.authorName},
-			{original: "[fullname] [fullname] [fullname]", expected: `${answers.authorName} ${answers.authorName} ${answers.authorName}`},
+			{ original: "[fullname]", expected: answers.authorName },
+			{ original: "[fullname] [fullname] [fullname]", expected: `${answers.authorName} ${answers.authorName} ${answers.authorName}` },
 		];
 
 		for (const { original, expected } of tests) {
 			expect(formatLicense(original, answers as any)).to.equal(expected);
 		}
+	});
+});
+
+describe("tools/formatJsonString()", () => {
+	it("should normalize the formatting of JSON strings", () => {
+		expect(
+			formatJsonString(`{
+"foo":   "bar",
+
+
+	"baz": "foo",
+			}`, "Tab"),
+		).to.equal(`{
+	"foo": "bar",
+	"baz": "foo"
+}`);
+
 	});
 });

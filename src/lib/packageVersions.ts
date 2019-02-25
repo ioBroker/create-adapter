@@ -29,7 +29,7 @@ export function getPackageName(packageNameAndVersion: string): string {
  * @param fallbackVersion The fallback version to return in case anything goes wrong. If this is set, no error is thrown.
  */
 
-export async function fetchAllPackageVersions(packageName: string): Promise<string[]> {
+async function fetchAllPackageVersions(packageName: string): Promise<string[]> {
 	if (allVersionsCache.has(packageName)) return allVersionsCache.get(packageName)!;
 
 	const packageURIComponent = encodeURIComponent(packageName);
@@ -48,7 +48,22 @@ export async function fetchAllPackageVersions(packageName: string): Promise<stri
 	return allVersions;
 }
 
-async function fetchSinglePackageVersion(packageName: string, fallbackVersion?: string): Promise<string> {
+async function fetchSpecificPackageVersion(packageNameAndVersion: string, fallbackVersion?: string): Promise<string> {
+	// A specific version is requested, return the highest version matching the specifier
+	try {
+		const versionSpecifier = getVersionSpecifier(packageNameAndVersion)!;
+		const packageName = getPackageName(packageNameAndVersion);
+		const allVersions = await fetchAllPackageVersions(packageName);
+		return semver.maxSatisfying(allVersions, versionSpecifier);
+	} catch (e) {
+		if (fallbackVersion) return fallbackVersion;
+		throw e;
+	}
+}
+
+async function fetchLatestPackageVersion(packageName: string, fallbackVersion?: string): Promise<string> {
+	if (latestVersionCache.has(packageName)) return latestVersionCache.get(packageName)!;
+
 	const packageURIComponent = encodeURIComponent(packageName);
 	const url = `https://registry.npmjs.org/-/package/${packageURIComponent}/dist-tags`;
 
@@ -72,22 +87,10 @@ async function fetchSinglePackageVersion(packageName: string, fallbackVersion?: 
  * @param fallbackVersion The fallback version to return in case anything goes wrong. If this is set, no error is thrown.
  */
 export async function fetchPackageVersion(packageName: string, fallbackVersion?: string): Promise<string> {
-	if (latestVersionCache.has(packageName)) return latestVersionCache.get(packageName)!;
-
 	if (hasVersionSpecifier(packageName)) {
-		// A specific version is requested, return the highest version matching the specifier
-		try {
-			const versionSpecifier = getVersionSpecifier(packageName)!;
-			packageName = getPackageName(packageName);
-			const allVersions = await fetchAllPackageVersions(packageName);
-			return semver.maxSatisfying(allVersions, versionSpecifier);
-		} catch (e) {
-			console.error(e);
-			if (fallbackVersion) return fallbackVersion;
-			throw e;
-		}
+		return fetchSpecificPackageVersion(packageName, fallbackVersion);
 	} else {
-		return fetchSinglePackageVersion(packageName, fallbackVersion);
+		return fetchLatestPackageVersion(packageName, fallbackVersion);
 	}
 
 }
