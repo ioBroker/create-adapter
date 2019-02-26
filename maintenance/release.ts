@@ -38,9 +38,10 @@ const pack = require(packPath);
 const changelogPath = path.join(rootDir, "CHANGELOG.md");
 let changelog = fs.readFileSync(changelogPath, "utf8");
 const CHANGELOG_PLACEHOLDER = "## __WORK IN PROGRESS__";
+const CHANGELOG_PLACEHOLDER_REGEX = new RegExp("^" + CHANGELOG_PLACEHOLDER + "$", "gm");
 
 // check if the changelog contains exactly 1 occurence of the changelog placeholder
-switch ((changelog.match(new RegExp("^" + CHANGELOG_PLACEHOLDER + "$", "gm")) || []).length) {
+switch ((changelog.match(CHANGELOG_PLACEHOLDER_REGEX) || []).length) {
 	case 0:
 		fail(colors.red(
 			"Cannot continue, the changelog placeholder is missing from CHANGELOG.md!\n"
@@ -108,8 +109,8 @@ if (argv.dry) {
 	console.log(`updating CHANGELOG.md`);
 	const d = new Date();
 	changelog = changelog.replace(
-		CHANGELOG_PLACEHOLDER,
-		`## ${newVersion} (${d.getFullYear()}-${padStart("" + (d.getMonth() + 1), 2, "0")}-${padStart("" + d.getDate(), 2, "0")})`,
+		CHANGELOG_PLACEHOLDER_REGEX,
+		`## v${newVersion} (${d.getFullYear()}-${padStart("" + (d.getMonth() + 1), 2, "0")}-${padStart("" + d.getDate(), 2, "0")})`,
 	);
 	fs.writeFileSync(changelogPath, changelog, "utf8");
 

@@ -1,11 +1,20 @@
 # Changelog
 
-## 1.10.0 (2019-02-25)
+<!--
+	Placeholder for the next version:
+	## __WORK IN PROGRESS__
+	(at the beginning of a new line )
+-->
+
+## __WORK IN PROGRESS__
+* (AlCalzone) Enforce `js-controller >= 1.4.2` during installation
+
+## v1.10.0 (2019-02-25)
 * (AlCalzone) Add more unit tests
 * (AlCalzone) Add the possibility to specify keywords (fixes #3)
 * (AlCalzone) Bind event handlers in the ES6 templates to the class instance
 
-## 1.9.0 (2019-02-14)
+## v1.9.0 (2019-02-14)
 * (AlCalzone) Add the ability to pin package versions in the template `package.json`
 * (AlCalzone & bluefox) Automatically translate settings labels in words.js (fixes #98)
 * (AlCalzone & bluefox) Add the possibility to specify adapter config and generate options page (not on the CLI) (fixes #97)
@@ -23,21 +32,21 @@
 To use it, append `--yandex <yandex_api_key>` to the gulp command.
 * (AlCalzone) Add license to io-package.json (fixes #88)
 
-## 1.8.0 (2019-01-24)
+## v1.8.0 (2019-01-24)
 * (AlCalzone & jogibear9988) Add ES6 class support for the main file
 
-## 1.7.0 (2019-01-23)
+## v1.7.0 (2019-01-23)
 * (AlCalzone) Automatically create the template repo on release
 * (AlCalzone) Always create `gulpfile.js`, even in VIS-only templates (fixes #75)
 * (AlCalzone) Add `"compact": true` to `io-package.json` in adapter mode (fixes #47)
 
-## 1.6.3 (2019-01-22)
+## v1.6.3 (2019-01-22)
 * (AlCalzone) Use `files` in `package.json` instead of `.npmignore` to avoid excluding templates.
 
-## 1.6.1 (2019-01-19)
+## v1.6.1 (2019-01-19)
 * (AlCalzone) Fix "cannot find module `typescript`"
 
-## 1.6.0 (2019-01-17)
+## v1.6.0 (2019-01-17)
 * (AlCalzone) Allow choosing quote style in TypeScript (fixes #33)
 * (AlCalzone) Ensure JS files contain `"use strict";` (fixes #53)
 * (AlCalzone) Print the creator version in the main file header (fixes #52)
@@ -49,7 +58,7 @@ To use it, append `--yandex <yandex_api_key>` to the gulp command.
 * (ldittmar & AlCalzone) Support custom_m.html (fixes #61)
 * (ldittmar & AlCalzone) Support admin tab (fixes #14)
 
-## 1.5.0 (2019-01-07)
+## v1.5.0 (2019-01-07)
 * (AlCalzone) Allow targeting newer ES version when using JS (fixes #43)
 * (AlCalzone) Support compact mode (coming in JS-Controller 2.0) (fixes #47)
 
