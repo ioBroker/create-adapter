@@ -20,8 +20,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@iobroker/testing": "^1.1.4",
-    "@types/gulp": "^4.0.5",
+    "@iobroker/testing": "^1.1.16",
+    "@types/gulp": "^4.0.6",
     "axios": "^0.18.0",
     "gulp": "^4.0.0"
   },
