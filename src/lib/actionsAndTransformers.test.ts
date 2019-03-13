@@ -83,6 +83,11 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 		result.should.be.a("string").and.match(/already exists/);
 	});
 
+	it("should not return an error if the adapter exists and the check is skipped", async () => {
+		fetchPackageVersion.resolves("1.2.3");
+		await checkAdapterName("foo", {skipAdapterExistenceCheck: true}).should.become(true);
+	});
+
 	it("should return true otherwise", async () => {
 		fetchPackageVersion.rejects("404");
 		await checkAdapterName("foo").should.become(true);

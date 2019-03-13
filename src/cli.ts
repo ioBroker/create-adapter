@@ -10,6 +10,10 @@ import { error, executeCommand, isWindows } from "./lib/tools";
 /** Where the output should be written */
 const rootDir = path.resolve(yargs.argv.target || process.cwd());
 
+const creatorOptions = {
+	skipAdapterExistenceCheck: !!yargs.argv.skipAdapterExistenceCheck,
+};
+
 /** Asks a series of questions on the CLI */
 async function ask() {
 	let answers: Record<string, any> = { cli: true };
@@ -35,7 +39,7 @@ async function ask() {
 				}
 				// Test the result
 				if (q.action != undefined) {
-					const testResult = await q.action(answer[q.name as string]);
+					const testResult = await q.action(answer[q.name as string], creatorOptions);
 					if (typeof testResult === "string") {
 						error(testResult);
 						continue;

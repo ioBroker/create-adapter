@@ -35,12 +35,14 @@ async function checkAdapterExistence(name: string): Promise<CheckResult> {
 	}
 }
 
-export async function checkAdapterName(name: string): Promise<CheckResult> {
+export async function checkAdapterName<T extends { skipAdapterExistenceCheck: boolean }>(name: string, options?: T): Promise<CheckResult> {
 	const validCheck = isAdapterNameValid(name);
 	if (typeof validCheck === "string") return validCheck;
 
-	const existenceCheck = await checkAdapterExistence(name);
-	if (typeof existenceCheck === "string") return existenceCheck;
+	if (!options || !options.skipAdapterExistenceCheck) {
+		const existenceCheck = await checkAdapterExistence(name);
+		if (typeof existenceCheck === "string") return existenceCheck;
+	}
 
 	return true;
 }
@@ -93,7 +95,7 @@ export function transformKeywords(keywords: string): string[] | undefined {
 		.split(",")
 		.map(k => k.trim())
 		.filter(k => !!k)
-	;
+		;
 	if (keywordsArray.length === 0) return undefined;
 	return keywordsArray;
 }

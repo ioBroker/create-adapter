@@ -9,7 +9,7 @@ import { getOwnVersion } from "./tools";
 // Sadly, Enquirer does not export the PromptOptions type
 // tslint:disable-next-line:ban-types
 type PromptOptions = Exclude<Parameters<typeof prompt>[0], Function | any[]>;
-type QuestionAction<T> = (value: T) => CheckResult | Promise<CheckResult>;
+type QuestionAction<T> = (value: T, options?: unknown) => CheckResult | Promise<CheckResult>;
 // tslint:disable-next-line:interface-over-type-literal
 export type AnswerValue = string | boolean | number;
 export type Condition = { name: string } & (
