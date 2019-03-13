@@ -32,7 +32,7 @@ export = (answers => {
 		// "strictNullChecks": true,
 		// "strictPropertyInitialization": true,
 		// "strictBindCallApply": true,
-		// "noImplicitAny": true,
+		${useTypeScript ? `// "noImplicitAny": true,` : `"noImplicitAny": false,`}
 		// "noUnusedLocals": true,
 		// "noUnusedParameters": true,
 
