@@ -22,12 +22,16 @@ Any computer with NodeJS in version 8 or higher and npm 6 or higher.
 ## Usage
 This tool is not supposed to be installed. Instead, run the most recent version using
 ```
-npx @iobroker/create-adapter
+npx @iobroker/create-adapter [options]
 ```
 in the directory where the directory of your project should be created. You don't need to create the adapter/widget directory, because it will be created for you.
 
 After a short while, you will be asked a few questions. Afterwards all the necessary files will be created for you.
 
+### Options
+The following CLI options are available:
+* `--target=/path/to/dir` - Specify which directory the adapter files should be created in (instead of the current dir)
+* `--skipAdapterExistenceCheck` - Don't check if an adapter with the same name already exists on `npm`.
 
 ## Features
 * Choose between: ioBroker adapter, VIS widget or both

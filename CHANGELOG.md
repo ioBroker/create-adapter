@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Enforce `js-controller >= 1.4.2` during installation
+* (AlCalzone) Added the `--skipAdapterExistenceCheck` CLI option to skip checking if an adapter already exists
 
 ## v1.10.0 (2019-02-25)
 * (AlCalzone) Add more unit tests
