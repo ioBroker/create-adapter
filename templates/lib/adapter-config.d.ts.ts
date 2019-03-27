@@ -16,7 +16,7 @@ const templateFunction: TemplateFunction = answers => {
 
 import { native } from "${useTypeScript ? "../" : ""}../io-package.json";
 
-type _AdapterConfig = Partial<typeof native>;
+type _AdapterConfig = typeof native;
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
