@@ -9,6 +9,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) In JS, make adapter config properties non-nullable
 * (AlCalzone) Drop Node 6 from the test matrix when using object spreads in JS (fixes #127)
+* (AlCalzone) Remove AppVeyor badge from readme, since all tests are on TravisCI (fixes #129)
 
 ## v1.11.0 (2019-03-13)
 * (AlCalzone) Enforce `js-controller >= 1.4.2` during installation
