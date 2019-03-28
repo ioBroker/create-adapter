@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) In JS, make adapter config properties non-nullable
+
 ## v1.11.0 (2019-03-13)
 * (AlCalzone) Enforce `js-controller >= 1.4.2` during installation
 * (AlCalzone) Added the `--skipAdapterExistenceCheck` CLI option to skip checking if an adapter already exists
