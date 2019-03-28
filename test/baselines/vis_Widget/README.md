@@ -10,8 +10,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.test-widget.png?downloads=true)](https://nodei.co/npm/iobroker.test-widget/)
 
-**Tests:** Linux/Mac: [![Travis-CI](http://img.shields.io/travis/AlCalzone/ioBroker.test-widget/master.svg)](https://travis-ci.org/AlCalzone/ioBroker.test-widget)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/AlCalzone/ioBroker.test-widget?branch=master&svg=true)](https://ci.appveyor.com/project/AlCalzone/ioBroker-test-widget/)
+**Tests:**: [![Travis-CI](http://img.shields.io/travis/AlCalzone/ioBroker.test-widget/master.svg)](https://travis-ci.org/AlCalzone/ioBroker.test-widget)
 
 ## test-widget adapter for ioBroker
 
