@@ -32,10 +32,10 @@
   },
   "devDependencies": {
     "@fimbul/mithotyn": "^0.18.0",
-    "@fimbul/wotan": "^0.18.0",
+    "@fimbul/wotan": "^0.20.0",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
-    "@types/debug": "0.0.31",
+    "@types/debug": "4.1.4",
     "@types/eslint": "^4.16.5",
     "@types/fs-extra": "^5.0.4",
     "@types/json5": "0.0.30",
@@ -55,16 +55,15 @@
     "coveralls": "^3.0.2",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.0.0",
     "prettier": "^1.17.0",
     "proxyquire": "^2.1.0",
     "rimraf": "^2.6.2",
-    "semver": "^5.6.0",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.3.0",
     "source-map-support": "^0.5.9",
-    "ts-node": "^7.0.1"
+    "ts-node": "^8.1.0"
   },
   "dependencies": {
     "alcalzone-shared": "^1.4.0",
@@ -74,8 +73,9 @@
     "eslint": "^5.16.0",
     "fs-extra": "^7.0.1",
     "json5": "^2.1.0",
+    "semver": "^6.0.0",
     "typescript": "^3.3.3",
-    "yargs": "^12.0.5"
+    "yargs": "^13.2.2"
   },
   "scripts": {
     "linkTemplates": "node --require ts-node/register maintenance/generateTemplateIndex.ts",
