@@ -5,10 +5,8 @@ export = (answers => {
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
-<h1>
-	<img src="admin/${answers.adapterName}.png" width="64"/>
-	ioBroker.${answers.adapterName}
-</h1>
+![Logo](admin/${answers.adapterName}.png)
+# ioBroker.${answers.adapterName}
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})
 [![Downloads](https://img.shields.io/npm/dm/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})
