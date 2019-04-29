@@ -64,7 +64,12 @@ async function fetchSpecificPackageVersion(
 		const versionSpecifier = getVersionSpecifier(packageNameAndVersion)!;
 		const packageName = getPackageName(packageNameAndVersion);
 		const allVersions = await fetchAllPackageVersions(packageName);
-		return semver.maxSatisfying(allVersions, versionSpecifier);
+		const ret = semver.maxSatisfying(allVersions, versionSpecifier);
+		if (!ret)
+			throw new Error(
+				`No version of ${packageName} found matching ${versionSpecifier}`,
+			);
+		return ret;
 	} catch (e) {
 		if (fallbackVersion) return fallbackVersion;
 		throw e;
