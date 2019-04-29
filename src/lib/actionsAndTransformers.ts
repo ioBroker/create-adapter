@@ -4,7 +4,11 @@ import { fetchPackageVersion } from "./packageVersions";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export type CheckResult = true | string;
-export async function checkMinSelections(category: string, min: number, answers: any[]): Promise<CheckResult> {
+export async function checkMinSelections(
+	category: string,
+	min: number,
+	answers: any[],
+): Promise<CheckResult> {
 	if (answers.length >= min) return true;
 	return `Please enter at least ${min} ${category}`;
 }
@@ -35,7 +39,9 @@ async function checkAdapterExistence(name: string): Promise<CheckResult> {
 	}
 }
 
-export async function checkAdapterName<T extends { skipAdapterExistenceCheck: boolean }>(name: string, options?: T): Promise<CheckResult> {
+export async function checkAdapterName<
+	T extends { skipAdapterExistenceCheck: boolean }
+>(name: string, options?: T): Promise<CheckResult> {
 	const validCheck = isAdapterNameValid(name);
 	if (typeof validCheck === "string") return validCheck;
 
@@ -79,7 +85,9 @@ export function transformAdapterName(name: string): string {
 	const startsWithIoBroker = /^ioBroker\./i;
 	if (startsWithIoBroker.test(name)) {
 		name = name.replace(startsWithIoBroker, "");
-		console.log(yellow(`You don't have to prefix the name with "ioBroker."`));
+		console.log(
+			yellow(`You don't have to prefix the name with "ioBroker."`),
+		);
 	}
 	return name;
 }
@@ -91,11 +99,11 @@ export function transformDescription(description: string): string | undefined {
 }
 
 export function transformKeywords(keywords: string): string[] | undefined {
-	const keywordsArray = keywords.trim()
+	const keywordsArray = keywords
+		.trim()
 		.split(",")
 		.map(k => k.trim())
-		.filter(k => !!k)
-		;
+		.filter(k => !!k);
 	if (keywordsArray.length === 0) return undefined;
 	return keywordsArray;
 }

@@ -19,7 +19,9 @@ const options: AxiosRequestConfig = {
 			...options,
 			url: `https://api.github.com/repos/ioBroker/ioBroker.template/pulls`,
 			data: {
-				title: `Update templates to creator version v${process.env.OWN_VERSION}`,
+				title: `Update templates to creator version v${
+					process.env.OWN_VERSION
+				}`,
 				body: `This PR updates the templates to the latest version of @ioBroker/create-adapter.`,
 				head: `AlCalzone:${process.env.BRANCH_NAME}`,
 				base: "master",
@@ -27,9 +29,11 @@ const options: AxiosRequestConfig = {
 		});
 	} catch (e) {
 		createPrResponse = e.response;
-		console.error(red(`PR creation failed with code ${createPrResponse.status}:
+		console.error(
+			red(`PR creation failed with code ${createPrResponse.status}:
 ${createPrResponse.statusText}
-${JSON.stringify(createPrResponse.data, null, 4)}`));
+${JSON.stringify(createPrResponse.data, null, 4)}`),
+		);
 		return process.exit(1);
 	}
 
@@ -42,10 +46,7 @@ ${JSON.stringify(createPrResponse.data, null, 4)}`));
 		...options,
 		url: `https://api.github.com/repos/ioBroker/ioBroker.template/issues/${issueNumber}/assignees`,
 		data: {
-			assignees: [
-				"AlCalzone",
-				"Apollon77",
-			],
+			assignees: ["AlCalzone", "Apollon77"],
 		},
 	});
 	console.log(`Assigned the PR`);

@@ -1,3 +1,6 @@
 package.json
 package-lock.json
 build/
+src/lib/licenses.ts
+templates/
+test/baselines/

@@ -1,24 +1,42 @@
 import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green, underline } from "ansi-colors";
 import { prompt } from "enquirer";
-import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, transformAdapterName, transformDescription, transformKeywords } from "./actionsAndTransformers";
+import {
+	checkAdapterName,
+	checkAuthorName,
+	checkEmail,
+	checkMinSelections,
+	CheckResult,
+	checkTitle,
+	transformAdapterName,
+	transformDescription,
+	transformKeywords,
+} from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
 import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
 
 // Sadly, Enquirer does not export the PromptOptions type
 type PromptOptions = Exclude<Parameters<typeof prompt>[0], Function | any[]>;
-type QuestionAction<T> = (value: T, options?: unknown) => CheckResult | Promise<CheckResult>;
+type QuestionAction<T> = (
+	value: T,
+	options?: unknown,
+) => CheckResult | Promise<CheckResult>;
 export type AnswerValue = string | boolean | number;
 export type Condition = { name: string } & (
 	| { value: AnswerValue | AnswerValue[] }
 	| { contains: AnswerValue }
-	| { doesNotContain: AnswerValue }
-);
+	| { doesNotContain: AnswerValue });
 
 interface QuestionMeta {
 	condition?: Condition | Condition[];
-	resultTransform?: (val: AnswerValue | AnswerValue[]) => AnswerValue | AnswerValue[] | undefined | Promise<AnswerValue | AnswerValue[] | undefined>;
+	resultTransform?: (
+		val: AnswerValue | AnswerValue[],
+	) =>
+		| AnswerValue
+		| AnswerValue[]
+		| undefined
+		| Promise<AnswerValue | AnswerValue[] | undefined>;
 	action?: QuestionAction<undefined | AnswerValue | AnswerValue[]>;
 	optional?: boolean;
 }
@@ -35,7 +53,9 @@ export function isQuestionGroup(val: any): val is QuestionGroup {
 	return true;
 }
 
-function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "type">>>(ms: T): T & { type: string } {
+function styledMultiselect<
+	T extends Pick<Question, Exclude<keyof Question, "type">>
+>(ms: T): T & { type: string } {
 	return Object.assign({} as Question, ms, {
 		type: "multiselect",
 		hint: gray("(<space> to select, <return> to submit)"),
@@ -52,7 +72,9 @@ function styledMultiselect<T extends Pick<Question, Exclude<keyof Question, "typ
 export const questionsAndText: (Question | QuestionGroup | string)[] = [
 	"",
 	green.bold("====================================================="),
-	green.bold(`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`),
+	green.bold(
+		`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`,
+	),
 	green.bold("====================================================="),
 	"",
 	gray(`You can cancel at any point by pressing Ctrl+C.`),
@@ -83,7 +105,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 			{
 				type: "input",
 				name: "keywords",
-				message: "Enter some keywords (separated by commas) to describe your project:",
+				message:
+					"Enter some keywords (separated by commas) to describe your project:",
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformKeywords,
@@ -114,7 +137,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 			styledMultiselect({
 				condition: { name: "features", contains: "adapter" },
 				name: "adminFeatures",
-				message: "Which additional features should be available in the admin?",
+				message:
+					"Which additional features should be available in the admin?",
 				hint: "(optional)",
 				initial: [],
 				choices: [
@@ -128,30 +152,119 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				name: "type",
 				message: "Which category does your adapter fall into?",
 				choices: [
-					{ message: "Alarm / security         (Home, car, boat, ...)", value: "alarm" },
-					{ message: "Calendars                (also schedules, etc. ...)", value: "date-and-time" },
-					{ message: "Climate control          (A/C, Heaters, air filters, ...)", value: "climate-control" },
-					{ message: "Communication protocols  (MQTT, ...)", value: "protocols" },
-					{ message: "Data storage             (SQL/NoSQL, file storage, logging, ...)", value: "storage" },
-					{ message: "Data transmission        (for other services via REST api, websockets, ...)", value: "communication" },
-					{ message: "Garden                   (Mowers, watering, ...)", value: "garden" },
-					{ message: "General purpose          (like admin, web, discovery, ...)", value: "general" },
-					{ message: "Geo positioning          (transmission and receipt of position data)", value: "geoposition" },
-					{ message: "Hardware                 (low-level, multi-purpose)", value: "hardware" },
-					{ message: "Household devices        (Vacuums, kitchen, ...)", value: "household" },
+					{
+						message:
+							"Alarm / security         (Home, car, boat, ...)",
+						value: "alarm",
+					},
+					{
+						message:
+							"Calendars                (also schedules, etc. ...)",
+						value: "date-and-time",
+					},
+					{
+						message:
+							"Climate control          (A/C, Heaters, air filters, ...)",
+						value: "climate-control",
+					},
+					{
+						message: "Communication protocols  (MQTT, ...)",
+						value: "protocols",
+					},
+					{
+						message:
+							"Data storage             (SQL/NoSQL, file storage, logging, ...)",
+						value: "storage",
+					},
+					{
+						message:
+							"Data transmission        (for other services via REST api, websockets, ...)",
+						value: "communication",
+					},
+					{
+						message:
+							"Garden                   (Mowers, watering, ...)",
+						value: "garden",
+					},
+					{
+						message:
+							"General purpose          (like admin, web, discovery, ...)",
+						value: "general",
+					},
+					{
+						message:
+							"Geo positioning          (transmission and receipt of position data)",
+						value: "geoposition",
+					},
+					{
+						message:
+							"Hardware                 (low-level, multi-purpose)",
+						value: "hardware",
+					},
+					{
+						message:
+							"Household devices        (Vacuums, kitchen, ...)",
+						value: "household",
+					},
 					{ message: "Lighting control", value: "lighting" },
-					{ message: "Logic                    (Scripts, rules, parsers, scenes, ...)", value: "logic" },
-					{ message: "Messaging                (E-Mail, Telegram, WhatsApp, ...)", value: "messaging" },
-					{ message: "Meters for energy, electricity, ...", value: "energy" },
-					{ message: "Meters for water, gas, oil, ...", value: "metering" },
-					{ message: "Miscellaneous data       (Import/export of contacts, gasoline prices, ...)", value: "misc-data" },
-					{ message: "Miscellaneous utilities  (Data import/emport, backup, ...)", value: "utility" },
-					{ message: "Multimedia               (TV, audio, remote controls, ...)", value: "multimedia" },
-					{ message: "Network infrastructure   (Hardware, printers, phones, ...)", value: "infrastructure" },
-					{ message: "Network utilities        (Ping, UPnP, network discovery, ...)", value: "network" },
-					{ message: "Smart home systems       (3rd party, hardware and software)", value: "iot-systems" },
-					{ message: "Visualizations           (VIS, MaterialUI, mobile views, ...)", value: "visualization" },
-					{ message: "Weather                  (Forecast, air quality, statistics, ...)", value: "weather" },
+					{
+						message:
+							"Logic                    (Scripts, rules, parsers, scenes, ...)",
+						value: "logic",
+					},
+					{
+						message:
+							"Messaging                (E-Mail, Telegram, WhatsApp, ...)",
+						value: "messaging",
+					},
+					{
+						message: "Meters for energy, electricity, ...",
+						value: "energy",
+					},
+					{
+						message: "Meters for water, gas, oil, ...",
+						value: "metering",
+					},
+					{
+						message:
+							"Miscellaneous data       (Import/export of contacts, gasoline prices, ...)",
+						value: "misc-data",
+					},
+					{
+						message:
+							"Miscellaneous utilities  (Data import/emport, backup, ...)",
+						value: "utility",
+					},
+					{
+						message:
+							"Multimedia               (TV, audio, remote controls, ...)",
+						value: "multimedia",
+					},
+					{
+						message:
+							"Network infrastructure   (Hardware, printers, phones, ...)",
+						value: "infrastructure",
+					},
+					{
+						message:
+							"Network utilities        (Ping, UPnP, network discovery, ...)",
+						value: "network",
+					},
+					{
+						message:
+							"Smart home systems       (3rd party, hardware and software)",
+						value: "iot-systems",
+					},
+					{
+						message:
+							"Visualizations           (VIS, MaterialUI, mobile views, ...)",
+						value: "visualization",
+					},
+					{
+						message:
+							"Weather                  (Forecast, air quality, statistics, ...)",
+						value: "weather",
+					},
 				],
 			},
 			{
@@ -171,10 +284,20 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "When should the adapter be started?",
 				initial: "daemon",
 				choices: [
-					{ message: "always", hint: dim.gray("(recommended for most adapters)"), value: "daemon" },
-					{ message: `when the ".alive" state is true`, value: "subscribe" },
+					{
+						message: "always",
+						hint: dim.gray("(recommended for most adapters)"),
+						value: "daemon",
+					},
+					{
+						message: `when the ".alive" state is true`,
+						value: "subscribe",
+					},
 					{ message: "depending on a schedule", value: "schedule" },
-					{ message: "when the instance object changes", value: "once" },
+					{
+						message: "when the instance object changes",
+						value: "once",
+					},
 					{ message: "never", value: "none" },
 				],
 			},
@@ -202,11 +325,9 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "language",
-				message: "Which language do you want to use to code the adapter?",
-				choices: [
-					"JavaScript",
-					"TypeScript",
-				],
+				message:
+					"Which language do you want to use to code the adapter?",
+				choices: ["JavaScript", "TypeScript"],
 			},
 			// {
 			// 	condition: { name: "language", value: "JavaScript" },
@@ -275,10 +396,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				name: "indentation",
 				message: "Do you prefer tab or space indentation?",
 				initial: "Tab",
-				choices: [
-					"Tab",
-					"Space (4)",
-				],
+				choices: ["Tab", "Space (4)"],
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -286,10 +404,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				name: "quotes",
 				message: "Do you prefer double or single quotes?",
 				initial: "double",
-				choices: [
-					"double",
-					"single",
-				],
+				choices: ["double", "single"],
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -298,8 +413,16 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "How should the main adapter file be structured?",
 				initial: "yes",
 				choices: [
-					{ message: "As an ES6 class", hint: "(recommended)", value: "yes" },
-					{ message: "With some methods", hint: "(like legacy code)", value: "no" },
+					{
+						message: "As an ES6 class",
+						hint: "(recommended)",
+						value: "yes",
+					},
+					{
+						message: "With some methods",
+						hint: "(like legacy code)",
+						value: "no",
+					},
 				],
 			},
 		],
@@ -339,7 +462,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				name: "license",
 				message: "Which license should be used for your project?",
 				initial: 5,
-				choices: [ // TODO: automate (GH#1)
+				choices: [
+					// TODO: automate (GH#1)
 					"GNU AGPLv3",
 					"GNU GPLv3",
 					"GNU LGPLv3",
@@ -357,10 +481,11 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 ];
 
 /** Only the questions */
-export const questions = (questionsAndText.filter(q => typeof q !== "string") as (Question | QuestionGroup)[])
-	.map(q => isQuestionGroup(q) ? q.questions : [q])
-	.reduce((arr, next) => arr.concat(...next), [])
-	;
+export const questions = (questionsAndText.filter(
+	q => typeof q !== "string",
+) as (Question | QuestionGroup)[])
+	.map(q => (isQuestionGroup(q) ? q.questions : [q]))
+	.reduce((arr, next) => arr.concat(...next), []);
 
 export interface BaseAdapterSettings<T> {
 	key: string;
@@ -384,8 +509,7 @@ export type AdapterSettings =
 	| StringAdapterSettings
 	| NumberAdapterSettings
 	| BooleanAdapterSettings
-	| SelectAdapterSettings
-	;
+	| SelectAdapterSettings;
 
 export interface Answers {
 	adapterName: string;
@@ -424,7 +548,10 @@ export function checkAnswers(answers: Partial<Answers>): void {
 			throw new Error(`Missing answer "${q.name}"!`);
 		} else if (!conditionFulfilled && answer != undefined) {
 			// TODO: Find a fool-proof way to check for extraneous answers
-			if (questions.filter(qq => qq.name as string === q.name).length > 0) {
+			if (
+				questions.filter(qq => (qq.name as string) === q.name).length >
+				0
+			) {
 				// For now, don't enforce conditions for questions with multiple branches
 				continue;
 			}
@@ -434,51 +561,64 @@ export function checkAnswers(answers: Partial<Answers>): void {
 	}
 }
 
-export async function formatAnswers(answers: Record<string, any>): Promise<Record<string, any>> {
+export async function formatAnswers(
+	answers: Record<string, any>,
+): Promise<Record<string, any>> {
 	for (const q of questions) {
 		const conditionFulfilled = testCondition(q.condition, answers);
 		if (!conditionFulfilled) continue;
 
 		// Apply an optional transformation
-		if (answers[q.name as string] != undefined && typeof q.resultTransform === "function") {
+		if (
+			answers[q.name as string] != undefined &&
+			typeof q.resultTransform === "function"
+		) {
 			const transformed = q.resultTransform(answers[q.name as string]);
-			answers[q.name as string] = transformed instanceof Promise ? await transformed : transformed;
+			answers[q.name as string] =
+				transformed instanceof Promise
+					? await transformed
+					: transformed;
 		}
 	}
 	return answers;
 }
 
-export async function validateAnswers(answers: Answers, disableValidation: (keyof Answers)[] = []): Promise<void> {
+export async function validateAnswers(
+	answers: Answers,
+	disableValidation: (keyof Answers)[] = [],
+): Promise<void> {
 	for (const q of questions) {
 		const conditionFulfilled = testCondition(q.condition, answers);
 		if (!conditionFulfilled) continue;
 		if (q.action == undefined) continue;
 		if (disableValidation.indexOf(q.name as keyof Answers) > -1) continue;
 
-		const testResult = await q.action(answers[q.name as keyof Answers] as any);
+		const testResult = await q.action(answers[
+			q.name as keyof Answers
+		] as any);
 		if (typeof testResult === "string") {
 			throw new Error(testResult);
 		}
 	}
 }
 
-export function getDefaultAnswer<T extends keyof Answers>(key: T): Answers[T] | undefined {
+export function getDefaultAnswer<T extends keyof Answers>(
+	key: T,
+): Answers[T] | undefined {
 	if (key === "adapterSettings") {
-		return [{
-			key: "option1",
-			defaultValue: true,
-			inputType: "checkbox",
-		}, {
-			key: "option2",
-			defaultValue: "42",
-			inputType: "text",
-		}];
-	} else if (key === "keywords") {
 		return [
-			"ioBroker",
-			"template",
-			"Smart Home",
-			"home automation",
+			{
+				key: "option1",
+				defaultValue: true,
+				inputType: "checkbox",
+			},
+			{
+				key: "option2",
+				defaultValue: "42",
+				inputType: "text",
+			},
 		];
+	} else if (key === "keywords") {
+		return ["ioBroker", "template", "Smart Home", "home automation"];
 	}
 }

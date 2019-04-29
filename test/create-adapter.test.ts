@@ -1,5 +1,3 @@
-// tslint:disable:object-literal-key-quotes
-
 // Disable API requests while testing
 process.env.TESTING = "true";
 
@@ -11,25 +9,42 @@ import { Answers } from "../src/lib/questions";
 
 const baselineDir = path.join(__dirname, "../test/baselines");
 
-async function generateBaselines(testName: string, answers: Answers, filterFilesPredicate?: (file: File) => boolean) {
+async function generateBaselines(
+	testName: string,
+	answers: Answers,
+	filterFilesPredicate?: (file: File) => boolean,
+) {
 	const files = await createAdapter(answers);
 
 	const testDir = path.join(baselineDir, testName);
 	await fs.emptyDir(testDir);
 	await writeFiles(
 		testDir,
-		typeof filterFilesPredicate === "function" ? files.filter(filterFilesPredicate) : files,
+		typeof filterFilesPredicate === "function"
+			? files.filter(filterFilesPredicate)
+			: files,
 	);
 }
 
 // TODO: Mock network requests
 
-async function expectSuccess(testName: string, answers: Answers, filterFilesPredicate?: (file: File) => boolean) {
+async function expectSuccess(
+	testName: string,
+	answers: Answers,
+	filterFilesPredicate?: (file: File) => boolean,
+) {
 	await generateBaselines(testName, answers, filterFilesPredicate);
 }
 
-async function expectFail(testName: string, answers: Partial<Answers>, message: string) {
-	await generateBaselines(testName, answers as Answers).should.be.rejectedWith(message);
+async function expectFail(
+	testName: string,
+	answers: Partial<Answers>,
+	message: string,
+) {
+	await generateBaselines(
+		testName,
+		answers as Answers,
+	).should.be.rejectedWith(message);
 	const testDir = path.join(baselineDir, testName);
 	await fs.pathExists(testDir).should.become(false);
 }
@@ -54,9 +69,7 @@ const baseAnswers: Answers = {
 };
 
 describe("adapter creation =>", () => {
-
 	describe("incomplete answer sets should fail =>", () => {
-
 		it("only name", () => {
 			const answers = { adapterName: "foobar" };
 			expectFail("incompleteAnswersOnlyName", answers, "Missing answer");
@@ -77,7 +90,11 @@ describe("adapter creation =>", () => {
 				...baseAnswers,
 				title: "",
 			};
-			expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
+			expectFail(
+				"incompleteAnswersEmptyTitle",
+				answers,
+				"Please enter a title",
+			);
 		});
 
 		it("empty title 2", () => {
@@ -85,7 +102,11 @@ describe("adapter creation =>", () => {
 				...baseAnswers,
 				title: "   ",
 			};
-			expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
+			expectFail(
+				"incompleteAnswersEmptyTitle",
+				answers,
+				"Please enter a title",
+			);
 		});
 
 		it("invalid title 1", () => {
@@ -93,13 +114,16 @@ describe("adapter creation =>", () => {
 				...baseAnswers,
 				title: "Adapter for ioBroker",
 			};
-			expectFail("incompleteAnswersEmptyTitle", answers, "must not contain the words");
+			expectFail(
+				"incompleteAnswersEmptyTitle",
+				answers,
+				"must not contain the words",
+			);
 		});
-
 	});
 
 	// tslint:disable-next-line:space-before-function-paren
-	describe("generate baselines =>", function () {
+	describe("generate baselines =>", function() {
 		this.timeout(60000);
 
 		before(async () => {
@@ -119,7 +143,10 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					adminFeatures: ["custom", "tab"],
 				};
-				await expectSuccess("adapter_TS_TSLint_Tabs_DoubleQuotes_MIT", answers);
+				await expectSuccess(
+					"adapter_TS_TSLint_Tabs_DoubleQuotes_MIT",
+					answers,
+				);
 			});
 
 			it("Adapter, TypeScript (ES6 class), TSLint, Tabs, Double quotes, MIT License", async () => {
@@ -127,7 +154,10 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					es6class: "yes",
 				};
-				await expectSuccess("adapter_TS_ES6Class_TSLint_Tabs_DoubleQuotes_MIT", answers);
+				await expectSuccess(
+					"adapter_TS_ES6Class_TSLint_Tabs_DoubleQuotes_MIT",
+					answers,
+				);
 			});
 
 			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {
@@ -139,7 +169,10 @@ describe("adapter creation =>", () => {
 					quotes: "single",
 					license: "GNU LGPLv3" as any,
 				};
-				await expectSuccess("adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
+				await expectSuccess(
+					"adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3",
+					answers,
+				);
 			});
 
 			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, LGPLv3", async () => {
@@ -152,7 +185,10 @@ describe("adapter creation =>", () => {
 					es6class: "yes",
 					license: "GNU LGPLv3" as any,
 				};
-				await expectSuccess("adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3", answers);
+				await expectSuccess(
+					"adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3",
+					answers,
+				);
 			});
 
 			it("Widget", async () => {
@@ -266,16 +302,13 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					quotes: "single",
 				};
-				await expectSuccess(
-					"TS_SingleQuotes",
-					answers,
-					file => {
-						return (
-							file.name.endsWith(".ts")
-							&& !file.name.endsWith(".d.ts")
-						) || file.name === "tslint.json";
-					},
-				);
+				await expectSuccess("TS_SingleQuotes", answers, file => {
+					return (
+						(file.name.endsWith(".ts") &&
+							!file.name.endsWith(".d.ts")) ||
+						file.name === "tslint.json"
+					);
+				});
 			});
 
 			it(`Connection indicator`, async () => {
@@ -286,11 +319,10 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"connectionIndicator_yes",
 					answers,
-					file => (
-						file.name.endsWith("main.ts")
-						|| file.name.endsWith("main.js")
-						|| file.name === "io-package.json"
-					),
+					file =>
+						file.name.endsWith("main.ts") ||
+						file.name.endsWith("main.js") ||
+						file.name === "io-package.json",
 				);
 			});
 
@@ -298,19 +330,28 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					adapterSettings: [
-						{key: "prop1", inputType: "number", label: "Property 1", defaultValue: 5},
-						{key: "prop2", inputType: "checkbox", label: "Property 2", defaultValue: true},
+						{
+							key: "prop1",
+							inputType: "number",
+							label: "Property 1",
+							defaultValue: 5,
+						},
+						{
+							key: "prop2",
+							inputType: "checkbox",
+							label: "Property 2",
+							defaultValue: true,
+						},
 					],
 				};
 				await expectSuccess(
 					"customAdapterSettings",
 					answers,
-					file => (
-						file.name.endsWith("main.ts")
-						|| file.name.endsWith("main.js")
-						|| file.name === "io-package.json"
-						|| file.name.endsWith("index_m.html")
-					),
+					file =>
+						file.name.endsWith("main.ts") ||
+						file.name.endsWith("main.js") ||
+						file.name === "io-package.json" ||
+						file.name.endsWith("index_m.html"),
 				);
 			});
 
@@ -319,15 +360,10 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					keywords: "this, adapter,uses,   different , keywords" as any,
 				};
-				await expectSuccess(
-					"keywords",
-					answers,
-					file => file.name.endsWith("package.json"),
+				await expectSuccess("keywords", answers, file =>
+					file.name.endsWith("package.json"),
 				);
 			});
-
 		});
-
 	});
-
 });

@@ -7,7 +7,10 @@ import { Answers } from "../src/lib/questions";
 
 const outDir = path.join(process.cwd(), "ioBroker.template");
 
-async function generateTemplates(templateName: string, answers: Answers) {
+async function generateTemplates(
+	templateName: string,
+	answers: Answers,
+): Promise<void> {
 	const files = await createAdapter(answers, ["adapterName", "title"]);
 
 	const templateDir = path.join(outDir, templateName);
@@ -86,8 +89,7 @@ const templates: Record<string, Answers> = {
 	const directories = (await fs.readdir(outDir))
 		.filter(entry => !/^\./.test(entry)) // Don't delete dotfiles/dotdirs
 		.map(entry => path.join(outDir, entry))
-		.filter(entry => fs.statSync(entry).isDirectory())
-	;
+		.filter(entry => fs.statSync(entry).isDirectory());
 	await Promise.all(directories.map(dir => fs.remove(dir)));
 
 	console.log();
@@ -103,6 +105,6 @@ const templates: Record<string, Answers> = {
 })();
 
 // Make sure errors fail the build
-process.on("unhandledRejection", (e) => {
+process.on("unhandledRejection", e => {
 	throw e;
 });

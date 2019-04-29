@@ -9,7 +9,9 @@ export function hasVersionSpecifier(packageName: string): boolean {
 	return packageName.lastIndexOf("@") > 0;
 }
 
-export function getVersionSpecifier(packageNameAndVersion: string): string | undefined {
+export function getVersionSpecifier(
+	packageNameAndVersion: string,
+): string | undefined {
 	const atIndex = packageNameAndVersion.lastIndexOf("@");
 	if (atIndex > 0) return packageNameAndVersion.slice(atIndex + 1);
 }
@@ -30,7 +32,8 @@ export function getPackageName(packageNameAndVersion: string): string {
  */
 
 async function fetchAllPackageVersions(packageName: string): Promise<string[]> {
-	if (allVersionsCache.has(packageName)) return allVersionsCache.get(packageName)!;
+	if (allVersionsCache.has(packageName))
+		return allVersionsCache.get(packageName)!;
 
 	const packageURIComponent = encodeURIComponent(packageName);
 	const url = `https://registry.npmjs.org/${packageURIComponent}`;
@@ -41,14 +44,21 @@ async function fetchAllPackageVersions(packageName: string): Promise<string[]> {
 
 	const response = await axios(options);
 	if (response.status !== 200) {
-		throw new Error(`Failed to fetch the versions for ${packageName} (${response.status})`);
+		throw new Error(
+			`Failed to fetch the versions for ${packageName} (${
+				response.status
+			})`,
+		);
 	}
 	const allVersions = Object.keys(response.data.versions);
 	allVersionsCache.set(packageName, allVersions);
 	return allVersions;
 }
 
-async function fetchSpecificPackageVersion(packageNameAndVersion: string, fallbackVersion?: string): Promise<string> {
+async function fetchSpecificPackageVersion(
+	packageNameAndVersion: string,
+	fallbackVersion?: string,
+): Promise<string> {
 	// A specific version is requested, return the highest version matching the specifier
 	try {
 		const versionSpecifier = getVersionSpecifier(packageNameAndVersion)!;
@@ -61,8 +71,12 @@ async function fetchSpecificPackageVersion(packageNameAndVersion: string, fallba
 	}
 }
 
-async function fetchLatestPackageVersion(packageName: string, fallbackVersion?: string): Promise<string> {
-	if (latestVersionCache.has(packageName)) return latestVersionCache.get(packageName)!;
+async function fetchLatestPackageVersion(
+	packageName: string,
+	fallbackVersion?: string,
+): Promise<string> {
+	if (latestVersionCache.has(packageName))
+		return latestVersionCache.get(packageName)!;
 
 	const packageURIComponent = encodeURIComponent(packageName);
 	const url = `https://registry.npmjs.org/-/package/${packageURIComponent}/dist-tags`;
@@ -74,7 +88,11 @@ async function fetchLatestPackageVersion(packageName: string, fallbackVersion?: 
 	const response = await axios(options);
 	if (response.status !== 200) {
 		if (fallbackVersion) return fallbackVersion;
-		throw new Error(`Failed to fetch the version for ${packageName} (${response.status})`);
+		throw new Error(
+			`Failed to fetch the version for ${packageName} (${
+				response.status
+			})`,
+		);
 	}
 	const version = response.data.latest as string;
 	latestVersionCache.set(packageName, version);
@@ -86,11 +104,13 @@ async function fetchLatestPackageVersion(packageName: string, fallbackVersion?: 
  * @param packageName The npm package name
  * @param fallbackVersion The fallback version to return in case anything goes wrong. If this is set, no error is thrown.
  */
-export async function fetchPackageVersion(packageName: string, fallbackVersion?: string): Promise<string> {
+export async function fetchPackageVersion(
+	packageName: string,
+	fallbackVersion?: string,
+): Promise<string> {
 	if (hasVersionSpecifier(packageName)) {
 		return fetchSpecificPackageVersion(packageName, fallbackVersion);
 	} else {
 		return fetchLatestPackageVersion(packageName, fallbackVersion);
 	}
-
 }

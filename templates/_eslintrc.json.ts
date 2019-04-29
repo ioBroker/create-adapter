@@ -41,12 +41,12 @@ const templateFunction: TemplateFunction = answers => {
             "error",
             "always"
         ]
-	},
-	${ecmaVersion > 2015 ? (`
-		"parserOptions": {
-			"ecmaVersion": ${ecmaVersion}
-		}
-	`) : ""}
+    },
+    ${ecmaVersion > 2015 ? (`
+        "parserOptions": {
+            "ecmaVersion": ${ecmaVersion}
+        }
+    `) : ""}
 }
 `;
 	return JSON.stringify(JSON5.parse(template), null, 4);

@@ -3,8 +3,18 @@ import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
-import { createFiles, File, testCondition, writeFiles } from "./lib/createAdapter";
-import { Answers, isQuestionGroup, Question, questionsAndText } from "./lib/questions";
+import {
+	createFiles,
+	File,
+	testCondition,
+	writeFiles,
+} from "./lib/createAdapter";
+import {
+	Answers,
+	isQuestionGroup,
+	Question,
+	questionsAndText,
+} from "./lib/questions";
 import { error, executeCommand, isWindows } from "./lib/tools";
 
 /** Where the output should be written */
@@ -34,12 +44,20 @@ async function ask(): Promise<Answers> {
 				}
 				// Apply an optional transformation
 				if (typeof q.resultTransform === "function") {
-					const transformed = q.resultTransform(answer[q.name as string]);
-					answer[q.name as string] = transformed instanceof Promise ? await transformed : transformed;
+					const transformed = q.resultTransform(
+						answer[q.name as string],
+					);
+					answer[q.name as string] =
+						transformed instanceof Promise
+							? await transformed
+							: transformed;
 				}
 				// Test the result
 				if (q.action != undefined) {
-					const testResult = await q.action(answer[q.name as string], creatorOptions);
+					const testResult = await q.action(
+						answer[q.name as string],
+						creatorOptions,
+					);
 					if (typeof testResult === "string") {
 						error(testResult);
 						continue;
@@ -58,7 +76,9 @@ async function ask(): Promise<Answers> {
 			console.log(entry);
 		} else if (isQuestionGroup(entry)) {
 			// only print the headline if any of the questions are necessary
-			if (entry.questions.find(qq => testCondition(qq.condition, answers))) {
+			if (
+				entry.questions.find(qq => testCondition(qq.condition, answers))
+			) {
 				console.log();
 				console.log(underline(entry.headline));
 			}
@@ -88,21 +108,34 @@ let gitCommit: boolean;
 
 /** CLI-specific functionality for creating the adapter directory */
 // eslint-disable-next-line @typescript-eslint/camelcase
-async function setupProject_CLI(answers: Answers, files: File[]): Promise<void> {
+async function setupProject_CLI(
+	answers: Answers,
+	files: File[],
+): Promise<void> {
 	const rootDirName = path.basename(rootDir);
 	// make sure we are working in a directory called ioBroker.<adapterName>
-	const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
-		? rootDir : path.join(rootDir, `ioBroker.${answers.adapterName}`)
-		;
+	const targetDir =
+		rootDirName.toLowerCase() ===
+		`iobroker.${answers.adapterName.toLowerCase()}`
+			? rootDir
+			: path.join(rootDir, `ioBroker.${answers.adapterName}`);
 	await writeFiles(targetDir, files);
 
 	if (installDependencies) {
 		logProgress("Installing dependencies");
-		await executeCommand(isWindows ? "npm.cmd" : "npm", ["install", "--quiet"], { cwd: targetDir });
+		await executeCommand(
+			isWindows ? "npm.cmd" : "npm",
+			["install", "--quiet"],
+			{ cwd: targetDir },
+		);
 
 		if (buildTypeScript) {
 			logProgress("Compiling TypeScript");
-			await executeCommand(isWindows ? "npm.cmd" : "npm", ["run", "build"], { cwd: targetDir, stdout: "ignore" });
+			await executeCommand(
+				isWindows ? "npm.cmd" : "npm",
+				["run", "build"],
+				{ cwd: targetDir, stdout: "ignore" },
+			);
 		}
 	}
 
@@ -113,10 +146,21 @@ async function setupProject_CLI(answers: Answers, files: File[]): Promise<void> 
 			["init"],
 			["add", "."],
 			["commit", "-m", `"Initial commit"`],
-			["remote", "add", "origin", `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`],
+			[
+				"remote",
+				"add",
+				"origin",
+				`https://github.com/${answers.authorGithub}/ioBroker.${
+					answers.adapterName
+				}`,
+			],
 		];
 		for (const args of gitCommandArgs) {
-			await executeCommand("git", args, { cwd: targetDir, stdout: "ignore", stderr: "ignore" });
+			await executeCommand("git", args, {
+				cwd: targetDir,
+				stdout: "ignore",
+				stderr: "ignore",
+			});
 		}
 	}
 
