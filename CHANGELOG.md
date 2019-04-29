@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## v1.12.0 (2019-04-29)
 * (AlCalzone) In JS, make adapter config properties non-nullable
 * (AlCalzone) Drop Node 6 from the test matrix when using object spreads in JS (fixes #127)
 * (AlCalzone) Remove AppVeyor badge from readme, since all tests are on TravisCI (fixes #129)
