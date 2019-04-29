@@ -11,7 +11,7 @@ import * as ts from "typescript";
 import * as nodeUrl from "url";
 import { Answers } from "./questions";
 
-export function error(message: string) {
+export function error(message: string): void {
 	console.error(bold.red(message));
 	console.error();
 }
@@ -154,7 +154,7 @@ export function enumFilesRecursiveSync(dir: string, predicate?: (name: string, p
  * @param targetDir The directory to copy to
  * @param predicate An optional predicate to apply to every found file system entry
  */
-export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, predicate?: (name: string) => boolean) {
+export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, predicate?: (name: string) => boolean): void {
 	// Enumerate all files in this module that are supposed to be in the root directory
 	const filesToCopy = enumFilesRecursiveSync(sourceDir, predicate);
 	// Copy all of them to the corresponding target dir
@@ -189,7 +189,7 @@ export function applyHttpsProxy(options: AxiosRequestConfig): AxiosRequestConfig
 const translationCache = new Map<string, Map<string, string>>();
 
 export async function translateText(text: string, targetLang: string): Promise<string> {
-	async function doTranslateText() {
+	async function doTranslateText(): Promise<string> {
 		if (isTesting) return `Mock translation of '${text}' to '${targetLang}'`;
 		if (targetLang === "en") return text;
 		try {
@@ -247,6 +247,11 @@ export function formatJsonString(json: string, indentation: "Tab" | "Space (4)")
 	);
 }
 
+export enum Quotemark {
+	"single" = "'",
+	"double" = '"',
+}
+
 /** Formats a JS source file to use single quotes */
 export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark): string {
 	const linter = new Linter();
@@ -271,11 +276,6 @@ export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 		},
 	});
 	return result.output;
-}
-
-export enum Quotemark {
-	"single" = "'",
-	"double" = '"',
 }
 
 /** Formats a TS source file to use single quotes */
@@ -307,7 +307,7 @@ export function tsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 }
 
 /** Escape new quotes within the string, unescape the old quotes. */
-function escapeQuotes(str: string, newQuotes: Quotemark, oldQuotes: Quotemark) {
+function escapeQuotes(str: string, newQuotes: Quotemark, oldQuotes: Quotemark): string {
 	return str.replace(new RegExp(newQuotes, "g"), `\\${newQuotes}`).replace(new RegExp(`\\\\${oldQuotes}`, "g"), oldQuotes);
 }
 

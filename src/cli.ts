@@ -15,10 +15,10 @@ const creatorOptions = {
 };
 
 /** Asks a series of questions on the CLI */
-async function ask() {
+async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true };
 
-	async function askQuestion(q: Question) {
+	async function askQuestion(q: Question): Promise<void> {
 		if (testCondition(q.condition, answers)) {
 			// Make properties dependent on previous answers
 			if (typeof q.initial === "function") {
@@ -73,9 +73,9 @@ async function ask() {
 	return answers as Answers;
 }
 
-let currentStep: number = 0;
-let maxSteps: number = 1;
-function logProgress(message: string) {
+let currentStep = 0;
+let maxSteps = 1;
+function logProgress(message: string): void {
 	console.log(blueBright(`[${++currentStep}/${maxSteps}] ${message}...`));
 }
 
@@ -87,7 +87,8 @@ let buildTypeScript: boolean;
 let gitCommit: boolean;
 
 /** CLI-specific functionality for creating the adapter directory */
-async function setupProject_CLI(answers: Answers, files: File[]) {
+// eslint-disable-next-line @typescript-eslint/camelcase
+async function setupProject_CLI(answers: Answers, files: File[]): Promise<void> {
 	const rootDirName = path.basename(rootDir);
 	// make sure we are working in a directory called ioBroker.<adapterName>
 	const targetDir = rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`

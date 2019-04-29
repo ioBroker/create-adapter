@@ -1,4 +1,3 @@
-// tslint:disable: no-unused-expression
 
 import { expect } from "chai";
 import { isQuestionGroup, questions } from "./questions";

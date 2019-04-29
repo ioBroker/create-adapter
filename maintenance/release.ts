@@ -1,5 +1,4 @@
-// tslint:disable:no-var-requires
-// tslint:disable:no-console
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 /*
 
@@ -26,11 +25,11 @@ import { argv } from "yargs";
 
 const rootDir = path.resolve(__dirname, "../");
 
-function fail(reason: string) {
+function fail(reason: string): never {
 	console.error("");
 	console.error(colors.red(reason));
 	console.error("");
-	process.exit(0);
+	return process.exit(0);
 }
 
 const packPath = path.join(rootDir, "package.json");

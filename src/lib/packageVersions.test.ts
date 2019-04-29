@@ -1,4 +1,3 @@
-// tslint:disable: no-unused-expression
 
 import { expect } from "chai";
 import * as proxyquireModule from "proxyquire";
@@ -8,7 +7,6 @@ import { getPackageName, getVersionSpecifier } from "./packageVersions";
 const axiosMock = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
-// tslint:disable-next-line: whitespace
 const { fetchPackageVersion } = proxyquire<typeof import("./packageVersions")>("./packageVersions", {
 	axios: {
 		default: axiosMock,

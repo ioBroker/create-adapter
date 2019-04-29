@@ -1,4 +1,3 @@
-// tslint:disable: no-unused-expression
 
 import { expect } from "chai";
 import { capitalize, formatJsonString, formatLicense, getOwnVersion, indentWithSpaces, indentWithTabs, jsFixQuotes, kebabCaseToUpperCamelCase, tsFixQuotes } from "./tools";

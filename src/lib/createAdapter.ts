@@ -25,7 +25,7 @@ export interface File {
 export function testCondition(condition: Condition | Condition[] | undefined, answers: Record<string, any>): boolean {
 	if (condition == undefined) return true;
 
-	function testSingleCondition(cond: Condition) {
+	function testSingleCondition(cond: Condition): boolean {
 		if ("value" in cond) {
 			return answers[cond.name] === cond.value;
 		} else if ("contains" in cond) {
@@ -72,15 +72,15 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 	// Normalize indentation considering user preference
 	const indentation = answers.indentation === "Tab" ? indentWithTabs : indentWithSpaces;
 	// Remove multiple subsequent empty lines (can happen during template creation).
-	const removeEmptyLines = (text: string) => {
+	const removeEmptyLines = (text: string): string => {
 		return text && text
 			.replace(/\r\n/g, "\n")
 			.replace(/^(\s*\n){2,}/gm, "\n")
 			.replace(/\n/g, os.EOL)
 			;
 	};
-	const trimWhitespaceLines = (text: string) => text && text.replace(/^[ \t]+$/gm, "");
-	const formatter = (text: string) => trimWhitespaceLines(removeEmptyLines(indentation(text)));
+	const trimWhitespaceLines = (text: string): string => text && text.replace(/^[ \t]+$/gm, "");
+	const formatter = (text: string): string => trimWhitespaceLines(removeEmptyLines(indentation(text)));
 	return files.map(f => {
 		if (f.noReformat || typeof f.content !== "string") return f;
 		// 1st step: Apply formatters that are valid for all files
@@ -94,7 +94,7 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 	});
 }
 
-export async function writeFiles(targetDir: string, files: File[]) {
+export async function writeFiles(targetDir: string, files: File[]): Promise<void> {
 	// write the files and make sure the target dirs exist
 	for (const file of files) {
 		await fs.outputFile(path.join(targetDir, file.name), file.content, typeof file.content === "string" ? "utf8" : undefined);

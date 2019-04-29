@@ -1,4 +1,3 @@
-// tslint:disable: no-unused-expression
 
 import { expect } from "chai";
 import * as proxyquireModule from "proxyquire";
@@ -9,7 +8,6 @@ import { checkAuthorName, checkEmail, checkMinSelections, checkTitle, transformA
 const fetchPackageVersion = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
-// tslint:disable-next-line: whitespace
 const { checkAdapterName } = proxyquire<typeof import("./actionsAndTransformers")>("./actionsAndTransformers", {
 	"./packageVersions": {
 		fetchPackageVersion,

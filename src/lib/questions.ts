@@ -7,10 +7,8 @@ import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
 
 // Sadly, Enquirer does not export the PromptOptions type
-// tslint:disable-next-line:ban-types
 type PromptOptions = Exclude<Parameters<typeof prompt>[0], Function | any[]>;
 type QuestionAction<T> = (value: T, options?: unknown) => CheckResult | Promise<CheckResult>;
-// tslint:disable-next-line:interface-over-type-literal
 export type AnswerValue = string | boolean | number;
 export type Condition = { name: string } & (
 	| { value: AnswerValue | AnswerValue[] }
@@ -380,7 +378,7 @@ export interface BooleanAdapterSettings extends BaseAdapterSettings<boolean> {
 }
 export interface SelectAdapterSettings extends BaseAdapterSettings<string> {
 	inputType: "select";
-	options: { value: string, text: string }[];
+	options: { value: string; text: string }[];
 }
 export type AdapterSettings =
 	| StringAdapterSettings
@@ -402,7 +400,7 @@ export interface Answers {
 	tools?: ("ESLint" | "TSLint" | "type checking" | "code coverage")[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
-	license?: { id: string, name: string, text: string };
+	license?: { id: string; name: string; text: string };
 	type: string;
 	adminReact?: string;
 	indentation?: "Tab" | "Space (4)";

@@ -1,6 +1,3 @@
-// tslint:disable: no-unused-expression
-
-import { expect } from "chai";
 import * as path from "path";
 import * as proxyquireModule from "proxyquire";
 import { stub } from "sinon";
@@ -17,7 +14,6 @@ const fsStub = {
 };
 
 import { testCondition } from "./createAdapter";
-// tslint:disable-next-line: whitespace
 const { readFile, readFileFromRootDir } = proxyquire<typeof import("./createAdapter")>("./createAdapter", {
 	"fs": fsStub,
 	"fs-extra": fsStub,
