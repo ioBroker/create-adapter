@@ -18,7 +18,7 @@ import {
 import { error, executeCommand, isWindows } from "./lib/tools";
 
 /** Where the output should be written */
-const rootDir = path.resolve(yargs.argv.target || process.cwd());
+const rootDir = path.resolve((yargs.argv.target as string) || process.cwd());
 
 const creatorOptions = {
 	skipAdapterExistenceCheck: !!yargs.argv.skipAdapterExistenceCheck,
