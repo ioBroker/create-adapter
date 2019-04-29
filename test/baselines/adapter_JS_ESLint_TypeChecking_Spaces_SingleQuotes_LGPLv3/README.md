@@ -1,7 +1,5 @@
-<h1>
-    <img src="admin/test-adapter.png" width="64"/>
-    ioBroker.test-adapter
-</h1>
+![Logo](admin/test-adapter.png)
+# ioBroker.test-adapter
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.test-adapter.svg)](https://www.npmjs.com/package/iobroker.test-adapter)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.test-adapter.svg)](https://www.npmjs.com/package/iobroker.test-adapter)
