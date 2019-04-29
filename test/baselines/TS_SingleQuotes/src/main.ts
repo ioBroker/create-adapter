@@ -75,13 +75,13 @@ function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}) {
 		// Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
 		// requires "common.message" property to be set to true in io-package.json
 		// message: (obj) => {
-		// 	if (typeof obj === "object" && obj.message) {
-		// 		if (obj.command === "send") {
+		// 	if (typeof obj === 'object' && obj.message) {
+		// 		if (obj.command === 'send') {
 		// 			// e.g. send email or pushover or whatever
-		// 			adapter.log.info("send command");
+		// 			adapter.log.info('send command');
 
 		// 			// Send response in callback if required
-		// 			if (obj.callback) adapter.sendTo(obj.from, obj.command, "Message received", obj.callback);
+		// 			if (obj.callback) adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
 		// 		}
 		// 	}
 		// },
