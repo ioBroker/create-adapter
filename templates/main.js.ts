@@ -8,6 +8,7 @@ export = (async answers => {
 	if (!useJavaScript || useES6Class) return;
 
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
+	const quote = answers.quotes === "double" ? '"' : "'";
 
 	const template = `
 "use strict";
@@ -77,13 +78,13 @@ function startAdapter(options) {
 		// Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
 		// requires "common.message" property to be set to true in io-package.json
 		// message: (obj) => {
-		// 	if (typeof obj === "object" && obj.message) {
-		// 		if (obj.command === "send") {
+		// 	if (typeof obj === ${quote}object${quote} && obj.message) {
+		// 		if (obj.command === ${quote}send${quote}) {
 		// 			// e.g. send email or pushover or whatever
-		// 			adapter.log.info("send command");
+		// 			adapter.log.info(${quote}send command${quote});
 
 		// 			// Send response in callback if required
-		// 			if (obj.callback) adapter.sendTo(obj.from, obj.command, "Message received", obj.callback);
+		// 			if (obj.callback) adapter.sendTo(obj.from, obj.command, ${quote}Message received${quote}, obj.callback);
 		// 		}
 		// 	}
 		// },

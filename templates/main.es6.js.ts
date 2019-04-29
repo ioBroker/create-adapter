@@ -10,6 +10,7 @@ const templateFunction: TemplateFunction = async answers => {
 
 	const className = kebabCaseToUpperCamelCase(answers.adapterName);
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
+	const quote = answers.quotes === "double" ? '"' : "'";
 
 	const template = `
 "use strict";
@@ -38,7 +39,7 @@ class ${className} extends utils.Adapter {
 		this.on("ready", this.onReady.bind(this));
 		this.on("objectChange", this.onObjectChange.bind(this));
 		this.on("stateChange", this.onStateChange.bind(this));
-		// this.on("message", this.onMessage.bind(this));
+		// this.on(${quote}message${quote}, this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
 	}
 
@@ -148,13 +149,13 @@ ${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.
 	//  * @param {ioBroker.Message} obj
 	//  */
 	// onMessage(obj) {
-	// 	if (typeof obj === "object" && obj.message) {
-	// 		if (obj.command === "send") {
+	// 	if (typeof obj === ${quote}object${quote} && obj.message) {
+	// 		if (obj.command === ${quote}send${quote}) {
 	// 			// e.g. send email or pushover or whatever
-	// 			this.log.info("send command");
+	// 			this.log.info(${quote}send command${quote});
 
 	// 			// Send response in callback if required
-	// 			if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
+	// 			if (obj.callback) this.sendTo(obj.from, obj.command, ${quote}Message received${quote}, obj.callback);
 	// 		}
 	// 	}
 	// }
