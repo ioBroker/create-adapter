@@ -64,7 +64,7 @@
     "sinon": "^7.1.1",
     "sinon-chai": "^3.3.0",
     "source-map-support": "^0.5.9",
-    "ts-node": "^7.0.1"
+    "ts-node": "^8.1.0"
   },
   "dependencies": {
     "alcalzone-shared": "^1.4.0",
