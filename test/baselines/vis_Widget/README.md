@@ -1,7 +1,5 @@
-<h1>
-	<img src="admin/test-widget.png" width="64"/>
-	ioBroker.test-widget
-</h1>
+![Logo](admin/test-widget.png)
+# ioBroker.test-widget
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.test-widget.svg)](https://www.npmjs.com/package/iobroker.test-widget)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.test-widget.svg)](https://www.npmjs.com/package/iobroker.test-widget)

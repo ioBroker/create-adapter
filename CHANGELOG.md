@@ -9,6 +9,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) Show the debug output during integration tests (#135)
 * (AlCalzone) Migrate creator from TSLint to ESLint (and prettier) (#136)
+* (AlCalzone & bluefox) Simplify Readme header (fixes #147)
 
 ## v1.12.0 (2019-04-29)
 * (AlCalzone) In JS, make adapter config properties non-nullable
