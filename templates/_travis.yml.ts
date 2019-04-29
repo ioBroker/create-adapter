@@ -38,6 +38,7 @@ before_script:
 script:
   - npm run test:package
   - npm run test:unit
+  - export DEBUG=testing:*
   - npm run test:integration
 `;
 	return template.trimLeft();
