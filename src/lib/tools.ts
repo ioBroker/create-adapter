@@ -11,7 +11,7 @@ import * as ts from "typescript";
 import * as nodeUrl from "url";
 import { Answers } from "./questions";
 
-export function error(message: string) {
+export function error(message: string): void {
 	console.error(bold.red(message));
 	console.error();
 }
@@ -43,15 +43,26 @@ export interface ExecuteCommandResult {
 	stderr?: string;
 }
 
-export function executeCommand(command: string, options?: Partial<ExecuteCommandOptions>): Promise<ExecuteCommandResult>;
+export function executeCommand(
+	command: string,
+	options?: Partial<ExecuteCommandOptions>,
+): Promise<ExecuteCommandResult>;
 /**
  * Executes a command and returns the exit code and (if requested) the stdout
  * @param command The command to execute
  * @param args The command line arguments for the command
  * @param options (optional) Some options for the command execution
  */
-export function executeCommand(command: string, args: string[], options?: Partial<ExecuteCommandOptions>): Promise<ExecuteCommandResult>;
-export function executeCommand(command: string, argsOrOptions?: string[] | Partial<ExecuteCommandOptions>, options?: Partial<ExecuteCommandOptions>): Promise<ExecuteCommandResult> {
+export function executeCommand(
+	command: string,
+	args: string[],
+	options?: Partial<ExecuteCommandOptions>,
+): Promise<ExecuteCommandResult>;
+export function executeCommand(
+	command: string,
+	argsOrOptions?: string[] | Partial<ExecuteCommandOptions>,
+	options?: Partial<ExecuteCommandOptions>,
+): Promise<ExecuteCommandResult> {
 	let args: string[] | undefined;
 	if (isArray(argsOrOptions)) {
 		args = argsOrOptions;
@@ -73,36 +84,35 @@ export function executeCommand(command: string, argsOrOptions?: string[] | Parti
 	};
 	if (options.cwd != null) spawnOptions.cwd = options.cwd;
 
-	if (options.logCommandExecution == null) options.logCommandExecution = false;
+	if (options.logCommandExecution == null)
+		options.logCommandExecution = false;
 	if (options.logCommandExecution) {
-		console.log(
-			"executing: "
-			+ `${command} ${args.join(" ")}`,
-		);
+		console.log("executing: " + `${command} ${args.join(" ")}`);
 	}
 
 	// Now execute the npm process and avoid throwing errors
-	return new Promise((resolve) => {
+	return new Promise(resolve => {
 		try {
 			let bufferedStdout: string | undefined;
 			let bufferedStderr: string | undefined;
-			const cmd = spawn(command, args, spawnOptions)
-				.on("close", (code, signal) => {
+			const cmd = spawn(command, args, spawnOptions).on(
+				"close",
+				(code, signal) => {
 					resolve({
 						exitCode: code,
 						signal,
 						stdout: bufferedStdout,
 						stderr: bufferedStderr,
 					});
-				});
+				},
+			);
 			// Capture stdout/stderr if requested
 			if (options!.stdout === "pipe") {
 				bufferedStdout = "";
 				cmd.stdout.on("data", chunk => {
 					const buffer = Buffer.isBuffer(chunk)
 						? chunk
-						: new Buffer(chunk, "utf8")
-						;
+						: new Buffer(chunk, "utf8");
 					bufferedStdout! += buffer;
 				});
 			}
@@ -111,8 +121,7 @@ export function executeCommand(command: string, argsOrOptions?: string[] | Parti
 				cmd.stderr.on("data", chunk => {
 					const buffer = Buffer.isBuffer(chunk)
 						? chunk
-						: new Buffer(chunk, "utf8")
-						;
+						: new Buffer(chunk, "utf8");
 					bufferedStderr! += buffer;
 				});
 			}
@@ -128,14 +137,17 @@ export function executeCommand(command: string, argsOrOptions?: string[] | Parti
  * @param predicate An optional predicate to apply to every found file system entry
  * @returns A list of all files found
  */
-export function enumFilesRecursiveSync(dir: string, predicate?: (name: string, parentDir: string) => boolean): string[] {
+export function enumFilesRecursiveSync(
+	dir: string,
+	predicate?: (name: string, parentDir: string) => boolean,
+): string[] {
 	const ret = [];
 	if (typeof predicate !== "function") predicate = () => true;
 	// enumerate all files in this directory
-	const filesOrDirs = fs.readdirSync(dir)
+	const filesOrDirs = fs
+		.readdirSync(dir)
 		.filter(f => predicate!(f, dir)) // exclude all files starting with "."
-		.map(f => path.join(dir, f)) // and prepend the full path
-		;
+		.map(f => path.join(dir, f)); // and prepend the full path
 	for (const entry of filesOrDirs) {
 		if (fs.statSync(entry).isDirectory()) {
 			// Continue recursing this directory and remember the files there
@@ -154,13 +166,20 @@ export function enumFilesRecursiveSync(dir: string, predicate?: (name: string, p
  * @param targetDir The directory to copy to
  * @param predicate An optional predicate to apply to every found file system entry
  */
-export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, predicate?: (name: string) => boolean) {
+export function copyFilesRecursiveSync(
+	sourceDir: string,
+	targetDir: string,
+	predicate?: (name: string) => boolean,
+): void {
 	// Enumerate all files in this module that are supposed to be in the root directory
 	const filesToCopy = enumFilesRecursiveSync(sourceDir, predicate);
 	// Copy all of them to the corresponding target dir
 	for (const file of filesToCopy) {
 		// Find out where it's supposed to be
-		const targetFileName = path.join(targetDir, path.relative(sourceDir, file));
+		const targetFileName = path.join(
+			targetDir,
+			path.relative(sourceDir, file),
+		);
 		// Ensure the directory exists
 		fs.ensureDirSync(path.dirname(targetFileName));
 		// And copy the file
@@ -172,8 +191,11 @@ export function copyFilesRecursiveSync(sourceDir: string, targetDir: string, pre
  * Adds https proxy options to an axios request if they were defined as an env variable
  * @param options The options object passed to axios
  */
-export function applyHttpsProxy(options: AxiosRequestConfig): AxiosRequestConfig {
-	const proxy: string | undefined = process.env.https_proxy || process.env.HTTPS_PROXY;
+export function applyHttpsProxy(
+	options: AxiosRequestConfig,
+): AxiosRequestConfig {
+	const proxy: string | undefined =
+		process.env.https_proxy || process.env.HTTPS_PROXY;
 	if (proxy) {
 		const proxyUrl = nodeUrl.parse(proxy);
 		if (proxyUrl.hostname) {
@@ -188,13 +210,22 @@ export function applyHttpsProxy(options: AxiosRequestConfig): AxiosRequestConfig
 
 const translationCache = new Map<string, Map<string, string>>();
 
-export async function translateText(text: string, targetLang: string): Promise<string> {
-	async function doTranslateText() {
-		if (isTesting) return `Mock translation of '${text}' to '${targetLang}'`;
+export async function translateText(
+	text: string,
+	targetLang: string,
+): Promise<string> {
+	async function doTranslateText(): Promise<string> {
+		if (isTesting)
+			return `Mock translation of '${text}' to '${targetLang}'`;
 		if (targetLang === "en") return text;
 		try {
-			const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}&ie=UTF-8&oe=UTF-8`;
-			let options: AxiosRequestConfig = { url, timeout: getRequestTimeout() };
+			const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(
+				text,
+			)}&ie=UTF-8&oe=UTF-8`;
+			let options: AxiosRequestConfig = {
+				url,
+				timeout: getRequestTimeout(),
+			};
 
 			// If an https-proxy is defined as an env variable, use it
 			options = applyHttpsProxy(options);
@@ -212,7 +243,8 @@ export async function translateText(text: string, targetLang: string): Promise<s
 	}
 
 	// Try to read the translation from the translation cache
-	if (!translationCache.has(targetLang)) translationCache.set(targetLang, new Map());
+	if (!translationCache.has(targetLang))
+		translationCache.set(targetLang, new Map());
 	const langCache = translationCache.get(targetLang)!;
 	// or fall back to an online translation
 	if (!langCache.has(text)) langCache.set(text, await doTranslateText());
@@ -222,8 +254,7 @@ export async function translateText(text: string, targetLang: string): Promise<s
 export function formatLicense(licenseText: string, answers: Answers): string {
 	return licenseText
 		.replace(/\[year\]/g, new Date().getFullYear().toString())
-		.replace(/\[fullname\]/g, answers.authorName)
-		;
+		.replace(/\[fullname\]/g, answers.authorName);
 }
 
 /** Replaces 4-space indentation with tabs */
@@ -239,7 +270,10 @@ export function indentWithSpaces(text: string): string {
 }
 
 /** Normalizes formatting of a JSON string */
-export function formatJsonString(json: string, indentation: "Tab" | "Space (4)"): string {
+export function formatJsonString(
+	json: string,
+	indentation: "Tab" | "Space (4)",
+): string {
 	return JSON.stringify(
 		JSON5.parse(json),
 		null,
@@ -247,8 +281,16 @@ export function formatJsonString(json: string, indentation: "Tab" | "Space (4)")
 	);
 }
 
+export enum Quotemark {
+	"single" = "'",
+	"double" = '"',
+}
+
 /** Formats a JS source file to use single quotes */
-export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark): string {
+export function jsFixQuotes(
+	sourceText: string,
+	quotes: keyof typeof Quotemark,
+): string {
 	const linter = new Linter();
 	const result = linter.verifyAndFix(sourceText, {
 		env: {
@@ -273,33 +315,41 @@ export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 	return result.output;
 }
 
-export enum Quotemark {
-	"single" = "'",
-	"double" = '"',
-}
-
 /** Formats a TS source file to use single quotes */
-export function tsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark): string {
+export function tsFixQuotes(
+	sourceText: string,
+	quotes: keyof typeof Quotemark,
+): string {
 	const newQuotes = Quotemark[quotes];
 	const oldQuotes = Quotemark[quotes === "double" ? "single" : "double"];
 	// create an AST from the source code, this step is unnecessary if you already have a SourceFile object
-	const sourceFile = ts.createSourceFile("fixQuotes.ts", sourceText, ts.ScriptTarget.Latest);
+	const sourceFile = ts.createSourceFile(
+		"fixQuotes.ts",
+		sourceText,
+		ts.ScriptTarget.Latest,
+	);
 	let resultString = "";
 	let lastPos = 0;
 
 	// visit each immediate child node of SourceFile
 	ts.forEachChild(sourceFile, function cb(node) {
-		if (node.kind === ts.SyntaxKind.StringLiteral && sourceText[node.end - 1] === oldQuotes) {
+		if (
+			node.kind === ts.SyntaxKind.StringLiteral &&
+			sourceText[node.end - 1] === oldQuotes
+		) {
 			// we found a string with the wrong quote style
 			const start = node.getStart(sourceFile); // get the position of the opening quotes (this is different from 'node.pos' as it skips all whitespace and comments)
 			const rawContent = sourceText.slice(start + 1, node.end - 1); // get the actual contents of the string
-			resultString += sourceText.slice(lastPos, start) + newQuotes + escapeQuotes(rawContent, newQuotes, oldQuotes) + newQuotes;
+			resultString +=
+				sourceText.slice(lastPos, start) +
+				newQuotes +
+				escapeQuotes(rawContent, newQuotes, oldQuotes) +
+				newQuotes;
 			lastPos = node.end;
 		} else {
 			// recurse deeper down the AST visiting the immediate children of the current node
 			ts.forEachChild(node, cb);
 		}
-
 	});
 	resultString += sourceText.slice(lastPos);
 
@@ -307,18 +357,23 @@ export function tsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 }
 
 /** Escape new quotes within the string, unescape the old quotes. */
-function escapeQuotes(str: string, newQuotes: Quotemark, oldQuotes: Quotemark) {
-	return str.replace(new RegExp(newQuotes, "g"), `\\${newQuotes}`).replace(new RegExp(`\\\\${oldQuotes}`, "g"), oldQuotes);
+function escapeQuotes(
+	str: string,
+	newQuotes: Quotemark,
+	oldQuotes: Quotemark,
+): string {
+	return str
+		.replace(new RegExp(newQuotes, "g"), `\\${newQuotes}`)
+		.replace(new RegExp(`\\\\${oldQuotes}`, "g"), oldQuotes);
 }
 
 export function getOwnVersion(): string {
-	for (const jsonPath of [
-		"../../package.json",
-		"../../../package.json",
-	]) {
+	for (const jsonPath of ["../../package.json", "../../../package.json"]) {
 		try {
 			return require(jsonPath).version;
-		} catch (e) { /* OK */ }
+		} catch (e) {
+			/* OK */
+		}
 	}
 	/* istanbul ignore next */
 	return "unknown";
@@ -329,11 +384,11 @@ export function capitalize(name: string): string {
 }
 
 export function kebabCaseToUpperCamelCase(name: string): string {
-	return name.split(/[_\-]/)
+	return name
+		.split(/[_\-]/)
 		.filter(part => part.length > 0)
 		.map(capitalize)
-		.join("")
-		;
+		.join("");
 }
 
 export function getRequestTimeout(): number {

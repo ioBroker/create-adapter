@@ -1,5 +1,3 @@
-// tslint:disable: no-unused-expression
-
 import { expect } from "chai";
 import { isQuestionGroup, questions } from "./questions";
 
@@ -11,9 +9,16 @@ describe("questions/isQuestionGroup()", () => {
 
 	it(`should return false if the argument doesn't have a string property "headline"`, () => {
 		for (const arg of [
-			{}, [], "whatever", { foo: "bar" }, 1, true,
-			{ headline: 1 }, { headline: false },
-		]) isQuestionGroup(arg).should.be.false;
+			{},
+			[],
+			"whatever",
+			{ foo: "bar" },
+			1,
+			true,
+			{ headline: 1 },
+			{ headline: false },
+		])
+			isQuestionGroup(arg).should.be.false;
 	});
 
 	it(`should return false if the argument doesn't have an array property "questions"`, () => {
@@ -22,7 +27,8 @@ describe("questions/isQuestionGroup()", () => {
 			{ headline: "headline", questions: {} },
 			{ headline: "headline", questions: 1 },
 			{ headline: "headline", questions: false },
-		]) isQuestionGroup(arg).should.be.false;
+		])
+			isQuestionGroup(arg).should.be.false;
 	});
 
 	it("should return true otherwise", () => {

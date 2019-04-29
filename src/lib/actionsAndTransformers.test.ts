@@ -1,16 +1,21 @@
-// tslint:disable: no-unused-expression
-
 import { expect } from "chai";
 import * as proxyquireModule from "proxyquire";
 import { stub } from "sinon";
-
-import { checkAuthorName, checkEmail, checkMinSelections, checkTitle, transformAdapterName, transformDescription } from "./actionsAndTransformers";
+import {
+	checkAuthorName,
+	checkEmail,
+	checkMinSelections,
+	checkTitle,
+	transformAdapterName,
+	transformDescription,
+} from "./actionsAndTransformers";
 
 const fetchPackageVersion = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
-// tslint:disable-next-line: whitespace
-const { checkAdapterName } = proxyquire<typeof import("./actionsAndTransformers")>("./actionsAndTransformers", {
+const { checkAdapterName } = proxyquire<
+	typeof import("./actionsAndTransformers")
+>("./actionsAndTransformers", {
 	"./packageVersions": {
 		fetchPackageVersion,
 	},
@@ -34,13 +39,10 @@ describe("actionsAndTransformers/checkMinSelections()", () => {
 });
 
 describe("actionsAndTransformers/checkAdapterName()", () => {
-
 	beforeEach(() => fetchPackageVersion.reset());
 
 	it("should not accept empty names", async () => {
-		const forbiddenNames = [
-			"", " ", "\t",
-		];
+		const forbiddenNames = ["", " ", "\t"];
 		for (const name of forbiddenNames) {
 			const result = await checkAdapterName(name);
 			result.should.be.a("string").and.match(/Please enter/);
@@ -48,9 +50,7 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 	});
 
 	it(`should only accept lowercase letters, numbers, "-" and "_"`, async () => {
-		const forbiddenNames = [
-			"ö", "$", "foo/bar", "FOO",
-		];
+		const forbiddenNames = ["ö", "$", "foo/bar", "FOO"];
 		for (const name of forbiddenNames) {
 			const result = await checkAdapterName(name);
 			result.should.be.a("string").and.match(/may only consist/);
@@ -58,9 +58,7 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 	});
 
 	it(`should only accept names that start with a letter`, async () => {
-		const forbiddenNames = [
-			"1baz", "_foo", "---123b",
-		];
+		const forbiddenNames = ["1baz", "_foo", "---123b"];
 		for (const name of forbiddenNames) {
 			const result = await checkAdapterName(name);
 			result.should.be.a("string").and.match(/must start with/);
@@ -68,9 +66,7 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 	});
 
 	it(`should only accept names that end with a letter or number`, async () => {
-		const forbiddenNames = [
-			"abc-", "foo-bar-_",
-		];
+		const forbiddenNames = ["abc-", "foo-bar-_"];
 		for (const name of forbiddenNames) {
 			const result = await checkAdapterName(name);
 			result.should.be.a("string").and.match(/must end with/);
@@ -85,7 +81,9 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 
 	it("should not return an error if the adapter exists and the check is skipped", async () => {
 		fetchPackageVersion.resolves("1.2.3");
-		await checkAdapterName("foo", {skipAdapterExistenceCheck: true}).should.become(true);
+		await checkAdapterName("foo", {
+			skipAdapterExistenceCheck: true,
+		}).should.become(true);
 	});
 
 	it("should return true otherwise", async () => {
@@ -96,9 +94,7 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 
 describe("actionsAndTransformers/checkAuthorName()", () => {
 	it("should not accept empty names", async () => {
-		const forbidden = [
-			"", " ", "\t",
-		];
+		const forbidden = ["", " ", "\t"];
 		for (const name of forbidden) {
 			const result = await checkAuthorName(name);
 			result.should.be.a("string").and.match(/Please enter/);
@@ -111,9 +107,7 @@ describe("actionsAndTransformers/checkAuthorName()", () => {
 
 describe("actionsAndTransformers/checkEmail()", () => {
 	it("should only accept valid email addresses", async () => {
-		const forbidden = [
-			"", " ", "foo@", "bar.de", "foo@bar@baz.de",
-		];
+		const forbidden = ["", " ", "foo@", "bar.de", "foo@bar@baz.de"];
 		for (const name of forbidden) {
 			const result = await checkEmail(name);
 			result.should.be.a("string").and.match(/Please enter/);
@@ -142,8 +136,14 @@ describe("actionsAndTransformers/transformAdapterName()", () => {
 describe("actionsAndTransformers/transformDescription()", () => {
 	it(`should remove leading and trailing spaces`, () => {
 		const tests = [
-			{ original: "This is a description", expected: "This is a description" },
-			{ original: "  This is also a description\t", expected: "This is also a description" },
+			{
+				original: "This is a description",
+				expected: "This is a description",
+			},
+			{
+				original: "  This is also a description\t",
+				expected: "This is also a description",
+			},
 		];
 
 		for (const { original, expected } of tests) {
@@ -165,9 +165,7 @@ describe("actionsAndTransformers/transformDescription()", () => {
 
 describe("actionsAndTransformers/checkTitle()", () => {
 	it("should not accept empty titles", async () => {
-		const forbidden = [
-			"", " ", "\t",
-		];
+		const forbidden = ["", " ", "\t"];
 		for (const name of forbidden) {
 			const result = await checkTitle(name);
 			result.should.be.a("string").and.match(/Please enter/);
@@ -176,7 +174,9 @@ describe("actionsAndTransformers/checkTitle()", () => {
 
 	it("should return an error if the title contains iobroker or adapter", async () => {
 		const forbidden = [
-			"iobroker adapter", "adapter test foo", "this is for iobroker",
+			"iobroker adapter",
+			"adapter test foo",
+			"this is for iobroker",
 		];
 		for (const name of forbidden) {
 			const result = await checkTitle(name);

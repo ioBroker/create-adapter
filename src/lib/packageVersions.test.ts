@@ -1,5 +1,3 @@
-// tslint:disable: no-unused-expression
-
 import { expect } from "chai";
 import * as proxyquireModule from "proxyquire";
 import { stub } from "sinon";
@@ -8,12 +6,14 @@ import { getPackageName, getVersionSpecifier } from "./packageVersions";
 const axiosMock = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
-// tslint:disable-next-line: whitespace
-const { fetchPackageVersion } = proxyquire<typeof import("./packageVersions")>("./packageVersions", {
-	axios: {
-		default: axiosMock,
+const { fetchPackageVersion } = proxyquire<typeof import("./packageVersions")>(
+	"./packageVersions",
+	{
+		axios: {
+			default: axiosMock,
+		},
 	},
-});
+);
 
 function returnVersions(versions: string[]) {
 	const ret: any = {
@@ -48,11 +48,12 @@ function getRandomPackageVersion() {
 	return [0, 0, 0]
 		.map(() => Math.round(Math.random() * 10))
 		.map(v => v.toString())
-		.join(".")
-		;
+		.join(".");
 }
 
-function getRandomPackageNameAndVersion(version: string = getRandomPackageVersion()) {
+function getRandomPackageNameAndVersion(
+	version: string = getRandomPackageVersion(),
+) {
 	return `${getRandomPackageName()}@${version}`;
 }
 
@@ -89,7 +90,10 @@ describe("packageVersions/getPackageName()", () => {
 			{ nameAndVersion: "", expected: "" },
 			{ nameAndVersion: "foobar", expected: "foobar" },
 			{ nameAndVersion: "foobar@1.2.3", expected: "foobar" },
-			{ nameAndVersion: "@scope/foobar@4.5.6", expected: "@scope/foobar" },
+			{
+				nameAndVersion: "@scope/foobar@4.5.6",
+				expected: "@scope/foobar",
+			},
 		];
 		for (const { nameAndVersion, expected } of tests) {
 			getPackageName(nameAndVersion).should.equal(expected);
@@ -98,7 +102,6 @@ describe("packageVersions/getPackageName()", () => {
 });
 
 describe("packageVersions/fetchPackageVersion(latest)", () => {
-
 	beforeEach(() => {
 		axiosMock.reset();
 		resetProcessEnv();
@@ -106,13 +109,18 @@ describe("packageVersions/fetchPackageVersion(latest)", () => {
 
 	it("for status codes other than 200, an error is thrown", async () => {
 		returnStatus(403);
-		await fetchPackageVersion(getRandomPackageName()).should.be.rejectedWith("403");
+		await fetchPackageVersion(
+			getRandomPackageName(),
+		).should.be.rejectedWith("403");
 	});
 
 	it("for status codes other than 200, the fallback version is returned if it is passed", async () => {
 		returnStatus(403);
 		const version = "1.2.3-beta";
-		await fetchPackageVersion(getRandomPackageName(), version).should.become(version);
+		await fetchPackageVersion(
+			getRandomPackageName(),
+			version,
+		).should.become(version);
 	});
 
 	it("if the status code is 200, the latest version is extracted from the response data", async () => {
@@ -122,7 +130,6 @@ describe("packageVersions/fetchPackageVersion(latest)", () => {
 	});
 
 	it("subsequent requests should return a cached version instead of issuing another request", async () => {
-
 		const packageName = getRandomPackageName();
 
 		const latest = "3.2.1";
@@ -145,7 +152,9 @@ describe("packageVersions/fetchPackageVersion(latest)", () => {
 		axiosMock.should.have.been.called;
 		expect(axiosMock.getCall(0).args[0]).to.be.an("object");
 		expect(axiosMock.getCall(0).args[0].url).to.include("/-/package/");
-		expect(axiosMock.getCall(0).args[0].url).to.include(encodeURIComponent("bar-baz"));
+		expect(axiosMock.getCall(0).args[0].url).to.include(
+			encodeURIComponent("bar-baz"),
+		);
 	});
 
 	it("the request object should contain a default timeout of 5000ms", async () => {
@@ -199,19 +208,10 @@ describe("packageVersions/fetchPackageVersion(latest)", () => {
 		const callArg = axiosMock.getCall(0).args[0];
 		expect(callArg.proxy).to.be.undefined;
 	});
-
 });
 
 describe("packageVersions/fetchPackageVersion(specific)", () => {
-
-	const testVersions = [
-		"0.1.5",
-		"1.2.3",
-		"1.3.5",
-		"1.2.4",
-		"1.1.1",
-		"2.3.4",
-	];
+	const testVersions = ["0.1.5", "1.2.3", "1.3.5", "1.2.4", "1.1.1", "2.3.4"];
 
 	beforeEach(() => {
 		axiosMock.reset();
@@ -220,24 +220,34 @@ describe("packageVersions/fetchPackageVersion(specific)", () => {
 
 	it("for status codes other than 200, an error is thrown", async () => {
 		returnStatus(403);
-		await fetchPackageVersion(getRandomPackageNameAndVersion()).should.be.rejectedWith("403");
+		await fetchPackageVersion(
+			getRandomPackageNameAndVersion(),
+		).should.be.rejectedWith("403");
 	});
 
 	it("for status codes other than 200, the fallback version is returned if it is passed", async () => {
 		returnStatus(403);
 		const version = "1.2.3-beta";
-		await fetchPackageVersion(getRandomPackageNameAndVersion(), version).should.become(version);
+		await fetchPackageVersion(
+			getRandomPackageNameAndVersion(),
+			version,
+		).should.become(version);
 	});
 
 	it("if the status code is 200, the highest matching version is extracted from the response data", async () => {
 		returnVersions(testVersions);
-		await fetchPackageVersion(getRandomPackageName() + "@1").should.become("1.3.5");
-		await fetchPackageVersion(getRandomPackageName() + "@~1.2").should.become("1.2.4");
-		await fetchPackageVersion(getRandomPackageName() + "@2").should.become("2.3.4");
+		await fetchPackageVersion(getRandomPackageName() + "@1").should.become(
+			"1.3.5",
+		);
+		await fetchPackageVersion(
+			getRandomPackageName() + "@~1.2",
+		).should.become("1.2.4");
+		await fetchPackageVersion(getRandomPackageName() + "@2").should.become(
+			"2.3.4",
+		);
 	});
 
 	it("subsequent requests should return a cached version instead of issuing another request", async () => {
-
 		const packageName = getRandomPackageNameAndVersion("2");
 		const expected = "2.3.4";
 
@@ -260,7 +270,8 @@ describe("packageVersions/fetchPackageVersion(specific)", () => {
 		axiosMock.should.have.been.called;
 		expect(axiosMock.getCall(0).args[0]).to.be.an("object");
 		expect(axiosMock.getCall(0).args[0].url).to.not.include("/-/package/");
-		expect(axiosMock.getCall(0).args[0].url).to.include(encodeURIComponent("bar-baz"));
+		expect(axiosMock.getCall(0).args[0].url).to.include(
+			encodeURIComponent("bar-baz"),
+		);
 	});
-
 });

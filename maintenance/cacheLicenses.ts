@@ -23,9 +23,14 @@ const startMarker = "/** BEGIN LICENSES */";
 const endMarker = "/** END LICENSES */";
 const licenseCacheFile = path.resolve(__dirname, "../src/lib/", "licenses.ts");
 
-async function loadLicense(shortName: keyof typeof licenseUrls): Promise<License> {
+async function loadLicense(
+	shortName: keyof typeof licenseUrls,
+): Promise<License> {
 	try {
-		let options: AxiosRequestConfig = { url: licenseUrls[shortName], timeout: getRequestTimeout() };
+		let options: AxiosRequestConfig = {
+			url: licenseUrls[shortName],
+			timeout: getRequestTimeout(),
+		};
 		// If an https-proxy is defined as an env variable, use it
 		options = applyHttpsProxy(options);
 
@@ -41,9 +46,12 @@ async function loadLicense(shortName: keyof typeof licenseUrls): Promise<License
 	}
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function loadLicenses() {
 	const licenses = {} as Record<keyof typeof licenseUrls, License>;
-	for (const shortName of Object.keys(licenseUrls) as (keyof typeof licenseUrls)[]) {
+	for (const shortName of Object.keys(
+		licenseUrls,
+	) as (keyof typeof licenseUrls)[]) {
 		licenses[shortName] = await loadLicense(shortName);
 	}
 	return licenses;
@@ -51,18 +59,22 @@ async function loadLicenses() {
 
 (async function main() {
 	let templateContent = await fs.readFile(licenseCacheFile, "utf8");
-	const startMarkerEnd = templateContent.indexOf(startMarker) + startMarker.length;
+	const startMarkerEnd =
+		templateContent.indexOf(startMarker) + startMarker.length;
 	const endMarkerStart = templateContent.indexOf(endMarker);
 	if (endMarkerStart < startMarkerEnd + 100 || !!yargs.argv.force) {
 		// < 100 Bytes is not enough for all licenses, so we need to fetch them
 		const licenses = await loadLicenses();
 		templateContent =
-			templateContent.substr(0, startMarkerEnd)
-			+ JSON.stringify(licenses, null, "\t")
-			+ templateContent.substr(endMarkerStart)
-			;
+			templateContent.substr(0, startMarkerEnd) +
+			JSON.stringify(licenses, null, "\t") +
+			templateContent.substr(endMarkerStart);
 		await fs.writeFile(licenseCacheFile, templateContent, "utf8");
 	} else {
-		console.log(green(`Licenses are already cached. Run this with the parameter --force to update them`));
+		console.log(
+			green(
+				`Licenses are already cached. Run this with the parameter --force to update them`,
+			),
+		);
 	}
 })();
