@@ -63,35 +63,35 @@ export function executeCommand(
 	argsOrOptions?: string[] | Partial<ExecuteCommandOptions>,
 	options?: Partial<ExecuteCommandOptions>,
 ): Promise<ExecuteCommandResult> {
-	let args: string[] | undefined;
-	if (isArray(argsOrOptions)) {
-		args = argsOrOptions;
-	} else if (isObject(argsOrOptions)) {
-		// no args were given
-		options = argsOrOptions;
-	}
-	if (options == null) options = {};
-	if (args == null) args = [];
-
-	const spawnOptions: SpawnOptions = {
-		stdio: [
-			options.stdin || process.stdin,
-			options.stdout || process.stdout,
-			options.stderr || process.stderr,
-		],
-		// @ts-ignore This option exists starting with NodeJS 8
-		windowsHide: true,
-	};
-	if (options.cwd != null) spawnOptions.cwd = options.cwd;
-
-	if (options.logCommandExecution == null)
-		options.logCommandExecution = false;
-	if (options.logCommandExecution) {
-		console.log("executing: " + `${command} ${args.join(" ")}`);
-	}
-
-	// Now execute the npm process and avoid throwing errors
 	return new Promise(resolve => {
+		let args: string[] | undefined;
+		if (isArray(argsOrOptions)) {
+			args = argsOrOptions;
+		} else if (isObject(argsOrOptions)) {
+			// no args were given
+			options = argsOrOptions;
+		}
+		if (options == null) options = {};
+		if (args == null) args = [];
+
+		const spawnOptions: SpawnOptions = {
+			stdio: [
+				options.stdin || process.stdin,
+				options.stdout || process.stdout,
+				options.stderr || process.stderr,
+			],
+			// @ts-ignore This option exists starting with NodeJS 8
+			windowsHide: true,
+		};
+		if (options.cwd != null) spawnOptions.cwd = options.cwd;
+
+		if (options.logCommandExecution == null)
+			options.logCommandExecution = false;
+		if (options.logCommandExecution) {
+			console.log("executing: " + `${command} ${args.join(" ")}`);
+		}
+
+		// Now execute the npm process and avoid throwing errors
 		try {
 			let bufferedStdout: string | undefined;
 			let bufferedStderr: string | undefined;
@@ -107,21 +107,21 @@ export function executeCommand(
 				},
 			);
 			// Capture stdout/stderr if requested
-			if (options!.stdout === "pipe") {
+			if (options.stdout === "pipe") {
 				bufferedStdout = "";
-				cmd.stdout.on("data", chunk => {
+				cmd.stdout!.on("data", chunk => {
 					const buffer = Buffer.isBuffer(chunk)
 						? chunk
-						: new Buffer(chunk, "utf8");
+						: Buffer.from(chunk, "utf8");
 					bufferedStdout! += buffer;
 				});
 			}
-			if (options!.stderr === "pipe") {
+			if (options.stderr === "pipe") {
 				bufferedStderr = "";
-				cmd.stderr.on("data", chunk => {
+				cmd.stderr!.on("data", chunk => {
 					const buffer = Buffer.isBuffer(chunk)
 						? chunk
-						: new Buffer(chunk, "utf8");
+						: Buffer.from(chunk, "utf8");
 					bufferedStderr! += buffer;
 				});
 			}
