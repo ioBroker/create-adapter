@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Show the debug output during integration tests (#135)
+
 ## v1.12.0 (2019-04-29)
 * (AlCalzone) In JS, make adapter config properties non-nullable
 * (AlCalzone) Drop Node 6 from the test matrix when using object spreads in JS (fixes #127)
