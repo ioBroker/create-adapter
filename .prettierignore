@@ -4,3 +4,4 @@ build/
 src/lib/licenses.ts
 templates/
 test/baselines/
+CHANGELOG.md
