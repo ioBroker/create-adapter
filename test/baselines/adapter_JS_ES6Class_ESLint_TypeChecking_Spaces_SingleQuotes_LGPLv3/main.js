@@ -24,7 +24,7 @@ class TestAdapter extends utils.Adapter {
         this.on('ready', this.onReady.bind(this));
         this.on('objectChange', this.onObjectChange.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
-        // this.on("message", this.onMessage.bind(this));
+        // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
 
@@ -130,13 +130,13 @@ class TestAdapter extends utils.Adapter {
     //  * @param {ioBroker.Message} obj
     //  */
     // onMessage(obj) {
-    // 	if (typeof obj === "object" && obj.message) {
-    // 		if (obj.command === "send") {
+    // 	if (typeof obj === 'object' && obj.message) {
+    // 		if (obj.command === 'send') {
     // 			// e.g. send email or pushover or whatever
-    // 			this.log.info("send command");
+    // 			this.log.info('send command');
 
     // 			// Send response in callback if required
-    // 			if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
+    // 			if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
     // 		}
     // 	}
     // }
