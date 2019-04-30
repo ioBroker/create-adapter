@@ -36,10 +36,14 @@ async function ask(): Promise<Answers> {
 			}
 			while (true) {
 				// Ask the user for an answer
-				const answer: Record<string, any> = await prompt(q);
-				// Cancel the process if necessary
-				if (answer[q.name as string] == undefined) {
-					error("Adapter creation canceled");
+				let answer: Record<string, any>;
+				try {
+					answer = await prompt(q);
+					// Cancel the process if necessary
+					if (answer[q.name as string] == undefined)
+						throw new Error();
+				} catch (e) {
+					error(e.message || "Adapter creation canceled!");
 					return process.exit(1);
 				}
 				// Apply an optional transformation
