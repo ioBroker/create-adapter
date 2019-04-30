@@ -54,7 +54,9 @@ export function isQuestionGroup(val: any): val is QuestionGroup {
 }
 
 function styledMultiselect<
-	T extends Pick<Question, Exclude<keyof Question, "type">>
+	T extends Pick<Question, Exclude<keyof Question, "type">> & {
+		choices: any[];
+	}
 >(ms: T): T & { type: string } {
 	return Object.assign({} as Question, ms, {
 		type: "multiselect",
