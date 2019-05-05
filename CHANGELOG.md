@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Switch TypeScript templates to ESLint (#158)
+
 ## v1.12.1 (2019-04-29)
 * (AlCalzone) Show the debug output during integration tests (#135)
 * (AlCalzone) Migrate creator from TSLint to ESLint (and prettier) (#136)
