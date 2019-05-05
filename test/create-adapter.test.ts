@@ -58,7 +58,7 @@ const baseAnswers: Answers = {
 	adminFeatures: [],
 	type: "general",
 	language: "TypeScript",
-	tools: ["TSLint"],
+	tools: ["ESLint"],
 	indentation: "Tab",
 	quotes: "double",
 	es6class: "no",
@@ -122,7 +122,6 @@ describe("adapter creation =>", () => {
 		});
 	});
 
-	// tslint:disable-next-line:space-before-function-paren
 	describe("generate baselines =>", function() {
 		this.timeout(60000);
 
@@ -138,24 +137,24 @@ describe("adapter creation =>", () => {
 		});
 
 		describe("full adapter dir =>", () => {
-			it("Adapter (w/ custom and tab), TypeScript, TSLint, Tabs, Double quotes, MIT License", async () => {
+			it("Adapter (w/ custom and tab), TypeScript, ESLint, Tabs, Double quotes, MIT License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					adminFeatures: ["custom", "tab"],
 				};
 				await expectSuccess(
-					"adapter_TS_TSLint_Tabs_DoubleQuotes_MIT",
+					"adapter_TS_ESLint_Tabs_DoubleQuotes_MIT",
 					answers,
 				);
 			});
 
-			it("Adapter, TypeScript (ES6 class), TSLint, Tabs, Double quotes, MIT License", async () => {
+			it("Adapter, TypeScript (ES6 class), ESLint, Tabs, Double quotes, MIT License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					es6class: "yes",
 				};
 				await expectSuccess(
-					"adapter_TS_ES6Class_TSLint_Tabs_DoubleQuotes_MIT",
+					"adapter_TS_ES6Class_ESLint_Tabs_DoubleQuotes_MIT",
 					answers,
 				);
 			});
@@ -306,7 +305,7 @@ describe("adapter creation =>", () => {
 					return (
 						(file.name.endsWith(".ts") &&
 							!file.name.endsWith(".d.ts")) ||
-						file.name === "tslint.json"
+						file.name === "eslint.json"
 					);
 				});
 			});

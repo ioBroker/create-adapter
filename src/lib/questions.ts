@@ -357,7 +357,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which of the following tools do you want to use?",
 				initial: [0],
 				choices: [
-					{ message: "TSLint", hint: "(recommended)" },
+					{ message: "ESLint", hint: "(recommended)" },
 					{ message: "code coverage" },
 				],
 			}),
@@ -523,7 +523,7 @@ export interface Answers {
 	language?: "JavaScript" | "TypeScript";
 	features: ("adapter" | "vis")[];
 	adminFeatures?: ("tab" | "custom")[];
-	tools?: ("ESLint" | "TSLint" | "type checking" | "code coverage")[];
+	tools?: ("ESLint" | "type checking" | "code coverage")[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
 	license?: { id: string; name: string; text: string };

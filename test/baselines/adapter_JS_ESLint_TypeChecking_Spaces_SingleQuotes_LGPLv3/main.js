@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * Created with @iobroker/create-adapter v1.12.0
+ * Created with @iobroker/create-adapter v1.12.1
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
@@ -129,6 +129,7 @@ function main() {
     });
 }
 
+// @ts-ignore parent is a valid property on module
 if (module.parent) {
     // Export startAdapter in compact mode
     module.exports = startAdapter;

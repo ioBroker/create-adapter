@@ -5,7 +5,6 @@ const templateFunction: TemplateFunction = answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 
 	const template = `
@@ -28,8 +27,10 @@ ${useTypeScript ? `
 src/
 tsconfig.json
 tsconfig.*.json` : ""}
-${useTSLint ? "tslint.json" : ""}
-${useESLint ? ".eslintrc.json" : ""}
+${useESLint ? `
+.eslintrc.json
+.eslintrc.js
+` : ""}
 
 ${useTypeScript ? (`
 # Sourcemaps
