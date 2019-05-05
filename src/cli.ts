@@ -149,7 +149,7 @@ async function setupProject_CLI(
 		const gitCommandArgs = [
 			["init"],
 			["add", "."],
-			["commit", "-m", `"Initial commit"`],
+			["commit", "-m", "Initial commit"],
 			[
 				"remote",
 				"add",
