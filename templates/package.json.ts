@@ -9,7 +9,6 @@ const templateFunction: TemplateFunction = async answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useTSLint = answers.tools && answers.tools.indexOf("TSLint") > -1;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 
@@ -55,8 +54,11 @@ const templateFunction: TemplateFunction = async answers => {
 			// to clean the build dir
 			"rimraf",
 		] : [])
-		.concat(useTSLint ? ["tslint"] : [])
 		.concat(useESLint ? ["eslint"] : [])
+		.concat((useESLint && useTypeScript) ? [
+			"@typescript-eslint/eslint-plugin",
+			"@typescript-eslint/parser",
+		] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
@@ -103,12 +105,8 @@ const templateFunction: TemplateFunction = async answers => {
 			"test:integration": "mocha test/integration --exit",
 			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
 			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
-			${useTSLint ? (`
-				"lint": "npm run lint:ts \\\"src/**/*.ts\\\"",
-				"lint:ts": "tslint",
-			`) : useESLint ? (`
-				"lint": "npm run lint:js",
-				"lint:js": "eslint",
+			${useESLint ? (`
+				"lint": "eslint${useTypeScript ? " --ext .ts src" : ""}",
 			`) : ""}
 		`) : isWidget ? (`
 			"test:package": "mocha test/package --exit",
