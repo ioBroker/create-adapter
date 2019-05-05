@@ -1,5 +1,5 @@
 /*
- * Created with @iobroker/create-adapter v1.12.0
+ * Created with @iobroker/create-adapter v1.12.1
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
@@ -12,6 +12,7 @@ import * as utils from "@iobroker/adapter-core";
 // Augment the adapter.config object with the actual types
 // TODO: delete this in the next version
 declare global {
+	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace ioBroker {
 		interface AdapterConfig {
 			// Define the shape of your options here (recommended)
@@ -25,7 +26,7 @@ declare global {
 
 class TestAdapter extends utils.Adapter {
 
-	constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
+	public constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
 		super({
 			...options,
 			name: "test-adapter",
@@ -40,7 +41,7 @@ class TestAdapter extends utils.Adapter {
 	/**
 	 * Is called when databases are connected and adapter received configuration.
 	 */
-	private async onReady() {
+	private async onReady(): Promise<void> {
 		// Initialize your adapter here
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
@@ -93,7 +94,7 @@ class TestAdapter extends utils.Adapter {
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
 	 */
-	private onUnload(callback: () => void) {
+	private onUnload(callback: () => void): void {
 		try {
 			this.log.info("cleaned everything up...");
 			callback();
@@ -105,7 +106,7 @@ class TestAdapter extends utils.Adapter {
 	/**
 	 * Is called if a subscribed object changes
 	 */
-	private onObjectChange(id: string, obj: ioBroker.Object | null | undefined) {
+	private onObjectChange(id: string, obj: ioBroker.Object | null | undefined): void {
 		if (obj) {
 			// The object was changed
 			this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
@@ -118,7 +119,7 @@ class TestAdapter extends utils.Adapter {
 	/**
 	 * Is called if a subscribed state changes
 	 */
-	private onStateChange(id: string, state: ioBroker.State | null | undefined) {
+	private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
 		if (state) {
 			// The state was changed
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
@@ -132,7 +133,7 @@ class TestAdapter extends utils.Adapter {
 	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
 	//  * Using this method requires "common.message" property to be set to true in io-package.json
 	//  */
-	// private onMessage(obj: ioBroker.Message) {
+	// private onMessage(obj: ioBroker.Message): void {
 	// 	if (typeof obj === "object" && obj.message) {
 	// 		if (obj.command === "send") {
 	// 			// e.g. send email or pushover or whatever

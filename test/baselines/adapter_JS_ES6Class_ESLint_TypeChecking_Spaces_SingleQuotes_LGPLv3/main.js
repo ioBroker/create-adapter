@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * Created with @iobroker/create-adapter v1.12.0
+ * Created with @iobroker/create-adapter v1.12.1
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
@@ -143,6 +143,7 @@ class TestAdapter extends utils.Adapter {
 
 }
 
+// @ts-ignore parent is a valid property on module
 if (module.parent) {
     // Export the constructor in compact mode
     /**

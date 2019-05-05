@@ -1,5 +1,5 @@
 /*
- * Created with @iobroker/create-adapter v1.12.0
+ * Created with @iobroker/create-adapter v1.12.1
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
@@ -12,6 +12,7 @@ import * as utils from '@iobroker/adapter-core';
 // Augment the adapter.config object with the actual types
 // TODO: delete this in the next version
 declare global {
+	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace ioBroker {
 		interface AdapterConfig {
 			// Define the shape of your options here (recommended)
@@ -28,7 +29,7 @@ let adapter: ioBroker.Adapter;
 /**
  * Starts the adapter instance
  */
-function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}) {
+function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}): ioBroker.Adapter {
 	// Create the adapter and define its methods
 	return adapter = utils.adapter({
 		// Default options
@@ -88,7 +89,7 @@ function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}) {
 	});
 }
 
-function main() {
+function main(): void {
 
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
