@@ -7,6 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
+* (AlCalzone) Remove extraneous quotes from "initial commit" (#159)
 * (AlCalzone) Switch TypeScript templates to ESLint (#158)
 
 ## v1.12.1 (2019-04-29)
