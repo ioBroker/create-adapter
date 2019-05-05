@@ -3,6 +3,9 @@ import { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 
+	// This version is intended for use in JS projects
+	if (answers.language !== "JavaScript") return;
+
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
 

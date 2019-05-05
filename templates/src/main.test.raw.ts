@@ -5,8 +5,6 @@
  * It is advised to test all your modules with accompanying *.test.ts-files
  */
 
-// tslint:disable:no-unused-expression
-
 import { expect } from "chai";
 // import { functionToTest } from "./moduleToTest";
 

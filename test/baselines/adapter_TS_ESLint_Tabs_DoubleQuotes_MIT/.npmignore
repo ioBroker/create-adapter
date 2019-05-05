@@ -16,7 +16,9 @@ appveyor.yaml
 src/
 tsconfig.json
 tsconfig.*.json
-tslint.json
+
+.eslintrc.json
+.eslintrc.js
 
 # Sourcemaps
 maps/

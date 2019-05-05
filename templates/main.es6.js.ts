@@ -162,6 +162,7 @@ ${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.
 
 }
 
+// @ts-ignore parent is a valid property on module
 if (module.parent) {
 	// Export the constructor in compact mode
 	/**
