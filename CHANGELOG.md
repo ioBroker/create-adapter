@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## v1.13.0 (2019-05-06)
 * (AlCalzone) Remove extraneous quotes from "initial commit" (#159)
 * (AlCalzone) Switch TypeScript templates to ESLint (#158)
 * (AlCalzone) Fix tsconfig.json include for TypeScript projects (fixes #160)
