@@ -43,10 +43,12 @@ export = (answers => {
 		"inlineSourceMap": false,
 		"watch": false`) : ""}
 	},
-	"include": [
+	"include": [${useTypeScript ? (`
+		"**/*.ts"
+`) : (`
 		"**/*.js",
 		"**/*.d.ts"
-	],
+`)}	],
 	"exclude": [
 		${useTypeScript ? (`"build/**",
 		`) : ""}"node_modules/**",
