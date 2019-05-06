@@ -40,12 +40,13 @@ The following CLI options are available:
   * Short description (optional)
   * Adapter start mode
   * Adapter/VIS category
+  * Keywords (optional)
 * IntelliSense (auto completion and tooltips) in supporting editors based on the [ioBroker declaration files](https://www.npmjs.com/package/@types/iobroker)
 * JavaScript with the following optional tools:
   * [ESLint](https://github.com/eslint/eslint) for code quality
   * Type checking based on the ioBroker declarations
 * Or TypeScript with the following optional tools:
-  * [TSLint](https://github.com/palantir/tslint) for code quality
+  * [ESLint](https://github.com/eslint/eslint) for code quality
   * [nyc](https://github.com/istanbuljs/nyc) for code coverage
 * Choose between indentation: tabs or 4 spaces
 * Choose your preferred quote style
@@ -55,7 +56,7 @@ The following CLI options are available:
   * Custom datapoint-specific options (optional)
 * Predefined settings page for the admin UI
 * Choice of an OpenSource license and automatic creation of the license file
-* Built-in component tests using `mocha` & `chai` (with `chai-as-promised`), `sinon` (with `sinon-chai`) for:
+* Built-in component tests using `mocha`, `chai` (with `chai-as-promised`) and `sinon` (with `sinon-chai`) for:
   * Correctly defined package files
   * and your own tests...
 * Automated testing using Travis CI
@@ -65,8 +66,6 @@ The following features did not make it into v1.0.0 and are planned for a later r
 - [ ] [React](https://reactjs.org/) as an alternative to plain HTML+CSS for the admin UI (some predefined helpful methods included)
 - [ ] Strongly typed `adapter.config` properties in TypeScript (they are supported in JS though!)
 - [ ] Package scripts for automatic semantic release of new versions
-- [ ] Ask for:
-  * keywords
 - [ ] Automatically open the folder in your favorite editor
 - [ ] Scripts/Helpers for remote debugging
 
