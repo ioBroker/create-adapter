@@ -35,8 +35,7 @@
 		"watch": false
 	},
 	"include": [
-		"**/*.js",
-		"**/*.d.ts"
+		"**/*.ts"
 	],
 	"exclude": [
 		"build/**",
