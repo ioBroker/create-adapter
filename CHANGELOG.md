@@ -9,6 +9,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) Remove extraneous quotes from "initial commit" (#159)
 * (AlCalzone) Switch TypeScript templates to ESLint (#158)
+* (AlCalzone) Fix tsconfig.json include for TypeScript projects (fixes #160)
 
 ## v1.12.1 (2019-04-29)
 * (AlCalzone) Show the debug output during integration tests (#135)
