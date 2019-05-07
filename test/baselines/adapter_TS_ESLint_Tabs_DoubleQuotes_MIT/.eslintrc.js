@@ -18,6 +18,14 @@ module.exports = {
 				"SwitchCase": 1
 			}
 		],
+		"quotes": [
+			"error",
+			"double",
+			{
+				"avoidEscape": true,
+				"allowTemplateLiterals": true
+			}
+		],
 		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/no-use-before-define": [
@@ -45,14 +53,6 @@ module.exports = {
 		"@typescript-eslint/no-object-literal-type-assertion": "off",
 		"@typescript-eslint/interface-name-prefix": "off",
 		"@typescript-eslint/no-non-null-assertion": "off", // This is necessary for Map.has()/get()!
-		"quotes": [
-			"error",
-			"double",
-			{
-				"avoidEscape": true,
-				"allowTemplateLiterals": true
-			}
-		],
 		"no-var": "error",
 		"prefer-const": "error",
 	},
