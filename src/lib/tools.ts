@@ -7,7 +7,6 @@ import * as fs from "fs-extra";
 import * as JSON5 from "json5";
 import * as os from "os";
 import * as path from "path";
-import * as ts from "typescript";
 import * as nodeUrl from "url";
 import { Answers } from "./questions";
 
@@ -286,13 +285,11 @@ export enum Quotemark {
 	"double" = '"',
 }
 
-/** Formats a JS source file to use single quotes */
-export function jsFixQuotes(
-	sourceText: string,
+function createESLintOptions(
+	language: Exclude<Answers["language"], undefined>,
 	quotes: keyof typeof Quotemark,
-): string {
-	const linter = new Linter();
-	const result = linter.verifyAndFix(sourceText, {
+): Record<string, any> {
+	const baseOptions: Record<string, any> = {
 		env: {
 			es6: true,
 			node: true,
@@ -311,7 +308,27 @@ export function jsFixQuotes(
 				},
 			],
 		},
-	});
+	};
+	if (language === "TypeScript") {
+		baseOptions.parser = "@typescript-eslint/parser";
+		baseOptions.parserOptions = {
+			...baseOptions.parserOptions,
+			sourceType: "module",
+		};
+	}
+	return baseOptions;
+}
+
+/** Formats a JS source file to use single quotes */
+export function jsFixQuotes(
+	sourceText: string,
+	quotes: keyof typeof Quotemark,
+): string {
+	const linter = new Linter();
+	const result = linter.verifyAndFix(
+		sourceText,
+		createESLintOptions("JavaScript", quotes),
+	);
 	return result.output;
 }
 
@@ -320,51 +337,12 @@ export function tsFixQuotes(
 	sourceText: string,
 	quotes: keyof typeof Quotemark,
 ): string {
-	const newQuotes = Quotemark[quotes];
-	const oldQuotes = Quotemark[quotes === "double" ? "single" : "double"];
-	// create an AST from the source code, this step is unnecessary if you already have a SourceFile object
-	const sourceFile = ts.createSourceFile(
-		"fixQuotes.ts",
+	const linter = new Linter();
+	const result = linter.verifyAndFix(
 		sourceText,
-		ts.ScriptTarget.Latest,
+		createESLintOptions("TypeScript", quotes),
 	);
-	let resultString = "";
-	let lastPos = 0;
-
-	// visit each immediate child node of SourceFile
-	ts.forEachChild(sourceFile, function cb(node) {
-		if (
-			node.kind === ts.SyntaxKind.StringLiteral &&
-			sourceText[node.end - 1] === oldQuotes
-		) {
-			// we found a string with the wrong quote style
-			const start = node.getStart(sourceFile); // get the position of the opening quotes (this is different from 'node.pos' as it skips all whitespace and comments)
-			const rawContent = sourceText.slice(start + 1, node.end - 1); // get the actual contents of the string
-			resultString +=
-				sourceText.slice(lastPos, start) +
-				newQuotes +
-				escapeQuotes(rawContent, newQuotes, oldQuotes) +
-				newQuotes;
-			lastPos = node.end;
-		} else {
-			// recurse deeper down the AST visiting the immediate children of the current node
-			ts.forEachChild(node, cb);
-		}
-	});
-	resultString += sourceText.slice(lastPos);
-
-	return resultString;
-}
-
-/** Escape new quotes within the string, unescape the old quotes. */
-function escapeQuotes(
-	str: string,
-	newQuotes: Quotemark,
-	oldQuotes: Quotemark,
-): string {
-	return str
-		.replace(new RegExp(newQuotes, "g"), `\\${newQuotes}`)
-		.replace(new RegExp(`\\\\${oldQuotes}`, "g"), oldQuotes);
+	return result.output;
 }
 
 export function getOwnVersion(): string {
