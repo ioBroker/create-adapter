@@ -100,9 +100,8 @@ fn1(\`'\`);
 fn2('\\"');
 `;
 
-		// TS does not avoid escaping as opposed to ESLint
 		const expected = `const foo = '';
-const bar = '\\'';
+const bar = "'";
 fn1(\`'\`);
 fn2('\\"');
 `;

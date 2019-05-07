@@ -17,6 +17,9 @@ import { testCondition } from "./createAdapter";
 import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
 
+// This is being used to simulate wrong options for conditions on the type level
+const __misused: unique symbol = Symbol.for("__misused");
+
 // Sadly, Enquirer does not export the PromptOptions type
 type PromptOptions = Exclude<Parameters<typeof prompt>[0], Function | any[]>;
 type QuestionAction<T> = (
@@ -27,7 +30,8 @@ export type AnswerValue = string | boolean | number;
 export type Condition = { name: string } & (
 	| { value: AnswerValue | AnswerValue[] }
 	| { contains: AnswerValue }
-	| { doesNotContain: AnswerValue });
+	| { doesNotContain: AnswerValue }
+	| { [__misused]: undefined });
 
 interface QuestionMeta {
 	condition?: Condition | Condition[];

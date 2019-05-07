@@ -6,7 +6,7 @@ const templateFunction: TemplateFunction = answers => {
 			// Try to decode Base64
 			const base64Match = answers.icon.match(/^data:image\/(\w+);base64,(.+)$/);
 			if (base64Match) {
-				return new Buffer(base64Match[2], "base64");
+				return Buffer.from(base64Match[2], "base64");
 			}
 			throw new Error("The icon has an unsupported string encoding!");
 		} else {

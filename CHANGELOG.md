@@ -9,6 +9,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) Add the option to use Prettier as a formatter in TypeScript (#164)  
 **Note:** This option also enables different auto-formatting settings in VSCode
+* (AlCalzone) Use ESLint to fix quotes in TypeScript (#165)
 
 ## v1.13.0 (2019-05-06)
 * (AlCalzone) Remove extraneous quotes from "initial commit" (#159)
