@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Use ESLint to fix quotes in TypeScript (#165)
+
 ## v1.13.0 (2019-05-06)
 * (AlCalzone) Remove extraneous quotes from "initial commit" (#159)
 * (AlCalzone) Switch TypeScript templates to ESLint (#158)
