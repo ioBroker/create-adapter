@@ -7,6 +7,7 @@ import * as fs from "fs-extra";
 import * as JSON5 from "json5";
 import * as os from "os";
 import * as path from "path";
+import * as prettier from "prettier";
 import * as nodeUrl from "url";
 import { Answers } from "./questions";
 
@@ -343,6 +344,26 @@ export function tsFixQuotes(
 		createESLintOptions("TypeScript", quotes),
 	);
 	return result.output;
+}
+
+export function formatWithPrettier(
+	sourceText: string,
+	answers: Pick<Answers, "quotes" | "indentation">,
+	extension: "js" | "ts" | "json",
+): string {
+	// Keep this in sync with templates/_prettierrc.js.ts
+	const prettierOptions: prettier.Options = {
+		semi: true,
+		trailingComma: "all",
+		singleQuote: answers.quotes === "single",
+		printWidth: 120,
+		useTabs: answers.indentation === "Tab",
+		tabWidth: 4,
+		endOfLine: "lf",
+		// To infer the correct parser
+		filepath: `index.${extension}`,
+	};
+	return prettier.format(sourceText, prettierOptions);
 }
 
 export function getOwnVersion(): string {
