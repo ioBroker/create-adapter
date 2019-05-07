@@ -1,5 +1,6 @@
 import { yellow } from "ansi-colors";
 import { fetchPackageVersion } from "./packageVersions";
+import { Answers } from "./questions";
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -77,6 +78,15 @@ export async function checkAuthorName(name?: string): Promise<CheckResult> {
 export async function checkEmail(email: string): Promise<CheckResult> {
 	if (!emailRegex.test(email)) {
 		return "Please enter a valid email address!";
+	}
+	return true;
+}
+
+export async function checkTypeScriptTools(
+	tools: Exclude<Answers["tools"], undefined>,
+): Promise<CheckResult> {
+	if (tools.indexOf("Prettier") > -1 && tools.indexOf("ESLint") === -1) {
+		return "ESLint must be selected to use Prettier!";
 	}
 	return true;
 }

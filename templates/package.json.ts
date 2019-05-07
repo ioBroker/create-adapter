@@ -10,6 +10,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
+	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 
 	const dependencyPromises = ([] as string[])
@@ -58,6 +59,11 @@ const templateFunction: TemplateFunction = async answers => {
 		.concat((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
 			"@typescript-eslint/parser",
+		] : [])
+		.concat((useESLint && usePrettier) ? [
+			"eslint-config-prettier",
+			"eslint-plugin-prettier",
+			"prettier",
 		] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()

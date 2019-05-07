@@ -43,6 +43,10 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "_gitignore.ts", templateFunction: require("./_gitignore") },
 	{ name: "_issue_template/bug_report.md.ts", templateFunction: require("./_issue_template/bug_report.md") },
 	{ name: "_npmignore.ts", templateFunction: require("./_npmignore") },
+	{ name: "_prettierignore.ts", templateFunction: require("./_prettierignore") },
+	{ name: "_prettierrc.js.ts", templateFunction: require("./_prettierrc.js") },
 	{ name: "_travis.yml.ts", templateFunction: require("./_travis.yml") },
+	{ name: "_vscode/extensions.json.ts", templateFunction: require("./_vscode/extensions.json") },
+	{ name: "_vscode/settings.json.ts", templateFunction: require("./_vscode/settings.json") },
 ];
 export = templates;

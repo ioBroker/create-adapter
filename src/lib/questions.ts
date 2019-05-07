@@ -8,6 +8,7 @@ import {
 	checkMinSelections,
 	CheckResult,
 	checkTitle,
+	checkTypeScriptTools,
 	transformAdapterName,
 	transformDescription,
 	transformKeywords,
@@ -358,8 +359,14 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				initial: [0],
 				choices: [
 					{ message: "ESLint", hint: "(recommended)" },
+					{
+						message: "Prettier",
+						hint:
+							"(requires ESLint, enables automatic code formatting in VSCode)",
+					},
 					{ message: "code coverage" },
 				],
+				action: checkTypeScriptTools,
 			}),
 
 			// TODO: enable React (only TypeScript at the start)
@@ -523,7 +530,7 @@ export interface Answers {
 	language?: "JavaScript" | "TypeScript";
 	features: ("adapter" | "vis")[];
 	adminFeatures?: ("tab" | "custom")[];
-	tools?: ("ESLint" | "type checking" | "code coverage")[];
+	tools?: ("ESLint" | "Prettier" | "type checking" | "code coverage")[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
 	license?: { id: string; name: string; text: string };

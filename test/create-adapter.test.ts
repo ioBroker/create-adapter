@@ -120,6 +120,18 @@ describe("adapter creation =>", () => {
 				"must not contain the words",
 			);
 		});
+
+		it("selecting Prettier without ESLint", () => {
+			const answers: Answers = {
+				...baseAnswers,
+				tools: ["Prettier"],
+			};
+			expectFail(
+				"invalidAnswersPrettierWithoutESLint",
+				answers,
+				"ESLint must be selected",
+			);
+		});
 	});
 
 	describe("generate baselines =>", function() {
@@ -305,7 +317,22 @@ describe("adapter creation =>", () => {
 					return (
 						(file.name.endsWith(".ts") &&
 							!file.name.endsWith(".d.ts")) ||
-						file.name === "eslint.json"
+						file.name.startsWith(".eslint")
+					);
+				});
+			});
+
+			it(`TS with Prettier`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					tools: ["ESLint", "Prettier"],
+				};
+				await expectSuccess("TS_Prettier", answers, file => {
+					return (
+						file.name.startsWith(".vscode/") ||
+						file.name.startsWith(".eslint") ||
+						file.name.startsWith(".prettier") ||
+						file.name === "package.json"
 					);
 				});
 			});
