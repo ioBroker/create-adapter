@@ -5,6 +5,7 @@ import * as path from "path";
 import * as templateFiles from "../../templates";
 import { Answers, AnswerValue, Condition } from "./questions";
 import {
+	formatWithPrettier,
 	getOwnVersion,
 	indentWithSpaces,
 	indentWithTabs,
@@ -109,16 +110,29 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 		text && text.replace(/^[ \t]+$/gm, "");
 	const formatter = (text: string): string =>
 		trimWhitespaceLines(removeEmptyLines(indentation(text)));
+	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
+
 	return files.map(f => {
 		if (f.noReformat || typeof f.content !== "string") return f;
-		// 1st step: Apply formatters that are valid for all files
-		f.content = formatter(f.content);
-		// 2nd step: Apply more specialized formatters
-		if (answers.quotes != undefined) {
-			if (f.name.endsWith(".js"))
-				f.content = jsFixQuotes(f.content, answers.quotes);
-			else if (f.name.endsWith(".ts"))
-				f.content = tsFixQuotes(f.content, answers.quotes);
+		if (usePrettier && /\.(js|json|ts)$/.test(f.name)) {
+			// Use prettier to format JS/TS/JSON code
+			const extension = f.name.substr(f.name.lastIndexOf(".") + 1);
+			f.content = formatWithPrettier(
+				f.content,
+				answers,
+				extension as any,
+			);
+		} else {
+			// We are using our own handmade formatters
+			// 1st step: Apply formatters that are valid for all files
+			f.content = formatter(f.content);
+			// 2nd step: Apply more specialized formatters
+			if (answers.quotes != undefined) {
+				if (f.name.endsWith(".js"))
+					f.content = jsFixQuotes(f.content, answers.quotes);
+				else if (f.name.endsWith(".ts"))
+					f.content = tsFixQuotes(f.content, answers.quotes);
+			}
 		}
 		return f;
 	});

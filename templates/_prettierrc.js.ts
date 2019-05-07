@@ -10,6 +10,7 @@ const templateFunction: TemplateFunction = answers => {
 	// However leaving it on "auto" causes linting to fail on CI servers
 	// when the adapter was developed on Windows
 	
+	// Keep this in sync with lib/tools.ts -> formatWithPrettier()
 	const template = `
 module.exports = {
 	semi: true,
