@@ -12,6 +12,7 @@
 * (AlCalzone) Use ESLint to fix quotes in TypeScript (#165)
 * (AlCalzone) Use Prettier to format code if the option is set (#166)
 * (AlCalzone) Describe `package.json` scripts in README (fixes #9)
+* (AlCalzone) Add a getting started section to the README (fixes #12)
 
 ## v1.13.0 (2019-05-06)
 * (AlCalzone) Remove extraneous quotes from "initial commit" (#159)
