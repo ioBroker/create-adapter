@@ -3,6 +3,11 @@ import { formatLicense } from "../src/lib/tools";
 
 export = (answers => {
 
+	const isAdapter = answers.features.indexOf("adapter") > -1;
+	const useTypeScript = answers.language === "TypeScript";
+	const useNyc = answers.tools && answers.tools.indexOf("code coverage");
+	const useESLint = answers.tools && answers.tools.indexOf("ESLint");
+
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
 ![Logo](admin/${answers.adapterName}.png)
@@ -20,6 +25,29 @@ export = (answers => {
 ## ${answers.adapterName} adapter for ioBroker
 
 ${answers.description || "Describe your project here"}
+
+## Developer manual
+
+### Scripts in \`package.json\`
+Several npm scripts are predefined for your convenience. You can run them using \`npm run <scriptname>\`
+| Script name | Description                                              |
+|-------------|----------------------------------------------------------|
+${isAdapter && useTypeScript ? (
+`| \`build\`    | Re-compile the TypeScript sources.                       |
+| \`watch\`     | Re-compile the TypeScript sources and watch for changes. |
+| \`test:ts\`   | Executes the tests you defined in \`*.test.ts\` files.     |
+`) : ""}${isAdapter && !useTypeScript ? (
+`| \`test:js\`   | Executes the tests you defined in \`*.test.js\` files.     |
+`) : ""}| \`test:package\`    | Ensures your \`package.json\` and \`io-package.json\` are valid. |
+${isAdapter && useTypeScript ? (
+`| \`test:unit\`       | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
+| \`test:integration\`| Tests the adapter startup with an actual instance of ioBroker. |
+`) : ""}| \`test\` | Performs a minimal test run on package files${isAdapter ? " and your tests" : ""}. |
+${useNyc ? (
+`| \`coverage\` | Generates code coverage using your test files. |
+`) : ""}${useESLint ? (
+`| \`lint\` | Runs \`ESLint\` to check your code for formatting errors and potential bugs. |
+`) : ""}
 
 ## Changelog
 
