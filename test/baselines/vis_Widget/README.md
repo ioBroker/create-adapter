@@ -14,6 +14,15 @@
 
 Describe your project here
 
+## Developer manual
+
+### Scripts in `package.json`
+Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
+| Script name | Description                                              |
+|-------------|----------------------------------------------------------|
+| `test:package`    | Ensures your `package.json` and `io-package.json` are valid. |
+| `test` | Performs a minimal test run on package files. |
+
 ## Changelog
 
 ### 0.0.1
