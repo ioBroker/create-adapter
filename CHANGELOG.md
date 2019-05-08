@@ -11,11 +11,12 @@
 **Note:** This option also enables different auto-formatting settings in VSCode
 * (AlCalzone) Use ESLint to fix quotes in TypeScript (#165)
 * (AlCalzone) Use Prettier to format code if the option is set (#166)
+* (AlCalzone) Describe `package.json` scripts in README (fixes #9)
 
 ## v1.13.0 (2019-05-06)
 * (AlCalzone) Remove extraneous quotes from "initial commit" (#159)
 * (AlCalzone) Switch TypeScript templates to ESLint (#158)
-* (AlCalzone) Fix tsconfig.json include for TypeScript projects (fixes #160)
+* (AlCalzone) Fix `tsconfig.json` include for TypeScript projects (fixes #160)
 
 ## v1.12.1 (2019-04-29)
 * (AlCalzone) Show the debug output during integration tests (#135)

@@ -14,6 +14,21 @@
 
 Describe your project here
 
+## Developer manual
+
+### Scripts in `package.json`
+Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
+| Script name | Description                                              |
+|-------------|----------------------------------------------------------|
+| `build`    | Re-compile the TypeScript sources.                       |
+| `watch`     | Re-compile the TypeScript sources and watch for changes. |
+| `test:ts`   | Executes the tests you defined in `*.test.ts` files.     |
+| `test:package`    | Ensures your `package.json` and `io-package.json` are valid. |
+| `test:unit`       | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
+| `test:integration`| Tests the adapter startup with an actual instance of ioBroker. |
+| `test` | Performs a minimal test run on package files and your tests. |
+| `coverage` | Generates code coverage using your test files. |
+
 ## Changelog
 
 ### 0.0.1
