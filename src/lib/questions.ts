@@ -569,7 +569,7 @@ export interface Answers {
 	adapterName: string;
 	description?: string;
 	keywords?: string[];
-	expert: "yes" | "no";
+	expert?: "yes" | "no";
 	authorName: string;
 	authorEmail: string;
 	authorGithub: string;

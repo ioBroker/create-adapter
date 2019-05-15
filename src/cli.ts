@@ -37,7 +37,7 @@ async function ask(): Promise<Answers> {
 			while (true) {
 				let answer: Record<string, any>;
 				if (
-					answers.expert === "yes" &&
+					answers.expert !== "yes" &&
 					q.expert &&
 					q.initial !== undefined
 				) {
