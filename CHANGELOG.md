@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Allow choosing the git remote protocol (HTTPS or SSH) (fixes #180)
+* (AlCalzone) Add expert mode. In non-expert mode, some questions are not asked (fixes #183)
 
 ## v1.14.0 (2019-05-09)
 * (AlCalzone) Add the option to use Prettier as a formatter in TypeScript (#164)  
