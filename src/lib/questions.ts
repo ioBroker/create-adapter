@@ -463,6 +463,21 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				action: checkEmail,
 			},
 			{
+				type: "select",
+				name: "gitRemoteProtocol",
+				message: "Which protocol should be used for the repo URL?",
+				initial: "HTTPS",
+				choices: [
+					{
+						message: "HTTPS",
+					},
+					{
+						message: "SSH",
+						hint: "(requires you to setup SSH keys)",
+					},
+				],
+			},
+			{
 				condition: { name: "cli", value: true },
 				type: "select",
 				name: "gitCommit",
@@ -543,6 +558,7 @@ export interface Answers {
 	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
 	es6class?: "yes" | "no";
+	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	connectionIndicator?: "yes" | "no";
