@@ -146,18 +146,19 @@ async function setupProject_CLI(
 	if (gitCommit) {
 		logProgress("Initializing git repo");
 		// As described here: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
+		const gitUrl =
+			answers.gitRemoteProtocol === "HTTPS"
+				? `https://github.com/${answers.authorGithub}/ioBroker.${
+						answers.adapterName
+				  }`
+				: `git@github.com:${answers.authorGithub}/ioBroker.${
+						answers.adapterName
+				  }.git`;
 		const gitCommandArgs = [
 			["init"],
 			["add", "."],
 			["commit", "-m", "Initial commit"],
-			[
-				"remote",
-				"add",
-				"origin",
-				`https://github.com/${answers.authorGithub}/ioBroker.${
-					answers.adapterName
-				}`,
-			],
+			["remote", "add", "origin", gitUrl],
 		];
 		for (const args of gitCommandArgs) {
 			await executeCommand("git", args, {

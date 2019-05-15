@@ -71,6 +71,10 @@ const templateFunction: TemplateFunction = async answers => {
 		;
 	const devDependencies = await promiseSequence<string>(devDependencyPromises);
 
+	const gitUrl = answers.gitRemoteProtocol === "HTTPS"
+		? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
+		: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
+
 	const template = `
 {
 	"name": "iobroker.${answers.adapterName.toLowerCase()}",
@@ -85,7 +89,7 @@ const templateFunction: TemplateFunction = async answers => {
 	"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
+		"url": "${gitUrl}",
 	},
 	"dependencies": {${dependencies.join(",")}},
 	"devDependencies": {${devDependencies.join(",")}},

@@ -65,6 +65,7 @@ const baseAnswers: Answers = {
 	authorName: "Al Calzone",
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
+	gitRemoteProtocol: "HTTPS",
 	license: "MIT License" as any,
 };
 
@@ -213,6 +214,7 @@ describe("adapter creation =>", () => {
 					authorName: "Al Calzone",
 					authorGithub: "AlCalzone",
 					authorEmail: "al@calzo.ne",
+					gitRemoteProtocol: "HTTPS",
 					license: "MIT License" as any,
 				};
 				await expectSuccess("vis_Widget", answers);
@@ -388,6 +390,18 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess("keywords", answers, file =>
 					file.name.endsWith("package.json"),
+				);
+			});
+
+			it(`SSH protocol for git`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					gitRemoteProtocol: "SSH",
+				};
+				await expectSuccess(
+					"git_SSH",
+					answers,
+					file => file.name === "package.json",
 				);
 			});
 		});

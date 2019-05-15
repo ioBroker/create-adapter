@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Allow choosing the git remote protocol (HTTPS or SSH) (fixes #180)
+
 ## v1.14.0 (2019-05-09)
 * (AlCalzone) Add the option to use Prettier as a formatter in TypeScript (#164)  
 **Note:** This option also enables different auto-formatting settings in VSCode

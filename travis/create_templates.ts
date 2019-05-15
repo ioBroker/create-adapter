@@ -26,6 +26,7 @@ const baseAnswers = {
 	authorName: "Author",
 	authorGithub: "Author",
 	authorEmail: "author@mail.com",
+	gitRemoteProtocol: "HTTPS",
 	license: "MIT License" as any,
 } as Answers;
 
