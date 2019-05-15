@@ -34,6 +34,7 @@ export type Condition = { name: string } & (
 	| { [__misused]: undefined });
 
 interface QuestionMeta {
+	/** One or more conditions that need(s) to be fulfilled for this question to be asked */
 	condition?: Condition | Condition[];
 	resultTransform?: (
 		val: AnswerValue | AnswerValue[],
@@ -43,7 +44,13 @@ interface QuestionMeta {
 		| undefined
 		| Promise<AnswerValue | AnswerValue[] | undefined>;
 	action?: QuestionAction<undefined | AnswerValue | AnswerValue[]>;
+	/** Whether an answer for this question is optional */
 	optional?: boolean;
+	/**
+	 * Whether this question should only be asked in expert mode.
+	 * In non-expert mode, the initial answer will be used.
+	 */
+	expert?: true;
 }
 export type Question = PromptOptions & QuestionMeta;
 export interface QuestionGroup {
@@ -131,6 +138,19 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 	{
 		headline: "Nice! Let's get technical...",
 		questions: [
+			{
+				type: "select",
+				name: "expert",
+				message: "How detailed do you want to configure your project?",
+				choices: [
+					{
+						message: "Just ask me the most important stuff!",
+						value: "no",
+					},
+					{ message: "I want to specify everything!", value: "yes" },
+				],
+				optional: true,
+			},
 			styledMultiselect({
 				name: "features",
 				message: "Which features should your project contain?",
@@ -144,6 +164,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 			styledMultiselect({
 				condition: { name: "features", contains: "adapter" },
 				name: "adminFeatures",
+				expert: true,
 				message:
 					"Which additional features should be available in the admin?",
 				hint: "(optional)",
@@ -288,6 +309,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "startMode",
+				expert: true,
 				message: "When should the adapter be started?",
 				initial: "daemon",
 				choices: [
@@ -312,6 +334,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "connectionIndicator",
+				expert: true,
 				message: `Do you want to indicate the connection state?`,
 				hint: "(To some device or some service)",
 				initial: "no",
@@ -423,6 +446,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "es6class",
+				expert: true,
 				message: "How should the main adapter file be structured?",
 				initial: "yes",
 				choices: [
@@ -466,6 +490,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				type: "select",
 				name: "gitRemoteProtocol",
 				message: "Which protocol should be used for the repo URL?",
+				expert: true,
 				initial: "HTTPS",
 				choices: [
 					{
@@ -481,6 +506,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				condition: { name: "cli", value: true },
 				type: "select",
 				name: "gitCommit",
+				expert: true,
 				message: "Initialize the GitHub repo automatically?",
 				initial: "no",
 				choices: ["yes", "no"],
@@ -543,6 +569,7 @@ export interface Answers {
 	adapterName: string;
 	description?: string;
 	keywords?: string[];
+	expert: "yes" | "no";
 	authorName: string;
 	authorEmail: string;
 	authorGithub: string;

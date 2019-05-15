@@ -35,16 +35,25 @@ async function ask(): Promise<Answers> {
 				q.initial = q.initial(answers);
 			}
 			while (true) {
-				// Ask the user for an answer
 				let answer: Record<string, any>;
-				try {
-					answer = await prompt(q);
-					// Cancel the process if necessary
-					if (answer[q.name as string] == undefined)
-						throw new Error();
-				} catch (e) {
-					error(e.message || "Adapter creation canceled!");
-					return process.exit(1);
+				if (
+					answers.expert === "yes" &&
+					q.expert &&
+					q.initial !== undefined
+				) {
+					// In expert mode, prefill the default answer for expert questions
+					answer = { [q.name as string]: q.initial };
+				} else {
+					// Ask the user for an answer
+					try {
+						answer = await prompt(q);
+						// Cancel the process if necessary
+						if (answer[q.name as string] == undefined)
+							throw new Error();
+					} catch (e) {
+						error(e.message || "Adapter creation canceled!");
+						return process.exit(1);
+					}
 				}
 				// Apply an optional transformation
 				if (typeof q.resultTransform === "function") {
