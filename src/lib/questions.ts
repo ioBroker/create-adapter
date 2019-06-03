@@ -144,10 +144,10 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "How detailed do you want to configure your project?",
 				choices: [
 					{
-						message: "Just ask me the most important stuff!",
+						name: "Just ask me the most important stuff!",
 						value: "no",
 					},
-					{ message: "I want to specify everything!", value: "yes" },
+					{ name: "I want to specify everything!", value: "yes" },
 				],
 				optional: true,
 			},
@@ -156,8 +156,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which features should your project contain?",
 				initial: [0],
 				choices: [
-					{ message: "Adapter", value: "adapter" },
-					{ message: "Visualization", value: "vis" },
+					{ name: "Adapter", value: "adapter" },
+					{ name: "Visualization", value: "vis" },
 				],
 				action: checkMinSelections.bind(undefined, "feature", 1),
 			}),
@@ -170,8 +170,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				hint: "(optional)",
 				initial: [],
 				choices: [
-					{ message: "An extra tab", value: "tab" },
-					{ message: "Custom options for states", value: "custom" },
+					{ name: "An extra tab", value: "tab" },
+					{ name: "Custom options for states", value: "custom" },
 				],
 			}),
 			{
@@ -181,115 +181,114 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which category does your adapter fall into?",
 				choices: [
 					{
-						message:
-							"Alarm / security         (Home, car, boat, ...)",
+						name: "Alarm / security         (Home, car, boat, ...)",
 						value: "alarm",
 					},
 					{
-						message:
+						name:
 							"Calendars                (also schedules, etc. ...)",
 						value: "date-and-time",
 					},
 					{
-						message:
+						name:
 							"Climate control          (A/C, Heaters, air filters, ...)",
 						value: "climate-control",
 					},
 					{
-						message: "Communication protocols  (MQTT, ...)",
+						name: "Communication protocols  (MQTT, ...)",
 						value: "protocols",
 					},
 					{
-						message:
+						name:
 							"Data storage             (SQL/NoSQL, file storage, logging, ...)",
 						value: "storage",
 					},
 					{
-						message:
+						name:
 							"Data transmission        (for other services via REST api, websockets, ...)",
 						value: "communication",
 					},
 					{
-						message:
+						name:
 							"Garden                   (Mowers, watering, ...)",
 						value: "garden",
 					},
 					{
-						message:
+						name:
 							"General purpose          (like admin, web, discovery, ...)",
 						value: "general",
 					},
 					{
-						message:
+						name:
 							"Geo positioning          (transmission and receipt of position data)",
 						value: "geoposition",
 					},
 					{
-						message:
+						name:
 							"Hardware                 (low-level, multi-purpose)",
 						value: "hardware",
 					},
 					{
-						message:
+						name:
 							"Household devices        (Vacuums, kitchen, ...)",
 						value: "household",
 					},
-					{ message: "Lighting control", value: "lighting" },
+					{ name: "Lighting control", value: "lighting" },
 					{
-						message:
+						name:
 							"Logic                    (Scripts, rules, parsers, scenes, ...)",
 						value: "logic",
 					},
 					{
-						message:
+						name:
 							"Messaging                (E-Mail, Telegram, WhatsApp, ...)",
 						value: "messaging",
 					},
 					{
-						message: "Meters for energy, electricity, ...",
+						name: "Meters for energy, electricity, ...",
 						value: "energy",
 					},
 					{
-						message: "Meters for water, gas, oil, ...",
+						name: "Meters for water, gas, oil, ...",
 						value: "metering",
 					},
 					{
-						message:
+						name:
 							"Miscellaneous data       (Import/export of contacts, gasoline prices, ...)",
 						value: "misc-data",
 					},
 					{
-						message:
+						name:
 							"Miscellaneous utilities  (Data import/emport, backup, ...)",
 						value: "utility",
 					},
 					{
-						message:
+						name:
 							"Multimedia               (TV, audio, remote controls, ...)",
 						value: "multimedia",
 					},
 					{
-						message:
+						name:
 							"Network infrastructure   (Hardware, printers, phones, ...)",
 						value: "infrastructure",
 					},
 					{
-						message:
+						name:
 							"Network utilities        (Ping, UPnP, network discovery, ...)",
 						value: "network",
 					},
 					{
-						message:
+						name:
 							"Smart home systems       (3rd party, hardware and software)",
 						value: "iot-systems",
 					},
 					{
-						message:
+						name:
 							"Visualizations           (VIS, MaterialUI, mobile views, ...)",
 						value: "visualization",
 					},
 					{
-						message:
+						name:
 							"Weather                  (Forecast, air quality, statistics, ...)",
 						value: "weather",
 					},
@@ -301,8 +300,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				name: "type",
 				message: "Which kind of visualization is this?",
 				choices: [
-					{ message: "Icons for VIS", value: "visualization-icons" },
-					{ message: "VIS widgets", value: "visualization-widgets" },
+					{ name: "Icons for VIS", value: "visualization-icons" },
+					{ name: "VIS widgets", value: "visualization-widgets" },
 				],
 			},
 			{
@@ -314,20 +313,20 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				initial: "daemon",
 				choices: [
 					{
-						message: "always",
+						name: "always",
 						hint: dim.gray("(recommended for most adapters)"),
 						value: "daemon",
 					},
 					{
-						message: `when the ".alive" state is true`,
+						name: `when the ".alive" state is true`,
 						value: "subscribe",
 					},
-					{ message: "depending on a schedule", value: "schedule" },
+					{ name: "depending on a schedule", value: "schedule" },
 					{
-						message: "when the instance object changes",
+						name: "when the instance object changes",
 						value: "once",
 					},
-					{ message: "never", value: "none" },
+					{ name: "never", value: "none" },
 				],
 			},
 			{
@@ -365,8 +364,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 			// 	name: "ecmaVersion",
 			// 	message: `Do you need async functions or String.pad{Start,End}`,
 			// 	choices: [
-			// 		{ message: "yes", value: 8 },
-			// 		{ message: "no", value: 6 },
+			// 		{ name: "yes", value: 8 },
+			// 		{ name: "no", value: 6 },
 			// 	],
 			// },
 			styledMultiselect({
@@ -375,8 +374,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which of the following tools do you want to use?",
 				initial: [0, 1],
 				choices: [
-					{ message: "ESLint", hint: "(recommended)" },
-					{ message: "type checking", hint: "(recommended)" },
+					{ name: "ESLint", hint: "(recommended)" },
+					{ name: "type checking", hint: "(recommended)" },
 				],
 			}),
 			styledMultiselect({
@@ -385,13 +384,13 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which of the following tools do you want to use?",
 				initial: [0],
 				choices: [
-					{ message: "ESLint", hint: "(recommended)" },
+					{ name: "ESLint", hint: "(recommended)" },
 					{
-						message: "Prettier",
+						name: "Prettier",
 						hint:
 							"(requires ESLint, enables automatic code formatting in VSCode)",
 					},
-					{ message: "code coverage" },
+					{ name: "code coverage" },
 				],
 				action: checkTypeScriptTools,
 			}),
@@ -451,12 +450,12 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				initial: "yes",
 				choices: [
 					{
-						message: "As an ES6 class",
+						name: "As an ES6 class",
 						hint: "(recommended)",
 						value: "yes",
 					},
 					{
-						message: "With some methods",
+						name: "With some methods",
 						hint: "(like legacy code)",
 						value: "no",
 					},
@@ -494,10 +493,10 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				initial: "HTTPS",
 				choices: [
 					{
-						message: "HTTPS",
+						name: "HTTPS",
 					},
 					{
-						message: "SSH",
+						name: "SSH",
 						hint: "(requires you to setup SSH keys)",
 					},
 				],
@@ -661,6 +660,9 @@ export async function validateAnswers(
 export function getDefaultAnswer<T extends keyof Answers>(
 	key: T,
 ): Answers[T] | undefined {
+	// Apparently, it is not possible to make the return type depend on the
+	// given object key: https://github.com/microsoft/TypeScript/issues/31672
+	// So we cast to `any` until a solution emerges
 	if (key === "adapterSettings") {
 		return [
 			{
@@ -673,8 +675,8 @@ export function getDefaultAnswer<T extends keyof Answers>(
 				defaultValue: "42",
 				inputType: "text",
 			},
-		];
+		] as any;
 	} else if (key === "keywords") {
-		return ["ioBroker", "template", "Smart Home", "home automation"];
+		return ["ioBroker", "template", "Smart Home", "home automation"] as any;
 	}
 }
