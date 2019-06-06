@@ -95,7 +95,6 @@ export = (async answers => {
 		`) : ""}
 		${supportCustom ? `"supportCustoms": true,` : ""}
 		"dependencies": [
-			${isAdapter ? `{ "admin": ">=3.0.0" },` : ""}
 			${isAdapter ? `{ "js-controller": ">=1.4.2" },` : ""}
 			${isWidget ? `"vis",` : ""}
 		],
