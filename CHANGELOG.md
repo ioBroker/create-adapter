@@ -6,6 +6,10 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Properly fix build breaks from #193.  
+The original "fix" broke the creator instead
+
 ## v1.15.0 (2019-06-07)
 * (AlCalzone) Allow choosing the git remote protocol (HTTPS or SSH) (fixes #180)
 * (AlCalzone) Add expert mode. In non-expert mode, some questions are not asked (fixes #183)
