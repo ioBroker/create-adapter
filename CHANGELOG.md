@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## v1.15.0 (2019-06-07)
 * (AlCalzone) Allow choosing the git remote protocol (HTTPS or SSH) (fixes #180)
 * (AlCalzone) Add expert mode. In non-expert mode, some questions are not asked (fixes #183)
 * (AlCalzone) Remove admin dependency, which prevents installation on a slave host (#199)
