@@ -8,13 +8,11 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Programm starten",
-			"program": "${workspaceFolder}/src/index.ts",
+			"program": "${workspaceFolder}/src/cli.ts",
 			"console": "integratedTerminal",
 			"sourceMaps": true,
 			"stopOnEntry": true,
-			"outFiles": [
-				"${workspaceFolder}/build/**/*.js"
-			]
+			"outFiles": ["${workspaceFolder}/build/**/*.js"]
 		}
 	]
 }

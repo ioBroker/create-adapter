@@ -52,6 +52,7 @@ interface QuestionMeta {
 	 */
 	expert?: true;
 }
+
 export type Question = PromptOptions & QuestionMeta;
 export interface QuestionGroup {
 	headline: string;
@@ -144,10 +145,10 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "How detailed do you want to configure your project?",
 				choices: [
 					{
-						name: "Just ask me the most important stuff!",
+						message: "Just ask me the most important stuff!",
 						value: "no",
 					},
-					{ name: "I want to specify everything!", value: "yes" },
+					{ message: "I want to specify everything!", value: "yes" },
 				],
 				optional: true,
 			},
@@ -156,8 +157,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which features should your project contain?",
 				initial: [0],
 				choices: [
-					{ name: "Adapter", value: "adapter" },
-					{ name: "Visualization", value: "vis" },
+					{ message: "Adapter", value: "adapter" },
+					{ message: "Visualization", value: "vis" },
 				],
 				action: checkMinSelections.bind(undefined, "feature", 1),
 			}),
@@ -170,8 +171,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				hint: "(optional)",
 				initial: [],
 				choices: [
-					{ name: "An extra tab", value: "tab" },
-					{ name: "Custom options for states", value: "custom" },
+					{ message: "An extra tab", value: "tab" },
+					{ message: "Custom options for states", value: "custom" },
 				],
 			}),
 			{
@@ -181,114 +182,115 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which category does your adapter fall into?",
 				choices: [
 					{
-						name: "Alarm / security         (Home, car, boat, ...)",
+						message:
+							"Alarm / security         (Home, car, boat, ...)",
 						value: "alarm",
 					},
 					{
-						name:
+						message:
 							"Calendars                (also schedules, etc. ...)",
 						value: "date-and-time",
 					},
 					{
-						name:
+						message:
 							"Climate control          (A/C, Heaters, air filters, ...)",
 						value: "climate-control",
 					},
 					{
-						name: "Communication protocols  (MQTT, ...)",
+						message: "Communication protocols  (MQTT, ...)",
 						value: "protocols",
 					},
 					{
-						name:
+						message:
 							"Data storage             (SQL/NoSQL, file storage, logging, ...)",
 						value: "storage",
 					},
 					{
-						name:
+						message:
 							"Data transmission        (for other services via REST api, websockets, ...)",
 						value: "communication",
 					},
 					{
-						name:
+						message:
 							"Garden                   (Mowers, watering, ...)",
 						value: "garden",
 					},
 					{
-						name:
+						message:
 							"General purpose          (like admin, web, discovery, ...)",
 						value: "general",
 					},
 					{
-						name:
+						message:
 							"Geo positioning          (transmission and receipt of position data)",
 						value: "geoposition",
 					},
 					{
-						name:
+						message:
 							"Hardware                 (low-level, multi-purpose)",
 						value: "hardware",
 					},
 					{
-						name:
+						message:
 							"Household devices        (Vacuums, kitchen, ...)",
 						value: "household",
 					},
-					{ name: "Lighting control", value: "lighting" },
+					{ message: "Lighting control", value: "lighting" },
 					{
-						name:
+						message:
 							"Logic                    (Scripts, rules, parsers, scenes, ...)",
 						value: "logic",
 					},
 					{
-						name:
+						message:
 							"Messaging                (E-Mail, Telegram, WhatsApp, ...)",
 						value: "messaging",
 					},
 					{
-						name: "Meters for energy, electricity, ...",
+						message: "Meters for energy, electricity, ...",
 						value: "energy",
 					},
 					{
-						name: "Meters for water, gas, oil, ...",
+						message: "Meters for water, gas, oil, ...",
 						value: "metering",
 					},
 					{
-						name:
+						message:
 							"Miscellaneous data       (Import/export of contacts, gasoline prices, ...)",
 						value: "misc-data",
 					},
 					{
-						name:
+						message:
 							"Miscellaneous utilities  (Data import/emport, backup, ...)",
 						value: "utility",
 					},
 					{
-						name:
+						message:
 							"Multimedia               (TV, audio, remote controls, ...)",
 						value: "multimedia",
 					},
 					{
-						name:
+						message:
 							"Network infrastructure   (Hardware, printers, phones, ...)",
 						value: "infrastructure",
 					},
 					{
-						name:
+						message:
 							"Network utilities        (Ping, UPnP, network discovery, ...)",
 						value: "network",
 					},
 					{
-						name:
+						message:
 							"Smart home systems       (3rd party, hardware and software)",
 						value: "iot-systems",
 					},
 					{
-						name:
+						message:
 							"Visualizations           (VIS, MaterialUI, mobile views, ...)",
 						value: "visualization",
 					},
 					{
-						name:
+						message:
 							"Weather                  (Forecast, air quality, statistics, ...)",
 						value: "weather",
 					},
@@ -300,8 +302,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				name: "type",
 				message: "Which kind of visualization is this?",
 				choices: [
-					{ name: "Icons for VIS", value: "visualization-icons" },
-					{ name: "VIS widgets", value: "visualization-widgets" },
+					{ message: "Icons for VIS", value: "visualization-icons" },
+					{ message: "VIS widgets", value: "visualization-widgets" },
 				],
 			},
 			{
@@ -313,20 +315,20 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				initial: "daemon",
 				choices: [
 					{
-						name: "always",
+						message: "always",
 						hint: dim.gray("(recommended for most adapters)"),
 						value: "daemon",
 					},
 					{
-						name: `when the ".alive" state is true`,
+						message: `when the ".alive" state is true`,
 						value: "subscribe",
 					},
-					{ name: "depending on a schedule", value: "schedule" },
+					{ message: "depending on a schedule", value: "schedule" },
 					{
-						name: "when the instance object changes",
+						message: "when the instance object changes",
 						value: "once",
 					},
-					{ name: "never", value: "none" },
+					{ message: "never", value: "none" },
 				],
 			},
 			{
@@ -364,8 +366,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 			// 	name: "ecmaVersion",
 			// 	message: `Do you need async functions or String.pad{Start,End}`,
 			// 	choices: [
-			// 		{ name: "yes", value: 8 },
-			// 		{ name: "no", value: 6 },
+			// 		{ message: "yes", value: 8 },
+			// 		{ message: "no", value: 6 },
 			// 	],
 			// },
 			styledMultiselect({
@@ -374,8 +376,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which of the following tools do you want to use?",
 				initial: [0, 1],
 				choices: [
-					{ name: "ESLint", hint: "(recommended)" },
-					{ name: "type checking", hint: "(recommended)" },
+					{ message: "ESLint", hint: "(recommended)" },
+					{ message: "type checking", hint: "(recommended)" },
 				],
 			}),
 			styledMultiselect({
@@ -384,13 +386,13 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				message: "Which of the following tools do you want to use?",
 				initial: [0],
 				choices: [
-					{ name: "ESLint", hint: "(recommended)" },
+					{ message: "ESLint", hint: "(recommended)" },
 					{
-						name: "Prettier",
+						message: "Prettier",
 						hint:
 							"(requires ESLint, enables automatic code formatting in VSCode)",
 					},
-					{ name: "code coverage" },
+					{ message: "code coverage" },
 				],
 				action: checkTypeScriptTools,
 			}),
@@ -450,12 +452,12 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				initial: "yes",
 				choices: [
 					{
-						name: "As an ES6 class",
+						message: "As an ES6 class",
 						hint: "(recommended)",
 						value: "yes",
 					},
 					{
-						name: "With some methods",
+						message: "With some methods",
 						hint: "(like legacy code)",
 						value: "no",
 					},
@@ -493,10 +495,10 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				initial: "HTTPS",
 				choices: [
 					{
-						name: "HTTPS",
+						message: "HTTPS",
 					},
 					{
-						name: "SSH",
+						message: "SSH",
 						hint: "(requires you to setup SSH keys)",
 					},
 				],
