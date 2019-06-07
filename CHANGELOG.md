@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## v1.15.1 (2019-06-07)
 * (AlCalzone) Properly fix build breaks from #193.  
 The original "fix" broke the creator instead
 
