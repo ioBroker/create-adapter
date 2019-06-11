@@ -19,9 +19,7 @@ const options: AxiosRequestConfig = {
 			...options,
 			url: `https://api.github.com/repos/ioBroker/ioBroker.template/pulls`,
 			data: {
-				title: `Update templates to creator version v${
-					process.env.OWN_VERSION
-				}`,
+				title: `Update templates to creator version v${process.env.OWN_VERSION}`,
 				body: `This PR updates the templates to the latest version of @ioBroker/create-adapter.`,
 				head: `AlCalzone:${process.env.BRANCH_NAME}`,
 				base: "master",
