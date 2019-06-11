@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@fimbul/mithotyn": "^0.21.0",
-    "@fimbul/wotan": "^0.20.0",
+    "@fimbul/wotan": "^0.21.0",
     "@types/ansi-colors": "^3.2.0",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
