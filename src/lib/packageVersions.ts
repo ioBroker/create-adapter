@@ -45,9 +45,7 @@ async function fetchAllPackageVersions(packageName: string): Promise<string[]> {
 	const response = await axios(options);
 	if (response.status !== 200) {
 		throw new Error(
-			`Failed to fetch the versions for ${packageName} (${
-				response.status
-			})`,
+			`Failed to fetch the versions for ${packageName} (${response.status})`,
 		);
 	}
 	const allVersions = Object.keys(response.data.versions);
@@ -94,9 +92,7 @@ async function fetchLatestPackageVersion(
 	if (response.status !== 200) {
 		if (fallbackVersion) return fallbackVersion;
 		throw new Error(
-			`Failed to fetch the version for ${packageName} (${
-				response.status
-			})`,
+			`Failed to fetch the version for ${packageName} (${response.status})`,
 		);
 	}
 	const version = response.data.latest as string;

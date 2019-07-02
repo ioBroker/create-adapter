@@ -157,12 +157,8 @@ async function setupProject_CLI(
 		// As described here: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
 		const gitUrl =
 			answers.gitRemoteProtocol === "HTTPS"
-				? `https://github.com/${answers.authorGithub}/ioBroker.${
-						answers.adapterName
-				  }`
-				: `git@github.com:${answers.authorGithub}/ioBroker.${
-						answers.adapterName
-				  }.git`;
+				? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
+				: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
 		const gitCommandArgs = [
 			["init"],
 			["add", "."],

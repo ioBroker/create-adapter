@@ -145,9 +145,7 @@ if (releaseTypes.indexOf(releaseType) > -1) {
 		// valid version string => check if its actually newer
 		if (!semver.gt(newVersion, pack.version)) {
 			fail(
-				`new version ${newVersion} is NOT > than package.json version ${
-					pack.version
-				}`,
+				`new version ${newVersion} is NOT > than package.json version ${pack.version}`,
 			);
 		}
 		// if (!semver.gt(newVersion, ioPack.common.version)) {

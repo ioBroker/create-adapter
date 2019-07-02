@@ -191,9 +191,7 @@ describe("tools/formatLicense()", () => {
 			{ original: "[fullname]", expected: answers.authorName },
 			{
 				original: "[fullname] [fullname] [fullname]",
-				expected: `${answers.authorName} ${answers.authorName} ${
-					answers.authorName
-				}`,
+				expected: `${answers.authorName} ${answers.authorName} ${answers.authorName}`,
 			},
 		];
 
