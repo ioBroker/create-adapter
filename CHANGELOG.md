@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## v1.16.0 (2019-07-12)
 * (bluefox & AlCalzone) Add email address to MIT license (#232)
 
 ## v1.15.1 (2019-06-07)
