@@ -12,3 +12,4 @@ node_modules/
 
 # npm packet files
 iobroker-create-adapter-*.tgz
+/.idea

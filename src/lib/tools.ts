@@ -254,7 +254,8 @@ export async function translateText(
 export function formatLicense(licenseText: string, answers: Answers): string {
 	return licenseText
 		.replace(/\[year\]/g, new Date().getFullYear().toString())
-		.replace(/\[fullname\]/g, answers.authorName);
+		.replace(/\[fullname\]/g, answers.authorName)
+		.replace(/\[email\]/g, answers.authorEmail);
 }
 
 /** Replaces 4-space indentation with tabs */
