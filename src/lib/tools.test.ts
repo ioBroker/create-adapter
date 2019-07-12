@@ -165,7 +165,7 @@ describe("tools/getOwnVersion()", () => {
 });
 
 describe("tools/formatLicense()", () => {
-	const answers = { authorName: "John Doe" };
+	const answers = { authorName: "John Doe", authorEmail: "foo@bar.com" };
 
 	it("should replace [year] with the current year", () => {
 		const curYear = new Date().getFullYear().toString();
@@ -192,6 +192,20 @@ describe("tools/formatLicense()", () => {
 			{
 				original: "[fullname] [fullname] [fullname]",
 				expected: `${answers.authorName} ${answers.authorName} ${answers.authorName}`,
+			},
+		];
+
+		for (const { original, expected } of tests) {
+			expect(formatLicense(original, answers as any)).to.equal(expected);
+		}
+	});
+
+	it("should replace [email] with the author's email address", () => {
+		const tests = [
+			{ original: "[email]", expected: answers.authorEmail },
+			{
+				original: "[email] [email] [email]",
+				expected: `${answers.authorEmail} ${answers.authorEmail} ${answers.authorEmail}`,
 			},
 		];
 
