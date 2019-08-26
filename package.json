@@ -77,7 +77,7 @@
     "prettier": "^1.17.0",
     "semver": "^6.0.0",
     "typescript": "^3.3.3",
-    "yargs": "^13.2.2"
+    "yargs": "^14.0.0"
   },
   "scripts": {
     "linkTemplates": "node --require ts-node/register maintenance/generateTemplateIndex.ts",
