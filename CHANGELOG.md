@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) The package files are now CI tested for VIS projects (fixes #302)
+
 ## v1.16.0 (2019-07-12)
 * (bluefox & AlCalzone) Add email address to MIT license (#232)
 
