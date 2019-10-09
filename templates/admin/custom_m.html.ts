@@ -32,7 +32,7 @@ export = (answers => {
 	$.get("adapter/${answers.adapterName}/words.js", function(script) {
 		let translation = script.substring(script.indexOf('{'), script.length);
 		translation = translation.substring(0, translation.lastIndexOf(';'));
-		$.extend(systemDictionary, JSON.parse(translation));
+		$.extend(true, systemDictionary, JSON.parse(translation));
 	});
 
 	// There are two ways how to predefine default settings:
