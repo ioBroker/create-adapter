@@ -1,9 +1,8 @@
-import { readFile, TemplateFunction } from "../src/lib/createAdapter";
+import { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
-	if (!isAdapter) return;
 	// We drop Node 6 from the test matrix if we are using object spreads
 	const isJSWithES6Class = answers.language === "JavaScript" && answers.es6class === "yes";
 
@@ -37,10 +36,10 @@ before_script:
   - npm -v
 script:
   - npm run test:package
-  - npm run test:unit
+${isAdapter ? `  - npm run test:unit
   - export DEBUG=testing:*
   - npm run test:integration
-`;
+` : ""}`;
 	return template.trimLeft();
 };
 
