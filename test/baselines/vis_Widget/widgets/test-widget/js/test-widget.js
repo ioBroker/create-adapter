@@ -8,10 +8,10 @@
 "use strict";
 
 // add translations for edit mode
-$.get( "adapter/test-widget/words.js", function(script) {
+$.get("adapter/test-widget/words.js", function(script) {
 	let translation = script.substring(script.indexOf("{"), script.length);
 	translation = translation.substring(0, translation.lastIndexOf(";"));
-	$.extend(systemDictionary, JSON.parse(translation));
+	$.extend(true, systemDictionary, JSON.parse(translation));
 });
 
 // this code can be placed directly in test-widget.html
