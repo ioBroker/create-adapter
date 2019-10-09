@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Fix translation in VIS template (fixes #303)
+
 ## v1.16.0 (2019-07-12)
 * (bluefox & AlCalzone) Add email address to MIT license (#232)
 
