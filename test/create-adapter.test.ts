@@ -393,6 +393,18 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it(`Contributors`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					contributors: `Bill Gates, "Malformed JSON, ,,` as any,
+				};
+				await expectSuccess(
+					"contributors",
+					answers,
+					file => file.name === "package.json",
+				);
+			});
+
 			it(`SSH protocol for git`, async () => {
 				const answers: Answers = {
 					...baseAnswers,

@@ -10,6 +10,7 @@ import {
 	checkTitle,
 	checkTypeScriptTools,
 	transformAdapterName,
+	transformContributors,
 	transformDescription,
 	transformKeywords,
 } from "./actionsAndTransformers";
@@ -125,6 +126,15 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformKeywords,
+			},
+			{
+				type: "input",
+				name: "contributors",
+				message:
+					"If you have any contributors, please enter their names (seperated by commas):",
+				hint: "(optional)",
+				optional: true,
+				resultTransform: transformContributors,
 			},
 			{
 				condition: { name: "cli", value: false },
@@ -574,6 +584,7 @@ export interface Answers {
 	authorName: string;
 	authorEmail: string;
 	authorGithub: string;
+	contributors?: string[];
 	language?: "JavaScript" | "TypeScript";
 	features: ("adapter" | "vis")[];
 	adminFeatures?: ("tab" | "custom")[];
