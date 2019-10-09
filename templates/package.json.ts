@@ -84,6 +84,11 @@ const templateFunction: TemplateFunction = async answers => {
 		"name": "${answers.authorName}",
 		"email": "${answers.authorEmail}",
 	},
+	${answers.contributors && answers.contributors.length ? (`
+		"contributors": ${JSON.stringify(
+			answers.contributors.map(name => ({ name }))
+		)},
+	`) : ""}
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
 	"license": "${answers.license!.id}",
 	"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},

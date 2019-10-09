@@ -117,3 +117,15 @@ export function transformKeywords(keywords: string): string[] | undefined {
 	if (keywordsArray.length === 0) return undefined;
 	return keywordsArray;
 }
+
+export function transformContributors(
+	contributors: string,
+): string[] | undefined {
+	const contributorsArray = contributors
+		.trim()
+		.split(",")
+		.map(c => c.trim())
+		.filter(c => !!c);
+	if (contributorsArray.length === 0) return undefined;
+	return contributorsArray;
+}
