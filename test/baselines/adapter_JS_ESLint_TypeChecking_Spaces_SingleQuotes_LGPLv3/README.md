@@ -3,6 +3,8 @@
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.test-adapter.svg)](https://www.npmjs.com/package/iobroker.test-adapter)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.test-adapter.svg)](https://www.npmjs.com/package/iobroker.test-adapter)
+![Number of Installations (latest)](http://iobroker.live/badges/test-adapter-installed.svg)
+![Number of Installations (stable)](http://iobroker.live/badges/test-adapter-stable.svg)
 [![Dependency Status](https://img.shields.io/david/AlCalzone/iobroker.test-adapter.svg)](https://david-dm.org/AlCalzone/iobroker.test-adapter)
 [![Known Vulnerabilities](https://snyk.io/test/github/AlCalzone/ioBroker.test-adapter/badge.svg)](https://snyk.io/test/github/AlCalzone/ioBroker.test-adapter)
 

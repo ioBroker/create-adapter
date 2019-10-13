@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Add badges for number of installations (fixes #311)
+
 ## v1.17.0 (2019-10-13)
 * (AlCalzone) The package files are now CI tested for VIS projects (fixes #302)
 * (AlCalzone) Add the possibility to specify contributors (fixes #304)
