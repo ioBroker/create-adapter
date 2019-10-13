@@ -3,6 +3,7 @@
 node_modules/
 nbproject/
 .vs*/
+*.code-workspace
 Thumbs.db
 
 test/
