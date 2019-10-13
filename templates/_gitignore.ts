@@ -8,6 +8,7 @@ const templateFunction: TemplateFunction = answers => {
 	const template = `
 .git
 .idea
+*.code-workspace
 node_modules
 nbproject
 

@@ -13,6 +13,7 @@ const templateFunction: TemplateFunction = answers => {
 node_modules/
 nbproject/
 .vs*/
+*.code-workspace
 Thumbs.db
 ${isAdapter ? `gulpfile.js` : ""}
 
