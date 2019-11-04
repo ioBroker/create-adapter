@@ -237,6 +237,11 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 					},
 					{
 						message:
+							"Health                   (Fitness sensors, weight, pulse, ...)",
+						value: "health",
+					},
+					{
+						message:
 							"Hardware                 (low-level, multi-purpose)",
 						value: "hardware",
 					},
