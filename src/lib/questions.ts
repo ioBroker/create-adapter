@@ -32,7 +32,8 @@ export type Condition = { name: string } & (
 	| { value: AnswerValue | AnswerValue[] }
 	| { contains: AnswerValue }
 	| { doesNotContain: AnswerValue }
-	| { [__misused]: undefined });
+	| { [__misused]: undefined }
+);
 
 interface QuestionMeta {
 	/** One or more conditions that need(s) to be fulfilled for this question to be asked */
@@ -237,13 +238,13 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 					},
 					{
 						message:
-							"Health                   (Fitness sensors, weight, pulse, ...)",
-						value: "health",
+							"Hardware                 (low-level, multi-purpose)",
+						value: "hardware",
 					},
 					{
 						message:
-							"Hardware                 (low-level, multi-purpose)",
-						value: "hardware",
+							"Health                   (Fitness sensors, weight, pulse, ...)",
+						value: "health",
 					},
 					{
 						message:
@@ -666,9 +667,9 @@ export async function validateAnswers(
 		if (q.action == undefined) continue;
 		if (disableValidation.indexOf(q.name as keyof Answers) > -1) continue;
 
-		const testResult = await q.action(answers[
-			q.name as keyof Answers
-		] as any);
+		const testResult = await q.action(
+			answers[q.name as keyof Answers] as any,
+		);
 		if (typeof testResult === "string") {
 			throw new Error(testResult);
 		}
