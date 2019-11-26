@@ -5,9 +5,9 @@ os:
 
 language: node_js
 node_js:
-  - '6'
   - '8'
   - '10'
+  - '12'
 
 env:
   - CXX=g++-4.8

@@ -1,0 +1,24 @@
+.git
+.idea
+node_modules/
+nbproject/
+.vs*/
+*.code-workspace
+Thumbs.db
+
+test/
+travis/
+.travis.yml
+appveyor.yml
+.travis.yaml
+appveyor.yaml
+
+# npm package files
+iobroker.*.tgz
+package-lock.json
+
+# i18n intermediate files
+admin/i18n
+
+# maintenance scripts
+maintenance/**
