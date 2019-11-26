@@ -48,7 +48,8 @@ Several npm scripts are predefined for your convenience. You can run them using 
 | `test` | Performs a minimal test run on package files. |
 
 ### Publishing the widget
-See the documentation of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
+To get your widget released in ioBroker, please refer to the documentation 
+of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
 
 ### Test the adapter manually on a local ioBroker installation
 In order to install the adapter locally without publishing, the following steps are recommended:
