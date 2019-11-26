@@ -8,6 +8,7 @@ export = (answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage");
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint");
 	const autoInitGit = answers.gitCommit === "yes";
+	const isGithubActions = answers.ci === "gh-actions";
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
@@ -92,7 +93,13 @@ The template provides you with basic tests for the adapter startup and package f
 It is recommended that you add your own tests into the mix.
 
 ` : ""}### Publishing the ${isAdapter ? "adapter" : "widget"}
-See the documentation of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
+${isGithubActions ? `Since you have chosen GitHub Actions as your CI service, you can 
+enable automatic releases on npm whenever you push a new git tag that matches the form 
+\`v<major>.<minor>.<patch>\`. The necessary steps are described in \`.github/workflows/test-and-release.yml\`.
+
+`: ""}To get your ${isAdapter ? "adapter" : "widget"} released in ioBroker, please refer to the documentation 
+of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
+
 
 ### Test the adapter manually on a local ioBroker installation
 In order to install the adapter locally without publishing, the following steps are recommended:
