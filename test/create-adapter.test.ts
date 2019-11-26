@@ -66,6 +66,7 @@ const baseAnswers: Answers = {
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
 	gitRemoteProtocol: "HTTPS",
+	ci: "gh-actions",
 	license: "MIT License" as any,
 };
 
@@ -215,9 +216,28 @@ describe("adapter creation =>", () => {
 					authorGithub: "AlCalzone",
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
+					ci: "gh-actions",
 					license: "MIT License" as any,
 				};
 				await expectSuccess("vis_Widget", answers);
+			});
+
+			it("Widget with Travis", async () => {
+				const answers: Answers = {
+					adapterName: "test-widget",
+					title: "Is used to test the creator",
+					features: ["vis"],
+					type: "visualization-widgets",
+					indentation: "Tab",
+					quotes: "double",
+					authorName: "Al Calzone",
+					authorGithub: "AlCalzone",
+					authorEmail: "al@calzo.ne",
+					gitRemoteProtocol: "HTTPS",
+					ci: "travis",
+					license: "MIT License" as any,
+				};
+				await expectSuccess("vis_Widget_Travis", answers);
 			});
 		});
 
@@ -414,6 +434,18 @@ describe("adapter creation =>", () => {
 					"git_SSH",
 					answers,
 					file => file.name === "package.json",
+				);
+			});
+
+			it(`Travis CI instead of Github Actions`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					ci: "travis",
+				};
+				await expectSuccess(
+					"ci_Travis",
+					answers,
+					file => file.name === ".travis.yml",
 				);
 			});
 		});
