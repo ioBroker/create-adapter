@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## v1.18.0 (2019-11-26)
 * (AlCalzone) Add badges for number of installations (fixes #311)
 * (AlCalzone) Add Github Actions as the default CI choice (#341)
 * (AlCalzone) Mention automatic release process in the template readme (#342)
