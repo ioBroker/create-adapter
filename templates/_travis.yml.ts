@@ -2,9 +2,10 @@ import { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 
+	const useTravis = answers.ci === "travis";
+	if (!useTravis) return;
+
 	const isAdapter = answers.features.indexOf("adapter") > -1;
-	// We drop Node 6 from the test matrix if we are using object spreads
-	const isJSWithES6Class = answers.language === "JavaScript" && answers.es6class === "yes";
 
 	const template = `
 os:
@@ -14,9 +15,9 @@ os:
 
 language: node_js
 node_js:
-${isJSWithES6Class ? "" : `  - '6'
-`}  - '8'
+  - '8'
   - '10'
+  - '12'
 
 env:
   - CXX=g++-4.8
