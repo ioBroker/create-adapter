@@ -9,6 +9,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) Add badges for number of installations (fixes #311)
 * (AlCalzone) Add Github Actions as the default CI choice (#341)
+* (AlCalzone) Mention automatic release process in the template readme (#342)
 
 ## v1.17.0 (2019-10-13)
 * (AlCalzone) The package files are now CI tested for VIS projects (fixes #302)
