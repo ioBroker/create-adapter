@@ -27,7 +27,7 @@ const baseAnswers = {
 	authorGithub: "Author",
 	authorEmail: "author@mail.com",
 	gitRemoteProtocol: "HTTPS",
-	ci: "gh-actions",
+	ci: ["gh-actions"],
 	license: "MIT License" as any,
 } as Answers;
 
