@@ -10,8 +10,6 @@
 
 [![NPM](https://nodei.co/npm/iobroker.test-adapter.png?downloads=true)](https://nodei.co/npm/iobroker.test-adapter/)
 
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/AlCalzone/ioBroker.test-adapter/master.svg)](https://travis-ci.org/AlCalzone/ioBroker.test-adapter)
-
 ## test-adapter adapter for ioBroker
 
 Describe your project here
@@ -51,7 +49,7 @@ Several npm scripts are predefined for your convenience. You can run them using 
 | `test:unit`       | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
 | `test:integration`| Tests the adapter startup with an actual instance of ioBroker. |
 | `test` | Performs a minimal test run on package files and your tests. |
-| `coverage` | Generates code coverage using your test files. |
+| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
 
 ### Writing tests
 When done right, testing code is invaluable, because it gives you the 

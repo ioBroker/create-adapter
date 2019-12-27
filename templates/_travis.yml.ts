@@ -2,7 +2,7 @@ import { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 
-	const useTravis = answers.ci === "travis";
+	const useTravis = answers.ci?.includes("travis");
 	if (!useTravis) return;
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
