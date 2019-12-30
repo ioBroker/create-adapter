@@ -32,7 +32,8 @@ export type Condition = { name: string } & (
 	| { value: AnswerValue | AnswerValue[] }
 	| { contains: AnswerValue }
 	| { doesNotContain: AnswerValue }
-	| { [__misused]: undefined });
+	| { [__misused]: undefined }
+);
 
 interface QuestionMeta {
 	/** One or more conditions that need(s) to be fulfilled for this question to be asked */
@@ -534,12 +535,11 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				],
 				resultTransform: (value: string) => licenses[value] as any,
 			},
-			{
-				type: "select",
+			styledMultiselect({
 				name: "ci",
 				expert: true,
 				message: "Which continuous integration service should be used?",
-				initial: "gh-actions",
+				initial: [0],
 				choices: [
 					{
 						message: "GitHub Actions",
@@ -551,7 +551,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 						value: "travis",
 					},
 				],
-			},
+			}),
 		],
 	},
 	"",
@@ -612,7 +612,7 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
-	ci?: "gh-actions" | "travis";
+	ci?: ("gh-actions" | "travis")[];
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	connectionIndicator?: "yes" | "no";
 	/** An icon in binary or some string-encoded format */
@@ -675,9 +675,9 @@ export async function validateAnswers(
 		if (q.action == undefined) continue;
 		if (disableValidation.indexOf(q.name as keyof Answers) > -1) continue;
 
-		const testResult = await q.action(answers[
-			q.name as keyof Answers
-		] as any);
+		const testResult = await q.action(
+			answers[q.name as keyof Answers] as any,
+		);
 		if (typeof testResult === "string") {
 			throw new Error(testResult);
 		}

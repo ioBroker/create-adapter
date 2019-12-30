@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) It is now possible to use Github Actions and Travis together
+
 ## v1.18.0 (2019-11-26)
 * (AlCalzone) Add badges for number of installations (fixes #311)
 * (AlCalzone) Add Github Actions as the default CI choice (#341)

@@ -5,10 +5,11 @@ export = (answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useNyc = answers.tools && answers.tools.indexOf("code coverage");
-	const useESLint = answers.tools && answers.tools.indexOf("ESLint");
+	const useNyc = answers.tools?.includes("code coverage");
+	const useESLint = answers.tools?.includes("ESLint");
 	const autoInitGit = answers.gitCommit === "yes";
-	const isGithubActions = answers.ci === "gh-actions";
+	const useTravis = answers.ci?.includes("travis");
+	const useGithubActions = answers.ci?.includes("gh-actions");
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
@@ -23,8 +24,9 @@ export = (answers => {
 [![Known Vulnerabilities](https://snyk.io/test/github/${answers.authorGithub}/ioBroker.${answers.adapterName}/badge.svg)](https://snyk.io/test/github/${answers.authorGithub}/ioBroker.${answers.adapterName})
 
 [![NPM](https://nodei.co/npm/iobroker.${adapterNameLowerCase}.png?downloads=true)](https://nodei.co/npm/iobroker.${adapterNameLowerCase}/)
-
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})
+${useTravis ? (`
+**Tests:**: [![Travis-CI](http://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`) 
+	: "" /* Github Actions has no badge right now */}
 
 ## ${answers.adapterName} adapter for ioBroker
 
@@ -93,7 +95,7 @@ The template provides you with basic tests for the adapter startup and package f
 It is recommended that you add your own tests into the mix.
 
 ` : ""}### Publishing the ${isAdapter ? "adapter" : "widget"}
-${isGithubActions ? `Since you have chosen GitHub Actions as your CI service, you can 
+${useGithubActions ? `Since you have chosen GitHub Actions as your CI service, you can 
 enable automatic releases on npm whenever you push a new git tag that matches the form 
 \`v<major>.<minor>.<patch>\`. The necessary steps are described in \`.github/workflows/test-and-release.yml\`.
 
