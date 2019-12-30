@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## v1.19.0 (2019-12-30)
 * (AlCalzone) It is now possible to use Github Actions and Travis together
 
 ## v1.18.0 (2019-11-26)
