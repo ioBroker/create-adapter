@@ -21,7 +21,7 @@
 		"target": "es2017",
 		"watch": false, // true breaks CircleCI
 		// Fix enquirer typings
-		"typeRoots": ["./node_modules/@types", "./src/@types/"]
+		"typeRoots": ["./src/@types/", "./node_modules/@types"]
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["build/**", "node_modules/**", "test/baselines/**"]

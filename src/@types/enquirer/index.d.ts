@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-
 // This file patches the broken enquirer typings
+import "enquirer";
+import { EventEmitter } from "events";
 
 declare module "enquirer" {
 	interface BasePromptOptions {
@@ -18,12 +19,12 @@ declare module "enquirer" {
 		onSubmit?(
 			name: string,
 			value: any,
-			prompt: Enquirer.Prompt,
+			prompt: Prompt,
 		): boolean | Promise<boolean>;
 		onCancel?(
 			name: string,
 			value: any,
-			prompt: Enquirer.Prompt,
+			prompt: Prompt,
 		): boolean | Promise<boolean>;
 		stdin?: NodeJS.ReadStream;
 		stdout?: NodeJS.WriteStream;
@@ -104,7 +105,7 @@ declare module "enquirer" {
 		| SortPromptOptions
 		| BasePromptOptions;
 
-	class BasePrompt extends NodeJS.EventEmitter {
+	class BasePrompt extends EventEmitter {
 		constructor(options?: PromptOptions);
 
 		render(): void;
@@ -112,7 +113,7 @@ declare module "enquirer" {
 		run(): Promise<any>;
 	}
 
-	class Enquirer<T = object> extends NodeJS.EventEmitter {
+	class Enquirer<T = object> extends EventEmitter {
 		constructor(options?: object, answers?: T);
 
 		/**
@@ -165,6 +166,4 @@ declare module "enquirer" {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		class Prompt extends BasePrompt {}
 	}
-
-	export = Enquirer;
 }
