@@ -70,7 +70,7 @@
     "alcalzone-shared": "^2.0.0",
     "axios": "^0.19.0",
     "debug": "^4.1.0",
-    "enquirer": "^2.1.0",
+    "enquirer": "^2.3.4",
     "eslint": "^5.16.0",
     "fs-extra": "^8.0.0",
     "json5": "^2.1.0",

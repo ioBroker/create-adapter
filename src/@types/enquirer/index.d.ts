@@ -155,17 +155,15 @@ declare module "enquirer" {
 		use(plugin: (this: this, enquirer: this) => void): this;
 	}
 
-	// namespace Enquirer {
-	// 	function prompt<T = object>(
-	// 		questions:
-	// 			| PromptOptions
-	// 			| ((this: Enquirer) => PromptOptions)
-	// 			| (PromptOptions | ((this: Enquirer) => PromptOptions))[],
-	// 	): Promise<T>;
+	namespace Enquirer {
+		function prompt<T = object>(
+			questions:
+				| PromptOptions
+				| ((this: Enquirer) => PromptOptions)
+				| (PromptOptions | ((this: Enquirer) => PromptOptions))[],
+		): Promise<T>;
 
-	// 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	// 	declare class Prompt extends BasePrompt {}
-	// }
-
-	// export = Enquirer;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		class Prompt extends BasePrompt {}
+	}
 }
