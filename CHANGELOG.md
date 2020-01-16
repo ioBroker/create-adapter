@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.20.0 (2020-01-16)
 * (AlCalzone) Add the possibility to start `schedule` adapters when the configuration changes (fixes #376)
 
 ## v1.19.0 (2019-12-30)
