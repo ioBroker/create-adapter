@@ -59,6 +59,7 @@
 		"readme": "https://github.com/AlCalzone/ioBroker.test-adapter/blob/master/README.md",
 		"loglevel": "info",
 		"mode": "schedule",
+		"allowInit": true,
 		"type": "general",
 		"compact": true,
 		"materialize": true,

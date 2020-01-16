@@ -282,6 +282,7 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					startMode: "schedule",
+					scheduleStartOnChange: "yes",
 				};
 				await expectSuccess(
 					"startMode_schedule",

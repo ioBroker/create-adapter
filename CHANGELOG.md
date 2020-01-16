@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Add the possibility to start `schedule` adapters when the configuration changes (fixes #376)
+
 ## v1.19.0 (2019-12-30)
 * (AlCalzone) It is now possible to use Github Actions and Travis together
 
