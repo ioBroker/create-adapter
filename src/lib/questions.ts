@@ -348,6 +348,16 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				],
 			},
 			{
+				condition: { name: "startMode", value: "schedule" },
+				type: "select",
+				name: "scheduleStartOnChange",
+				expert: true,
+				message:
+					"Should the adapter also be started when the configuration is changed?",
+				initial: "no",
+				choices: ["yes", "no"],
+			},
+			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "connectionIndicator",
@@ -614,6 +624,7 @@ export interface Answers {
 	gitCommit?: "yes" | "no";
 	ci?: ("gh-actions" | "travis")[];
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
+	scheduleStartOnChange?: "yes" | "no";
 	connectionIndicator?: "yes" | "no";
 	/** An icon in binary or some string-encoded format */
 	icon?: string | Buffer;

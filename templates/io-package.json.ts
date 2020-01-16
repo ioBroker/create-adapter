@@ -74,6 +74,9 @@ export = (async answers => {
 		`) : ""}
 		${isAdapter ? (`
 			"mode": "${answers.startMode || "daemon"}",
+			${answers.scheduleStartOnChange === "yes" ? (`
+				"allowInit": true,
+			`) : ""}
 			"type": "${answers.type || "general"}",
 			"compact": true,
 		`) : isWidget ? (`
