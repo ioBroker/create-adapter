@@ -29,6 +29,7 @@ npx @iobroker/create-adapter [options]
 ```
 
 in the directory where the directory of your project should be created. You don't need to create the adapter/widget directory, because it will be created for you.
+**WARNING:** If the path contains a space, this [won't work](https://github.com/npm/npx/issues/14).
 
 After a short while, you will be asked a few questions. Afterwards all the necessary files will be created for you.
 
