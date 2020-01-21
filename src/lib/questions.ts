@@ -199,8 +199,13 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 					},
 					{
 						message:
-							"Calendars                (also schedules, etc. ...)",
+							"Calendars                (also schedules, etc., ...)",
 						value: "date-and-time",
+					},
+					{
+						message:
+							"Cars / Vehicles          (trip information, vehicle status, aux. heating, ...)",
+						value: "vehicle",
 					},
 					{
 						message:
@@ -305,6 +310,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 							"Visualizations           (VIS, MaterialUI, mobile views, ...)",
 						value: "visualization",
 					},
+					// visualization-icons and visualization-widgets are a separate question for
+					// VIS projects
 					{
 						message:
 							"Weather                  (Forecast, air quality, statistics, ...)",
