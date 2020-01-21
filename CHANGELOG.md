@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Add the `vehicle` adapter type (fixes #384)
+
 ## 1.20.0 (2020-01-16)
 * (AlCalzone) Add the possibility to start `schedule` adapters when the configuration changes (fixes #376)
 
