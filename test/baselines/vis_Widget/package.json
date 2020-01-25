@@ -22,7 +22,7 @@
   "devDependencies": {
     "@iobroker/testing": "^2.0.1",
     "@types/gulp": "^4.0.6",
-    "axios": "^0.19.1",
+    "axios": "^0.19.2",
     "gulp": "^4.0.2"
   },
   "main": "widgets/test-widget.html",
