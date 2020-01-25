@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Add the `vehicle` adapter type (fixes #384)
+* (AlCalzone) The auto-publish on Github Actions now also works for pre-releases, e.g. `v1.0.0-beta.2` (#387)
 
 ## 1.20.0 (2020-01-16)
 * (AlCalzone) Add the possibility to start `schedule` adapters when the configuration changes (fixes #376)
