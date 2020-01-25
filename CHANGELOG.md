@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.20.1 (2020-01-25)
 * (AlCalzone) Add the `vehicle` adapter type (fixes #384)
 * (AlCalzone) The auto-publish on Github Actions now also works for pre-releases, e.g. `v1.0.0-beta.2` (#387)
 
