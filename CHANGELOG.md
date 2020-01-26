@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.21.0 (2020-01-26)
 * (AlCalzone) Add support for connectionType and dataSource (fixes #386)
 
 ## 1.20.1 (2020-01-25)
