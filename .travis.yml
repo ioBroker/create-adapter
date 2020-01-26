@@ -45,6 +45,9 @@ jobs:
       script: skip
       deploy:
         provider: npm
+        # Opt in to deploy v2 which fixes some issues
+        # https://docs.travis-ci.com/user/deployment-v2#how-to-opt-in-to-v2
+        edge: true 
         skip_cleanup: true
         email: $NPM_EMAIL
         api_key: $NPM_API_KEY
