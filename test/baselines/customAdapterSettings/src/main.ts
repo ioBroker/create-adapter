@@ -1,5 +1,5 @@
 /*
- * Created with @iobroker/create-adapter v1.20.0
+ * Created with @iobroker/create-adapter v1.20.1
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
