@@ -55,6 +55,8 @@ const baseAnswers: Answers = {
 	startMode: "daemon",
 	features: ["adapter"],
 	connectionIndicator: "no",
+	connectionType: "local",
+	dataSource: "push",
 	adminFeatures: [],
 	type: "general",
 	language: "TypeScript",
@@ -447,6 +449,19 @@ describe("adapter creation =>", () => {
 					"ci_Travis",
 					answers,
 					file => file.name === ".travis.yml",
+				);
+			});
+
+			it(`Data Source and Connection Type`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					connectionType: "cloud",
+					dataSource: "assumption",
+				};
+				await expectSuccess(
+					"connectionType",
+					answers,
+					file => file.name === "io-package.json",
 				);
 			});
 		});

@@ -79,6 +79,12 @@ export = (async answers => {
 			`) : ""}
 			"type": "${answers.type || "general"}",
 			"compact": true,
+			${!!answers.connectionType ? (`
+				"connectionType": "${answers.connectionType}",
+			`) : ""}
+			${!!answers.dataSource ? (`
+				"dataSource": "${answers.dataSource}",
+			`) : ""}
 		`) : isWidget ? (`
 			"onlyWWW": true,
 			"noConfig": true,

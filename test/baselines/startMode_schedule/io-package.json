@@ -62,6 +62,8 @@
 		"allowInit": true,
 		"type": "general",
 		"compact": true,
+		"connectionType": "local",
+		"dataSource": "push",
 		"materialize": true,
 		"dependencies": [
 			{

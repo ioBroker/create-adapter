@@ -61,6 +61,8 @@
 		"mode": "daemon",
 		"type": "storage",
 		"compact": true,
+		"connectionType": "local",
+		"dataSource": "push",
 		"materialize": true,
 		"dependencies": [
 			{

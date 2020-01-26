@@ -367,6 +367,44 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
+				name: "connectionType",
+				optional: true, // We cannot assume this when creating templates
+				message: `From where will the adapter get its data?`,
+				choices: [
+					{ message: "Website or cloud service", value: "cloud" },
+					{
+						message: "Local network or wireless",
+						value: "local",
+					},
+				],
+			},
+			{
+				condition: { name: "features", contains: "adapter" },
+				type: "select",
+				name: "dataSource",
+				optional: true, // We cannot assume this when creating templates
+				message: `How will the adapter receive its data?`,
+				choices: [
+					{
+						message:
+							"Request it regularly from the service or device",
+						value: "poll",
+					},
+					{
+						message:
+							"The service or device actively sends new data",
+						value: "push",
+					},
+					{
+						message: "Assumption or educated guess",
+						hint: "(e.g. when receiving incomplete events)",
+						value: "assumption",
+					},
+				],
+			},
+			{
+				condition: { name: "features", contains: "adapter" },
+				type: "select",
 				name: "connectionIndicator",
 				expert: true,
 				message: `Do you want to indicate the connection state?`,
@@ -633,6 +671,8 @@ export interface Answers {
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";
 	connectionIndicator?: "yes" | "no";
+	connectionType?: "cloud" | "local";
+	dataSource?: "poll" | "push" | "assumption";
 	/** An icon in binary or some string-encoded format */
 	icon?: string | Buffer;
 	/** An array of predefined adapter options */

@@ -45,11 +45,10 @@
 			"Al Calzone <al@calzo.ne>"
 		],
 		"keywords": [
-			"this",
-			"adapter",
-			"uses",
-			"different",
-			"keywords"
+			"ioBroker",
+			"template",
+			"Smart Home",
+			"home automation"
 		],
 		"license": "MIT",
 		"platform": "Javascript/Node.js",
@@ -62,8 +61,8 @@
 		"mode": "daemon",
 		"type": "general",
 		"compact": true,
-		"connectionType": "local",
-		"dataSource": "push",
+		"connectionType": "cloud",
+		"dataSource": "assumption",
 		"materialize": true,
 		"dependencies": [
 			{
