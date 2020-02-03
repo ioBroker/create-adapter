@@ -44,7 +44,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/proxyquire",
 			"proxyquire",
 			// and NodeJS typings
-			"@types/node@10",
+			"@types/node@12",
 		] : [])
 		.concat(useTypeScript ? [
 			// enhance testing through TS tools
@@ -86,8 +86,8 @@ const templateFunction: TemplateFunction = async answers => {
 	},
 	${answers.contributors && answers.contributors.length ? (`
 		"contributors": ${JSON.stringify(
-			answers.contributors.map(name => ({ name }))
-		)},
+		answers.contributors.map(name => ({ name }))
+	)},
 	`) : ""}
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
 	"license": "${answers.license!.id}",
