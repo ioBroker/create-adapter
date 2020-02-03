@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Bump Node.js typings in generated adapters (`@types/node`) to 12.x
+
 ## 1.21.1 (2020-02-03)
 * (AlCalzone) Add `tsconfig.json` to `.npmignore` if type-checking is enabled (fixes #395)
 
