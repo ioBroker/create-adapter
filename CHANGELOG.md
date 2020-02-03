@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Add `tsconfig.json` to `.npmignore` if type-checking is enabled (fixes #395)
+
 ## 1.21.0 (2020-01-26)
 * (AlCalzone) Add support for connectionType and dataSource (fixes #386)
 
