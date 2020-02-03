@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.21.1 (2020-02-03)
 * (AlCalzone) Add `tsconfig.json` to `.npmignore` if type-checking is enabled (fixes #395)
 
 ## 1.21.0 (2020-01-26)
