@@ -6,6 +6,7 @@ nbproject/
 *.code-workspace
 Thumbs.db
 
+# CI test files
 test/
 travis/
 .travis.yml
