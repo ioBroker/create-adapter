@@ -1,19 +1,7 @@
 import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green, underline } from "ansi-colors";
-import { prompt } from "enquirer";
-import {
-	checkAdapterName,
-	checkAuthorName,
-	checkEmail,
-	checkMinSelections,
-	CheckResult,
-	checkTitle,
-	checkTypeScriptTools,
-	transformAdapterName,
-	transformContributors,
-	transformDescription,
-	transformKeywords,
-} from "./actionsAndTransformers";
+import { SpecificPromptOptions } from "enquirer";
+import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, checkTypeScriptTools, transformAdapterName, transformContributors, transformDescription, transformKeywords } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
 import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
@@ -21,8 +9,6 @@ import { getOwnVersion } from "./tools";
 // This is being used to simulate wrong options for conditions on the type level
 const __misused: unique symbol = Symbol.for("__misused");
 
-// Sadly, Enquirer does not export the PromptOptions type
-type PromptOptions = Exclude<Parameters<typeof prompt>[0], Function | any[]>;
 type QuestionAction<T> = (
 	value: T,
 	options?: unknown,
@@ -55,7 +41,7 @@ interface QuestionMeta {
 	expert?: true;
 }
 
-export type Question = PromptOptions & QuestionMeta;
+export type Question = SpecificPromptOptions & QuestionMeta;
 export interface QuestionGroup {
 	headline: string;
 	questions: Question[];
@@ -72,9 +58,9 @@ function styledMultiselect<
 	T extends Pick<Question, Exclude<keyof Question, "type">> & {
 		choices: any[];
 	}
->(ms: T): T & { type: string } {
+>(ms: T): T & { type: "multiselect" } {
 	return Object.assign({} as Question, ms, {
-		type: "multiselect",
+		type: "multiselect" as const,
 		hint: gray("(<space> to select, <return> to submit)"),
 		symbols: {
 			indicator: {
@@ -539,7 +525,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				type: "input",
 				name: "authorGithub",
 				message: "What's your name/org on GitHub?",
-				initial: (answers: Answers) => answers.authorName,
+				initial: ((answers: Answers) => answers.authorName) as any,
 				action: checkAuthorName,
 			},
 			{
