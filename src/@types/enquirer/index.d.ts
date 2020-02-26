@@ -4,7 +4,7 @@ import "enquirer";
 import { EventEmitter } from "events";
 
 declare module "enquirer" {
-	interface BasePromptOptions {
+	export interface BasePromptOptions {
 		name: string | (() => string);
 		type: string | (() => string);
 		message: string | (() => string) | (() => Promise<string>);
@@ -30,7 +30,7 @@ declare module "enquirer" {
 		stdout?: NodeJS.WriteStream;
 	}
 
-	interface Choice {
+	export interface Choice {
 		name?: string;
 		message?: string;
 		value?: string;
@@ -38,20 +38,21 @@ declare module "enquirer" {
 		disabled?: boolean | string;
 	}
 
-	interface ArrayPromptOptions extends BasePromptOptions {
+	export interface ArrayPromptOptions extends BasePromptOptions {
 		type:
-			| "autocomplete"
-			| "editable"
-			| "form"
-			| "multiselect"
-			| "select"
-			| "survey"
-			| "list"
-			| "scale";
+		| "autocomplete"
+		| "editable"
+		| "form"
+		| "multiselect"
+		| "select"
+		| "survey"
+		| "list"
+		| "scale";
 		choices: string[] | Choice[];
 		maxChoices?: number;
 		muliple?: boolean;
-		initial?: number;
+		initial?: number | number[] | string;
+		hint?: string;
 		delay?: number;
 		separator?: boolean;
 		sort?: boolean;
@@ -61,18 +62,19 @@ declare module "enquirer" {
 		scroll?: boolean;
 	}
 
-	interface BooleanPromptOptions extends BasePromptOptions {
+	export interface BooleanPromptOptions extends BasePromptOptions {
 		type: "confirm";
 		initial?: boolean;
 	}
 
-	interface StringPromptOptions extends BasePromptOptions {
+	export interface StringPromptOptions extends BasePromptOptions {
 		type: "input" | "invisible" | "list" | "password" | "text";
+		hint?: string;
 		initial?: string;
 		multiline?: boolean;
 	}
 
-	interface NumberPromptOptions extends BasePromptOptions {
+	export interface NumberPromptOptions extends BasePromptOptions {
 		type: "numeral";
 		min?: number;
 		max?: number;
@@ -84,19 +86,19 @@ declare module "enquirer" {
 		initial?: number;
 	}
 
-	interface SnippetPromptOptions extends BasePromptOptions {
+	export interface SnippetPromptOptions extends BasePromptOptions {
 		type: "snippet";
 		newline?: string;
 	}
 
-	interface SortPromptOptions extends BasePromptOptions {
+	export interface SortPromptOptions extends BasePromptOptions {
 		type: "sort";
 		hint?: string;
 		drag?: boolean;
 		numbered?: boolean;
 	}
 
-	type PromptOptions =
+	export type PromptOptions =
 		| ArrayPromptOptions
 		| BooleanPromptOptions
 		| StringPromptOptions
@@ -104,6 +106,13 @@ declare module "enquirer" {
 		| SnippetPromptOptions
 		| SortPromptOptions
 		| BasePromptOptions;
+	export type SpecificPromptOptions =
+		| ArrayPromptOptions
+		| BooleanPromptOptions
+		| StringPromptOptions
+		| NumberPromptOptions
+		| SnippetPromptOptions
+		| SortPromptOptions;
 
 	class BasePrompt extends EventEmitter {
 		constructor(options?: PromptOptions);
@@ -164,6 +173,6 @@ declare module "enquirer" {
 		): Promise<T>;
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		class Prompt extends BasePrompt {}
+		class Prompt extends BasePrompt { }
 	}
 }
