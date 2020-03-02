@@ -1,7 +1,19 @@
 import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green, underline } from "ansi-colors";
 import { SpecificPromptOptions } from "enquirer";
-import { checkAdapterName, checkAuthorName, checkEmail, checkMinSelections, CheckResult, checkTitle, checkTypeScriptTools, transformAdapterName, transformContributors, transformDescription, transformKeywords } from "./actionsAndTransformers";
+import {
+	checkAdapterName,
+	checkAuthorName,
+	checkEmail,
+	checkMinSelections,
+	CheckResult,
+	checkTitle,
+	checkTypeScriptTools,
+	transformAdapterName,
+	transformContributors,
+	transformDescription,
+	transformKeywords,
+} from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
 import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
@@ -580,11 +592,11 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				name: "ci",
 				expert: true,
 				message: "Which continuous integration service should be used?",
-				initial: [0],
+				initial: ((answers: Answers) =>
+					answers.features.includes("adapter") ? [1] : [0]) as any,
 				choices: [
 					{
 						message: "GitHub Actions",
-						hint: "(recommended)",
 						value: "gh-actions",
 					},
 					{
