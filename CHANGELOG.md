@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.22.0 (2020-03-02)
 * (AlCalzone) Bump Node.js typings in generated adapters (`@types/node`) to 12.x
 * (AlCalzone) Add link to best practices in the generated adapter README (fixes #417)
 * (AlCalzone) Re-enable Travis CI as the default CI in adapters
