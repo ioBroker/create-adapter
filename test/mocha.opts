@@ -1,4 +1,0 @@
---require test/mocha.setup.js
---watch-extensions ts
---require ts-node/register
---require source-map-support/register
