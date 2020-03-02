@@ -40,6 +40,10 @@ You are almost done, only a few steps left:
 	```
 1. Head over to [widgets/test-widget.html](widgets/test-widget.html) and start programming!
 
+### Best Practices
+We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
+check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
+
 ### Scripts in `package.json`
 Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
 | Script name | Description                                              |
