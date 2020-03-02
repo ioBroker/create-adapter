@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Bump Node.js typings in generated adapters (`@types/node`) to 12.x
+* (AlCalzone) Add link to best practices in the generated adapter README (fixes #417)
 
 ## 1.21.1 (2020-02-03)
 * (AlCalzone) Add `tsconfig.json` to `.npmignore` if type-checking is enabled (fixes #395)
