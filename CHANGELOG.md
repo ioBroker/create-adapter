@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Update `.travis.yml` in the template to `gcc 6`
+* (oweitman) Remember bound handler in VIS template to avoid leak (fixes https://github.com/ioBroker/ioBroker.template/issues/62)
 
 ## 1.22.0 (2020-03-02)
 * (AlCalzone) Bump Node.js typings in generated adapters (`@types/node`) to 12.x
