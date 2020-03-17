@@ -38,8 +38,8 @@
     "gulp": "^4.0.2",
     "mocha": "^7.1.0",
     "proxyquire": "^2.1.3",
-    "sinon": "^9.0.1",
-    "sinon-chai": "^3.5.0"
+    "sinon-chai": "^3.5.0",
+    "sinon": "^8.1.1"
   },
   "main": "main.js",
   "scripts": {
