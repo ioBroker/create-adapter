@@ -10,6 +10,7 @@
 * (AlCalzone) Update `.travis.yml` in the template to `gcc 6`
 * (oweitman) Remember bound handler in VIS template to avoid leak (fixes https://github.com/ioBroker/ioBroker.template/issues/62)
 * (AlCalzone) Use bracket property access in VIS widget to avoid runtime errors when the widget name contains a `-`
+* (AlCalzone) Pin the `sinon` dependency on `8.x` until we drop Node.js 8 support (fixes #436)
 
 ## 1.22.0 (2020-03-02)
 * (AlCalzone) Bump Node.js typings in generated adapters (`@types/node`) to 12.x
