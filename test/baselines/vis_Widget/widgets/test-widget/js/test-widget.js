@@ -43,10 +43,15 @@ vis.binds["test-widget"] = {
 		$("#" + widgetID).html(text);
 
 		// subscribe on updates of value
+		function onChange(e, newVal, oldVal) {
+			$div.find(".template-value").html(newVal);
+		}
 		if (data.oid) {
-			vis.states.bind(data.oid + ".val", function (e, newVal, oldVal) {
-				$div.find(".test-widget-value").html(newVal);
-			});
+			vis.states.bind(data.oid + ".val", onChange);
+			//remember bound state that vis can release if didnt needed
+			$div.data("bound", [data.oid + ".val"]);
+			//remember onchange handler to release bound states
+			$div.data("bindHandler", onChange);
 		}
 	}
 };
