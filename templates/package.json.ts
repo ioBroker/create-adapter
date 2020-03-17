@@ -38,7 +38,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/mocha",
 			"mocha",
 			"@types/sinon",
-			"sinon",
+			"sinon@8", // pinned until we drop Node 8 support
 			"@types/sinon-chai",
 			"sinon-chai",
 			"@types/proxyquire",
