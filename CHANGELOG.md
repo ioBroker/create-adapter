@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.23.0 (2020-03-17)
 * (AlCalzone) Update `.travis.yml` in the template to `gcc 6`
 * (oweitman) Remember bound handler in VIS template to avoid leak (fixes https://github.com/ioBroker/ioBroker.template/issues/62)
 * (AlCalzone) Use bracket property access in VIS widget to avoid runtime errors when the widget name contains a `-`
