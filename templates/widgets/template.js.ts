@@ -18,13 +18,13 @@ const templateFunction: TemplateFunction = answers => {
 "use strict";
 
 // add translations for edit mode
-$.get( "adapter/${widgetName}/words.js", function(script) {
+$.get( "adapter/${answers.adapterName}/words.js", function(script) {
 	let translation = script.substring(script.indexOf('{'), script.length);
 	translation = translation.substring(0, translation.lastIndexOf(';'));
 	$.extend(systemDictionary, JSON.parse(translation));
 });
 
-// this code can be placed directly in ${widgetName}.html
+// this code can be placed directly in ${answers.adapterName}.html
 vis.binds["${widgetName}"] = {
 	version: "0.0.1",
 	showVersion: function () {
@@ -44,7 +44,7 @@ vis.binds["${widgetName}"] = {
 
 		var text = '';
 		text += 'OID: ' + data.oid + '</div><br>';
-		text += 'OID value: <span class="myset-value">' + vis.states[data.oid + '.val'] + '</span><br>';
+		text += 'OID value: <span class="${widgetName}-value">' + vis.states[data.oid + '.val'] + '</span><br>';
 		text += 'Color: <span style="color: ' + data.myColor + '">' + data.myColor + '</span><br>';
 		text += 'extraAttr: ' + data.extraAttr + '<br>';
 		text += 'Browser instance: ' + vis.instance + '<br>';

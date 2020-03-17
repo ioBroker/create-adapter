@@ -17,9 +17,9 @@ const templateFunction: TemplateFunction = answers => {
 	Copyright ${new Date().getFullYear().toString()} ${answers.authorName} ${answers.authorEmail}
 -->
 <!-- here you can include so many css as you want -->
-<link rel="stylesheet" href="widgets/${widgetName}/css/style.css" />
+<link rel="stylesheet" href="widgets/${answers.adapterName}/css/style.css" />
 <!-- here you can include so many js-files as you want -->
-<script type="text/javascript" src="widgets/${widgetName}/js/${widgetName}.js"></script>
+<script type="text/javascript" src="widgets/${answers.adapterName}/js/${answers.adapterName}.js"></script>
 
 <!-- the full description of format in data-vis-attrs can be found here:
 	https://github.com/ioBroker/ioBroker.vis/blob/master/www/js/visEditInspect.js#L39
@@ -114,7 +114,7 @@ const templateFunction: TemplateFunction = answers => {
 <script id="tpl${widgetNameCapitalized}ShowInstance"
 		type="text/ejs"
 		class="vis-tpl"
-		data-vis-prev='<div id="prev_tplMysetShowInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="myset-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
+		data-vis-prev='<div id="prev_tpl${widgetNameCapitalized}ShowInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="${widgetName}-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
 		data-vis-attrs="oid/id;myColor/color;htmlText/text;"
 		data-vis-attrs0="group.extra${widgetNameCapitalized};extraAttr"
 		data-vis-set="${widgetName}"
@@ -135,14 +135,14 @@ const templateFunction: TemplateFunction = answers => {
 <script id="tpl${widgetNameCapitalized}Helper"
 		type="text/ejs"
 		class="vis-tpl"
-		data-vis-prev='<div id="prev_tpl${widgetNameCapitalized}Helper" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="myset-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
+		data-vis-prev='<div id="prev_tpl${widgetNameCapitalized}Helper" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="${widgetName}-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
 		data-vis-attrs="oid/id;myColor/color;htmlText/text;"
 		data-vis-attrs0="group.extra${widgetNameCapitalized};extraAttr"
 		data-vis-set="${widgetName}"
 		data-vis-type="helper"
 		data-vis-name="Helper">
 	<div class="vis-widget <%== this.data.attr('class') %>" style="overflow:visible; width: 230px; height: 210px" id="<%= this.data.attr('wid') %>"><%
-		vis.binds.${widgetName}.createWidget(this.data.wid, this.view, this.data, this.style);
+		vis.binds['${widgetName}'].createWidget(this.data.wid, this.view, this.data, this.style);
 	%></div>
 </script>
 `;
