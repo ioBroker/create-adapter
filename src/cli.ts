@@ -90,7 +90,9 @@ async function ask(): Promise<Answers> {
 		} else if (isQuestionGroup(entry)) {
 			// only print the headline if any of the questions are necessary
 			if (
-				entry.questions.find(qq => testCondition(qq.condition, answers))
+				entry.questions.find((qq) =>
+					testCondition(qq.condition, answers),
+				)
 			) {
 				console.log();
 				console.log(underline(entry.headline));

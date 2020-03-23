@@ -56,7 +56,7 @@ export function testCondition(
 	}
 
 	if (isArray(condition)) {
-		return condition.every(cond => testSingleCondition(cond));
+		return condition.every((cond) => testSingleCondition(cond));
 	} else {
 		return testSingleCondition(condition);
 	}
@@ -87,7 +87,9 @@ export async function createFiles(answers: Answers): Promise<File[]> {
 			};
 		}),
 	);
-	const necessaryFiles = files.filter(f => f.content != undefined) as File[];
+	const necessaryFiles = files.filter(
+		(f) => f.content != undefined,
+	) as File[];
 	return formatFiles(answers, necessaryFiles);
 }
 
@@ -112,7 +114,7 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 		trimWhitespaceLines(removeEmptyLines(indentation(text)));
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 
-	return files.map(f => {
+	return files.map((f) => {
 		if (f.noReformat || typeof f.content !== "string") return f;
 		if (usePrettier && /\.(js|json|ts)$/.test(f.name)) {
 			// Use prettier to format JS/TS/JSON code

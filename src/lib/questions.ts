@@ -613,9 +613,9 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 
 /** Only the questions */
 export const questions = (questionsAndText.filter(
-	q => typeof q !== "string",
+	(q) => typeof q !== "string",
 ) as (Question | QuestionGroup)[])
-	.map(q => (isQuestionGroup(q) ? q.questions : [q]))
+	.map((q) => (isQuestionGroup(q) ? q.questions : [q]))
 	.reduce((arr, next) => arr.concat(...next), []);
 
 export interface BaseAdapterSettings<T> {
@@ -687,8 +687,8 @@ export function checkAnswers(answers: Partial<Answers>): void {
 		} else if (!conditionFulfilled && answer != undefined) {
 			// TODO: Find a fool-proof way to check for extraneous answers
 			if (
-				questions.filter(qq => (qq.name as string) === q.name).length >
-				0
+				questions.filter((qq) => (qq.name as string) === q.name)
+					.length > 0
 			) {
 				// For now, don't enforce conditions for questions with multiple branches
 				continue;

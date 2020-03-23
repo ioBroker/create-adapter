@@ -39,7 +39,7 @@ describe("questions/isQuestionGroup()", () => {
 describe("questions/questions", () => {
 	it("should be an array of question objects", () => {
 		questions.should.be.an("array");
-		questions.forEach(q => {
+		questions.forEach((q) => {
 			q.should.have.property("type");
 			expect(typeof q.type).to.equal("string");
 		});

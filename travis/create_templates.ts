@@ -89,10 +89,10 @@ const templates: Record<string, Answers> = {
 	console.log(green("Removing old templates"));
 	console.log(green("======================"));
 	const directories = (await fs.readdir(outDir))
-		.filter(entry => !/^\./.test(entry)) // Don't delete dotfiles/dotdirs
-		.map(entry => path.join(outDir, entry))
-		.filter(entry => fs.statSync(entry).isDirectory());
-	await Promise.all(directories.map(dir => fs.remove(dir)));
+		.filter((entry) => !/^\./.test(entry)) // Don't delete dotfiles/dotdirs
+		.map((entry) => path.join(outDir, entry))
+		.filter((entry) => fs.statSync(entry).isDirectory());
+	await Promise.all(directories.map((dir) => fs.remove(dir)));
 
 	console.log();
 	console.log(green("Creating templates"));
@@ -107,6 +107,6 @@ const templates: Record<string, Answers> = {
 })();
 
 // Make sure errors fail the build
-process.on("unhandledRejection", e => {
+process.on("unhandledRejection", (e) => {
 	throw e;
 });

@@ -138,7 +138,7 @@ describe("adapter creation =>", () => {
 		});
 	});
 
-	describe("generate baselines =>", function() {
+	describe("generate baselines =>", function () {
 		this.timeout(60000);
 
 		before(async () => {
@@ -147,8 +147,8 @@ describe("adapter creation =>", () => {
 			const files = await fs.readdir(baselineDir);
 			await Promise.all(
 				files
-					.filter(file => file !== "README.md")
-					.map(file => fs.remove(path.join(baselineDir, file))),
+					.filter((file) => file !== "README.md")
+					.map((file) => fs.remove(path.join(baselineDir, file))),
 			);
 		});
 
@@ -252,7 +252,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"description_valid",
 					answers,
-					file => file.name === "io-package.json",
+					(file) => file.name === "io-package.json",
 				);
 			});
 
@@ -264,7 +264,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"description_empty_1",
 					answers,
-					file => file.name === "io-package.json",
+					(file) => file.name === "io-package.json",
 				);
 			});
 
@@ -276,7 +276,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"description_empty_2",
 					answers,
-					file => file.name === "io-package.json",
+					(file) => file.name === "io-package.json",
 				);
 			});
 
@@ -289,7 +289,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"startMode_schedule",
 					answers,
-					file => file.name === "io-package.json",
+					(file) => file.name === "io-package.json",
 				);
 			});
 
@@ -302,7 +302,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"type_storage",
 					answers,
-					file => file.name === "io-package.json",
+					(file) => file.name === "io-package.json",
 				);
 			});
 
@@ -315,7 +315,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"type_visualization-icons",
 					answers,
-					file => file.name === "io-package.json",
+					(file) => file.name === "io-package.json",
 				);
 			});
 
@@ -329,7 +329,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"JS_ES2018",
 					answers,
-					file => file.name === ".eslintrc.json",
+					(file) => file.name === ".eslintrc.json",
 				);
 			});
 
@@ -338,7 +338,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					quotes: "single",
 				};
-				await expectSuccess("TS_SingleQuotes", answers, file => {
+				await expectSuccess("TS_SingleQuotes", answers, (file) => {
 					return (
 						(file.name.endsWith(".ts") &&
 							!file.name.endsWith(".d.ts")) ||
@@ -352,7 +352,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					tools: ["ESLint", "Prettier"],
 				};
-				await expectSuccess("TS_Prettier", answers, file => {
+				await expectSuccess("TS_Prettier", answers, (file) => {
 					return (
 						file.name.startsWith(".vscode/") ||
 						file.name.startsWith(".eslint") ||
@@ -370,7 +370,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"connectionIndicator_yes",
 					answers,
-					file =>
+					(file) =>
 						file.name.endsWith("main.ts") ||
 						file.name.endsWith("main.js") ||
 						file.name === "io-package.json",
@@ -398,7 +398,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"customAdapterSettings",
 					answers,
-					file =>
+					(file) =>
 						file.name.endsWith("main.ts") ||
 						file.name.endsWith("main.js") ||
 						file.name === "io-package.json" ||
@@ -411,7 +411,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					keywords: "this, adapter,uses,   different , keywords" as any,
 				};
-				await expectSuccess("keywords", answers, file =>
+				await expectSuccess("keywords", answers, (file) =>
 					file.name.endsWith("package.json"),
 				);
 			});
@@ -424,7 +424,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"contributors",
 					answers,
-					file => file.name === "package.json",
+					(file) => file.name === "package.json",
 				);
 			});
 
@@ -436,7 +436,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"git_SSH",
 					answers,
-					file => file.name === "package.json",
+					(file) => file.name === "package.json",
 				);
 			});
 
@@ -448,7 +448,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"ci_Travis",
 					answers,
-					file => file.name === ".travis.yml",
+					(file) => file.name === ".travis.yml",
 				);
 			});
 
@@ -461,7 +461,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"connectionType",
 					answers,
-					file => file.name === "io-package.json",
+					(file) => file.name === "io-package.json",
 				);
 			});
 		});

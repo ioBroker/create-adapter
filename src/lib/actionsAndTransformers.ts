@@ -112,8 +112,8 @@ export function transformKeywords(keywords: string): string[] | undefined {
 	const keywordsArray = keywords
 		.trim()
 		.split(",")
-		.map(k => k.trim())
-		.filter(k => !!k);
+		.map((k) => k.trim())
+		.filter((k) => !!k);
 	if (keywordsArray.length === 0) return undefined;
 	return keywordsArray;
 }
@@ -124,8 +124,8 @@ export function transformContributors(
 	const contributorsArray = contributors
 		.trim()
 		.split(",")
-		.map(c => c.trim())
-		.filter(c => !!c);
+		.map((c) => c.trim())
+		.filter((c) => !!c);
 	if (contributorsArray.length === 0) return undefined;
 	return contributorsArray;
 }
