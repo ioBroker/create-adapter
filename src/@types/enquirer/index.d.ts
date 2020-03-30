@@ -40,14 +40,14 @@ declare module "enquirer" {
 
 	export interface ArrayPromptOptions extends BasePromptOptions {
 		type:
-		| "autocomplete"
-		| "editable"
-		| "form"
-		| "multiselect"
-		| "select"
-		| "survey"
-		| "list"
-		| "scale";
+			| "autocomplete"
+			| "editable"
+			| "form"
+			| "multiselect"
+			| "select"
+			| "survey"
+			| "list"
+			| "scale";
 		choices: string[] | Choice[];
 		maxChoices?: number;
 		muliple?: boolean;
@@ -173,6 +173,6 @@ declare module "enquirer" {
 		): Promise<T>;
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		class Prompt extends BasePrompt { }
+		class Prompt extends BasePrompt {}
 	}
 }

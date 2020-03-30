@@ -47,7 +47,7 @@ function getRandomPackageName() {
 function getRandomPackageVersion() {
 	return [0, 0, 0]
 		.map(() => Math.round(Math.random() * 10))
-		.map(v => v.toString())
+		.map((v) => v.toString())
 		.join(".");
 }
 

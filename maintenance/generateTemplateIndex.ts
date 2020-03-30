@@ -29,7 +29,7 @@ function getRequirePath(normalizedPath: string): string {
 
 const templatePaths = allTemplateFiles
 	.map(normalizePath)
-	.map(file => [file, getRequirePath(file)] as [string, string])
+	.map((file) => [file, getRequirePath(file)] as [string, string])
 	.map(
 		([file, req]) =>
 			`\t{ name: "${file}", templateFunction: require("${req}") },`,

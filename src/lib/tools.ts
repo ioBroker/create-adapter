@@ -63,7 +63,7 @@ export function executeCommand(
 	argsOrOptions?: string[] | Partial<ExecuteCommandOptions>,
 	options?: Partial<ExecuteCommandOptions>,
 ): Promise<ExecuteCommandResult> {
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		let args: string[] | undefined;
 		if (isArray(argsOrOptions)) {
 			args = argsOrOptions;
@@ -109,7 +109,7 @@ export function executeCommand(
 			// Capture stdout/stderr if requested
 			if (options.stdout === "pipe") {
 				bufferedStdout = "";
-				cmd.stdout!.on("data", chunk => {
+				cmd.stdout!.on("data", (chunk) => {
 					const buffer = Buffer.isBuffer(chunk)
 						? chunk
 						: Buffer.from(chunk, "utf8");
@@ -118,7 +118,7 @@ export function executeCommand(
 			}
 			if (options.stderr === "pipe") {
 				bufferedStderr = "";
-				cmd.stderr!.on("data", chunk => {
+				cmd.stderr!.on("data", (chunk) => {
 					const buffer = Buffer.isBuffer(chunk)
 						? chunk
 						: Buffer.from(chunk, "utf8");
@@ -146,8 +146,8 @@ export function enumFilesRecursiveSync(
 	// enumerate all files in this directory
 	const filesOrDirs = fs
 		.readdirSync(dir)
-		.filter(f => predicate!(f, dir)) // exclude all files starting with "."
-		.map(f => path.join(dir, f)); // and prepend the full path
+		.filter((f) => predicate!(f, dir)) // exclude all files starting with "."
+		.map((f) => path.join(dir, f)); // and prepend the full path
 	for (const entry of filesOrDirs) {
 		if (fs.statSync(entry).isDirectory()) {
 			// Continue recursing this directory and remember the files there
@@ -261,13 +261,13 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 /** Replaces 4-space indentation with tabs */
 export function indentWithTabs(text: string): string {
 	if (!text) return text;
-	return text.replace(/^( {4})+/gm, match => "\t".repeat(match.length / 4));
+	return text.replace(/^( {4})+/gm, (match) => "\t".repeat(match.length / 4));
 }
 
 /** Replaces tab indentation with 4 spaces */
 export function indentWithSpaces(text: string): string {
 	if (!text) return text;
-	return text.replace(/^(\t)+/gm, match => " ".repeat(match.length * 4));
+	return text.replace(/^(\t)+/gm, (match) => " ".repeat(match.length * 4));
 }
 
 /** Normalizes formatting of a JSON string */
@@ -386,7 +386,7 @@ export function capitalize(name: string): string {
 export function kebabCaseToUpperCamelCase(name: string): string {
 	return name
 		.split(/[_\-]/)
-		.filter(part => part.length > 0)
+		.filter((part) => part.length > 0)
 		.map(capitalize)
 		.join("");
 }
