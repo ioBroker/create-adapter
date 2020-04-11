@@ -33,6 +33,8 @@ function isArray(it) {
 async function translateText(text, targetLang, yandexApiKey) {
     if (targetLang === 'en') {
         return text;
+    } else if (!text) {
+        return '';
     }
     if (yandexApiKey) {
         return await translateYandex(text, targetLang, yandexApiKey);
