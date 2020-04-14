@@ -340,6 +340,10 @@ export function tsFixQuotes(
 	quotes: keyof typeof Quotemark,
 ): string {
 	const linter = new Linter();
+	linter.defineParser(
+		"@typescript-eslint/parser",
+		require("@typescript-eslint/parser"),
+	);
 	const result = linter.verifyAndFix(
 		sourceText,
 		createESLintOptions("TypeScript", quotes),
