@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (Mic-M) Don't auto-translate empty texts (fixes #462)
+* (AlCalzone) Drop Node.js 8 from testing
 
 ## 1.23.0 (2020-03-17)
 * (AlCalzone) Update `.travis.yml` in the template to `gcc 6`
