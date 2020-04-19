@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.24.0 (2020-04-19)
 * (Mic-M) Don't auto-translate empty texts (fixes #462)
 * (AlCalzone) Drop Node.js 8 from testing
 
