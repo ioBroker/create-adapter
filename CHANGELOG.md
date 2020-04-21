@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Move `@typescript-eslint/parser` to dependencies to fix crash when building TypeScript adapters.
+
 ## 1.24.0 (2020-04-19)
 * (Mic-M) Don't auto-translate empty texts (fixes #462)
 * (AlCalzone) Drop Node.js 8 from testing
