@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.24.1 (2020-04-21)
 * (AlCalzone) Move `@typescript-eslint/parser` to dependencies to fix crash when building TypeScript adapters.
 
 ## 1.24.0 (2020-04-19)
