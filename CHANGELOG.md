@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Fixed compatibility with `@types/iobroker@3.0.6`
+
 ## 1.24.1 (2020-04-21)
 * (AlCalzone) Move `@typescript-eslint/parser` to dependencies to fix crash when building TypeScript adapters.
 
