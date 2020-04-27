@@ -40,7 +40,7 @@ jobs:
     - # Only deploy on versioned tags (created by npm run release ...)
       if: (tag =~ /^v[0-9]+\.[0-9]+\.[0-9]+/)
       stage: deploy
-      node_js: "8"
+      node_js: "12"
       install: npm ci
       script: skip
       deploy:
@@ -55,7 +55,7 @@ jobs:
           tags: true # This must be true or tags won't be released
     - # Update the ioBroker.template repo always (for now)
       stage: deploy
-      node_js: "8"
+      node_js: "12"
       install: npm ci
       script: skip
       deploy:
