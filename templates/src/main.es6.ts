@@ -40,7 +40,7 @@ ${adapterSettings.map(s => `\t\t\t${s.key}: ${typeof s.defaultValue};`).join("\n
 
 class ${className} extends utils.Adapter {
 
-	public constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
+	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
 			name: "${answers.adapterName}",
@@ -168,7 +168,7 @@ ${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.
 
 if (module.parent) {
 	// Export the constructor in compact mode
-	module.exports = (options: Partial<ioBroker.AdapterOptions> | undefined) => new ${className}(options);
+	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new ${className}(options);
 } else {
 	// otherwise start the instance directly
 	(() => new ${className}())();

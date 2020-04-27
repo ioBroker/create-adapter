@@ -29,7 +29,7 @@ const utils = require("@iobroker/adapter-core");
 class ${className} extends utils.Adapter {
 
 	/**
-	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}]
 	 */
 	constructor(options) {
 		super({
@@ -166,7 +166,7 @@ ${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.
 if (module.parent) {
 	// Export the constructor in compact mode
 	/**
-	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}]
 	 */
 	module.exports = (options) => new ${className}(options);
 } else {

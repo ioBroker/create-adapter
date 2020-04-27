@@ -14,7 +14,7 @@ const utils = require('@iobroker/adapter-core');
 class TestAdapter extends utils.Adapter {
 
     /**
-     * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+     * @param {Partial<utils.AdapterOptions>} [options={}]
      */
     constructor(options) {
         super({
@@ -147,7 +147,7 @@ class TestAdapter extends utils.Adapter {
 if (module.parent) {
     // Export the constructor in compact mode
     /**
-     * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+     * @param {Partial<utils.AdapterOptions>} [options={}]
      */
     module.exports = (options) => new TestAdapter(options);
 } else {

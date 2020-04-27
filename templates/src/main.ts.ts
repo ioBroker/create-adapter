@@ -41,7 +41,7 @@ let adapter: ioBroker.Adapter;
 /**
  * Starts the adapter instance
  */
-function startAdapter(options: Partial<ioBroker.AdapterOptions> = {}): ioBroker.Adapter {
+function startAdapter(options: Partial<utils.AdapterOptions> = {}): ioBroker.Adapter {
 	// Create the adapter and define its methods
 	return adapter = utils.adapter({
 		// Default options

@@ -19,7 +19,7 @@ let adapter;
 
 /**
  * Starts the adapter instance
- * @param {Partial<ioBroker.AdapterOptions>} [options]
+ * @param {Partial<utils.AdapterOptions>} [options]
  */
 function startAdapter(options) {
     // Create the adapter and define its methods

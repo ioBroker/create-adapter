@@ -26,7 +26,7 @@ declare global {
 
 class TestAdapter extends utils.Adapter {
 
-	public constructor(options: Partial<ioBroker.AdapterOptions> = {}) {
+	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
 			name: "test-adapter",
@@ -149,7 +149,7 @@ class TestAdapter extends utils.Adapter {
 
 if (module.parent) {
 	// Export the constructor in compact mode
-	module.exports = (options: Partial<ioBroker.AdapterOptions> | undefined) => new TestAdapter(options);
+	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new TestAdapter(options);
 } else {
 	// otherwise start the instance directly
 	(() => new TestAdapter())();
