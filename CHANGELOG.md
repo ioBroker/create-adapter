@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Update the CI scripts (including Node.js 14.x)
+
 ## 1.24.2 (2020-04-27)
 * (AlCalzone) Fixed compatibility with `@types/iobroker@3.0.6`
 
