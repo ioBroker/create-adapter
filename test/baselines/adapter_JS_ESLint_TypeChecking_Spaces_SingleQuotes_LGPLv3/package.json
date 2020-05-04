@@ -19,7 +19,7 @@
     "url": "https://github.com/AlCalzone/ioBroker.test-adapter"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.3.1"
+    "@iobroker/adapter-core": "^2.4.0"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.2.0",
