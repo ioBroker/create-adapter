@@ -9,8 +9,8 @@ const templateFunction: TemplateFunction = answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 
-	const latestNodeVersion = "12.x";
-	const adapterTestVersions = ["10.x", "12.x"];
+	const latestNodeVersion = "14.x";
+	const adapterTestVersions = ["10.x", "12.x", "14.x"];
 	const adapterTestOS = ["ubuntu-latest", "windows-latest", "macos-latest"]
 
 	const template = `
@@ -73,13 +73,17 @@ ${isAdapter ? (
                 node-version: [${adapterTestVersions.join(", ")}]
                 os: [${adapterTestOS.join(", ")}]
 ${(adapterTestOS.includes("windows-latest") && adapterTestVersions.includes("8.x")) ? (
+	// This is unnecessary but I'm leaving it here in case we need it again.
+	// The else branch will never trigger
 `                exclude:
                     # Don't test Node.js 8 on Windows. npm is weird here
                     - os: windows-latest
                       node-version: 8.x`
 ) :""}
         steps:
-            - uses: actions/checkout@v1
+            - name: Checkout code
+              uses: actions/checkout@v2
+
             - name: Use Node.js \${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
@@ -137,14 +141,6 @@ ${useTypeScript ? (
 #                  npm config set //registry.npmjs.org/:_authToken=\${{ secrets.NPM_TOKEN }}
 #                  npm whoami
 #                  npm publish
-
-    # Dummy job for skipped builds - without this, github reports the build as failed
-    skip-ci:
-        if: contains(github.event.head_commit.message, '[skip ci]')
-        runs-on: ubuntu-latest
-        steps:
-            - name: Skip build
-              run: echo "Build skipped!"
 `;
 	return template.trimLeft();
 };
