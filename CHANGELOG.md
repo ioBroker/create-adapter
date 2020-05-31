@@ -8,6 +8,8 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Update the CI scripts (including Node.js 14.x)
+* (AlCalzone) Print better error message when translations hit the rate limiter
+* (AlCalzone) Synchronize translation implementation in TS with the JS one
 
 ## 1.24.2 (2020-04-27)
 * (AlCalzone) Fixed compatibility with `@types/iobroker@3.0.6`
