@@ -7,6 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
+* (klein0r) Fix translations in VIS projects (#503)
 * (AlCalzone) Update the CI scripts (including Node.js 14.x)
 
 ## 1.24.2 (2020-04-27)
