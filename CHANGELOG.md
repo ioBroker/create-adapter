@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.25.0 (2020-05-31)
 * (klein0r) Fix translations in VIS projects (#503)
 * (AlCalzone) Update the CI scripts (including Node.js 14.x)
 * (AlCalzone) Print better error message when translations hit the rate limiter
