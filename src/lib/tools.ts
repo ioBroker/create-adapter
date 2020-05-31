@@ -237,7 +237,13 @@ export async function translateText(
 			}
 			error(`Invalid response for translate request`);
 		} catch (e) {
-			error(`Could not translate to "${targetLang}": ${e}`);
+			if (e.response?.status === 429) {
+				error(
+					`Could not translate to "${targetLang}": Rate-limited by Google Translate`,
+				);
+			} else {
+				error(`Could not translate to "${targetLang}": ${e}`);
+			}
 		}
 		return text;
 	}
