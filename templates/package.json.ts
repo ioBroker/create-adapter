@@ -38,13 +38,13 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/mocha",
 			"mocha",
 			"@types/sinon",
-			"sinon@8", // pinned until we drop Node 8 support
+			"sinon",
 			"@types/sinon-chai",
 			"sinon-chai",
 			"@types/proxyquire",
 			"proxyquire",
 			// and NodeJS typings
-			"@types/node@12",
+			"@types/node@14",
 		] : [])
 		.concat(useTypeScript ? [
 			// enhance testing through TS tools
