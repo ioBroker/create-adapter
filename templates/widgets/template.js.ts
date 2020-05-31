@@ -18,11 +18,25 @@ const templateFunction: TemplateFunction = answers => {
 "use strict";
 
 // add translations for edit mode
-$.get( "adapter/${answers.adapterName}/words.js", function(script) {
-	let translation = script.substring(script.indexOf('{'), script.length);
-	translation = translation.substring(0, translation.lastIndexOf(';'));
-	$.extend(systemDictionary, JSON.parse(translation));
-});
+$.extend(
+	true,
+	systemDictionary,
+	{
+		// Add your translations here, e.g.:
+		// "size": {
+		// 	"en": "Size",
+		// 	"de": "Größe",
+		// 	"ru": "Размер",
+		// 	"pt": "Tamanho",
+		// 	"nl": "Grootte",
+		// 	"fr": "Taille",
+		// 	"it": "Dimensione",
+		// 	"es": "Talla",
+		// 	"pl": "Rozmiar",
+		// 	"zh-cn": "尺寸"
+		// }
+	}
+);
 
 // this code can be placed directly in ${answers.adapterName}.html
 vis.binds["${widgetName}"] = {
