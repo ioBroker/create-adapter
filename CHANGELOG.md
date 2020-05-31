@@ -7,6 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
+* (klein0r) Fix translations in VIS projects (#503)
 * (AlCalzone) Update the CI scripts (including Node.js 14.x)
 * (AlCalzone) Print better error message when translations hit the rate limiter
 * (AlCalzone) Synchronize translation implementation in TS with the JS one
