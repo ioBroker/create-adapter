@@ -37,9 +37,9 @@ async function translateText(text, targetLang, yandexApiKey) {
         return '';
     }
     if (yandexApiKey) {
-        return await translateYandex(text, targetLang, yandexApiKey);
+        return translateYandex(text, targetLang, yandexApiKey);
     } else {
-        return await translateGoogle(text, targetLang);
+        return translateGoogle(text, targetLang);
     }
 }
 
@@ -47,7 +47,7 @@ async function translateText(text, targetLang, yandexApiKey) {
  * Translates text with Yandex API
  * @param {string} text The text to translate
  * @param {string} targetLang The target languate
- * @param {string} [apiKey] The yandex API key. You can create one for free at https://translate.yandex.com/developers
+ * @param {string} apiKey The yandex API key. You can create one for free at https://translate.yandex.com/developers
  * @returns {Promise<string>}
  */
 async function translateYandex(text, targetLang, apiKey) {
@@ -57,8 +57,8 @@ async function translateYandex(text, targetLang, apiKey) {
     try {
         const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${apiKey}&text=${encodeURIComponent(text)}&lang=en-${targetLang}`;
         const response = await axios({url, timeout: 15000});
-        if (response.data && response.data['text']) {
-            return response.data['text'][0];
+        if (response.data && response.data.text && isArray(response.data.text)) {
+            return response.data.text[0];
         }
         throw new Error('Invalid response for translate request');
     } catch (e) {
@@ -82,7 +82,13 @@ async function translateGoogle(text, targetLang) {
         }
         throw new Error('Invalid response for translate request');
     } catch (e) {
-        throw new Error(`Could not translate to "${targetLang}": ${e}`);
+        if (e.response && e.response.status === 429) {
+            throw new Error(
+                `Could not translate to "${targetLang}": Rate-limited by Google Translate`
+            );
+        } else {
+            throw new Error(`Could not translate to "${targetLang}": ${e}`);
+        }
     }
 }
 
