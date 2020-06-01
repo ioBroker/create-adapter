@@ -105,8 +105,32 @@ jobs:
 #              with:
 #                  node-version: ${{ matrix.node-version }}
 #
+#            - name: Extract the version and commit body from the tag
+#              # The body may be multiline, therefore newlines and % need to be escaped
+#              run: |
+#                  VERSION="${{ github.ref }}"
+#                  VERSION=${VERSION##*/v}
+#                  echo "::set-env name=VERSION::$VERSION"
+#                  BODY=$(git show -s --format=%b)
+#                  BODY="${BODY//'%'/'%25'}"
+#                  BODY="${BODY//$'\n'/'%0A'}"
+#                  BODY="${BODY//$'\r'/'%0D'}"
+#                  echo "::set-env name=BODY::$BODY"
+#
 #            - name: Publish package to npm
 #              run: |
 #                  npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
 #                  npm whoami
 #                  npm publish
+#
+#            - name: Create Github Release
+#              uses: actions/create-release@v1
+#              env:
+#                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#              with:
+#                  tag_name: ${{ github.ref }}
+#                  release_name: Release v${{ env.VERSION }}
+#                  draft: false
+#                  # Prerelease versions create prereleases on Github
+#                  prerelease: ${{ contains(env.VERSION, '-') }}
+#                  body: ${{ env.BODY }}
