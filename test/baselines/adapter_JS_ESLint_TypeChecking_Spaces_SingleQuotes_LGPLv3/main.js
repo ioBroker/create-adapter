@@ -33,23 +33,29 @@ function startAdapter(options) {
         // is called when adapter shuts down - callback has to be called under any circumstances!
         unload: (callback) => {
             try {
-                adapter.log.info('cleaned everything up...');
+                // Here you must clear all timeouts or intervals that may still be active
+                // clearTimeout(timeout1);
+                // clearTimeout(timeout2);
+                // ...
+                // clearInterval(interval1);
+
                 callback();
             } catch (e) {
                 callback();
             }
         },
 
-        // is called if a subscribed object changes
-        objectChange: (id, obj) => {
-            if (obj) {
-                // The object was changed
-                adapter.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-            } else {
-                // The object was deleted
-                adapter.log.info(`object ${id} deleted`);
-            }
-        },
+        // If you need to react to object changes, uncomment the following method.
+        // You also need to subscribe to the objects with `adapter.subscribeObjects`, similar to `adapter.subscribeStates`.
+        // objectChange: (id, obj) => {
+        //     if (obj) {
+        //         // The object was changed
+        //         adapter.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
+        //     } else {
+        //         // The object was deleted
+        //         adapter.log.info(`object ${id} deleted`);
+        //     }
+        // },
 
         // is called if a subscribed state changes
         stateChange: (id, state) => {
@@ -62,18 +68,21 @@ function startAdapter(options) {
             }
         },
 
-        // Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
-        // requires "common.message" property to be set to true in io-package.json
+        // If you need to accept messages in your adapter, uncomment the following block.
+        // /**
+        //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
+        //  * Using this method requires "common.message" property to be set to true in io-package.json
+        //  */
         // message: (obj) => {
-        // 	if (typeof obj === 'object' && obj.message) {
-        // 		if (obj.command === 'send') {
-        // 			// e.g. send email or pushover or whatever
-        // 			adapter.log.info('send command');
+        //     if (typeof obj === 'object' && obj.message) {
+        //         if (obj.command === 'send') {
+        //             // e.g. send email or pushover or whatever
+        //             adapter.log.info('send command');
 
-        // 			// Send response in callback if required
-        // 			if (obj.callback) adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-        // 		}
-        // 	}
+        //             // Send response in callback if required
+        //             if (obj.callback) adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+        //         }
+        //     }
         // },
     }));
 }
@@ -90,7 +99,7 @@ function main() {
         Here a simple template for a boolean variable named "testVariable"
         Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
     */
-    adapter.setObject('testVariable', {
+    adapter.setObjectNotExists('testVariable', {
         type: 'state',
         common: {
             name: 'testVariable',
@@ -102,8 +111,12 @@ function main() {
         native: {},
     });
 
-    // in this template all states changes inside the adapters namespace are subscribed
-    adapter.subscribeStates('*');
+    // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
+    adapter.subscribeStates('testVariable');
+    // You can also add a subscription for multiple states. The following line watches all states starting with "lights."
+    // adapter.subscribeStates('lights.*');
+    // Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
+    // adapter.subscribeStates('*');
 
     /*
         setState examples
