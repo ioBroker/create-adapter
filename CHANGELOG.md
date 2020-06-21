@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) The auto-deploy now also creates Github Releases
+* (AlCalzone) Modernized the main file templates with some best practices and async methods
 
 ## 1.25.0 (2020-05-31)
 * (klein0r) Fix translations in VIS projects (#503)
