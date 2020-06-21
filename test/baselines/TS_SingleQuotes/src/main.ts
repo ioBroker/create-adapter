@@ -98,7 +98,7 @@ function startAdapter(options: Partial<utils.AdapterOptions> = {}): ioBroker.Ada
 	});
 }
 
-function main(): void {
+async function main(): Promise<void> {
 
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
@@ -110,7 +110,7 @@ function main(): void {
 		Here a simple template for a boolean variable named "testVariable"
 		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
 	*/
-	adapter.setObjectNotExists('testVariable', {
+	await adapter.setObjectNotExistsAsync('testVariable', {
 		type: 'state',
 		common: {
 			name: 'testVariable',
@@ -134,14 +134,14 @@ function main(): void {
 		you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
 	*/
 	// the variable testVariable is set to true as command (ack=false)
-	adapter.setState('testVariable', true);
+	await adapter.setStateAsync('testVariable', true);
 
 	// same thing, but the value is flagged "ack"
 	// ack should be always set to true if the value is received from or acknowledged from the target system
-	adapter.setState('testVariable', { val: true, ack: true });
+	await adapter.setStateAsync('testVariable', { val: true, ack: true });
 
 	// same thing, but the state is deleted after 30s (getState will return null afterwards)
-	adapter.setState('testVariable', { val: true, ack: true, expire: 30 });
+	await adapter.setStateAsync('testVariable', { val: true, ack: true, expire: 30 });
 
 	// examples for the checkPassword/checkGroup functions
 	adapter.checkPassword('admin', 'iobroker', (res) => {
