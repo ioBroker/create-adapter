@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.26.0 (2020-06-22)
 * (AlCalzone) The auto-deploy now also creates Github Releases
 * (AlCalzone) Modernized the main file templates with some best practices and async methods
 
