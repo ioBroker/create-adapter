@@ -1,7 +1,7 @@
 import { TemplateFunction } from "../../src/lib/createAdapter";
 import { AdapterSettings, getDefaultAnswer } from "../../src/lib/questions";
 
-function generateSettingsDiv(settings: AdapterSettings) {
+function generateSettingsDiv(settings: AdapterSettings): string {
 	if (settings.inputType === "select" && settings.options) {
 		const options = settings.options.map(opt => `
 					<option value="${opt.value}">${opt.text}</option>\n`);
