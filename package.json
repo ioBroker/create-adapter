@@ -69,6 +69,7 @@
   "dependencies": {
     "@typescript-eslint/parser": "^2.27.0",
     "alcalzone-shared": "^2.2.0",
+    "ansi-colors": "^4.1.1",
     "axios": "^0.19.2",
     "debug": "^4.1.1",
     "enquirer": "^2.3.5",
