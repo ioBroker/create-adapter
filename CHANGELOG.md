@@ -6,6 +6,10 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Fixed ESLint errors in the generated `src/lib/tools.ts` (fixes #545)
+* (AlCalzone) Fixed ESLint errors in the creator sources
+
 ## 1.26.0 (2020-06-22)
 * (AlCalzone) The auto-deploy now also creates Github Releases
 * (AlCalzone) Modernized the main file templates with some best practices and async methods
