@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.26.1 (2020-08-17)
 * (AlCalzone) Fixed ESLint errors in the generated `src/lib/tools.ts` (fixes #545)
 * (AlCalzone) Fixed ESLint errors in the creator sources
 
