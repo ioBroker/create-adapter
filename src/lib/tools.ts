@@ -80,7 +80,6 @@ export function executeCommand(
 				options.stdout || process.stdout,
 				options.stderr || process.stderr,
 			],
-			// @ts-ignore This option exists starting with NodeJS 8
 			windowsHide: true,
 		};
 		if (options.cwd != null) spawnOptions.cwd = options.cwd;
@@ -348,6 +347,7 @@ export function tsFixQuotes(
 	const linter = new Linter();
 	linter.defineParser(
 		"@typescript-eslint/parser",
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		require("@typescript-eslint/parser"),
 	);
 	const result = linter.verifyAndFix(
