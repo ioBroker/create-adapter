@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Convert `mocha.opts` to `.mocharc.json` (supports mocha 8) (fixes #547)
+
 ## 1.26.1 (2020-08-17)
 * (AlCalzone) Fixed ESLint errors in the generated `src/lib/tools.ts` (fixes #545)
 * (AlCalzone) Fixed ESLint errors in the creator sources
