@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.26.2 (2020-08-18)
 * (AlCalzone) Convert `mocha.opts` to `.mocharc.json` (supports mocha 8) (fixes #547)
 
 ## 1.26.1 (2020-08-17)
