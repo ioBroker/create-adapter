@@ -111,9 +111,9 @@ const templateFunction: TemplateFunction = async answers => {
 				"build": "npm run build:ts",
 				"watch:ts": "tsc -p tsconfig.build.json --watch",
 				"watch": "npm run watch:ts",
-				"test:ts": "mocha --opts test/mocha.custom.opts",
+				"test:ts": "mocha src/**/*.test.ts",
 			`) : (`
-				"test:js": "mocha --opts test/mocha.custom.opts",
+				"test:js": "mocha \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
 			`)}
 			"test:package": "mocha test/package --exit",
 			"test:unit": "mocha test/unit --exit",
