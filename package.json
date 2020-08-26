@@ -31,7 +31,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@alcalzone/release-script": "^1.4.1",
+    "@alcalzone/release-script": "^1.7.0",
     "@fimbul/mithotyn": "^0.21.0",
     "@fimbul/wotan": "^0.21.1",
     "@types/ansi-colors": "^3.2.2",
