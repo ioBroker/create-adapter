@@ -31,6 +31,7 @@ const templateFunction: TemplateFunction = answers => {
         ],
         "no-console": "off",
         "no-var": "error",
+        "no-trailing-spaces": "error",
         "prefer-const": "error",
         "quotes": [
             "error",
