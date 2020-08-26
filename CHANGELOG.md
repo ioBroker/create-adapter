@@ -7,6 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
+* (AlCalzone) Update release-script and ESLint
 * (AlCalzone) Enable "no-trailing-spaces" ESLint rule in adapters (fixes #549)
 
 ## 1.26.2 (2020-08-18)
