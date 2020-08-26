@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.26.3 (2020-08-26)
 * (AlCalzone) Update release-script and ESLint
 * (AlCalzone) Enable "no-trailing-spaces" ESLint rule in adapters (fixes #549)
 
