@@ -19,7 +19,7 @@
 		"sourceMap": true,
 		"inlineSourceMap": false,
 		"target": "es2017",
-		"watch": false, // true breaks CircleCI
+		"watch": false,
 		// Fix enquirer typings
 		"typeRoots": ["./src/@types/", "./node_modules/@types"]
 	},

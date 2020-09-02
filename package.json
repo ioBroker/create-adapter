@@ -97,7 +97,7 @@
     "coverage": "node_modules/.bin/nyc npm run test:ts",
     "coveralls": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls -v",
     "show-coverage": "npm run coverage && start ./coverage/index.html",
-    "lint:ts": "eslint {src,test,travis,maintenance}/**/*.ts",
+    "lint:ts": "eslint {src,test,.github,maintenance}/**/*.ts",
     "lint:wotan": "wotan",
     "lint": "npm run lint:ts && npm run lint:wotan",
     "release": "release-script",
