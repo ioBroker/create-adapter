@@ -27,7 +27,7 @@ export = (answers => {
 
 	const useReact = answers.adminReact === "yes";
 
-	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
+	const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;
 
 	const template = `
 <html>
@@ -96,6 +96,18 @@ ${useReact ? "" : (`
 
 <body>
 
+${useReact ? (`
+	<!-- this is where the React components are loaded into -->
+	<div class="m adapter-container">
+		<div class="loading">
+			<img src="${answers.adapterName}.png" />
+		</div>
+		<div class="translate loading">loading...</div>
+	</div>
+
+	<!-- load compiled React scripts -->
+	<script type="text/javascript" src="build/index.js"></script>
+`) : (`
 	<div class="m adapter-container">
 
 		<div class="row">
@@ -111,7 +123,7 @@ ${useReact ? "" : (`
 		</div>
 
 	</div>
-
+`)}
 </body>
 
 </html>

@@ -6,5 +6,12 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
-	return readFile("tsconfig.raw.json", __dirname);
+	const useReact = answers.adminReact === "yes";
+
+	return readFile(
+		useTypeScript && useReact
+			? "tsconfig_TS-React.raw.json"
+			: "tsconfig.raw.json",
+		__dirname
+	);
 }) as TemplateFunction;

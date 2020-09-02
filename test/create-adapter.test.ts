@@ -60,6 +60,7 @@ const baseAnswers: Answers = {
 	adminFeatures: [],
 	type: "general",
 	language: "TypeScript",
+	adminReact: "no",
 	tools: ["ESLint"],
 	indentation: "Tab",
 	quotes: "double",
@@ -173,6 +174,15 @@ describe("adapter creation =>", () => {
 					"adapter_TS_ES6Class_ESLint_Tabs_DoubleQuotes_MIT",
 					answers,
 				);
+			});
+
+			it("Adapter, TypeScript React", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					es6class: "yes",
+					adminReact: "yes",
+				};
+				await expectSuccess("adapter_TS_React", answers);
 			});
 
 			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {

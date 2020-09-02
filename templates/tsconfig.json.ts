@@ -18,6 +18,7 @@ export = (answers => {
 		"allowJs": true,
 		"checkJs": true,
 		${useTypeScript ? (`
+		"skipLibCheck": true, // Don't report errors in 3rd party definitions
 		"noEmitOnError": true,
 		"outDir": "./build/",
 		"removeComments": false,`) : ""}
@@ -25,6 +26,9 @@ export = (answers => {
 		"moduleResolution": "node",
 		// this is necessary for the automatic typing of the adapter config
 		"resolveJsonModule": true,
+
+		// Support React
+		"jsx": "react",
 
 		// Set this to false if you want to disable the very strict rules (not recommended)
 		"strict": true,

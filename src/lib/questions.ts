@@ -429,6 +429,29 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 					"Which language do you want to use to code the adapter?",
 				choices: ["JavaScript", "TypeScript"],
 			},
+			// enable React (only TypeScript at the start)
+			{
+				condition: [
+					{ name: "features", contains: "adapter" },
+					{ name: "language", value: "TypeScript" }, // TODO: enable React for JS through Babel
+				],
+				type: "select",
+				name: "adminReact",
+				message: "Use React for the Admin UI?",
+				initial: "no",
+				choices: ["yes", "no"],
+			},
+
+			// TODO: support admin tab (React)
+			// {
+			// 	condition: { name: "adminTab", value: "yes" },
+			// 	type: "select",
+			// 	name: "tabReact",
+			// 	message: "Use React for the tab?",
+			// 	initial: "no",
+			// 	choices: ["yes", "no"],
+			// },
+
 			styledMultiselect({
 				condition: { name: "language", value: "JavaScript" },
 				name: "tools",
@@ -456,36 +479,6 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				action: checkTypeScriptTools,
 			}),
 
-			// TODO: enable React (only TypeScript at the start)
-			// {
-			// 	condition: [
-			// 		{ name: "features", contains: "adapter" },
-			// 		{ name: "language", value: "TypeScript" }, // TODO: enable React for JS through Babel
-			// 	],
-			// 	type: "select",
-			// 	name: "adminReact",
-			// 	message: "Use React for the Admin UI?",
-			// 	initial: "no",
-			// 	choices: ["yes", "no"],
-			// },
-
-			// TODO: support admin tab
-			// {
-			// 	condition: { name: "features", contains: "adapter" },
-			// 	type: "select",
-			// 	name: "adminTab",
-			// 	message: "Create a tab in the admin UI?",
-			// 	initial: "no",
-			// 	choices: ["yes", "no"],
-			// },
-			// {
-			// 	condition: { name: "adminTab", value: "yes" },
-			// 	type: "select",
-			// 	name: "tabReact",
-			// 	message: "Use React for the tab?",
-			// 	initial: "no",
-			// 	choices: ["yes", "no"],
-			// },
 			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
@@ -659,7 +652,7 @@ export interface Answers {
 	title?: string;
 	license?: { id: string; name: string; text: string };
 	type: string;
-	adminReact?: string;
+	adminReact?: "yes" | "no";
 	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
 	es6class?: "yes" | "no";

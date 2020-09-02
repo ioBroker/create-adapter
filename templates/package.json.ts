@@ -9,6 +9,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
+	const useReact = answers.adminReact === "yes";
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
@@ -55,6 +56,28 @@ const templateFunction: TemplateFunction = async answers => {
 			// to clean the build dir
 			"rimraf",
 		] : [])
+		.concat(useTypeScript && useReact ? [
+			// We use parcel as the bundler
+			"parcel-bundler",
+			// React and its type definitions:
+			"react",
+			"react-dom",
+			"@types/react",
+			"@types/react-dom",
+			// UI library support in TS:
+			"@types/jquery",
+			"@types/materialize-css",
+			// We need this for parcel to support TypeScript
+			"@babel/cli",
+			"@babel/core",
+			"@babel/plugin-proposal-class-properties",
+			"@babel/plugin-proposal-decorators",
+			"@babel/plugin-proposal-nullish-coalescing-operator",
+			"@babel/plugin-proposal-numeric-separator",
+			"@babel/plugin-proposal-optional-chaining",
+			"@babel/preset-env",
+			"@babel/preset-typescript",
+		]: [])
 		.concat(useESLint ? ["eslint"] : [])
 		.concat((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
@@ -107,8 +130,10 @@ const templateFunction: TemplateFunction = async answers => {
 		${isAdapter ? (`
 			${useTypeScript ? (`
 				"prebuild": "rimraf ./build",
+				${useReact ? `"build:parcel": "parcel build admin/src/index.tsx -d admin/build",` : ""}
 				"build:ts": "tsc -p tsconfig.build.json",
-				"build": "npm run build:ts",
+				"build": "npm run build:ts${useReact ? " && npm run build:parcel" : ""}",
+				${useReact ? `"watch:parcel": "parcel admin/src/index.tsx -d admin/build ",` : ""}
 				"watch:ts": "tsc -p tsconfig.build.json --watch",
 				"watch": "npm run watch:ts",
 				"test:ts": "mocha src/**/*.test.ts",

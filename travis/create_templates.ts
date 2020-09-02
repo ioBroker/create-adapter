@@ -39,6 +39,7 @@ const adapterAnswers: Answers = {
 	es6class: "yes",
 	type: "general",
 	adminFeatures: ["custom", "tab"],
+	adminReact: "no",
 };
 
 const templates: Record<string, Answers> = {
@@ -57,6 +58,15 @@ const templates: Record<string, Answers> = {
 		tools: ["ESLint", "code coverage"],
 		indentation: "Tab",
 		quotes: "double",
+	},
+	TypeScriptReact: {
+		...adapterAnswers,
+		language: "TypeScript",
+		title: "Template (TypeScript with React)",
+		tools: ["ESLint", "code coverage"],
+		indentation: "Tab",
+		quotes: "double",
+		adminReact: "yes",
 	},
 	JavaScriptVIS: {
 		...adapterAnswers,
