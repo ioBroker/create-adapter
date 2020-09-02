@@ -6,6 +6,7 @@ export = (async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
+	const useReact = answers.adminReact === "yes";
 
 	// Automatically translate all settings
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
@@ -42,6 +43,19 @@ systemDictionary = ${formatJsonString(`{
 		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
 		"zh-cn": "${answers.adapterName}的适配器设置"
 	},
+	${useReact ? (`
+	"loading...": {
+		"en": "loading...",
+		"de": "Wird geladen...",
+		"ru": "загрузка ...",
+		"pt": "Carregando...",
+		"nl": "bezig met laden...",
+		"fr": "chargement...",
+		"it": "Caricamento in corso...",
+		"es": "cargando...",
+		"pl": "Ładuję...",
+		"zh-cn": "载入中..."
+	},`) : ""}
 	${translatedSettingsJson},
 	`) : ""}
 	${isWidget ? (`
