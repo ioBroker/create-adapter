@@ -1,5 +1,3 @@
-# This is a composition of lint and test scripts
-
 name: Test and Release
 
 # Run this job on all pushes and pull requests
@@ -19,8 +17,6 @@ jobs:
   # Runs unit tests on all supported node versions and OSes
   unit-tests:
     if: contains(github.event.head_commit.message, '[skip ci]') == false
-
-    needs: [check-and-lint]
 
     runs-on: ${{ matrix.os }}
     strategy:
