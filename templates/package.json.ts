@@ -13,6 +13,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
+	const useDevcontainer = !!answers.tools?.includes("devcontainer");
 
 	const dependencyPromises = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
@@ -133,7 +134,7 @@ const templateFunction: TemplateFunction = async answers => {
 				${useReact ? `"build:parcel": "parcel build admin/src/index.tsx -d admin/build",` : ""}
 				"build:ts": "tsc -p tsconfig.build.json",
 				"build": "npm run build:ts${useReact ? " && npm run build:parcel" : ""}",
-				${useReact ? `"watch:parcel": "parcel admin/src/index.tsx -d admin/build ",` : ""}
+				${useReact ? `"watch:parcel": "parcel admin/src/index.tsx -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",` : ""}
 				"watch:ts": "tsc -p tsconfig.build.json --watch",
 				"watch": "npm run watch:ts",
 				"test:ts": "mocha src/**/*.test.ts",

@@ -474,6 +474,16 @@ describe("adapter creation =>", () => {
 					(file) => file.name === "io-package.json",
 				);
 			});
+
+			it(`VSCode devcontainer`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					tools: [...(baseAnswers.tools ?? []), "devcontainer"],
+				};
+				await expectSuccess("devcontainer", answers, (file) =>
+					file.name.startsWith(".devcontainer/"),
+				);
+			});
 		});
 	});
 });

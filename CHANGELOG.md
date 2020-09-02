@@ -9,6 +9,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) Add support for TypeScript+React in the Admin UI · [Migration guide](docs/updates/20200902_typescript_react_admin.md)
 * (AlCalzone) Update definitions for type checking in the Admin UI, add some layout fixes to CSS · [Migration guide](docs/updates/20200902_admin_ui_updates.md)
+* (AlCalzone & UncleSamSwiss) Added support for VSCode devcontainers · [Migration guide](docs/updates/20200902_vscode_devcontainers.md)
 
 ## 1.26.3 (2020-08-26)
 * (AlCalzone) Update release-script and ESLint

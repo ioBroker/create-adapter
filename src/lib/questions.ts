@@ -460,6 +460,11 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 				choices: [
 					{ message: "ESLint", hint: "(recommended)" },
 					{ message: "type checking", hint: "(recommended)" },
+					{
+						message: "devcontainer",
+						hint:
+							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
+					},
 				],
 			}),
 			styledMultiselect({
@@ -475,6 +480,11 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 							"(requires ESLint, enables automatic code formatting in VSCode)",
 					},
 					{ message: "code coverage" },
+					{
+						message: "devcontainer",
+						hint:
+							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
+					},
 				],
 				action: checkTypeScriptTools,
 			}),
@@ -647,7 +657,13 @@ export interface Answers {
 	language?: "JavaScript" | "TypeScript";
 	features: ("adapter" | "vis")[];
 	adminFeatures?: ("tab" | "custom")[];
-	tools?: ("ESLint" | "Prettier" | "type checking" | "code coverage")[];
+	tools?: (
+		| "ESLint"
+		| "Prettier"
+		| "type checking"
+		| "code coverage"
+		| "devcontainer"
+	)[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
 	license?: { id: string; name: string; text: string };
