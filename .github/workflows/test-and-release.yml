@@ -122,3 +122,5 @@ jobs:
 
       - name: Update ioBroker.template repo
         run: bash .github/update_templates.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALCALZONE_GITHUB_TOKEN }}
