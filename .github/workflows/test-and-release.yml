@@ -1,0 +1,126 @@
+name: Test and Release
+
+# Run this job on all pushes and pull requests
+# as well as tags with a semantic version
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      # normal versions
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      # pre-releases
+      - "v[0-9]+.[0-9]+.[0-9]+-**"
+  pull_request: {}
+
+jobs:
+  # Runs unit tests on all supported node versions and OSes
+  unit-tests:
+    if: contains(github.event.head_commit.message, '[skip ci]') == false
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run component tests
+        run: npm t
+        env:
+          REQUEST_TIMEOUT: 20000
+          TESTING: true
+
+      - name: Test template creation
+        run: bash .github/test_template_creation.sh
+        env:
+          REQUEST_TIMEOUT: 20000
+          TESTING: true
+
+      - name: Compile TypeScript code
+        run: npm run build
+
+      - name: Start the CLI on a production environment
+        run: |
+          npm ci --only=production
+          TEST_STARTUP=true npx .
+    # TODO: Test the console output
+
+  # ===================
+
+  # Deploys the final package to NPM and Github Releases
+  deploy:
+    # Trigger this step only when a commit on master is tagged with a version number
+    if: |
+      contains(github.event.head_commit.message, '[skip ci]') == false &&
+      github.event_name == 'push' &&
+      github.event.base_ref == 'refs/heads/master' &&
+      startsWith(github.ref, 'refs/tags/v')
+
+    needs: [unit-tests]
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Extract the version and commit body from the tag
+        # The body may be multiline, therefore we need to escape some characters
+        run: |
+          VERSION="${{ github.ref }}"
+          VERSION=${VERSION##*/v}
+          echo "::set-env name=VERSION::$VERSION"
+          BODY=$(git show -s --format=%b)
+          BODY="${BODY//'%'/'%25'}"
+          BODY="${BODY//$'\n'/'%0A'}"
+          BODY="${BODY//$'\r'/'%0D'}"
+          echo "::set-env name=BODY::$BODY"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create a clean build
+        run: npm run build
+
+      - name: Publish package to npm
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+          npm whoami
+          npm publish
+
+      - name: Create Github Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release v${{ env.VERSION }}
+          draft: false
+          # Prerelease versions create prereleases on Github
+          prerelease: ${{ contains(env.VERSION, '-') }}
+          body: ${{ env.BODY }}
+
+      - name: Update ioBroker.template repo
+        run: bash .github/update_templates.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALCALZONE_GITHUB_TOKEN }}
