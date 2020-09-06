@@ -1,4 +1,4 @@
-import { TemplateFunction } from "../../src/lib/createAdapter";
+import { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 
@@ -12,5 +12,5 @@ RUN ln -s /opt/iobroker/node_modules/ /root/.node_modules
 	return template.trim();
 };
 
-templateFunction.customPath = ".devcontainer/Dockerfile";
+templateFunction.customPath = ".devcontainer/iobroker/Dockerfile";
 export = templateFunction;

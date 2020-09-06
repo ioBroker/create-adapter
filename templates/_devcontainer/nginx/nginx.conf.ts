@@ -1,8 +1,6 @@
-import { TemplateFunction } from "../../src/lib/createAdapter";
+import { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
-
 
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
 	if (!devcontainer) return;
@@ -46,6 +44,6 @@ ${needsParcel ? (`
 	return template.trim();
 };
 
-templateFunction.customPath = ".devcontainer/nginx.conf";
+templateFunction.customPath = ".devcontainer/nginx/nginx.conf";
 templateFunction.noReformat = true;
 export = templateFunction;
