@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.27.0 (2020-09-06)
 * (AlCalzone) Add support for TypeScript+React in the Admin UI · [Migration guide](docs/updates/20200902_typescript_react_admin.md)
 * (AlCalzone) Update definitions for type checking in the Admin UI, add some layout fixes to CSS · [Migration guide](docs/updates/20200902_admin_ui_updates.md)
 * (AlCalzone & UncleSamSwiss) Added support for VSCode devcontainers · [Migration guide](docs/updates/20200902_vscode_devcontainers.md)
