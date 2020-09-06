@@ -14,7 +14,7 @@ version: '3'
 services:
     iobroker:
         restart: always
-        build: .
+        build: ./iobroker
         container_name: iobroker-${adapterNameLowerCase}
         hostname: iobroker-${adapterNameLowerCase}
         # This port is only internal, so we can work on this while another instance of ioBroker is running on the host
@@ -53,7 +53,7 @@ ${needsParcel ? (`            - parcel
 `) : ""}        restart: always
         container_name: nginx-${adapterNameLowerCase}
         volumes:
-            - ./nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ..:/workspace:cached
         ports:
             # Make the ioBroker admin available under http://localhost:8082
