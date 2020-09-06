@@ -99,8 +99,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create a clean build
-        run: npm run build
+      # This is unnecessary, since npm publish will run prepublishOnly, which will run build
+      # - name: Create a clean build
+      #   run: npm run build
 
       - name: Publish package to npm
         run: |
