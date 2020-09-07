@@ -37,8 +37,8 @@ After a short while, you will be asked a few questions. Afterwards all the neces
 
 The following CLI options are available:
 
--   `--target=/path/to/dir` - Specify which directory the adapter files should be created in (instead of the current dir)
--   `--skipAdapterExistenceCheck` - Don't check if an adapter with the same name already exists on `npm`.
+-   `--target=/path/to/dir` - Specify which directory the adapter files should be created in (instead of the current dir). Shortcut: `-t`
+-   `--skipAdapterExistenceCheck` - Don't check if an adapter with the same name already exists on `npm`. Shortcut: `-x`
 
 ## Features
 
