@@ -58,6 +58,7 @@ export interface QuestionGroup {
 	headline: string;
 	questions: Question[];
 }
+export type ConditionalTitle = (answers: Record<string, any>) => void;
 export function isQuestionGroup(val: any): val is QuestionGroup {
 	if (val == undefined) return false;
 	if (typeof val.headline !== "string") return false;
@@ -84,7 +85,12 @@ function styledMultiselect<
 }
 
 /** All questions and the corresponding text lines */
-export const questionsAndText: (Question | QuestionGroup | string)[] = [
+export const questionsAndText: (
+	| Question
+	| QuestionGroup
+	| string
+	| ConditionalTitle
+)[] = [
 	"",
 	green.bold("====================================================="),
 	green.bold(
@@ -93,6 +99,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 	green.bold("====================================================="),
 	"",
 	gray(`You can cancel at any point by pressing Ctrl+C.`),
+	(answers) => (!!answers.replay ? green(`Replaying file`) : undefined),
+	(answers) => (!!answers.replay ? green(answers.replay) : undefined),
 	{
 		headline: "Let's get started with a few questions about your project!",
 		questions: [
@@ -616,7 +624,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 
 /** Only the questions */
 export const questions = (questionsAndText.filter(
-	(q) => typeof q !== "string",
+	(q) => typeof q !== "string" && typeof q !== "function",
 ) as (Question | QuestionGroup)[])
 	.map((q) => (isQuestionGroup(q) ? q.questions : [q]))
 	.reduce((arr, next) => arr.concat(...next), []);

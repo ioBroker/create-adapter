@@ -38,6 +38,11 @@ const argv = yargs
 			desc:
 				"Skip check if an adapter with the same name already exists on npm",
 		},
+		replay: {
+			alias: "r",
+			type: "string",
+			desc: "Replay answers from the given .create-adapter.json file",
+		},
 		noInstall: {
 			alias: "n",
 			type: "boolean",
@@ -48,13 +53,13 @@ const argv = yargs
 			alias: "i",
 			hidden: true,
 			type: "boolean",
-			default: true,
+			default: false,
 			desc: "Force installation of dependencies",
 		},
 	}).argv;
 
 /** Where the output should be written */
-const rootDir = path.resolve((argv.target as string) || process.cwd());
+const rootDir = path.resolve(argv.target || process.cwd());
 
 const creatorOptions = {
 	skipAdapterExistenceCheck: !!argv.skipAdapterExistenceCheck,
@@ -64,6 +69,13 @@ const creatorOptions = {
 async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true };
 
+	if (!!argv.replay) {
+		const replayFile = path.resolve(argv.replay);
+		const json = await fs.readFile(replayFile, "utf8");
+		answers = JSON.parse(json);
+		answers.replay = replayFile;
+	}
+
 	async function askQuestion(q: Question): Promise<void> {
 		if (testCondition(q.condition, answers)) {
 			// Make properties dependent on previous answers
@@ -72,7 +84,10 @@ async function ask(): Promise<Answers> {
 			}
 			while (true) {
 				let answer: Record<string, any>;
-				if (
+				if (answers.hasOwnProperty(q.name as string)) {
+					// answer was loaded using the "replay" feature
+					answer = { [q.name as string]: answers[q.name as string] };
+				} else if (
 					answers.expert !== "yes" &&
 					q.expert &&
 					q.initial !== undefined
@@ -123,6 +138,12 @@ async function ask(): Promise<Answers> {
 		if (typeof entry === "string") {
 			// Headlines
 			console.log(entry);
+		} else if (typeof entry === "function") {
+			// Conditional headlines
+			const text = entry(answers);
+			if (text !== undefined) {
+				console.log(text);
+			}
 		} else if (isQuestionGroup(entry)) {
 			// only print the headline if any of the questions are necessary
 			if (
@@ -237,7 +258,7 @@ if (process.env.TEST_STARTUP) {
 	const files = await createFiles(answers);
 
 	await setupProject_CLI(answers, files);
-})();
+})().catch((error) => console.error(error));
 
 process.on("exit", () => {
 	if (fs.pathExistsSync("npm-debug.log")) fs.removeSync("npm-debug.log");
