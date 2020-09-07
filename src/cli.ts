@@ -87,44 +87,46 @@ async function ask(): Promise<Answers> {
 				if (answers.hasOwnProperty(q.name as string)) {
 					// answer was loaded using the "replay" feature
 					answer = { [q.name as string]: answers[q.name as string] };
-				} else if (
-					answers.expert !== "yes" &&
-					q.expert &&
-					q.initial !== undefined
-				) {
-					// In expert mode, prefill the default answer for expert questions
-					answer = { [q.name as string]: q.initial };
 				} else {
-					// Ask the user for an answer
-					try {
-						answer = await prompt(q);
-						// Cancel the process if necessary
-						if (answer[q.name as string] == undefined)
-							throw new Error();
-					} catch (e) {
-						error(e.message || "Adapter creation canceled!");
-						return process.exit(1);
+					if (
+						answers.expert !== "yes" &&
+						q.expert &&
+						q.initial !== undefined
+					) {
+						// In expert mode, prefill the default answer for expert questions
+						answer = { [q.name as string]: q.initial };
+					} else {
+						// Ask the user for an answer
+						try {
+							answer = await prompt(q);
+							// Cancel the process if necessary
+							if (answer[q.name as string] == undefined)
+								throw new Error();
+						} catch (e) {
+							error(e.message || "Adapter creation canceled!");
+							return process.exit(1);
+						}
 					}
-				}
-				// Apply an optional transformation
-				if (typeof q.resultTransform === "function") {
-					const transformed = q.resultTransform(
-						answer[q.name as string],
-					);
-					answer[q.name as string] =
-						transformed instanceof Promise
-							? await transformed
-							: transformed;
-				}
-				// Test the result
-				if (q.action != undefined) {
-					const testResult = await q.action(
-						answer[q.name as string],
-						creatorOptions,
-					);
-					if (typeof testResult === "string") {
-						error(testResult);
-						continue;
+					// Apply an optional transformation
+					if (typeof q.resultTransform === "function") {
+						const transformed = q.resultTransform(
+							answer[q.name as string],
+						);
+						answer[q.name as string] =
+							transformed instanceof Promise
+								? await transformed
+								: transformed;
+					}
+					// Test the result
+					if (q.action != undefined) {
+						const testResult = await q.action(
+							answer[q.name as string],
+							creatorOptions,
+						);
+						if (typeof testResult === "string") {
+							error(testResult);
+							continue;
+						}
 					}
 				}
 				// And remember it
