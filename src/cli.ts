@@ -48,7 +48,7 @@ const argv = yargs
 			alias: "i",
 			hidden: true,
 			type: "boolean",
-			default: true,
+			default: false,
 			desc: "Force installation of dependencies",
 		},
 	}).argv;
