@@ -8,6 +8,7 @@ const templateFunction: TemplateFunction = answers => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
+	const useReact = answers.adminReact === "yes";
 
 	const template = `
 module.exports = {
@@ -16,15 +17,27 @@ module.exports = {
 		ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
 		sourceType: "module", // Allows for the use of imports
 		project: "./tsconfig.json",
-	},
+${useReact ? 
+`		ecmaFeatures: {
+			jsx: true,
+		},
+`: ""}	},
 	extends: [
 		"plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
 ${usePrettier ? (
 `		"prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
 		"plugin:prettier/recommended", // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+`) : ""}${useReact ? (
+`		"plugin:react/recommended", // Supports React JSX
 `) : ""}	],
-	plugins: [],
-	rules: {
+	plugins: [${useReact ? `"react"` : ""}],
+${useReact ? 
+`	settings: {
+		react: {
+			version: 'detect',
+		},
+	},
+`: ""}	rules: {
 ${usePrettier ? "" : (
 `		"indent": "off",
 		"@typescript-eslint/indent": [

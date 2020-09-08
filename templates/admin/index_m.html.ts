@@ -36,14 +36,22 @@ export = (answers => {
 
 	<!-- Load ioBroker scripts and styles-->
 	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
-	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+${useReact ? 
+`	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		// backwards compatibilty for words.js
+		if (typeof systemDictionary === 'undefined') {
+			systemDictionary = {};
+		}
+	</script>` :
+`	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
 	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 
 	<script type="text/javascript" src="../../js/translate.js"></script>
 	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
-	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+	<script type="text/javascript" src="../../js/adapter-settings.js"></script>`}
 
 	<!-- Load our own files -->
 	<link rel="stylesheet" type="text/css" href="style.css" />
@@ -98,12 +106,7 @@ ${useReact ? "" : (`
 
 ${useReact ? (`
 	<!-- this is where the React components are loaded into -->
-	<div class="m adapter-container">
-		<div class="loading">
-			<img src="${answers.adapterName}.png" />
-		</div>
-		<div class="translate loading">loading...</div>
-	</div>
+	<div class="m adapter-container" id="root"></div>
 
 	<!-- load compiled React scripts -->
 	<script type="text/javascript" src="build/index.js"></script>

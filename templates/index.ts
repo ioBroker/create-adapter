@@ -9,6 +9,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "admin/custom_m.html.ts", templateFunction: require("./admin/custom_m.html") },
 	{ name: "admin/icon.png.ts", templateFunction: require("./admin/icon.png") },
 	{ name: "admin/index_m.html.ts", templateFunction: require("./admin/index_m.html") },
+	{ name: "admin/src/app.tsx.ts", templateFunction: require("./admin/src/app.tsx") },
 	{ name: "admin/src/components/settings.tsx.ts", templateFunction: require("./admin/src/components/settings.tsx") },
 	{ name: "admin/src/index.tsx.ts", templateFunction: require("./admin/src/index.tsx") },
 	{ name: "admin/style.css.ts", templateFunction: require("./admin/style.css") },

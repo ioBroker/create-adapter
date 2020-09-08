@@ -43,19 +43,6 @@ systemDictionary = ${formatJsonString(`{
 		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
 		"zh-cn": "${answers.adapterName}的适配器设置"
 	},
-	${useReact ? (`
-	"loading...": {
-		"en": "loading...",
-		"de": "Wird geladen...",
-		"ru": "загрузка ...",
-		"pt": "Carregando...",
-		"nl": "bezig met laden...",
-		"fr": "chargement...",
-		"it": "Caricamento in corso...",
-		"es": "cargando...",
-		"pl": "Ładuję...",
-		"zh-cn": "载入中..."
-	},`) : ""}
 	${translatedSettingsJson},
 	`) : ""}
 	${isWidget ? (`
