@@ -11,7 +11,6 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "admin/index_m.html.ts", templateFunction: require("./admin/index_m.html") },
 	{ name: "admin/src/components/settings.tsx.ts", templateFunction: require("./admin/src/components/settings.tsx") },
 	{ name: "admin/src/index.tsx.ts", templateFunction: require("./admin/src/index.tsx") },
-	{ name: "admin/src/lib/backend.ts.ts", templateFunction: require("./admin/src/lib/backend.ts") },
 	{ name: "admin/style.css.ts", templateFunction: require("./admin/style.css") },
 	{ name: "admin/tab_m.html.ts", templateFunction: require("./admin/tab_m.html") },
 	{ name: "admin/tsconfig.json.ts", templateFunction: require("./admin/tsconfig.json") },
