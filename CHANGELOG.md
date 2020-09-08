@@ -6,6 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
+* (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react
 * (UncleSamSwiss) Allow to replay the adapter creation with the same answers
 
 ## 1.27.0 (2020-09-06)
