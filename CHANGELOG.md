@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
-* (UncleSamSwiss) Removed automatic restart of docker containers (#575)
+* (UncleSamSwiss) Removed automatic restart of docker containers (#575) · [Migration guide](docs/updates/20200909_devcontainers_no_restart.md)
 
 ## 1.27.0 (2020-09-06)
 * (AlCalzone) Add support for TypeScript+React in the Admin UI · [Migration guide](docs/updates/20200902_typescript_react_admin.md)
