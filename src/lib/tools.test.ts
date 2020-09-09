@@ -168,6 +168,7 @@ describe("tools/formatLicense()", () => {
 	const answers = { authorName: "John Doe", authorEmail: "foo@bar.com" };
 
 	it("should replace [year] with the current year", () => {
+		// MIT License
 		const curYear = new Date().getFullYear().toString();
 		const tests = [
 			{ original: "[year]", expected: curYear },
@@ -186,7 +187,28 @@ describe("tools/formatLicense()", () => {
 		}
 	});
 
+	it("should replace [yyyy] with the current year", () => {
+		// Apache License
+		const curYear = new Date().getFullYear().toString();
+		const tests = [
+			{ original: "[yyyy]", expected: curYear },
+			{
+				original: "Copyright © [yyyy]",
+				expected: `Copyright © ${curYear}`,
+			},
+			{
+				original: "[yyyy] [yyyy] [yyyy]",
+				expected: `${curYear} ${curYear} ${curYear}`,
+			},
+		];
+
+		for (const { original, expected } of tests) {
+			expect(formatLicense(original, answers as any)).to.equal(expected);
+		}
+	});
+
 	it("should replace [fullname] with the author's name", () => {
+		// MIT License
 		const tests = [
 			{ original: "[fullname]", expected: answers.authorName },
 			{
@@ -200,7 +222,27 @@ describe("tools/formatLicense()", () => {
 		}
 	});
 
+	it("should replace [name of copyright owner] with the author's name", () => {
+		// Apache License
+		const tests = [
+			{
+				original: "[name of copyright owner]",
+				expected: answers.authorName,
+			},
+			{
+				original:
+					"[name of copyright owner] [name of copyright owner] [name of copyright owner]",
+				expected: `${answers.authorName} ${answers.authorName} ${answers.authorName}`,
+			},
+		];
+
+		for (const { original, expected } of tests) {
+			expect(formatLicense(original, answers as any)).to.equal(expected);
+		}
+	});
+
 	it("should replace [email] with the author's email address", () => {
+		// MIT License
 		const tests = [
 			{ original: "[email]", expected: answers.authorEmail },
 			{
