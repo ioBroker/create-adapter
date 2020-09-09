@@ -15,7 +15,6 @@ import {
 	transformKeywords,
 } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
-import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
 
 // This is being used to simulate wrong options for conditions on the type level
@@ -597,7 +596,6 @@ export const questionsAndText: (
 					"MIT License",
 					"The Unlicense",
 				],
-				resultTransform: (value: string) => licenses[value] as any,
 			},
 			styledMultiselect({
 				name: "ci",
@@ -674,7 +672,7 @@ export interface Answers {
 	)[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
-	license?: { id: string; name: string; text: string };
+	license?: string;
 	type: string;
 	adminReact?: "yes" | "no";
 	indentation?: "Tab" | "Space (4)";

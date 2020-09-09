@@ -1,6 +1,7 @@
 import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
 import { TemplateFunction } from "../src/lib/createAdapter";
+import { licenses } from "../src/lib/licenses";
 import { fetchPackageVersion, getPackageName } from "../src/lib/packageVersions";
 import { getDefaultAnswer } from "../src/lib/questions";
 
@@ -114,7 +115,7 @@ const templateFunction: TemplateFunction = async answers => {
 	)},
 	`) : ""}
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
-	"license": "${answers.license!.id}",
+	"license": "${licenses[answers.license!].id}",
 	"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 	"repository": {
 		"type": "git",

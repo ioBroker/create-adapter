@@ -1,5 +1,5 @@
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { formatLicense } from "../src/lib/tools";
+import { getFormattedLicense } from "../src/lib/tools";
 
 export = (answers => {
 
@@ -130,10 +130,7 @@ For later updates, the above procedure is not necessary. Just do the following:
 * (${answers.authorName}) initial release
 
 ## License
-${answers.license
-	&& answers.license.text
-	&& formatLicense(answers.license.text, answers)
-	|| "TODO: enter license text here"}
+${getFormattedLicense(answers)}
 `;
 	return template.trim();
 }) as TemplateFunction;
