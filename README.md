@@ -40,6 +40,8 @@ The following CLI options are available:
 -   `--target=/path/to/dir` - Specify which directory the adapter files should be created in (instead of the current dir). Shortcut: `-t`
 -   `--skipAdapterExistenceCheck` - Don't check if an adapter with the same name already exists on `npm`. Shortcut: `-x`
 
+All CLI options can also be [provided as environment varialbes](https://yargs.js.org/docs/#api-reference-envprefix) by prepending `CREATE_ADAPTER_`. Example: `CREATE_ADAPTER_TARGET=/tmp/iobroker/create-adapter/`
+
 ## Features
 
 -   Choose between: ioBroker adapter, VIS widget or both
