@@ -41,6 +41,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "widgets/template.html.ts", templateFunction: require("./widgets/template.html") },
 	{ name: "widgets/template.js.ts", templateFunction: require("./widgets/template.js") },
 	{ name: "_babelrc.ts", templateFunction: require("./_babelrc") },
+	{ name: "_create-adapter.json.ts", templateFunction: require("./_create-adapter.json") },
 	{ name: "_devcontainer/devcontainer.json.ts", templateFunction: require("./_devcontainer/devcontainer.json") },
 	{ name: "_devcontainer/docker-compose.yml.ts", templateFunction: require("./_devcontainer/docker-compose.yml") },
 	{ name: "_devcontainer/iobroker/_Dockerfile.ts", templateFunction: require("./_devcontainer/iobroker/_Dockerfile") },

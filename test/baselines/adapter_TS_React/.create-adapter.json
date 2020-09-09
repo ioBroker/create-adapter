@@ -1,0 +1,30 @@
+{
+	"adapterName": "test-adapter",
+	"title": "Is used to test the creator",
+	"startMode": "daemon",
+	"features": [
+		"adapter"
+	],
+	"connectionIndicator": "no",
+	"connectionType": "local",
+	"dataSource": "push",
+	"adminFeatures": [],
+	"type": "general",
+	"language": "TypeScript",
+	"adminReact": "yes",
+	"tools": [
+		"ESLint"
+	],
+	"indentation": "Tab",
+	"quotes": "double",
+	"es6class": "yes",
+	"authorName": "Al Calzone",
+	"authorGithub": "AlCalzone",
+	"authorEmail": "al@calzo.ne",
+	"gitRemoteProtocol": "HTTPS",
+	"ci": [
+		"gh-actions"
+	],
+	"license": "MIT License",
+	"creatorVersion": "1.27.0"
+}

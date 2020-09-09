@@ -7,6 +7,7 @@
 -->
 ## __WORK IN PROGRESS__
 * (UncleSamSwiss) Improved command line arguments handling (#573)
+* (UncleSamSwiss) Allow to replay the adapter creation with the same answers (#574)
 
 ## 1.27.0 (2020-09-06)
 * (AlCalzone) Add support for TypeScript+React in the Admin UI · [Migration guide](docs/updates/20200902_typescript_react_admin.md)

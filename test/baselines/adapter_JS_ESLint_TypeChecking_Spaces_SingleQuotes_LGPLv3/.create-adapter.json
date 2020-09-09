@@ -1,0 +1,31 @@
+{
+    "adapterName": "test-adapter",
+    "title": "Is used to test the creator",
+    "startMode": "daemon",
+    "features": [
+        "adapter"
+    ],
+    "connectionIndicator": "no",
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminFeatures": [],
+    "type": "general",
+    "language": "JavaScript",
+    "adminReact": "no",
+    "tools": [
+        "ESLint",
+        "type checking"
+    ],
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "es6class": "no",
+    "authorName": "Al Calzone",
+    "authorGithub": "AlCalzone",
+    "authorEmail": "al@calzo.ne",
+    "gitRemoteProtocol": "HTTPS",
+    "ci": [
+        "gh-actions"
+    ],
+    "license": "GNU LGPLv3",
+    "creatorVersion": "1.27.0"
+}

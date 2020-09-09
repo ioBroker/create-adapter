@@ -9,6 +9,7 @@ import * as os from "os";
 import * as path from "path";
 import * as prettier from "prettier";
 import * as nodeUrl from "url";
+import { licenses } from "./licenses";
 import { Answers } from "./questions";
 
 export function error(message: string): void {
@@ -261,6 +262,17 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 		.replace(/\[year\]/g, new Date().getFullYear().toString())
 		.replace(/\[fullname\]/g, answers.authorName)
 		.replace(/\[email\]/g, answers.authorEmail);
+}
+
+export function getFormattedLicense(answers: Answers): string {
+	if (answers.license) {
+		const license = licenses[answers.license];
+		if (license) {
+			return formatLicense(license.text, answers);
+		}
+	}
+
+	return "TODO: enter license text here";
 }
 
 /** Replaces 4-space indentation with tabs */

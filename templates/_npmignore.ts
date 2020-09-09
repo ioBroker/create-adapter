@@ -15,6 +15,7 @@ node_modules/
 nbproject/
 .vs*/
 *.code-workspace
+.create-adapter.json
 Thumbs.db
 ${isAdapter ? `gulpfile.js` : ""}
 

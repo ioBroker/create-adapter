@@ -15,7 +15,6 @@ import {
 	transformKeywords,
 } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
-import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
 
 // This is being used to simulate wrong options for conditions on the type level
@@ -58,6 +57,7 @@ export interface QuestionGroup {
 	headline: string;
 	questions: Question[];
 }
+export type ConditionalTitle = (answers: Record<string, any>) => void;
 export function isQuestionGroup(val: any): val is QuestionGroup {
 	if (val == undefined) return false;
 	if (typeof val.headline !== "string") return false;
@@ -84,7 +84,12 @@ function styledMultiselect<
 }
 
 /** All questions and the corresponding text lines */
-export const questionsAndText: (Question | QuestionGroup | string)[] = [
+export const questionsAndText: (
+	| Question
+	| QuestionGroup
+	| string
+	| ConditionalTitle
+)[] = [
 	"",
 	green.bold("====================================================="),
 	green.bold(
@@ -93,6 +98,8 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 	green.bold("====================================================="),
 	"",
 	gray(`You can cancel at any point by pressing Ctrl+C.`),
+	(answers) => (!!answers.replay ? green(`Replaying file`) : undefined),
+	(answers) => (!!answers.replay ? green(answers.replay) : undefined),
 	{
 		headline: "Let's get started with a few questions about your project!",
 		questions: [
@@ -589,7 +596,6 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 					"MIT License",
 					"The Unlicense",
 				],
-				resultTransform: (value: string) => licenses[value] as any,
 			},
 			styledMultiselect({
 				name: "ci",
@@ -616,7 +622,7 @@ export const questionsAndText: (Question | QuestionGroup | string)[] = [
 
 /** Only the questions */
 export const questions = (questionsAndText.filter(
-	(q) => typeof q !== "string",
+	(q) => typeof q !== "string" && typeof q !== "function",
 ) as (Question | QuestionGroup)[])
 	.map((q) => (isQuestionGroup(q) ? q.questions : [q]))
 	.reduce((arr, next) => arr.concat(...next), []);
@@ -666,7 +672,7 @@ export interface Answers {
 	)[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
 	title?: string;
-	license?: { id: string; name: string; text: string };
+	license?: string;
 	type: string;
 	adminReact?: "yes" | "no";
 	indentation?: "Tab" | "Space (4)";
