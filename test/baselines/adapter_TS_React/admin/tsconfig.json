@@ -1,3 +1,5 @@
+// Specialized tsconfig for the admin directory,
+// includes DOM typings and configures the admin build
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
@@ -12,9 +14,9 @@
 		]
 	},
 	"include": [
-		"./**/*.ts*",
-		"../src/lib/adapter-config.d.ts",
-		"./src/lib/admin.d.ts"
+		"./**/*.ts",
+		"./**/*.tsx",
+		"../src/lib/adapter-config.d.ts"
 	],
 	"exclude": [
 		"./**/*.test.ts*"
