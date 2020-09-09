@@ -32,9 +32,7 @@ const templateFunction: TemplateFunction = answers => {
 import * as React from "react";
 import { composeObject, entries } from "alcalzone-shared/objects";
 
-export type OnSettingsChangedCallback = (
-	newSettings: Record<string, unknown>,
-) => void;
+export type OnSettingsChangedCallback = (newSettings: Record<string, unknown>) => void;
 
 interface SettingsProps {
 	onChange: OnSettingsChangedCallback;
@@ -76,9 +74,7 @@ export class Settings extends React.Component<SettingsProps, SettingsState> {
 	// 	$(this.chkWriteLogFile).off("click", this.handleChange as any);
 	// }
 
-	private parseChangedSetting(
-		target: HTMLInputElement | HTMLSelectElement,
-	): unknown {
+	private parseChangedSetting(target: HTMLInputElement | HTMLSelectElement): unknown {
 		// Checkboxes in MaterializeCSS are messed up, so we attach our own handler
 		// However that one gets called before the underlying checkbox is actually updated,
 		// so we need to invert the checked value here
@@ -90,7 +86,7 @@ export class Settings extends React.Component<SettingsProps, SettingsState> {
 	}
 
 	// gets called when the form elements are changed by the user
-	private handleChange(event: React.FormEvent<HTMLElement>) {
+	private handleChange(event: React.FormEvent<HTMLElement>): boolean {
 		const target = event.target as HTMLInputElement | HTMLSelectElement; // TODO: more types
 		const value = this.parseChangedSetting(target);
 		return this.updateSettings(target.id, value);
@@ -100,11 +96,7 @@ export class Settings extends React.Component<SettingsProps, SettingsState> {
 		// store the setting
 		this.putSetting(setting, value, () => {
 			// and notify the admin UI about changes
-			this.props.onChange(
-				composeObject(
-					entries(this.state).filter(([k, v]) => !k.startsWith("_")),
-				),
-			);
+			this.props.onChange(composeObject(entries(this.state).filter(([k]) => !k.startsWith("_"))));
 		});
 		return false;
 	}
@@ -123,31 +115,27 @@ export class Settings extends React.Component<SettingsProps, SettingsState> {
 	 * Saves a setting in the state object and transforms the value into the correct format
 	 * @param key The setting key to store at
 	 */
-	private putSetting(
-		key: string,
-		value: unknown,
-		callback?: () => void,
-	): void {
+	private putSetting(key: string, value: unknown, callback?: () => void): void {
 		this.setState({ [key]: value }, callback);
 	}
 
-	public componentDidMount() {
+	public componentDidMount(): void {
 		// update floating labels in materialize design
 		M.updateTextFields();
 
 		// Add checkbox click handlers here
 	}
 
-	public componentWillUnmount() {
+	public componentWillUnmount(): void {
 		// Remove checkbox click handlers here
 	}
 
-	public componentDidUpdate() {
+	public componentDidUpdate(): void {
 		// update floating labels in materialize design
 		M.updateTextFields();
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<>
 				<div className="row">${adapterSettings.map(generateSettingsDiv).join("\n")}
