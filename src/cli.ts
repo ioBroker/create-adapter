@@ -17,11 +17,47 @@ import {
 } from "./lib/questions";
 import { error, executeCommand, isWindows } from "./lib/tools";
 
+/** Define command line arguments */
+const argv = yargs
+	.env("CREATE_ADAPTER")
+	.strict()
+	.usage("ioBroker adapter creator\n\nUsage: $0 [options]")
+	.alias("h", "help")
+	.alias("v", "version")
+	.options({
+		target: {
+			alias: "t",
+			type: "string",
+			desc:
+				"Output directory for adapter files\n(default: current directory)",
+		},
+		skipAdapterExistenceCheck: {
+			alias: "x",
+			type: "boolean",
+			default: false,
+			desc:
+				"Skip check if an adapter with the same name already exists on npm",
+		},
+		noInstall: {
+			alias: "n",
+			type: "boolean",
+			default: false,
+			desc: "Skip installation of dependencies",
+		},
+		install: {
+			alias: "i",
+			hidden: true,
+			type: "boolean",
+			default: false,
+			desc: "Force installation of dependencies",
+		},
+	}).argv;
+
 /** Where the output should be written */
-const rootDir = path.resolve((yargs.argv.target as string) || process.cwd());
+const rootDir = path.resolve((argv.target as string) || process.cwd());
 
 const creatorOptions = {
-	skipAdapterExistenceCheck: !!yargs.argv.skipAdapterExistenceCheck,
+	skipAdapterExistenceCheck: !!argv.skipAdapterExistenceCheck,
 };
 
 /** Asks a series of questions on the CLI */
@@ -115,7 +151,7 @@ function logProgress(message: string): void {
 }
 
 /** Whether dependencies should be installed */
-const installDependencies = !yargs.argv.noInstall || !!yargs.argv.install;
+const installDependencies = !argv.noInstall || !!argv.install;
 /** Whether an initial build should be performed */
 let buildTypeScript: boolean;
 /** Whether the initial commit should be performed automatically */
