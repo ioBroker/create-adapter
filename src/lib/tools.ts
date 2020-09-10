@@ -259,8 +259,8 @@ export async function translateText(
 
 export function formatLicense(licenseText: string, answers: Answers): string {
 	return licenseText
-		.replace(/\[year\]/g, new Date().getFullYear().toString())
-		.replace(/\[fullname\]/g, answers.authorName)
+		.replace(/\[(year|yyyy)\]/g, new Date().getFullYear().toString())
+		.replace(/\[(fullname|name of copyright owner)\]/g, answers.authorName)
 		.replace(/\[email\]/g, answers.authorEmail);
 }
 

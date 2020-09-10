@@ -70,7 +70,7 @@ const baseAnswers: Answers = {
 	authorEmail: "al@calzo.ne",
 	gitRemoteProtocol: "HTTPS",
 	ci: ["gh-actions"],
-	license: "MIT License" as any,
+	license: "MIT License",
 };
 
 describe("adapter creation =>", () => {
@@ -185,22 +185,22 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_React", answers);
 			});
 
-			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {
+			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, Apache License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
 					tools: ["ESLint", "type checking"],
 					indentation: "Space (4)",
 					quotes: "single",
-					license: "GNU LGPLv3" as any,
+					license: "Apache License 2.0",
 				};
 				await expectSuccess(
-					"adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3",
+					"adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
 			});
 
-			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, LGPLv3", async () => {
+			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, Apache License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
@@ -208,10 +208,10 @@ describe("adapter creation =>", () => {
 					indentation: "Space (4)",
 					quotes: "single",
 					es6class: "yes",
-					license: "GNU LGPLv3" as any,
+					license: "Apache License 2.0",
 				};
 				await expectSuccess(
-					"adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3",
+					"adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
 			});
@@ -229,7 +229,7 @@ describe("adapter creation =>", () => {
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
 					ci: ["gh-actions"],
-					license: "MIT License" as any,
+					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget", answers);
 			});
@@ -247,7 +247,7 @@ describe("adapter creation =>", () => {
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
 					ci: ["travis"],
-					license: "MIT License" as any,
+					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget_Travis", answers);
 			});
