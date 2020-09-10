@@ -14,6 +14,7 @@
 	"ci": [
 		"travis"
 	],
+	"dependabot": "yes",
 	"license": "MIT License",
 	"creatorVersion": "1.27.0"
 }

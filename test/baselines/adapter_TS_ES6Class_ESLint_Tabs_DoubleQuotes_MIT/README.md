@@ -36,6 +36,8 @@ You are almost done, only a few steps left:
 	```bash
 	git push origin master
 	```
+1. Add a new secret under https://github.com/AlCalzone/ioBroker.test-adapter/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+
 1. Head over to [src/main.ts](src/main.ts) and start programming!
 
 ### Best Practices
