@@ -9,6 +9,7 @@
 * (UncleSamSwiss) Improved command line arguments handling (#573)
 * (UncleSamSwiss) Allow to replay the adapter creation with the same answers (#574)
 * (UncleSamSwiss) Removed automatic restart of docker containers (#575) · [Migration guide](docs/updates/20200909_devcontainers_no_restart.md)
+* (AlCalzone) Make ESLint work in the admin directory, fix most resulting errors (fixes #576)
 * (AlCalzone) The year and name placeholders in the Apache License are now correctly replaced (fixes #578)
 
 ## 1.27.0 (2020-09-06)

@@ -7,6 +7,7 @@ export = (answers => {
 	if (!useTypeScript && !useTypeChecking) return;
 
 	const template = `
+// Root tsconfig to set the settings and power editor support for all TS files
 {
 	"compileOnSave": true,
 	"compilerOptions": {
@@ -48,15 +49,16 @@ export = (answers => {
 		"watch": false`) : ""}
 	},
 	"include": [${useTypeScript ? (`
-		"**/*.ts"
+		"src/**/*.ts",
+		"admin/**/*.ts",
+		"admin/**/*.tsx"
 `) : (`
 		"**/*.js",
 		"**/*.d.ts"
 `)}	],
 	"exclude": [
 		${useTypeScript ? (`"build/**",
-		`) : ""}"node_modules/**",
-		"admin/**"
+		`) : ""}"node_modules/**"
 	]
 }`;
 	return template.trim();

@@ -1,12 +1,14 @@
 declare let systemDictionary: Record<string, Record<string, string>>;
 
-declare let load: (
-    settings: ioBroker.AdapterConfig,
-    onChange: (hasChanges: boolean) => void,
-) => void;
-declare let save: (
-    callback: (settings: ioBroker.AdapterConfig) => void,
-) => void;
+declare let load: (settings: Record<string, unknown>, onChange: (hasChanges: boolean) => void) => void;
+declare let save: (callback: (settings: Record<string, unknown>) => void) => void;
+
+// make load and save exist on the window object
+interface Window {
+    load: typeof load;
+    save: typeof save;
+}
+
 declare const instance: number;
 declare const adapter: string;
 /** Translates text */
@@ -51,7 +53,7 @@ interface ioBrokerSocket {
         event: 'getObjectView',
         view: 'system',
         type: 'device',
-        options: {},
+        options: ioBroker.GetObjectViewParams,
         callback: (
             err: string | undefined,
             result?: any,

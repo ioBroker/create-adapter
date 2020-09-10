@@ -1,3 +1,4 @@
+// Root tsconfig to set the settings and power editor support for all TS files
 {
     "compileOnSave": true,
     "compilerOptions": {
@@ -35,7 +36,6 @@
         "**/*.d.ts"
     ],
     "exclude": [
-        "node_modules/**",
-        "admin/**"
+        "node_modules/**"
     ]
 }

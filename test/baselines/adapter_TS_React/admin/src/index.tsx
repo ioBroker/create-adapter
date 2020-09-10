@@ -22,7 +22,7 @@ interface RootProps {
 }
 
 /** The root component displays all components that belong to the adapter configuration */
-function Root(props: RootProps) {
+const Root: React.FC<RootProps> = (props) => {
 	// Subscribe and unsubscribe from states and objects
 	React.useEffect(() => {
 		namespace = `${adapter}.${instance}`;
@@ -41,7 +41,7 @@ function Root(props: RootProps) {
 		return onUnload;
 	}, []);
 
-	function onUnload() {
+	function onUnload(): void {
 		// If you subscribed to some of the states above, don't forget to unsubscribe here!
 		// void unsubscribeStatesAsync(systemStates);
 		// void unsubscribeObjectsAsync(adapterStates);
@@ -65,10 +65,7 @@ let originalSettings: Record<string, unknown>;
  * Checks if any setting was changed
  */
 function hasChanges(): boolean {
-	if (
-		Object.keys(originalSettings).length !== Object.keys(curSettings).length
-	)
-		return true;
+	if (Object.keys(originalSettings).length !== Object.keys(curSettings).length) return true;
 	for (const key of Object.keys(originalSettings)) {
 		if (originalSettings[key] !== curSettings[key]) return true;
 	}
@@ -76,10 +73,7 @@ function hasChanges(): boolean {
 }
 
 // When the config page is loaded, set up the settings change handler and render the root component
-(window as any).load = (
-	settings: Record<string, unknown>,
-	onChange: (hasChanges: boolean) => void,
-) => {
+window.load = (settings: Record<string, unknown>, onChange: (hasChanges: boolean) => void) => {
 	originalSettings = settings;
 
 	const settingsChanged: OnSettingsChangedCallback = (newSettings) => {
@@ -98,10 +92,7 @@ function hasChanges(): boolean {
 };
 
 // When the save button is clicked, overwrite the original settings variable with the new settings
-(window as any).save = (
-	callback: (newSettings: Record<string, unknown>) => void,
-) => {
-	// save the settings
+window.save = (callback: (newSettings: Record<string, unknown>) => void) => {
 	callback(curSettings);
 	originalSettings = curSettings;
 };
