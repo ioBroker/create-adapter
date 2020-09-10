@@ -1,9 +1,12 @@
-import { promiseSequence } from "alcalzone-shared/async";
 import * as JSON5 from "json5";
+import * as pLimit from "p-limit";
 import { TemplateFunction } from "../src/lib/createAdapter";
 import { licenses } from "../src/lib/licenses";
 import { fetchPackageVersion, getPackageName } from "../src/lib/packageVersions";
 import { getDefaultAnswer } from "../src/lib/questions";
+
+// Limit package version downloads to 10 simultaneous connections
+const downloadLimiter = pLimit(10);
 
 const templateFunction: TemplateFunction = async answers => {
 
@@ -20,8 +23,9 @@ const templateFunction: TemplateFunction = async answers => {
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
 		.sort()
 		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
+		.map(task => downloadLimiter(task))
 		;
-	const dependencies = await promiseSequence<string>(dependencyPromises);
+	const dependencies = await Promise.all(dependencyPromises);
 
 	const devDependencyPromises = ([] as string[])
 		.concat([
@@ -93,8 +97,9 @@ const templateFunction: TemplateFunction = async answers => {
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
+		.map(task => downloadLimiter(task))
 		;
-	const devDependencies = await promiseSequence<string>(devDependencyPromises);
+	const devDependencies = await Promise.all(devDependencyPromises);
 
 	const gitUrl = answers.gitRemoteProtocol === "HTTPS"
 		? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
