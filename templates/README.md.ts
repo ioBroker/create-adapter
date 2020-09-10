@@ -10,6 +10,7 @@ export = (answers => {
 	const autoInitGit = answers.gitCommit === "yes";
 	const useTravis = answers.ci?.includes("travis");
 	const useGithubActions = answers.ci?.includes("gh-actions");
+	const useDependabot = answers.dependabot === "yes";
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
@@ -55,6 +56,9 @@ ${autoInitGit ? "" : (
 	\`\`\`bash
 	git push origin master
 	\`\`\`
+${useDependabot ? (
+`1. Add a new secret under https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/settings/secrets. It must be named \`AUTO_MERGE_TOKEN\` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+`) : ""}
 1. Head over to ${
 	isAdapter ? (
 		useTypeScript ? "[src/main.ts](src/main.ts)"

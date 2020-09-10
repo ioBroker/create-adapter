@@ -70,6 +70,7 @@ const baseAnswers: Answers = {
 	authorEmail: "al@calzo.ne",
 	gitRemoteProtocol: "HTTPS",
 	ci: ["gh-actions"],
+	dependabot: "yes",
 	license: "MIT License",
 };
 
@@ -229,6 +230,7 @@ describe("adapter creation =>", () => {
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
 					ci: ["gh-actions"],
+					dependabot: "yes",
 					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget", answers);
@@ -247,6 +249,7 @@ describe("adapter creation =>", () => {
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
 					ci: ["travis"],
+					dependabot: "yes",
 					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget_Travis", answers);
@@ -329,15 +332,15 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it(`JS with ES2018`, async () => {
+			it(`JS with ES2015`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
-					ecmaVersion: 2018,
+					ecmaVersion: 2015,
 					tools: ["ESLint", "type checking"],
 				};
 				await expectSuccess(
-					"JS_ES2018",
+					"JS_ES2015",
 					answers,
 					(file) => file.name === ".eslintrc.json",
 				);

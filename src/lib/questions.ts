@@ -614,6 +614,16 @@ export const questionsAndText: (
 					},
 				],
 			}),
+			{
+				type: "select",
+				name: "dependabot",
+				expert: true,
+				message:
+					"Do you want to receive regular dependency updates through Pull Requests?",
+				hint: "(recommended)",
+				initial: "no",
+				choices: ["yes", "no"],
+			},
 		],
 	},
 	"",
@@ -670,7 +680,7 @@ export interface Answers {
 		| "code coverage"
 		| "devcontainer"
 	)[];
-	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
+	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
 	title?: string;
 	license?: string;
 	type: string;
@@ -681,6 +691,7 @@ export interface Answers {
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
 	ci?: ("gh-actions" | "travis")[];
+	dependabot?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";
 	connectionIndicator?: "yes" | "no";

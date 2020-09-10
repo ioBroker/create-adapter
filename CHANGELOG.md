@@ -11,6 +11,7 @@
 * (UncleSamSwiss) Removed automatic restart of docker containers (#575) · [Migration guide](docs/updates/20200909_devcontainers_no_restart.md)
 * (AlCalzone) Make ESLint work in the admin directory, fix most resulting errors (fixes #576)
 * (AlCalzone) The year and name placeholders in the Apache License are now correctly replaced (fixes #578)
+* (AlCalzone) Added dependabot config for automated dependency updates with auto-merging (#582) · [Migration guide](docs/updates/20200910_dependabot.md)
 
 ## 1.27.0 (2020-09-06)
 * (AlCalzone) Add support for TypeScript+React in the Admin UI · [Migration guide](docs/updates/20200902_typescript_react_admin.md)
