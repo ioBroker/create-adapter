@@ -28,6 +28,7 @@ const baseAnswers = {
 	authorEmail: "author@mail.com",
 	gitRemoteProtocol: "HTTPS",
 	ci: ["travis"],
+	dependabot: "yes",
 	license: "MIT License" as any,
 } as Answers;
 
