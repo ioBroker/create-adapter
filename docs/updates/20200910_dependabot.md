@@ -67,4 +67,4 @@ jobs:
           command: squash and merge
 ```
 
-4. Add a new secret in your repo configuration with the name \`AUTO_MERGE_TOKEN\`. It must contain a personal access token with push access to the repository. You can create a new token under https://github.com/settings/tokens.
+4. Add a new secret in your repo configuration with the name `AUTO_MERGE_TOKEN`. It must contain a personal access token with push access to the repository. You can create a new token under https://github.com/settings/tokens.
