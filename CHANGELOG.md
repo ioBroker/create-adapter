@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 1.28.0 (2020-09-11)
 * (UncleSamSwiss) Improved command line arguments handling (#573)
 * (UncleSamSwiss) Allow to replay the adapter creation with the same answers (#574)
 * (UncleSamSwiss) Removed automatic restart of docker containers (#575) · [Migration guide](docs/updates/20200909_devcontainers_no_restart.md)
