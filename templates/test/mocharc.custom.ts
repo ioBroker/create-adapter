@@ -1,5 +1,5 @@
 import * as JSON5 from "json5";
-import { TemplateFunction } from "../src/lib/createAdapter";
+import { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 
@@ -8,7 +8,7 @@ const templateFunction: TemplateFunction = answers => {
 	const template = `
 {
 	"require": [
-		"./test/mocha.setup.js",
+		"test/mocha.setup.js",
 ${useTypeScript ? (`
 		"ts-node/register",
 		"source-map-support/register",
@@ -27,5 +27,5 @@ ${useTypeScript ? (`
 	return JSON.stringify(JSON5.parse(template), null, 4);
 };
 
-templateFunction.customPath = ".mocharc.json";
+templateFunction.customPath = "test/mocharc.custom.json";
 export = templateFunction;

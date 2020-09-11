@@ -143,9 +143,9 @@ const templateFunction: TemplateFunction = async answers => {
 				${useReact ? `"watch:parcel": "parcel admin/src/index.tsx -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",` : ""}
 				"watch:ts": "tsc -p tsconfig.build.json --watch",
 				"watch": "npm run watch:ts",
-				"test:ts": "mocha src/**/*.test.ts",
+				"test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
 			`) : (`
-				"test:js": "mocha \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
+				"test:js": "mocha --config test/mocharc.custom.json \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
 			`)}
 			"test:package": "mocha test/package --exit",
 			"test:unit": "mocha test/unit --exit",
