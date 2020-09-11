@@ -1,6 +1,6 @@
 {
     "require": [
-        "./test/mocha.setup.js"
+        "test/mocha.setup.js"
     ],
     "watch-files": [
         "!(node_modules|test)/**/*.test.js",
