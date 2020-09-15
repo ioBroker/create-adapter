@@ -10,6 +10,8 @@
 
 [![NPM](https://nodei.co/npm/iobroker.test-adapter.png?downloads=true)](https://nodei.co/npm/iobroker.test-adapter/)
 
+**Tests:** ![Test and Release](https://github.com/AlCalzone/ioBroker.test-adapter/workflows/Test%20and%20Release/badge.svg)
+
 ## test-adapter adapter for ioBroker
 
 Describe your project here

@@ -10,7 +10,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.test-widget.png?downloads=true)](https://nodei.co/npm/iobroker.test-widget/)
 
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/AlCalzone/ioBroker.test-widget/master.svg)](https://travis-ci.org/AlCalzone/ioBroker.test-widget)
+**Tests:** [![Travis-CI](http://img.shields.io/travis/AlCalzone/ioBroker.test-widget/master.svg)](https://travis-ci.org/AlCalzone/ioBroker.test-widget)
 
 ## test-widget adapter for ioBroker
 
