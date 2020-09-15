@@ -26,8 +26,9 @@ export = (answers => {
 
 [![NPM](https://nodei.co/npm/iobroker.${adapterNameLowerCase}.png?downloads=true)](https://nodei.co/npm/iobroker.${adapterNameLowerCase}/)
 ${useTravis ? (`
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`) 
-	: "" /* Github Actions has no badge right now */}
+**Tests:** [![Travis-CI](http://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`)
+	: (`
+**Tests:** ![Test and Release](https://github.com/${answers.authorGithub}/ioBroker.${adapterNameLowerCase}/workflows/Test%20and%20Release/badge.svg)`)}
 
 ## ${answers.adapterName} adapter for ioBroker
 
