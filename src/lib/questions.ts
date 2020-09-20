@@ -690,7 +690,7 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
-	ci?: ("gh-actions" | "travis")[];
+	ci?: "gh-actions" | "travis";
 	dependabot?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";
