@@ -11,9 +11,7 @@
 	"authorGithub": "AlCalzone",
 	"authorEmail": "al@calzo.ne",
 	"gitRemoteProtocol": "HTTPS",
-	"ci": [
-		"travis"
-	],
+	"ci": "travis",
 	"dependabot": "yes",
 	"license": "MIT License",
 	"creatorVersion": "1.28.0"
