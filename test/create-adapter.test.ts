@@ -69,7 +69,7 @@ const baseAnswers: Answers = {
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
 	gitRemoteProtocol: "HTTPS",
-	ci: ["gh-actions"],
+	ci: "gh-actions",
 	dependabot: "yes",
 	license: "MIT License",
 };
@@ -229,7 +229,7 @@ describe("adapter creation =>", () => {
 					authorGithub: "AlCalzone",
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
-					ci: ["gh-actions"],
+					ci: "gh-actions",
 					dependabot: "yes",
 					license: "MIT License",
 				};
@@ -248,7 +248,7 @@ describe("adapter creation =>", () => {
 					authorGithub: "AlCalzone",
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
-					ci: ["travis"],
+					ci: "travis",
 					dependabot: "yes",
 					license: "MIT License",
 				};
@@ -456,7 +456,7 @@ describe("adapter creation =>", () => {
 			it(`Travis CI instead of Github Actions`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					ci: ["travis"],
+					ci: "travis",
 				};
 				await expectSuccess(
 					"ci_Travis",

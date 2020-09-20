@@ -23,9 +23,7 @@
     "authorGithub": "AlCalzone",
     "authorEmail": "al@calzo.ne",
     "gitRemoteProtocol": "HTTPS",
-    "ci": [
-        "gh-actions"
-    ],
+    "ci": "gh-actions",
     "dependabot": "yes",
     "license": "Apache License 2.0",
     "creatorVersion": "1.28.0"

@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (AlCalzone) Add Badge for Github Actions to Readme (#585)
+* (AlCalzone) Select GitHub Actions as the default CI (fixes #586)
 
 ## 1.28.0 (2020-09-11)
 * (UncleSamSwiss) Improved command line arguments handling (#573)

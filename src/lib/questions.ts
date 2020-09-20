@@ -597,12 +597,12 @@ export const questionsAndText: (
 					"The Unlicense",
 				],
 			},
-			styledMultiselect({
+			{
+				type: "select",
 				name: "ci",
 				expert: true,
 				message: "Which continuous integration service should be used?",
-				initial: ((answers: Answers) =>
-					answers.features.includes("adapter") ? [1] : [0]) as any,
+				initial: 0,
 				choices: [
 					{
 						message: "GitHub Actions",
@@ -613,7 +613,7 @@ export const questionsAndText: (
 						value: "travis",
 					},
 				],
-			}),
+			},
 			{
 				type: "select",
 				name: "dependabot",
@@ -690,7 +690,7 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
-	ci?: ("gh-actions" | "travis")[];
+	ci?: "gh-actions" | "travis";
 	dependabot?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";
