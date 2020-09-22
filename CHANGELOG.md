@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.29.0 (2020-09-22)
 * (AlCalzone) Add Badge for Github Actions to Readme (#585)
 * (AlCalzone) Select GitHub Actions as the default CI (fixes #586)
 * (AlCalzone) Updated JS-Controller dependency to `>=2.0.0` for compatibility with `@iobroker/adapter-core` `v2.4.0`.
