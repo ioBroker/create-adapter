@@ -105,7 +105,7 @@ export = (async answers => {
 		`) : ""}
 		${supportCustom ? `"supportCustoms": true,` : ""}
 		"dependencies": [
-			${isAdapter ? `{ "js-controller": ">=1.4.2" },` : ""}
+			${isAdapter ? `{ "js-controller": ">=2.0.0" },` : ""}
 			${isWidget ? `"vis",` : ""}
 		],
 	},
