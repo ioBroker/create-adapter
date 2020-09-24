@@ -5,6 +5,8 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (UncleSamSwiss) Remove rsync from parcel devcontainer · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
 
 ## 1.29.0 (2020-09-22)
 * (AlCalzone) Add Badge for Github Actions to Readme (#585)
