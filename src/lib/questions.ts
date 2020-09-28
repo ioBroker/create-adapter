@@ -602,7 +602,7 @@ export const questionsAndText: (
 				name: "ci",
 				expert: true,
 				message: "Which continuous integration service should be used?",
-				initial: 0,
+				initial: "gh-actions",
 				choices: [
 					{
 						message: "GitHub Actions",
