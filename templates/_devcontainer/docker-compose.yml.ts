@@ -38,6 +38,8 @@ ${needsParcel ? (`
             - '1235:1235'
         volumes:
             - ..:/workspace:cached
+        environment:
+            - CHOKIDAR_USEPOLLING=1
 `) : ""}
     # Reverse proxy to load up-to-date admin sources from the repo
     nginx:

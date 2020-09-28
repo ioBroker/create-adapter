@@ -5,8 +5,8 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-
 ## __WORK IN PROGRESS__
+* (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
 * (AlCalzone) Fix TypeError resulting from CI answer change (fixes #590)
 
 ## 1.29.0 (2020-09-22)
