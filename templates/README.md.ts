@@ -8,8 +8,8 @@ export = (answers => {
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
 	const autoInitGit = answers.gitCommit === "yes";
-	const useTravis = answers.ci?.includes("travis");
-	const useGithubActions = answers.ci?.includes("gh-actions");
+	const useTravis = answers.ci === "travis";
+	const useGithubActions = answers.ci === "gh-actions";
 	const useDependabot = answers.dependabot === "yes";
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();

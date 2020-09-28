@@ -6,6 +6,9 @@
 	(at the beginning of a new line )
 -->
 
+## __WORK IN PROGRESS__
+* (AlCalzone) Fix TypeError resulting from CI answer change (fixes #590)
+
 ## 1.29.0 (2020-09-22)
 * (AlCalzone) Add Badge for Github Actions to Readme (#585)
 * (AlCalzone) Select GitHub Actions as the default CI (fixes #586)
