@@ -1,9 +1,9 @@
 - match:
-  dependency_type: development
-  update_type: "semver:minor"
+    dependency_type: development
+    update_type: "semver:minor"
 - match:
-  dependency_type: production
-  update_type: "security:minor"
+    dependency_type: production
+    update_type: "security:minor"
 - match:
-  dependency_type: production
-  update_type: "semver:patch"
+    dependency_type: production
+    update_type: "semver:patch"
