@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603)
+
 ## 1.29.1 (2020-09-28)
 * (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
 * (AlCalzone) Fix TypeError resulting from CI answer change (fixes #590)
