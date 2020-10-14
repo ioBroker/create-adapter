@@ -3,14 +3,15 @@ import { withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
 import Settings from "./components/settings";
+import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
 
 const styles = (theme) => ({
 	root: {},
 });
 
 class App extends GenericApp {
-	constructor(props) {
-		const extendedProps = { ...props };
+	constructor(props: GenericAppProps) {
+		const extendedProps: GenericAppSettings = { ...props };
 		extendedProps.encryptedFields = [];
 		extendedProps.translations = {};
 		for (const key in systemDictionary) {
