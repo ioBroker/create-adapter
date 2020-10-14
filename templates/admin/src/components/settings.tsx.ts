@@ -26,6 +26,7 @@ const templateFunction: TemplateFunction = answers => {
 	const template = `
 import * as React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -37,7 +38,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import I18n from "@iobroker/adapter-react/i18n";
 
-const styles = () => ({
+const styles = (): Record<string, CreateCSSProperties> => ({
 	input: {
 		marginTop: 0,
 		minWidth: 400,
@@ -70,16 +71,21 @@ const styles = () => ({
 	},
 });
 
-class Settings extends React.Component {
+interface SettingsProps {
+	classes: Record<string, string>;
+	native: any;
+
+	onChange: (attr: string, value: any) => void;
+}
+
+class Settings extends React.Component<SettingsProps, {}> {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			showSelectId: false,
-		};
+		this.state = {};
 	}
 
-	renderInput(title, attr, type) {
+	renderInput(title: string, attr: string, type: string) {
 		return (
 			<TextField
 				label={I18n.t(title)}
@@ -92,7 +98,7 @@ class Settings extends React.Component {
 		);
 	}
 
-	renderSelect(title, attr, options, style) {
+	renderSelect(title: string, attr: string, options: { value: string; title: string }[], style?: any) {
 		return (
 			<FormControl
 				className={this.props.classes.input + " " + this.props.classes.controlElement}
@@ -114,7 +120,7 @@ class Settings extends React.Component {
 		);
 	}
 
-	renderCheckbox(title, attr, style) {
+	renderCheckbox(title: string, attr: string, style?: any) {
 		return (
 			<FormControlLabel
 				key={attr}
