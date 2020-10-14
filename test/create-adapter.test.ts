@@ -69,8 +69,9 @@ const baseAnswers: Answers = {
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
 	gitRemoteProtocol: "HTTPS",
-	ci: ["gh-actions"],
-	license: "MIT License" as any,
+	ci: "gh-actions",
+	dependabot: "yes",
+	license: "MIT License",
 };
 
 describe("adapter creation =>", () => {
@@ -185,22 +186,22 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_React", answers);
 			});
 
-			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, LGPLv3", async () => {
+			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, Apache License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
 					tools: ["ESLint", "type checking"],
 					indentation: "Space (4)",
 					quotes: "single",
-					license: "GNU LGPLv3" as any,
+					license: "Apache License 2.0",
 				};
 				await expectSuccess(
-					"adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3",
+					"adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
 			});
 
-			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, LGPLv3", async () => {
+			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, Apache License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
@@ -208,10 +209,10 @@ describe("adapter creation =>", () => {
 					indentation: "Space (4)",
 					quotes: "single",
 					es6class: "yes",
-					license: "GNU LGPLv3" as any,
+					license: "Apache License 2.0",
 				};
 				await expectSuccess(
-					"adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_LGPLv3",
+					"adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
 			});
@@ -228,8 +229,9 @@ describe("adapter creation =>", () => {
 					authorGithub: "AlCalzone",
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
-					ci: ["gh-actions"],
-					license: "MIT License" as any,
+					ci: "gh-actions",
+					dependabot: "yes",
+					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget", answers);
 			});
@@ -246,8 +248,9 @@ describe("adapter creation =>", () => {
 					authorGithub: "AlCalzone",
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
-					ci: ["travis"],
-					license: "MIT License" as any,
+					ci: "travis",
+					dependabot: "yes",
+					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget_Travis", answers);
 			});
@@ -329,15 +332,15 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it(`JS with ES2018`, async () => {
+			it(`JS with ES2015`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
-					ecmaVersion: 2018,
+					ecmaVersion: 2015,
 					tools: ["ESLint", "type checking"],
 				};
 				await expectSuccess(
-					"JS_ES2018",
+					"JS_ES2015",
 					answers,
 					(file) => file.name === ".eslintrc.json",
 				);
@@ -453,7 +456,7 @@ describe("adapter creation =>", () => {
 			it(`Travis CI instead of Github Actions`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					ci: ["travis"],
+					ci: "travis",
 				};
 				await expectSuccess(
 					"ci_Travis",

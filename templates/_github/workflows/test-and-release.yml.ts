@@ -2,7 +2,7 @@ import { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 
-	const useGhActions = answers.ci?.includes("gh-actions");
+	const useGhActions = answers.ci === "gh-actions";
 	if (!useGhActions) return;
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;

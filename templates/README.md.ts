@@ -1,5 +1,5 @@
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { formatLicense } from "../src/lib/tools";
+import { getFormattedLicense } from "../src/lib/tools";
 
 export = (answers => {
 
@@ -8,8 +8,9 @@ export = (answers => {
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
 	const autoInitGit = answers.gitCommit === "yes";
-	const useTravis = answers.ci?.includes("travis");
-	const useGithubActions = answers.ci?.includes("gh-actions");
+	const useTravis = answers.ci === "travis";
+	const useGithubActions = answers.ci === "gh-actions";
+	const useDependabot = answers.dependabot === "yes";
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
@@ -25,8 +26,9 @@ export = (answers => {
 
 [![NPM](https://nodei.co/npm/iobroker.${adapterNameLowerCase}.png?downloads=true)](https://nodei.co/npm/iobroker.${adapterNameLowerCase}/)
 ${useTravis ? (`
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`) 
-	: "" /* Github Actions has no badge right now */}
+**Tests:** [![Travis-CI](http://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`)
+	: (`
+**Tests:** ![Test and Release](https://github.com/${answers.authorGithub}/ioBroker.${adapterNameLowerCase}/workflows/Test%20and%20Release/badge.svg)`)}
 
 ## ${answers.adapterName} adapter for ioBroker
 
@@ -55,6 +57,9 @@ ${autoInitGit ? "" : (
 	\`\`\`bash
 	git push origin master
 	\`\`\`
+${useDependabot ? (
+`1. Add a new secret under https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/settings/secrets. It must be named \`AUTO_MERGE_TOKEN\` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+`) : ""}
 1. Head over to ${
 	isAdapter ? (
 		useTypeScript ? "[src/main.ts](src/main.ts)"
@@ -130,10 +135,7 @@ For later updates, the above procedure is not necessary. Just do the following:
 * (${answers.authorName}) initial release
 
 ## License
-${answers.license
-	&& answers.license.text
-	&& formatLicense(answers.license.text, answers)
-	|| "TODO: enter license text here"}
+${getFormattedLicense(answers)}
 `;
 	return template.trim();
 }) as TemplateFunction;

@@ -15,7 +15,6 @@ import {
 	transformKeywords,
 } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
-import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
 
 // This is being used to simulate wrong options for conditions on the type level
@@ -597,14 +596,13 @@ export const questionsAndText: (
 					"MIT License",
 					"The Unlicense",
 				],
-				resultTransform: (value: string) => licenses[value] as any,
 			},
-			styledMultiselect({
+			{
+				type: "select",
 				name: "ci",
 				expert: true,
 				message: "Which continuous integration service should be used?",
-				initial: ((answers: Answers) =>
-					answers.features.includes("adapter") ? [1] : [0]) as any,
+				initial: "gh-actions",
 				choices: [
 					{
 						message: "GitHub Actions",
@@ -615,7 +613,17 @@ export const questionsAndText: (
 						value: "travis",
 					},
 				],
-			}),
+			},
+			{
+				type: "select",
+				name: "dependabot",
+				expert: true,
+				message:
+					"Do you want to receive regular dependency updates through Pull Requests?",
+				hint: "(recommended)",
+				initial: "no",
+				choices: ["yes", "no"],
+			},
 		],
 	},
 	"",
@@ -672,9 +680,9 @@ export interface Answers {
 		| "code coverage"
 		| "devcontainer"
 	)[];
-	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019;
+	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
 	title?: string;
-	license?: { id: string; name: string; text: string };
+	license?: string;
 	type: string;
 	adminReact?: "yes" | "no";
 	indentation?: "Tab" | "Space (4)";
@@ -682,7 +690,8 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
-	ci?: ("gh-actions" | "travis")[];
+	ci?: "gh-actions" | "travis";
+	dependabot?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";
 	connectionIndicator?: "yes" | "no";

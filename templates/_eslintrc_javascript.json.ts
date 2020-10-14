@@ -9,7 +9,7 @@ const templateFunction: TemplateFunction = answers => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
 
-	let ecmaVersion = answers.ecmaVersion || 2017;
+	let ecmaVersion = answers.ecmaVersion || 2018;
 	const useES6Class = answers.es6class === "yes";
 	if (useES6Class) ecmaVersion = Math.max(ecmaVersion, 2018) as any;
 

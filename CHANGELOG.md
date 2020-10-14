@@ -6,8 +6,26 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
+* (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603)
 * (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react
-* (UncleSamSwiss) Allow to replay the adapter creation with the same answers
+
+## 1.29.1 (2020-09-28)
+* (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
+* (AlCalzone) Fix TypeError resulting from CI answer change (fixes #590)
+
+## 1.29.0 (2020-09-22)
+* (AlCalzone) Add Badge for Github Actions to Readme (#585)
+* (AlCalzone) Select GitHub Actions as the default CI (fixes #586)
+* (AlCalzone) Updated JS-Controller dependency to `>=2.0.0` for compatibility with `@iobroker/adapter-core` `v2.4.0`.
+
+## 1.28.0 (2020-09-11)
+* (UncleSamSwiss) Improved command line arguments handling (#573)
+* (UncleSamSwiss) Allow to replay the adapter creation with the same answers (#574)
+* (UncleSamSwiss) Removed automatic restart of docker containers (#575) · [Migration guide](docs/updates/20200909_devcontainers_no_restart.md)
+* (AlCalzone) Make ESLint work in the admin directory, fix most resulting errors (fixes #576)
+* (AlCalzone) The year and name placeholders in the Apache License are now correctly replaced (fixes #578)
+* (AlCalzone) Added dependabot config for automated dependency updates with auto-merging (#582) · [Migration guide](docs/updates/20200910_dependabot.md)
+* (AlCalzone) Fixed how mocha interacts with TypeScript (#583)
 
 ## 1.27.0 (2020-09-06)
 * (AlCalzone) Add support for TypeScript+React in the Admin UI · [Migration guide](docs/updates/20200902_typescript_react_admin.md)

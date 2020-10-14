@@ -13,7 +13,6 @@ version: '3'
 
 services:
     iobroker:
-        restart: always
         build: ./iobroker
         container_name: iobroker-${adapterNameLowerCase}
         hostname: iobroker-${adapterNameLowerCase}
@@ -31,7 +30,6 @@ services:
             - SETGID=1000
 ${needsParcel ? (`
     parcel:
-        restart: always
         container_name: parcel-${adapterNameLowerCase}
         build: ./parcel
         expose:
@@ -40,6 +38,8 @@ ${needsParcel ? (`
             - '1235:1235'
         volumes:
             - ..:/workspace:cached
+        environment:
+            - CHOKIDAR_USEPOLLING=1
 `) : ""}
     # Reverse proxy to load up-to-date admin sources from the repo
     nginx:
@@ -50,8 +50,7 @@ ${needsParcel ? (`            - parcel
 `) : ""}        links:
             - iobroker
 ${needsParcel ? (`            - parcel
-`) : ""}        restart: always
-        container_name: nginx-${adapterNameLowerCase}
+`) : ""}        container_name: nginx-${adapterNameLowerCase}
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ..:/workspace:cached
