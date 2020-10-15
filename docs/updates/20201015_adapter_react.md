@@ -9,13 +9,13 @@ Just keep in mind you won't profit from future improvements to the React UI in `
 
 ### Configuration
 
-1. Update `.eslint.rc` to look like [this](../../test/baselines/adapter_TS_React/.eslint.rc)
+1. Update `.eslintrc.js` to look like [this](../../test/baselines/adapter_TS_React/.eslintrc.js)
     - Add ECMA Feature JSX
     - Extend the rules from `plugin:react/recommended`
     - Add the plugin `react`
     - Set the React version to `detect`
 1. Update `package.json`
-    - Add the latest version of the following packages as dev dependency:
+    - Add the latest version of the following packages as dev dependencies:
         - `@iobroker/adapter-react`
         - `@material-ui/core`
         - `@material-ui/icons`
@@ -23,11 +23,11 @@ Just keep in mind you won't profit from future improvements to the React UI in `
         - `react-icons`
     - Remove the following packages:
         - `@types/jquery`
-    - `@types/materialize-css`
+        - `@types/materialize-css`
 
 ### ioBroker Types
 
-1. Add the file `src/lib/adapter-config.d.ts` with your adapter configuration similar to [this](../../test/baselines/adapter_TS_React/lib/adapter-config.d.ts).
+1. Add the file `src/lib/adapter-config.d.ts` with your adapter configuration similar to [this](../../test/baselines/adapter_TS_React/src/lib/adapter-config.d.ts).
 1. Remove the following files because all methods related to ioBroker communication are now taken from `@iobroker/adapter-react` (see also under "Admin Content"):
     - `lib/admin.d.ts`
     - `lib/backend.ts`
@@ -41,7 +41,7 @@ Just keep in mind you won't profit from future improvements to the React UI in `
 1. Remove `admin/words.js` and put all translations in JSON files:
     - Path: `admin/src/i18n/[language].json`
     - One file for each language
-    - JSON format: [key-value pairs](../../test/baselines/adapter_TS_React/admin/src/i18n/en.tsx)
+    - JSON format: [key-value pairs](../../test/baselines/adapter_TS_React/admin/src/i18n/en.json)
 1. Create your UI in `admin/src/app.tsx` and linked files
     - You sould start from [admin/src/app.tsx](../../test/baselines/adapter_TS_React/admin/src/app.tsx)
     - You can look at [admin/src/components/settings.tsx](../../test/baselines/adapter_TS_React/admin/src/components/settings.tsx) for some inspiration
