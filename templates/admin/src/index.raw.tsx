@@ -10,8 +10,8 @@ import App from "./app";
 window["adapterName"] = "my-react-test";
 let themeName = Utils.getThemeName();
 
-function build() {
-	return ReactDOM.render(
+function build(): void {
+	ReactDOM.render(
 		<MuiThemeProvider theme={theme(themeName)}>
 			<App
 				onThemeChange={(_theme) => {
