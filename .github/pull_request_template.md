@@ -11,7 +11,8 @@
 -   [ ] If there are baseline changes, review them and make a separate commit for them with the comment "accept baselines" if they are desired changes
 -   [ ] Ensure the project builds with `npm run build`
 -   [ ] If you added a required option, also add it to the template creation (`.github/create_templates.ts`)
--   [ ] Add your changes to `CHANGELOG.md` (referencing this PR or the issue you fixed)
+-   [ ] Add a detailed migration description to `docs/updates` explaining what the user needs to do when manually updating an existing project
+-   [ ] Add your changes to `CHANGELOG.md` (referencing the migration description and this PR or the issue you fixed)
 
 **Description:**  
 add description here
