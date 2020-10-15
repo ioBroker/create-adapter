@@ -37,13 +37,7 @@ export = (answers => {
 	<!-- Load ioBroker scripts and styles-->
 	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
 ${useReact ? 
-`	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-	<script type="text/javascript">
-		// backwards compatibilty for words.js
-		if (typeof systemDictionary === 'undefined') {
-			systemDictionary = {};
-		}
-	</script>` :
+`	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>` :
 `	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
 	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
@@ -55,9 +49,9 @@ ${useReact ?
 
 	<!-- Load our own files -->
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script type="text/javascript" src="words.js"></script>
+${useReact ? "" :
+`	<script type="text/javascript" src="words.js"></script>
 
-${useReact ? "" : (`
 	<script type="text/javascript">
 		// This will be called by the admin adapter when the settings page loads
 		function load(settings, onChange) {
@@ -99,7 +93,7 @@ ${useReact ? "" : (`
 			callback(obj);
 		}
 	</script>
-`)}
+`}
 </head>
 
 <body>
