@@ -14,6 +14,8 @@ export type Languages =
 	| "pl"
 	| "zh-cn";
 
+export type TranslatedTerm = { [lang in Languages]?: string };
+
 const titles: Record<Languages, string> = {
 	en: "Adapter settings for ${adapterName}",
 	de: "Adaptereinstellungen für ${adapterName}",
@@ -53,7 +55,7 @@ export async function getTranslatedSettingsForLanguage(
  */
 export async function getTranslatedSettings(
 	answers: Answers,
-): Promise<Record<string, Record<Languages, string>>> {
+): Promise<Record<string, TranslatedTerm>> {
 	const languages: Languages[] = [
 		"en",
 		"de",
@@ -71,13 +73,14 @@ export async function getTranslatedSettings(
 			getTranslatedSettingsForLanguage(lang, answers),
 		),
 	);
-	const translatedSettings: Record<string, Record<Languages, string>> = {};
+	const translatedSettings: Record<string, TranslatedTerm> = {};
 	for (let i = 0; i < allTranslations.length; i++) {
 		const translations = allTranslations[i];
 		const lang = languages[i];
 		for (const key in translations) {
 			if (translations.hasOwnProperty(key)) {
-				const translation = translatedSettings[key] || {};
+				const translation =
+					translatedSettings[key] || (translatedSettings[key] = {});
 				translation[lang] = translations[key];
 			}
 		}
