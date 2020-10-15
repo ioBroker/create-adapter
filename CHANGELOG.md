@@ -6,8 +6,8 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
-* (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603)
-* (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react
+* (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603) · [Migration guide](docs/updates/20201015_adapter_react.md)
+* (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react (#347)
 
 ## 1.29.1 (2020-09-28)
 * (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
