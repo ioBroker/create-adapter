@@ -78,14 +78,19 @@ interface SettingsProps {
 	onChange: (attr: string, value: any) => void;
 }
 
-class Settings extends React.Component<SettingsProps, {}> {
-	constructor(props) {
+interface SettingsState {
+	// add your state properties here
+	dummy?: undefined;
+}
+
+class Settings extends React.Component<SettingsProps, SettingsState> {
+	constructor(props: SettingsProps) {
 		super(props);
 
 		this.state = {};
 	}
 
-	renderInput(title: string, attr: string, type: string) {
+	renderInput(title: string, attr: string, type: string): React.ReactNode {
 		return (
 			<TextField
 				label={I18n.t(title)}
@@ -98,7 +103,12 @@ class Settings extends React.Component<SettingsProps, {}> {
 		);
 	}
 
-	renderSelect(title: string, attr: string, options: { value: string; title: string }[], style?: any) {
+	renderSelect(
+		title: string,
+		attr: string,
+		options: { value: string; title: string }[],
+		style?: any,
+	): React.ReactNode {
 		return (
 			<FormControl
 				className={this.props.classes.input + " " + this.props.classes.controlElement}
@@ -120,7 +130,7 @@ class Settings extends React.Component<SettingsProps, {}> {
 		);
 	}
 
-	renderCheckbox(title: string, attr: string, style?: any) {
+	renderCheckbox(title: string, attr: string, style?: any): React.ReactNode {
 		return (
 			<FormControlLabel
 				key={attr}
@@ -138,10 +148,10 @@ class Settings extends React.Component<SettingsProps, {}> {
 		);
 	}
 
-	render() {
+	render(): React.ReactNode {
 		return (
 			<form className={this.props.classes.tab}>
-				${adapterSettings.map(generateSettingsMethod).join("<br />\n")}
+				${adapterSettings.map(generateSettingsMethod).join("<br />")}
 			</form>
 		);
 	}

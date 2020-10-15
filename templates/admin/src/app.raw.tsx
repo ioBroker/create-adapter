@@ -1,11 +1,12 @@
 import * as React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { Theme, withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
 import Settings from "./components/settings";
 import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
+import { StyleRules } from "@material-ui/styles";
 
-const styles = (theme) => ({
+const styles = (_theme: Theme): StyleRules => ({
 	root: {},
 });
 
@@ -26,11 +27,11 @@ class App extends GenericApp {
 		super(props, extendedProps);
 	}
 
-	onConnectionReady() {
+	onConnectionReady(): void {
 		// executed when connection is ready
 	}
 
-	render() {
+	render(): React.ReactNode {
 		if (!this.state.loaded) {
 			return super.render();
 		}
