@@ -1,124 +1,136 @@
 import * as React from "react";
-import { composeObject, entries } from "alcalzone-shared/objects";
+import { withStyles } from "@material-ui/core/styles";
+import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
+import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
-export type OnSettingsChangedCallback = (newSettings: Record<string, unknown>) => void;
+import I18n from "@iobroker/adapter-react/i18n";
+
+const styles = (): Record<string, CreateCSSProperties> => ({
+	input: {
+		marginTop: 0,
+		minWidth: 400,
+	},
+	button: {
+		marginRight: 20,
+	},
+	card: {
+		maxWidth: 345,
+		textAlign: "center",
+	},
+	media: {
+		height: 180,
+	},
+	column: {
+		display: "inline-block",
+		verticalAlign: "top",
+		marginRight: 20,
+	},
+	columnLogo: {
+		width: 350,
+		marginRight: 0,
+	},
+	columnSettings: {
+		width: "calc(100% - 370px)",
+	},
+	controlElement: {
+		//background: "#d2d2d2",
+		marginBottom: 5,
+	},
+});
 
 interface SettingsProps {
-	onChange: OnSettingsChangedCallback;
-	settings: Record<string, unknown>;
+	classes: Record<string, string>;
+	native: any;
+
+	onChange: (attr: string, value: any) => void;
 }
 
-// Define here which settings exist and how they are typed
 interface SettingsState {
-	// catch-all for new and temporary values
-	[key: string]: unknown;
-	// they should all be optional, since they might not be set yet
-	// e.g. password?: string;
+	// add your state properties here
+	dummy?: undefined;
 }
 
-/** Example component for editing adapter settings */
-export class Settings extends React.Component<SettingsProps, SettingsState> {
+class Settings extends React.Component<SettingsProps, SettingsState> {
 	constructor(props: SettingsProps) {
 		super(props);
-		// settings are our state
-		this.state = {
-			...props.settings,
-		};
 
-		// setup change handlers
-		this.handleChange = this.handleChange.bind(this);
-		// If you add your own, don't forget to bind them to `this`, e.g.:
-		// this.validateNetworkKey = this.validateNetworkKey.bind(this);
+		this.state = {};
 	}
 
-	// MaterializeCSS checkboxed are messed up. To fix them, we need to...
-	// 1. store every reference to a checkbox in a variable
-	// private chkWriteLogFile: HTMLInputElement | null | undefined;
-	// 2. add the click event handler in `componentDidMount`
-	// if (this.chkWriteLogFile != null) {
-	// 	$(this.chkWriteLogFile).on("click", this.handleChange as any);
-	// }
-	// 3. remove the click handler in `componentWillUnmount`
-	// if (this.chkWriteLogFile != null) {
-	// 	$(this.chkWriteLogFile).off("click", this.handleChange as any);
-	// }
-
-	private parseChangedSetting(target: HTMLInputElement | HTMLSelectElement): unknown {
-		// Checkboxes in MaterializeCSS are messed up, so we attach our own handler
-		// However that one gets called before the underlying checkbox is actually updated,
-		// so we need to invert the checked value here
-		return target.type === "checkbox"
-			? !(target as any).checked
-			: target.type === "number"
-			? parseInt(target.value, 10)
-			: target.value;
-	}
-
-	// gets called when the form elements are changed by the user
-	private handleChange(event: React.FormEvent<HTMLElement>): boolean {
-		const target = event.target as HTMLInputElement | HTMLSelectElement; // TODO: more types
-		const value = this.parseChangedSetting(target);
-		return this.updateSettings(target.id, value);
-	}
-
-	private updateSettings(setting: string, value: unknown): boolean {
-		// store the setting
-		this.putSetting(setting, value, () => {
-			// and notify the admin UI about changes
-			this.props.onChange(composeObject(entries(this.state).filter(([k]) => !k.startsWith("_"))));
-		});
-		return false;
-	}
-
-	/**
-	 * Reads a setting from the state object and transforms the value into the correct format
-	 * If no value is set, the default value is returned
-	 * @param key The setting key to lookup
-	 */
-	private getSetting(key: string, defaultValue?: unknown): unknown {
-		const ret = this.state[key];
-		return ret != undefined ? ret : defaultValue;
-	}
-
-	/**
-	 * Saves a setting in the state object and transforms the value into the correct format
-	 * @param key The setting key to store at
-	 */
-	private putSetting(key: string, value: unknown, callback?: () => void): void {
-		this.setState({ [key]: value }, callback);
-	}
-
-	public componentDidMount(): void {
-		// update floating labels in materialize design
-		M.updateTextFields();
-
-		// Add checkbox click handlers here
-	}
-
-	public componentWillUnmount(): void {
-		// Remove checkbox click handlers here
-	}
-
-	public componentDidUpdate(): void {
-		// update floating labels in materialize design
-		M.updateTextFields();
-	}
-
-	public render(): JSX.Element {
+	renderInput(title: string, attr: string, type: string): React.ReactNode {
 		return (
-			<>
-				<div className="row">
-			<div className="col s6 input-field">
-				<input type="checkbox" className="value" id="option1" />
-				<label htmlFor="option1" className="translate">option1</label>
-			</div>
+			<TextField
+				label={I18n.t(title)}
+				className={this.props.classes.input + " " + this.props.classes.controlElement}
+				value={this.props.native[attr]}
+				type={type || "text"}
+				onChange={(e) => this.props.onChange(attr, e.target.value)}
+				margin="normal"
+			/>
+		);
+	}
 
-			<div className="col s6 input-field">
-				<input type="text" className="value" id="option2" />
-				<label htmlFor="option2" className="translate">option2</label>
-			</div>
-				</div>
-			</>
+	renderSelect(
+		title: string,
+		attr: string,
+		options: { value: string; title: string }[],
+		style?: any,
+	): React.ReactNode {
+		return (
+			<FormControl
+				className={this.props.classes.input + " " + this.props.classes.controlElement}
+				style={Object.assign({ paddingTop: 5 }, style)}
+			>
+				<Select
+					value={this.props.native[attr] || "_"}
+					onChange={(e) => this.props.onChange(attr, e.target.value === "_" ? "" : e.target.value)}
+					input={<Input name={attr} id={attr + "-helper"} />}
+				>
+					{options.map((item) => (
+						<MenuItem key={"key-" + item.value} value={item.value || "_"}>
+							{I18n.t(item.title)}
+						</MenuItem>
+					))}
+				</Select>
+				<FormHelperText>{I18n.t(title)}</FormHelperText>
+			</FormControl>
+		);
+	}
+
+	renderCheckbox(title: string, attr: string, style?: any): React.ReactNode {
+		return (
+			<FormControlLabel
+				key={attr}
+				style={Object.assign({ paddingTop: 5 }, style)}
+				className={this.props.classes.controlElement}
+				control={
+					<Checkbox
+						checked={this.props.native[attr]}
+						onChange={() => this.props.onChange(attr, !this.props.native[attr])}
+						color="primary"
+					/>
+				}
+				label={I18n.t(title)}
+			/>
+		);
+	}
+
+	render(): React.ReactNode {
+		return (
+			<form className={this.props.classes.tab}>
+
+			{this.renderCheckbox("option1", "option1")}<br />
+			{this.renderInput("option2", "option2", "text")}
+			</form>
 		);
 	}
 }
+
+export default withStyles(styles)(Settings);
