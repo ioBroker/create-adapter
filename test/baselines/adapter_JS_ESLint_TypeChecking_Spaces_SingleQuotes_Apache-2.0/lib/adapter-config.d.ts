@@ -14,3 +14,6 @@ declare global {
         }
     }
 }
+
+// this is required so the above AdapterConfig is found by ESlint
+export {};
