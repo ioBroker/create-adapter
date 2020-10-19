@@ -24,7 +24,7 @@ export = (async answers => {
 			.map(key => {
 				return `"${key}": ${JSON.stringify(translatedSettings[key], null, 4)}`;
 			})
-			.join(",\n");
+			.join(",\n") + ",";
 	}
 
 	const template = `

@@ -24,10 +24,11 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
+	let template: string;
 	if (useTypeScript && !useTypeChecking) {
 		const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;
 		
-		const template = `
+		template = `
 // This file extends the AdapterConfig type from "@types/iobroker"
 
 // Augment the globally declared type ioBroker.AdapterConfig
@@ -38,10 +39,8 @@ declare global {
 	}
 }
 `;
-		return template.trim();
-	}
-
-	const template = `
+	} else {
+		template = `
 // This file extends the AdapterConfig type from "@types/iobroker"
 // using the actual properties present in io-package.json
 // in order to provide typings for adapter.config properties
@@ -59,6 +58,8 @@ declare global {
 	}
 }
 `;
+	}
+
 	return template.trim();
 };
 

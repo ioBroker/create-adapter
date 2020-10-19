@@ -17,16 +17,16 @@ export type Languages =
 export type TranslatedTerm = { [lang in Languages]?: string };
 
 const titles: Record<Languages, string> = {
-	en: "Adapter settings for ${adapterName}",
-	de: "Adaptereinstellungen für ${adapterName}",
-	ru: "Настройки адаптера для ${adapterName}",
-	pt: "Configurações do adaptador para ${adapterName}",
-	nl: "Adapterinstellingen voor ${adapterName}",
-	fr: "Paramètres d'adaptateur pour ${adapterName}",
-	it: "Impostazioni dell'adattatore per ${adapterName}",
-	es: "Ajustes del adaptador para ${adapterName}",
-	pl: "Ustawienia adaptera dla ${adapterName}",
-	"zh-cn": "${adapterName}的适配器设置",
+	en: "Adapter settings for <adapterName>",
+	de: "Adaptereinstellungen für <adapterName>",
+	ru: "Настройки адаптера для <adapterName>",
+	pt: "Configurações do adaptador para <adapterName>",
+	nl: "Adapterinstellingen voor <adapterName>",
+	fr: "Paramètres d'adaptateur pour <adapterName>",
+	it: "Impostazioni dell'adattatore per <adapterName>",
+	es: "Ajustes del adaptador para <adapterName>",
+	pl: "Ustawienia adaptera dla <adapterName>",
+	"zh-cn": "<adapterName>的适配器设置",
 };
 
 export async function getTranslatedSettingsForLanguage(
@@ -38,7 +38,7 @@ export async function getTranslatedSettingsForLanguage(
 	const translatedSettings: Record<string, string> = {};
 	translatedSettings[`${answers.adapterName} adapter settings`] = titles[
 		language
-	].replace("${adapterName}", answers.adapterName);
+	].replace(/<adapterName>/gi, answers.adapterName);
 	for (const setting of adapterSettings) {
 		translatedSettings[setting.key] = await translateText(
 			setting.label || setting.key,
@@ -89,7 +89,7 @@ export async function getTranslatedSettings(
 	return translatedSettings;
 }
 
-export function getI18nJson(language: Languages): TemplateFunction {
+export function getI18nJsonTemplate(language: Languages): TemplateFunction {
 	return async (answers) => {
 		const isAdapter = answers.features.indexOf("adapter") > -1;
 		const useTypeScript = answers.language === "TypeScript";

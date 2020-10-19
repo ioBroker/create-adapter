@@ -1,3 +1,3 @@
-import { getI18nJson } from "../../../../src/lib/translation";
+import { getI18nJsonTemplate } from "../../../../src/lib/translation";
 
-export = getI18nJson("it");
+export = getI18nJsonTemplate("it");

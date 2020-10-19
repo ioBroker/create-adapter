@@ -15,16 +15,16 @@ class App extends GenericApp {
 		const extendedProps: GenericAppSettings = { ...props };
 		extendedProps.encryptedFields = [];
 		extendedProps.translations = {
-			"en": require("./i18n/en"),
-			"de": require("./i18n/de"),
-			"ru": require("./i18n/ru"),
-			"pt": require("./i18n/pt"),
-			"nl": require("./i18n/nl"),
-			"fr": require("./i18n/fr"),
-			"it": require("./i18n/it"),
-			"es": require("./i18n/es"),
-			"pl": require("./i18n/pl"),
-			"zh-cn": require("./i18n/zh-cn"),
+			"en": require("./i18n/en.json"),
+			"de": require("./i18n/de.json"),
+			"ru": require("./i18n/ru.json"),
+			"pt": require("./i18n/pt.json"),
+			"nl": require("./i18n/nl.json"),
+			"fr": require("./i18n/fr.json"),
+			"it": require("./i18n/it.json"),
+			"es": require("./i18n/es.json"),
+			"pl": require("./i18n/pl.json"),
+			"zh-cn": require("./i18n/zh-cn.json"),
 		};
 
 		super(props, extendedProps);

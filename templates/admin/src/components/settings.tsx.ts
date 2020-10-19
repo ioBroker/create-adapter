@@ -5,13 +5,13 @@ function generateSettingsMethod(settings: AdapterSettings): string {
 	if (settings.inputType === "select" && settings.options) {
 		const options = settings.options.map((opt) => ({ value: opt.value, title: opt.text }));
 		return `
-			{renderSelect("${settings.label || settings.key}", "${settings.key}", ${JSON.stringify(options)})}`;
+				{renderSelect("${settings.label || settings.key}", "${settings.key}", ${JSON.stringify(options)})}`;
 	} else if (settings.inputType === "checkbox") {
 		return `
-			{this.renderCheckbox("${settings.label || settings.key}", "${settings.key}")}`;
+				{this.renderCheckbox("${settings.label || settings.key}", "${settings.key}")}`;
 	} else {
 		return `
-			{this.renderInput("${settings.label || settings.key}", "${settings.key}", "${settings.inputType}")}`;
+				{this.renderInput("${settings.label || settings.key}", "${settings.key}", "${settings.inputType}")}`;
 	}
 }
 
@@ -150,8 +150,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 
 	render(): React.ReactNode {
 		return (
-			<form className={this.props.classes.tab}>
-				${adapterSettings.map(generateSettingsMethod).join("<br />")}
+			<form className={this.props.classes.tab}>${adapterSettings.map(generateSettingsMethod).join("<br />")}
 			</form>
 		);
 	}
