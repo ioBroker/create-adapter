@@ -68,7 +68,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: ["*.test.ts"],
+			files: ["*.test.ts", "*.tsx"],
 			rules: {
 				"@typescript-eslint/explicit-function-return-type": "off",
 			},

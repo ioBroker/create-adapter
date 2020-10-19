@@ -34,7 +34,7 @@ class App extends GenericApp {
 		// executed when connection is ready
 	}
 
-	render(): React.ReactNode {
+	render() {
 		if (!this.state.loaded) {
 			return super.render();
 		}
