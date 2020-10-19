@@ -125,9 +125,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 	render(): React.ReactNode {
 		return (
 			<form className={this.props.classes.tab}>
-
-			{this.renderCheckbox("option1", "option1")}<br />
-			{this.renderInput("option2", "option2", "text")}
+				{this.renderCheckbox("option1", "option1")}<br />
+				{this.renderInput("option2", "option2", "text")}
 			</form>
 		);
 	}
