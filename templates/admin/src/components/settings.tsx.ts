@@ -90,7 +90,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		this.state = {};
 	}
 
-	renderInput(title: string, attr: string, type: string): React.ReactNode {
+	renderInput(title: string, attr: string, type: string) {
 		return (
 			<TextField
 				label={I18n.t(title)}
@@ -108,7 +108,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		attr: string,
 		options: { value: string; title: string }[],
 		style?: any,
-	): React.ReactNode {
+	) {
 		return (
 			<FormControl
 				className={this.props.classes.input + " " + this.props.classes.controlElement}
@@ -130,7 +130,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		);
 	}
 
-	renderCheckbox(title: string, attr: string, style?: any): React.ReactNode {
+	renderCheckbox(title: string, attr: string, style?: any) {
 		return (
 			<FormControlLabel
 				key={attr}
@@ -148,7 +148,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		);
 	}
 
-	render(): React.ReactNode {
+	render() {
 		return (
 			<form className={this.props.classes.tab}>${adapterSettings.map(generateSettingsMethod).join("<br />")}
 			</form>
