@@ -116,7 +116,7 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 
 	return files.map((f) => {
 		if (f.noReformat || typeof f.content !== "string") return f;
-		if (usePrettier && /\.(js|json|ts)$/.test(f.name)) {
+		if (usePrettier && /\.(jsx?|json|tsx?)$/.test(f.name)) {
 			// Use prettier to format JS/TS/JSON code
 			const extension = f.name.substr(f.name.lastIndexOf(".") + 1);
 			f.content = formatWithPrettier(
@@ -130,9 +130,9 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 			f.content = formatter(f.content);
 			// 2nd step: Apply more specialized formatters
 			if (answers.quotes != undefined) {
-				if (f.name.endsWith(".js"))
+				if (f.name.endsWith(".js") || f.name.endsWith(".jsx"))
 					f.content = jsFixQuotes(f.content, answers.quotes);
-				else if (f.name.endsWith(".ts"))
+				else if (f.name.endsWith(".ts") || f.name.endsWith(".tsx"))
 					f.content = tsFixQuotes(f.content, answers.quotes);
 			}
 		}

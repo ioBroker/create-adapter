@@ -7,6 +7,7 @@ const templateFunction: TemplateFunction = answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
+	const useReact = answers.adminReact === "yes";
 
 	const template = `
 .git
@@ -29,7 +30,8 @@ appveyor.yaml
 
 ${useTypeScript ? `
 # TypeScript sources and project configuration
-src/
+src/${useReact ? `
+admin/src/` : ""}
 tsconfig.json
 tsconfig.*.json`
 			: useTypeChecking ? `
@@ -55,10 +57,10 @@ ${useNyc ? `
 # NYC coverage files
 coverage
 .nyc*` : ""}
-
+${useReact ? "" : `
 # i18n intermediate files
 admin/i18n
-
+`}
 # maintenance scripts
 maintenance/**
 `;

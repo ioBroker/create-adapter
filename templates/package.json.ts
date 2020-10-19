@@ -70,9 +70,12 @@ const templateFunction: TemplateFunction = async answers => {
 			"react-dom",
 			"@types/react",
 			"@types/react-dom",
-			// UI library support in TS:
-			"@types/jquery",
-			"@types/materialize-css",
+			// ioBroker
+			"@iobroker/adapter-react",
+			// UI library
+			"react-icons",
+			"@material-ui/core",
+			"@material-ui/icons",
 			// We need this for parcel to support TypeScript
 			"@babel/cli",
 			"@babel/core",
@@ -88,6 +91,9 @@ const templateFunction: TemplateFunction = async answers => {
 		.concat((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
 			"@typescript-eslint/parser",
+		] : [])
+		.concat((useESLint && useTypeScript && useReact) ? [
+			"eslint-plugin-react",
 		] : [])
 		.concat((useESLint && usePrettier) ? [
 			"eslint-config-prettier",
@@ -153,7 +159,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
 			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
 			${useESLint ? (`
-				"lint": "eslint${useTypeScript ? " --ext .ts src" : ""}",
+				"lint": "eslint${useTypeScript ? (useReact ? ` --ext .tsx,.ts \\"{src,admin}\\"` : " --ext .ts src") : ""}",
 			`) : ""}
 		`) : isWidget ? (`
 			"test:package": "mocha test/package --exit",

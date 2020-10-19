@@ -6,6 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
+* (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react (#347) · [Migration guide](docs/updates/20201015_adapter_react.md)
 * (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603)
 
 ## 1.29.1 (2020-09-28)

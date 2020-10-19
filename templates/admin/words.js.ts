@@ -1,63 +1,38 @@
 import { TemplateFunction } from "../../src/lib/createAdapter";
-import { AdapterSettings, getDefaultAnswer } from "../../src/lib/questions";
-import { formatJsonString, translateText } from "../../src/lib/tools";
+import { formatJsonString } from "../../src/lib/tools";
+import { getTranslatedSettings } from "../../src/lib/translation";
 
 export = (async answers => {
 
-	const isAdapter = answers.features.indexOf("adapter") > -1;
+	let isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
+	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminReact === "yes";
-
-	// Automatically translate all settings
-	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
-	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
-	const translatedSettings: Record<string, Record<string, string>> = {};
-	for (const setting of adapterSettings) {
-		translatedSettings[setting.key] = {};
-		for (const lang of languages) {
-			translatedSettings[setting.key][lang] = await translateText(setting.label || setting.key, lang);
+	if (useTypeScript && useReact) {
+		if (!isWidget) {
+			return;
 		}
+
+		isAdapter = false;
 	}
-	const translatedSettingsJson = Object.keys(translatedSettings)
-		.map(key => {
-			return `"${key}": ${JSON.stringify(translatedSettings[key], null, 4)}`;
-		})
-		.join(",\n")
-	;
+	
+	let translatedSettingsJson = "";
+	if (isAdapter) {
+		// Automatically translate all settings
+		const translatedSettings = await getTranslatedSettings(answers);
+		translatedSettingsJson = Object.keys(translatedSettings)
+			.map(key => {
+				return `"${key}": ${JSON.stringify(translatedSettings[key], null, 4)}`;
+			})
+			.join(",\n") + ",";
+	}
 
 	const template = `
 /*global systemDictionary:true */
 'use strict';
 
 systemDictionary = ${formatJsonString(`{
-	${isAdapter ? (`
-	"${answers.adapterName} adapter settings": {
-		"en": "Adapter settings for ${answers.adapterName}",
-		"de": "Adaptereinstellungen für ${answers.adapterName}",
-		"ru": "Настройки адаптера для ${answers.adapterName}",
-		"pt": "Configurações do adaptador para ${answers.adapterName}",
-		"nl": "Adapterinstellingen voor ${answers.adapterName}",
-		"fr": "Paramètres d'adaptateur pour ${answers.adapterName}",
-		"it": "Impostazioni dell'adattatore per ${answers.adapterName}",
-		"es": "Ajustes del adaptador para ${answers.adapterName}",
-		"pl": "Ustawienia adaptera dla ${answers.adapterName}",
-		"zh-cn": "${answers.adapterName}的适配器设置"
-	},
-	${useReact ? (`
-	"loading...": {
-		"en": "loading...",
-		"de": "Wird geladen...",
-		"ru": "загрузка ...",
-		"pt": "Carregando...",
-		"nl": "bezig met laden...",
-		"fr": "chargement...",
-		"it": "Caricamento in corso...",
-		"es": "cargando...",
-		"pl": "Ładuję...",
-		"zh-cn": "载入中..."
-	},`) : ""}
-	${translatedSettingsJson},
-	`) : ""}
+	${translatedSettingsJson}
 	${isWidget ? (`
 	"myColor": {
 		"en": "myColor",

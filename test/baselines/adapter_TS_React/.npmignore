@@ -18,6 +18,7 @@ appveyor.yaml
 
 # TypeScript sources and project configuration
 src/
+admin/src/
 tsconfig.json
 tsconfig.*.json
 
@@ -31,9 +32,6 @@ maps/
 # npm package files
 iobroker.*.tgz
 package-lock.json
-
-# i18n intermediate files
-admin/i18n
 
 # maintenance scripts
 maintenance/**
