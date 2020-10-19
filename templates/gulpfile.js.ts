@@ -3,6 +3,8 @@ import { TemplateFunction } from "../src/lib/createAdapter";
 export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
+	const useReact = answers.adminReact === "yes";
+	const skipWordsJs = useTypeScript && useReact;
 
 	const template = `
 /*!
@@ -31,7 +33,7 @@ const languages = {
 	pl: {},
 	"zh-cn": {}
 };
-
+` + (skipWordsJs ? '' : `
 function lang2data(lang) {
 	let str ="{\\n";
 	let count = 0;
@@ -210,7 +212,7 @@ function languages2words(src) {
 
 	writeWordJs(bigOne, src);
 }
-
+`) + `
 async function translateNotExisting(obj, baseText, yandex) {
 	let t = obj['en'];
 	if (!t) {
@@ -229,7 +231,7 @@ async function translateNotExisting(obj, baseText, yandex) {
 }
 
 //TASKS
-
+` + (skipWordsJs ? '' : `
 gulp.task("adminWords2languages", function (done) {
 	words2languages("./admin/");
 	done();
@@ -239,7 +241,7 @@ gulp.task("adminLanguages2words", function (done) {
 	languages2words("./admin/");
 	done();
 });
-
+`) + `
 gulp.task("updatePackages", function (done) {
 	iopackage.common.version = pkg.version;
 	iopackage.common.news = iopackage.common.news || {};
@@ -338,9 +340,9 @@ gulp.task('translate', async function (done) {
 	}
 	fs.writeFileSync('io-package.json', JSON.stringify(iopackage, null, 4));
 });
-
+` + (skipWordsJs ? '' : `
 gulp.task("translateAndUpdateWordsJS", gulp.series("translate", "adminLanguages2words", "adminWords2languages"));
-
+`) + `
 gulp.task("default", gulp.series("updatePackages", "updateReadme"));
 `;
 	return template.trim();
