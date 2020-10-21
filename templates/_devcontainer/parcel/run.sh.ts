@@ -14,7 +14,7 @@ npm install
 
 npm run watch:parcel
 `;
-	return template.trim();
+	return template.trim().replace(/\r\n/g, '\n');
 };
 
 templateFunction.customPath = ".devcontainer/parcel/run.sh";
