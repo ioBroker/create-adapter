@@ -13,11 +13,6 @@ appveyor.yaml
 # React sources for the Admin UI
 admin/src/
 
-# TypeScript sources and project configuration
-src/
-tsconfig.json
-tsconfig.*.json
-
 # Sourcemaps
 *.map
 

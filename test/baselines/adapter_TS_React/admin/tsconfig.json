@@ -19,6 +19,7 @@
 		"../src/lib/adapter-config.d.ts"
 	],
 	"exclude": [
-		"./**/*.test.ts*"
+		"./**/*.test.ts",
+		"./**/*.test.tsx"
 	]
 }
