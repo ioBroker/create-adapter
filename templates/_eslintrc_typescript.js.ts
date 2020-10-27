@@ -16,30 +16,27 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
 		sourceType: "module", // Allows for the use of imports
-		project: "./tsconfig.json",
-${useReact ? 
-`		ecmaFeatures: {
+		project: "./tsconfig.json",${useReact ? (`
+		ecmaFeatures: {
 			jsx: true,
-		},
-`: ""}	},
+		},`) : ""}
+	},
 	extends: [
 		"plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-${usePrettier ? (
-`		"prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+${usePrettier ? (`
+		"prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
 		"plugin:prettier/recommended", // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
-`) : ""}${useReact ? (
-`		"plugin:react/recommended", // Supports React JSX
+`) : ""}${useReact ? (`
+		"plugin:react/recommended", // Supports React JSX
 `) : ""}	],
-	plugins: [${useReact ? `"react"` : ""}],
-${useReact ? 
-`	settings: {
+	plugins: [${useReact ? `"react"` : ""}],${useReact ? (`
+	settings: {
 		react: {
-			version: 'detect',
+			version: "detect",
 		},
-	},
-`: ""}	rules: {
-${usePrettier ? "" : (
-`		"indent": "off",
+	},`): ""}
+	rules: {${usePrettier ? "" : (`
+		"indent": "off",
 		"@typescript-eslint/indent": [
 			"error",
 			${answers.indentation === "Tab" ? `"tab"` : "4"},
@@ -54,9 +51,8 @@ ${usePrettier ? "" : (
 				"avoidEscape": true,
 				"allowTemplateLiterals": true
 			}
-		],
-`)
-}		"@typescript-eslint/no-parameter-properties": "off",
+		],`)}
+		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/no-use-before-define": [
 			"error",
@@ -97,7 +93,7 @@ ${usePrettier ? "" : (
 	],
 };
 `;
-	return template.trim();
+	return template.trim().replace(/(\r?\n)+/g, "\n");
 };
 
 templateFunction.customPath = ".eslintrc.js";

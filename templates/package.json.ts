@@ -13,6 +13,8 @@ const templateFunction: TemplateFunction = async answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
+	const useTypeChecking = useTypeScript
+		|| (answers.tools && answers.tools.indexOf("type checking") > -1);
 	const useReact = answers.adminReact === "yes";
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
@@ -38,18 +40,20 @@ const templateFunction: TemplateFunction = async answers => {
 		])
 		.concat(isAdapter ? [
 			// support adapter testing by default
-			"@types/chai",
 			"chai",
-			"@types/chai-as-promised",
 			"chai-as-promised",
-			"@types/mocha",
 			"mocha",
-			"@types/sinon",
 			"sinon",
-			"@types/sinon-chai",
 			"sinon-chai",
-			"@types/proxyquire",
 			"proxyquire",
+		] : [])
+		.concat(isAdapter && useTypeChecking ? [
+			"@types/chai",
+			"@types/chai-as-promised",
+			"@types/mocha",
+			"@types/sinon",
+			"@types/sinon-chai",
+			"@types/proxyquire",
 			// and NodeJS typings
 			"@types/node@14",
 		] : [])
@@ -62,28 +66,32 @@ const templateFunction: TemplateFunction = async answers => {
 			// to clean the build dir
 			"rimraf",
 		] : [])
-		.concat(useTypeScript && useReact ? [
+		.concat(useReact ? [
 			// We use parcel as the bundler
 			"parcel-bundler",
-			// React and its type definitions:
+			// React
 			"react",
 			"react-dom",
 			"@types/react",
 			"@types/react-dom",
-			// ioBroker
+			// ioBroker react framework
 			"@iobroker/adapter-react",
 			// UI library
 			"react-icons",
 			"@material-ui/core",
 			"@material-ui/icons",
-			// We need this for parcel to support TypeScript
+			// This is needed by parcel to compile JSX/TSX
 			"@babel/cli",
 			"@babel/core",
-			"@babel/plugin-proposal-class-properties",
+		]: [])
+		.concat(useTypeChecking && useReact ? [
+			// React's type definitions
+			"@types/react",
+			"@types/react-dom",
+		]: [])
+		.concat(useTypeScript && useReact ? [
+			// We need this for parcel to support some TypeScript features
 			"@babel/plugin-proposal-decorators",
-			"@babel/plugin-proposal-nullish-coalescing-operator",
-			"@babel/plugin-proposal-numeric-separator",
-			"@babel/plugin-proposal-optional-chaining",
 			"@babel/preset-env",
 			"@babel/preset-typescript",
 		]: [])
@@ -92,7 +100,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"@typescript-eslint/eslint-plugin",
 			"@typescript-eslint/parser",
 		] : [])
-		.concat((useESLint && useTypeScript && useReact) ? [
+		.concat((useESLint && useReact) ? [
 			"eslint-plugin-react",
 		] : [])
 		.concat((useESLint && usePrettier) ? [
@@ -151,6 +159,8 @@ const templateFunction: TemplateFunction = async answers => {
 				"watch": "npm run watch:ts",
 				"test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
 			`) : (`
+				${useReact ? `"build:parcel": "parcel build admin/src/index.jsx -d admin/build",
+				"build": "npm run build:parcel",` : ""}
 				"test:js": "mocha --config test/mocharc.custom.json \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
 			`)}
 			"test:package": "mocha test/package --exit",
@@ -158,8 +168,11 @@ const templateFunction: TemplateFunction = async answers => {
 			"test:integration": "mocha test/integration --exit",
 			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
 			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
-			${useESLint ? (`
-				"lint": "eslint${useTypeScript ? (useReact ? ` --ext .ts,.tsx src/ admin/src/` : " --ext .ts src/") : ""}",
+			${useESLint && useTypeScript ? (`
+				"lint": "eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}",
+			`) : ""}
+			${useESLint && !useTypeScript ? (`
+				"lint": "eslint${useReact ? " --ext .js,.jsx" : ""}",
 			`) : ""}
 		`) : isWidget ? (`
 			"test:package": "mocha test/package --exit",

@@ -5,6 +5,8 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminReact === "yes";
+
+	// This is only required for TypeScript React
 	if (!(useTypeScript && useReact)) return;
 
 	const template = `

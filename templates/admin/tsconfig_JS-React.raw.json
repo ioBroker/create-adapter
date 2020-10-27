@@ -14,12 +14,11 @@
 		]
 	},
 	"include": [
-		"./**/*.ts",
-		"./**/*.tsx",
+		"./**/*.d.ts",
+		"./**/*.jsx",
 		"../src/lib/adapter-config.d.ts"
 	],
 	"exclude": [
-		"./**/*.test.ts",
-		"./**/*.test.tsx"
+		"./**/*.test.jsx"
 	]
 }

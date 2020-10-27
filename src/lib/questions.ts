@@ -436,12 +436,8 @@ export const questionsAndText: (
 					"Which language do you want to use to code the adapter?",
 				choices: ["JavaScript", "TypeScript"],
 			},
-			// enable React (only TypeScript at the start)
 			{
-				condition: [
-					{ name: "features", contains: "adapter" },
-					{ name: "language", value: "TypeScript" }, // TODO: enable React for JS through Babel
-				],
+				condition: [{ name: "features", contains: "adapter" }],
 				type: "select",
 				name: "adminReact",
 				message: "Use React for the Admin UI?",

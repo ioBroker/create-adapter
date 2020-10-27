@@ -4,7 +4,7 @@ export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminReact === "yes";
-	const skipWordsJs = useTypeScript && useReact;
+	const skipWordsJs = useReact;
 
 	const template = `
 /*!
