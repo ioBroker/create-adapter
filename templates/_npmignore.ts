@@ -6,26 +6,19 @@ const templateFunction: TemplateFunction = answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
-	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const useReact = answers.adminReact === "yes";
 
 	const template = `
-.git
-.idea
+.*
 node_modules/
 nbproject/
-.vs*/
 *.code-workspace
-.create-adapter.json
 Thumbs.db
 ${isAdapter ? `gulpfile.js` : ""}
 
 # CI test files
 test/
 travis/
-.travis.yml
-appveyor.yml
-.travis.yaml
 appveyor.yaml
 
 ${useTypeScript ? `
@@ -38,15 +31,10 @@ tsconfig.*.json`
 # Type checking configuration
 tsconfig.json
 tsconfig.*.json` : ""}
-${useESLint ? `
-# ESLint configuration
-.eslintrc.json
-.eslintrc.js
-` : ""}
 
 ${useTypeScript ? (`
 # Sourcemaps
-maps/
+*.map
 `) : ""}
 
 # npm package files
@@ -55,8 +43,7 @@ package-lock.json
 
 ${useNyc ? `
 # NYC coverage files
-coverage
-.nyc*` : ""}
+coverage` : ""}
 ${useReact ? "" : `
 # i18n intermediate files
 admin/i18n
