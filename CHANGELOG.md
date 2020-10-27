@@ -9,6 +9,7 @@
 * (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react (#347) · [Migration guide](docs/updates/20201015_adapter_react.md)
 * (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603)
 * (UncleSamSwiss) Fixed issue with running parcel in Devcontainer (with WSL2 remote path)
+* (UncleSamSwiss) Cleaned up `.npmignore` file (#608)
 
 ## 1.29.1 (2020-09-28)
 * (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)

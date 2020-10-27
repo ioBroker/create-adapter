@@ -24,6 +24,7 @@ Just keep in mind you won't profit from future improvements to the React UI in `
     - Remove the following packages:
         - `@types/jquery`
         - `@types/materialize-css`
+1. Update `.npmignore` to look like [this](../../test/baselines/adapter_TS_React/.npmignore)
 
 ### ioBroker Types
 
