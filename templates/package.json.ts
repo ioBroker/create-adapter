@@ -70,10 +70,8 @@ const templateFunction: TemplateFunction = async answers => {
 			// We use parcel as the bundler
 			"parcel-bundler",
 			// React
-			"react",
-			"react-dom",
-			"@types/react",
-			"@types/react-dom",
+			"react@16", // Pinned to v16 for now, don't forget to update @types/react[-dom] aswell
+			"react-dom@16",
 			// ioBroker react framework
 			"@iobroker/adapter-react",
 			// UI library
@@ -86,8 +84,8 @@ const templateFunction: TemplateFunction = async answers => {
 		]: [])
 		.concat(useTypeChecking && useReact ? [
 			// React's type definitions
-			"@types/react",
-			"@types/react-dom",
+			"@types/react@16",
+			"@types/react-dom@16",
 		]: [])
 		.concat(useTypeScript && useReact ? [
 			// We need this for parcel to support some TypeScript features
@@ -159,7 +157,8 @@ const templateFunction: TemplateFunction = async answers => {
 				"watch": "npm run watch:ts",
 				"test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
 			`) : (`
-				${useReact ? `"build:parcel": "parcel build admin/src/index.jsx -d admin/build",
+				${useReact ? `"watch:parcel": "parcel admin/src/index.jsx -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",
+				"build:parcel": "parcel build admin/src/index.jsx -d admin/build",
 				"build": "npm run build:parcel",` : ""}
 				"test:js": "mocha --config test/mocharc.custom.json \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
 			`)}
