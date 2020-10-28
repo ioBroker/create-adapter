@@ -158,7 +158,7 @@ const templates: Record<string, Answers> = {
 			}
 			if (typecheck) {
 				console.log("performing a type-check...");
-				execSync(`npx run check`, cmdOpts);
+				execSync(`npm run check`, cmdOpts);
 			}
 		}
 	}
