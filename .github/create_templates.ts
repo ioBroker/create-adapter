@@ -52,6 +52,15 @@ const templates: Record<string, Answers> = {
 		indentation: "Space (4)",
 		quotes: "single",
 	},
+	JavaScriptReact: {
+		...adapterAnswers,
+		language: "JavaScript",
+		title: "Template (JavaScript)",
+		tools: ["ESLint", "type checking"],
+		indentation: "Space (4)",
+		quotes: "single",
+		adminReact: "yes",
+	},
 	TypeScript: {
 		...adapterAnswers,
 		language: "TypeScript",
