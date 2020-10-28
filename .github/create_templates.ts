@@ -148,7 +148,7 @@ const templates: Record<string, Answers> = {
 			const templateDir = getTemplateDir(tplName);
 			const cmdOpts: ExecSyncOptions = {
 				cwd: templateDir,
-				stdio: ["pipe", "pipe", "pipe"],
+				stdio: "inherit",
 			};
 			console.log("installing dependencies...");
 			execSync(`npm install --loglevel error --no-audit`, cmdOpts);
