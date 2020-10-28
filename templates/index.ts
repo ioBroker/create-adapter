@@ -70,6 +70,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "test/tsconfig.json.ts", templateFunction: require("./test/tsconfig.json") },
 	{ name: "test/unit.js.ts", templateFunction: require("./test/unit.js") },
 	{ name: "tsconfig.build.json.ts", templateFunction: require("./tsconfig.build.json") },
+	{ name: "tsconfig.check.json.ts", templateFunction: require("./tsconfig.check.json") },
 	{ name: "tsconfig.json.ts", templateFunction: require("./tsconfig.json") },
 	{ name: "widgets/style.css.ts", templateFunction: require("./widgets/style.css") },
 	{ name: "widgets/template.html.ts", templateFunction: require("./widgets/template.html") },

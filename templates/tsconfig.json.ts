@@ -41,8 +41,8 @@ export = (answers => {
 		// "noUnusedLocals": true,
 		// "noUnusedParameters": true,
 
-		// Consider targetting es2017 or higher if you require the new NodeJS 8+ features
-		"target": "es2015",
+		// Consider targetting es2019 or higher if you only support Node.js 12+
+		"target": "es2018",
 		${useTypeScript ? (`
 		"sourceMap": false,
 		"inlineSourceMap": false,
