@@ -38,6 +38,6 @@ build();
 
 templateFunction.customPath = (answers) => {
 	const useTypeScript = answers.language === "TypeScript";
-	return useTypeScript ? "admin/src/index.tsx" : "admin/src/index.jsx";
+	return `admin/src/index.${useTypeScript ? "tsx" : "jsx"}`;
 }
 export = templateFunction;
