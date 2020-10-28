@@ -1,4 +1,5 @@
 import { blue, green } from "ansi-colors";
+import { execSync, ExecSyncOptions } from "child_process";
 import * as fs from "fs-extra";
 import * as path from "path";
 import { createAdapter } from "../src";
@@ -7,13 +8,17 @@ import { Answers } from "../src/lib/questions";
 
 const outDir = path.join(process.cwd(), "ioBroker.template");
 
+function getTemplateDir(templateName: string) {
+	return path.join(outDir, templateName);
+}
+
 async function generateTemplates(
 	templateName: string,
 	answers: Answers,
 ): Promise<void> {
 	const files = await createAdapter(answers, ["adapterName", "title"]);
 
-	const templateDir = path.join(outDir, templateName);
+	const templateDir = getTemplateDir(templateName);
 	await fs.emptyDir(templateDir);
 	await writeFiles(templateDir, files);
 }
@@ -123,6 +128,39 @@ const templates: Record<string, Answers> = {
 		console.log();
 		console.log(blue(`[${i + 1}/${keys.length}] `) + tplName);
 		await generateTemplates(tplName, templates[tplName]);
+	}
+
+	if (process.env.TESTING) {
+		console.log();
+		console.log(green("Type-Check and Lint templates"));
+		console.log(green("============================="));
+		for (let i = 0; i < keys.length; i++) {
+			const tplName = keys[i];
+			console.log();
+			console.log(blue(`[${i + 1}/${keys.length}] `) + tplName);
+			const template = templates[tplName];
+			const typecheck = template.tools?.includes("type checking");
+			const lint = template.tools?.includes("ESLint");
+			if (!typecheck && !lint) {
+				console.log("nothing to do, skipping this template...");
+				continue;
+			}
+			const templateDir = getTemplateDir(tplName);
+			const cmdOpts: ExecSyncOptions = {
+				cwd: templateDir,
+				stdio: ["pipe", "pipe", "pipe"],
+			};
+			console.log("installing dependencies...");
+			execSync(`npm install --loglevel error --no-audit`, cmdOpts);
+			if (lint) {
+				console.log("executing ESLint...");
+				execSync(`npm run lint`, cmdOpts);
+			}
+			if (typecheck) {
+				console.log("performing a type-check...");
+				execSync(`npx tsc -- --noEmit`, cmdOpts);
+			}
+		}
 	}
 })();
 
