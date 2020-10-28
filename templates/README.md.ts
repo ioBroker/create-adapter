@@ -5,6 +5,7 @@ export = (answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const useTypeScript = answers.language === "TypeScript";
+	const useTypeChecking = useTypeScript || answers.tools?.includes("type checking");
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
 	const useReact = answers.adminReact === "yes";
@@ -39,6 +40,9 @@ export = (answers => {
 		npmScripts["test:integration"] = "Tests the adapter startup with an actual instance of ioBroker.";
 	}
 	npmScripts["test"] = `Performs a minimal test run on package files${isAdapter ? " and your tests" : ""}.`;
+	if (useTypeChecking) {
+		npmScripts["check"] = "Performs a type-check on your code (without compiling anything).";
+	}
 	if (useNyc) {
 		npmScripts["coverage"] = "Generates code coverage using your test files.";
 	}

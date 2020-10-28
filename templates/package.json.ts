@@ -166,6 +166,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"test:unit": "mocha test/unit --exit",
 			"test:integration": "mocha test/integration --exit",
 			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
+			${useTypeChecking ? `"check": "tsc --noEmit",` : ""}
 			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
 			${useESLint && useTypeScript ? (`
 				"lint": "eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}",
