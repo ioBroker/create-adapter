@@ -11,6 +11,7 @@
 * (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603)
 * (UncleSamSwiss) Fixed issue with running parcel in Devcontainer (with WSL2 remote path)
 * (UncleSamSwiss) Cleaned up `.npmignore` file (#608)
+* (AlCalzone) Lint and typecheck generated templates during CI testing (#610)
 
 ## 1.29.1 (2020-09-28)
 * (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
