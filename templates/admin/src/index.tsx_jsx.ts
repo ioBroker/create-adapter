@@ -14,13 +14,13 @@ import theme from "@iobroker/adapter-react/Theme";
 import Utils from "@iobroker/adapter-react/Components/Utils";
 import App from "./app";
 
-window["adapterName"] = ${JSON.stringify(answers.adapterName)};
 let themeName = Utils.getThemeName();
 
 function build()${useTypeScript ? ": void" : ""} {
 	ReactDOM.render(
 		<MuiThemeProvider theme={theme(themeName)}>
 			<App
+				adapterName="${answers.adapterName}"
 				onThemeChange={(_theme) => {
 					themeName = _theme;
 					build();
