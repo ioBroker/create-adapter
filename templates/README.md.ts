@@ -7,10 +7,44 @@ export = (answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
+	const useReact = answers.adminReact === "yes";
 	const autoInitGit = answers.gitCommit === "yes";
 	const useTravis = answers.ci === "travis";
 	const useGithubActions = answers.ci === "gh-actions";
 	const useDependabot = answers.dependabot === "yes";
+
+	const npmScripts: Record<string, string> = {};
+	if (useReact) {
+		npmScripts["build:parcel"] = "Compile the React sources.";
+		npmScripts["watch:parcel"] = "Compile the React sources and watch for changes.";
+	}
+	if (useTypeScript) {
+		npmScripts["build:ts"] = "Compile the TypeScript sources.";
+		npmScripts["watch:ts"] = "Compile the TypeScript sources and watch for changes.";
+		npmScripts["watch"] = "Shortcut for `npm run watch:ts`";
+	}
+	if (useTypeScript && useReact) {
+		npmScripts["build"] = "Compile the TypeScript and the React sources.";
+	}
+	if (isAdapter) {
+		if (useTypeScript) {
+			npmScripts["test:ts"] = "Executes the tests you defined in \`*.test.ts\` files.";
+		} else {
+			npmScripts["test:js"] = "Executes the tests you defined in \`*.test.js\` files.";
+		}
+	}
+	npmScripts["test:package"] = "Ensures your \`package.json\` and \`io-package.json\` are valid.";
+	if (isAdapter) {
+		npmScripts["test:unit"] = "Tests the adapter startup with unit tests (fast, but might require module mocks to work).";
+		npmScripts["test:integration"] = "Tests the adapter startup with an actual instance of ioBroker.";
+	}
+	npmScripts["test"] = `Performs a minimal test run on package files${isAdapter ? " and your tests" : ""}.`;
+	if (useNyc) {
+		npmScripts["coverage"] = "Generates code coverage using your test files.";
+	}
+	if (useESLint) {
+		npmScripts["lint"] = "Runs \`ESLint\` to check your code for formatting errors and potential bugs.";
+	}
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
@@ -73,24 +107,11 @@ check them out. If you're already experienced, you should also take a look at th
 
 ### Scripts in \`package.json\`
 Several npm scripts are predefined for your convenience. You can run them using \`npm run <scriptname>\`
-| Script name | Description                                              |
-|-------------|----------------------------------------------------------|
-${isAdapter && useTypeScript ? (
-`| \`build\`    | Re-compile the TypeScript sources.                       |
-| \`watch\`     | Re-compile the TypeScript sources and watch for changes. |
-| \`test:ts\`   | Executes the tests you defined in \`*.test.ts\` files.     |
-`) : ""}${isAdapter && !useTypeScript ? (
-`| \`test:js\`   | Executes the tests you defined in \`*.test.js\` files.     |
-`) : ""}| \`test:package\`    | Ensures your \`package.json\` and \`io-package.json\` are valid. |
-${isAdapter && useTypeScript ? (
-`| \`test:unit\`       | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
-| \`test:integration\`| Tests the adapter startup with an actual instance of ioBroker. |
-`) : ""}| \`test\` | Performs a minimal test run on package files${isAdapter ? " and your tests" : ""}. |
-${useNyc ? (
-`| \`coverage\` | Generates code coverage using your test files. |
-`) : ""}${useESLint ? (
-`| \`lint\` | Runs \`ESLint\` to check your code for formatting errors and potential bugs. |
-`) : ""}
+| Script name | Description |
+|-------------|-------------|
+${Object.entries(npmScripts).map(([name, desc]) => (
+	`| \`${name}\` | ${desc} |`
+)).join("\n")}
 
 ${isAdapter ? `### Writing tests
 When done right, testing code is invaluable, because it gives you the 
