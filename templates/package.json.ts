@@ -57,12 +57,13 @@ const templateFunction: TemplateFunction = async answers => {
 			// and NodeJS typings
 			"@types/node@14",
 		] : [])
+		.concat(useTypeChecking ? [
+			"typescript",
+		] : [])
 		.concat(useTypeScript ? [
 			// enhance testing through TS tools
 			"source-map-support",
 			"ts-node",
-			// of course we need this
-			"typescript",
 			// to clean the build dir
 			"rimraf",
 		] : [])
