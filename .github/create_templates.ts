@@ -1,4 +1,4 @@
-import { blue, green } from "ansi-colors";
+import { blue, green, red } from "ansi-colors";
 import { execSync, ExecSyncOptions } from "child_process";
 import * as fs from "fs-extra";
 import * as path from "path";
@@ -131,6 +131,7 @@ const templates: Record<string, Answers> = {
 	}
 
 	if (process.env.TESTING) {
+		let hadError = false;
 		console.log();
 		console.log(green("Type-Check and Lint templates"));
 		console.log(green("============================="));
@@ -154,12 +155,26 @@ const templates: Record<string, Answers> = {
 			execSync(`npm install --loglevel error --no-audit`, cmdOpts);
 			if (lint) {
 				console.log("executing ESLint...");
-				execSync(`npm run lint`, cmdOpts);
+				try {
+					execSync(`npm run lint`, cmdOpts);
+				} catch (e) {
+					hadError = true;
+				}
 			}
 			if (typecheck) {
 				console.log("performing a type-check...");
-				execSync(`npm run check`, cmdOpts);
+				try {
+					execSync(`npm run check`, cmdOpts);
+				} catch (e) {
+					hadError = true;
+				}
 			}
+		}
+		if (hadError) {
+			console.error(
+				red("At least one template had lint or check errors!"),
+			);
+			process.exit(1);
 		}
 	}
 })();
