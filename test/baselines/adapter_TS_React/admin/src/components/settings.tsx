@@ -47,7 +47,7 @@ const styles = (): Record<string, CreateCSSProperties> => ({
 
 interface SettingsProps {
 	classes: Record<string, string>;
-	native: any;
+	native: Record<string, any>;
 
 	onChange: (attr: string, value: any) => void;
 }
@@ -60,7 +60,6 @@ interface SettingsState {
 class Settings extends React.Component<SettingsProps, SettingsState> {
 	constructor(props: SettingsProps) {
 		super(props);
-
 		this.state = {};
 	}
 
@@ -68,7 +67,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		return (
 			<TextField
 				label={I18n.t(title)}
-				className={this.props.classes.input + " " + this.props.classes.controlElement}
+				className={`${this.props.classes.input} ${this.props.classes.controlElement}`}
 				value={this.props.native[attr]}
 				type={type || "text"}
 				onChange={(e) => this.props.onChange(attr, e.target.value)}
@@ -81,12 +80,15 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		title: string,
 		attr: string,
 		options: { value: string; title: string }[],
-		style?: any,
+		style?: React.CSSProperties,
 	) {
 		return (
 			<FormControl
-				className={this.props.classes.input + " " + this.props.classes.controlElement}
-				style={Object.assign({ paddingTop: 5 }, style)}
+				className={`${this.props.classes.input} ${this.props.classes.controlElement}`}
+				style={{ 
+					paddingTop: 5,
+					...style
+				}}
 			>
 				<Select
 					value={this.props.native[attr] || "_"}
@@ -104,11 +106,14 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		);
 	}
 
-	renderCheckbox(title: string, attr: string, style?: any) {
+	renderCheckbox(title: string, attr: string, style?: React.CSSProperties) {
 		return (
 			<FormControlLabel
 				key={attr}
-				style={Object.assign({ paddingTop: 5 }, style)}
+				style={{ 
+					paddingTop: 5,
+					...style
+				}}
 				className={this.props.classes.controlElement}
 				control={
 					<Checkbox

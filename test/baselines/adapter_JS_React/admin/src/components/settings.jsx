@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -12,6 +11,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import I18n from "@iobroker/adapter-react/i18n";
 
+/**
+ * @type {() => Record<string, import("@material-ui/core/styles/withStyles").CreateCSSProperties>}
+ */
 const styles = () => ({
 	input: {
 		marginTop: 0,
@@ -45,18 +47,37 @@ const styles = () => ({
 	},
 });
 
+/**
+ * @typedef {object} SettingsProps
+ * @property {Record<string, string>} classes
+ * @property {Record<string, any>} native
+ * @property {(attr: string, value: any) => void} onChange
+ */
+
+/**
+ * @typedef {object} SettingsState
+ * @property {undefined} [dummy] Delete this and add your own state properties here
+ */
+
+/**
+ * @extends {React.Component<SettingsProps, SettingsState>}
+ */
 class Settings extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {};
 	}
 
+	/**
+	 * @param {string} title
+	 * @param {string} attr
+	 * @param {string} type
+	 */
 	renderInput(title, attr, type) {
 		return (
 			<TextField
 				label={I18n.t(title)}
-				className={this.props.classes.input + " " + this.props.classes.controlElement}
+				className={`${this.props.classes.input} ${this.props.classes.controlElement}`}
 				value={this.props.native[attr]}
 				type={type || "text"}
 				onChange={(e) => this.props.onChange(attr, e.target.value)}
@@ -65,11 +86,20 @@ class Settings extends React.Component {
 		);
 	}
 
+	/**
+	 * @param {string} title
+	 * @param {string} attr
+	 * @param {{ value: string; title: string }[]} options
+	 * @param {React.CSSProperties} [style]
+	 */
 	renderSelect(title, attr, options, style) {
 		return (
 			<FormControl
-				className={this.props.classes.input + " " + this.props.classes.controlElement}
-				style={Object.assign({ paddingTop: 5 }, style)}
+				className={`${this.props.classes.input} ${this.props.classes.controlElement}`}
+				style={{ 
+					paddingTop: 5,
+					...style
+				}}
 			>
 				<Select
 					value={this.props.native[attr] || "_"}
@@ -87,11 +117,19 @@ class Settings extends React.Component {
 		);
 	}
 
+	/**
+	 * @param {string} title
+	 * @param {string} attr
+	 * @param {React.CSSProperties} [style]
+	 */
 	renderCheckbox(title, attr, style) {
 		return (
 			<FormControlLabel
 				key={attr}
-				style={Object.assign({ paddingTop: 5 }, style)}
+				style={{ 
+					paddingTop: 5,
+					...style
+				}}
 				className={this.props.classes.controlElement}
 				control={
 					<Checkbox
