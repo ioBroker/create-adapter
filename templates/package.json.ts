@@ -57,12 +57,13 @@ const templateFunction: TemplateFunction = async answers => {
 			// and NodeJS typings
 			"@types/node@14",
 		] : [])
+		.concat(useTypeChecking ? [
+			"typescript",
+		] : [])
 		.concat(useTypeScript ? [
 			// enhance testing through TS tools
 			"source-map-support",
 			"ts-node",
-			// of course we need this
-			"typescript",
 			// to clean the build dir
 			"rimraf",
 		] : [])
@@ -166,6 +167,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"test:unit": "mocha test/unit --exit",
 			"test:integration": "mocha test/integration --exit",
 			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
+			${useTypeChecking ? `"check": "tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}",` : ""}
 			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
 			${useESLint && useTypeScript ? (`
 				"lint": "eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}",

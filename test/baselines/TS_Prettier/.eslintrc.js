@@ -1,4 +1,5 @@
 module.exports = {
+	root: true, // Don't look outside this project for inherited configs
 	parser: "@typescript-eslint/parser", // Specifies the ESLint parser
 	parserOptions: {
 		ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features

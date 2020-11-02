@@ -74,7 +74,7 @@ const styles = ()${useTypeScript ? ": Record<string, CreateCSSProperties>" : ""}
 	},
 });
 
-${useTypeScript ? 
+${useTypeScript ?
 `interface SettingsProps {
 	classes: Record<string, string>;
 	native: Record<string, any>;
@@ -139,7 +139,7 @@ ${useTypeScript ? "" : `/**
 		return (
 			<FormControl
 				className={\`\${this.props.classes.input} \${this.props.classes.controlElement}\`}
-				style={{ 
+				style={{
 					paddingTop: 5,
 					...style
 				}}
@@ -169,7 +169,7 @@ ${useTypeScript ? "" : `/**
 		return (
 			<FormControlLabel
 				key={attr}
-				style={{ 
+				style={{
 					paddingTop: 5,
 					...style
 				}}

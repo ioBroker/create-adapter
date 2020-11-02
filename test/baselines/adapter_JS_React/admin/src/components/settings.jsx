@@ -96,7 +96,7 @@ class Settings extends React.Component {
 		return (
 			<FormControl
 				className={`${this.props.classes.input} ${this.props.classes.controlElement}`}
-				style={{ 
+				style={{
 					paddingTop: 5,
 					...style
 				}}
@@ -126,7 +126,7 @@ class Settings extends React.Component {
 		return (
 			<FormControlLabel
 				key={attr}
-				style={{ 
+				style={{
 					paddingTop: 5,
 					...style
 				}}
