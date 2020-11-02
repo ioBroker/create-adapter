@@ -10,9 +10,11 @@ test/
 travis/
 appveyor.yaml
 
+# React sources for the Admin UI
+admin/src/
+
 # TypeScript sources and project configuration
 src/
-admin/src/
 tsconfig.json
 tsconfig.*.json
 

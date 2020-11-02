@@ -4,6 +4,7 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
+	const useReact = answers.adminReact === "yes";
 
 	const template = `
 .git
@@ -12,7 +13,7 @@ const templateFunction: TemplateFunction = answers => {
 node_modules
 nbproject
 
-${useTypeScript ? (`
+${useTypeScript || useReact ? (`
 # Sourcemaps
 maps/
 `) : ""}

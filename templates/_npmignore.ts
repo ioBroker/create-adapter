@@ -21,18 +21,21 @@ test/
 travis/
 appveyor.yaml
 
+${useReact ? `
+# React sources for the Admin UI
+admin/src/` : ""}
+
 ${useTypeScript ? `
 # TypeScript sources and project configuration
-src/${useReact ? `
-admin/src/` : ""}
+src/
 tsconfig.json
 tsconfig.*.json`
-			: useTypeChecking ? `
+: useTypeChecking ? `
 # Type checking configuration
 tsconfig.json
 tsconfig.*.json` : ""}
 
-${useTypeScript ? (`
+${useTypeScript || useReact ? (`
 # Sourcemaps
 *.map
 `) : ""}

@@ -186,6 +186,16 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_React", answers);
 			});
 
+			it("Adapter, JavaScript React", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					language: "JavaScript",
+					es6class: "yes",
+					adminReact: "yes",
+				};
+				await expectSuccess("adapter_JS_React", answers);
+			});
+
 			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, Apache License", async () => {
 				const answers: Answers = {
 					...baseAnswers,

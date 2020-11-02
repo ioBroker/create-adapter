@@ -48,9 +48,9 @@ check them out. If you're already experienced, you should also take a look at th
 
 ### Scripts in `package.json`
 Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description                                              |
-|-------------|----------------------------------------------------------|
-| `test:package`    | Ensures your `package.json` and `io-package.json` are valid. |
+| Script name | Description |
+|-------------|-------------|
+| `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
 | `test` | Performs a minimal test run on package files. |
 
 ### Publishing the widget

@@ -176,7 +176,7 @@ function logProgress(message: string): void {
 /** Whether dependencies should be installed */
 const installDependencies = !argv.noInstall || !!argv.install;
 /** Whether an initial build should be performed */
-let buildTypeScript: boolean;
+let needsBuildStep: boolean;
 /** Whether the initial commit should be performed automatically */
 let gitCommit: boolean;
 
@@ -203,8 +203,8 @@ async function setupProject_CLI(
 			{ cwd: targetDir },
 		);
 
-		if (buildTypeScript) {
-			logProgress("Compiling TypeScript");
+		if (needsBuildStep) {
+			logProgress("Compiling source files");
 			await executeCommand(
 				isWindows ? "npm.cmd" : "npm",
 				["run", "build"],
@@ -250,8 +250,9 @@ if (process.env.TEST_STARTUP) {
 
 	if (installDependencies) {
 		maxSteps++;
-		buildTypeScript = answers.language === "TypeScript";
-		if (buildTypeScript) maxSteps++;
+		needsBuildStep =
+			answers.language === "TypeScript" || answers.adminReact === "yes";
+		if (needsBuildStep) maxSteps++;
 	}
 	gitCommit = answers.gitCommit === "yes";
 	if (gitCommit) maxSteps++;

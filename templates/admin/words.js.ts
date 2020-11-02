@@ -4,18 +4,14 @@ import { getTranslatedSettings } from "../../src/lib/translation";
 
 export = (async answers => {
 
-	let isAdapter = answers.features.indexOf("adapter") > -1;
-	const isWidget = answers.features.indexOf("vis") > -1;
-	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminReact === "yes";
-	if (useTypeScript && useReact) {
-		if (!isWidget) {
-			return;
-		}
 
-		isAdapter = false;
-	}
-	
+	// Only do the adapter-specific things when not using React
+	const isAdapter = !useReact && answers.features.indexOf("adapter") > -1;
+	const isWidget = answers.features.indexOf("vis") > -1;
+
+	if (useReact && !isWidget) return;
+
 	let translatedSettingsJson = "";
 	if (isAdapter) {
 		// Automatically translate all settings
