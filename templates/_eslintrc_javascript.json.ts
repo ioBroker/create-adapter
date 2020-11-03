@@ -16,6 +16,7 @@ const templateFunction: TemplateFunction = answers => {
 
 	const template = `
 {
+	"root": true,
 	"env": {
 		"es6": true,
 		"node": true,
