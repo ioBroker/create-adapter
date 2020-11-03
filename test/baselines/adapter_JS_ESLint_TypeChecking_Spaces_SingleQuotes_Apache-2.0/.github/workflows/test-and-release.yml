@@ -84,11 +84,10 @@ jobs:
 #    deploy:
 #        needs: [adapter-tests]
 #
-#        # Trigger this step only when a commit on master is tagged with a version number
+#        # Trigger this step only when a commit on any branch is tagged with a version number
 #        if: |
 #            contains(github.event.head_commit.message, '[skip ci]') == false &&
 #            github.event_name == 'push' &&
-#            github.event.base_ref == 'refs/heads/master' &&
 #            startsWith(github.ref, 'refs/tags/v')
 #
 #        runs-on: ubuntu-latest
@@ -106,16 +105,17 @@ jobs:
 #                  node-version: ${{ matrix.node-version }}
 #
 #            - name: Extract the version and commit body from the tag
+#              id: extract_release
 #              # The body may be multiline, therefore newlines and % need to be escaped
 #              run: |
 #                  VERSION="${{ github.ref }}"
 #                  VERSION=${VERSION##*/v}
-#                  echo "VERSION=$VERSION" >> $GITHUB_ENV
+#                  echo "::set-output name=VERSION::$VERSION"
 #                  BODY=$(git show -s --format=%b)
 #                  BODY="${BODY//'%'/'%25'}"
 #                  BODY="${BODY//$'\n'/'%0A'}"
 #                  BODY="${BODY//$'\r'/'%0D'}"
-#                  echo "BODY=$BODY" >> $GITHUB_ENV
+#                  echo "::set-output name=BODY::$BODY"
 #
 #            - name: Publish package to npm
 #              run: |
@@ -129,8 +129,8 @@ jobs:
 #                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #              with:
 #                  tag_name: ${{ github.ref }}
-#                  release_name: Release v${{ env.VERSION }}
+#                  release_name: Release v${{ steps.extract_release.outputs.VERSION }}
 #                  draft: false
 #                  # Prerelease versions create prereleases on Github
-#                  prerelease: ${{ contains(env.VERSION, '-') }}
-#                  body: ${{ env.BODY }}
+#                  prerelease: ${{ contains(steps.extract_release.outputs.VERSION, '-') }}
+#                  body: ${{ steps.extract_release.outputs.BODY }}
