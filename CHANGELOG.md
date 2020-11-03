@@ -13,7 +13,7 @@
 * (UncleSamSwiss) Cleaned up `.npmignore` file (#608)
 * (AlCalzone) The GitHub Actions release workflow now longer uses the [deprecated `set-env`](https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/) command (#611) · [Migration guide](docs/updates/20201029_gh_actions_setenv.md)
 * (AlCalzone) Lint and typecheck generated templates during CI testing (#610)
-* (Peter Müller) Fixed CSS React UI height in Firefox [Migration guide](docs/updates/20201103_css_fix.md)
+* (Peter Müller) Fixed CSS React UI height in Firefox · [Migration guide](docs/updates/20201103_css_fix.md)
 
 ## 1.29.1 (2020-09-28)
 * (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
