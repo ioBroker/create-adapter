@@ -6,7 +6,8 @@
     /* Don't cut off dropdowns! */
     overflow: initial;
 }
-.m.adapter-container {
+.m.adapter-container,
+.m.adapter-container > div.App {
     /* Fix layout/scrolling issues with tabs */
     height: 100%;
     width: 100%;
