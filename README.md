@@ -55,33 +55,25 @@ All CLI options can also be [provided as environment variables](https://yargs.js
 -   IntelliSense (auto completion and tooltips) in supporting editors based on the [ioBroker declaration files](https://www.npmjs.com/package/@types/iobroker)
 -   JavaScript with the following optional tools:
     -   [ESLint](https://github.com/eslint/eslint) for code quality
-    -   Type checking based on the ioBroker declarations
+    -   Type checking based on the ioBroker declarations, including strongly-typed `adapter.config` properties
 -   Or TypeScript with the following optional tools:
     -   [ESLint](https://github.com/eslint/eslint) for code quality
     -   Automatic formatting with [Prettier](https://github.com/prettier/prettier/)
     -   [nyc](https://github.com/istanbuljs/nyc) for code coverage
+    -   strongly-typed `adapter.config` properties
 -   Choose between indentation: tabs or 4 spaces
 -   Choose your preferred quote style
 -   Integration in the ioBroker admin UI:
     -   Settings page
     -   An extra tab (optional)
     -   Custom datapoint-specific options (optional)
+-   [React](https://reactjs.org/) as an alternative to plain HTML+CSS for the admin UI, based on [`@iobroker/adapter-react`](https://github.com/ioBroker/adapter-react/)
 -   Predefined settings page for the admin UI
 -   Choice of an OpenSource license and automatic creation of the license file
 -   Built-in component tests using `mocha`, `chai` (with `chai-as-promised`) and `sinon` (with `sinon-chai`) for:
     -   Correctly defined package files
     -   and your own tests...
--   Automated testing using Github Actions or Travis CI
-
-## Roadmap
-
-The following features did not make it into v1.0.0 and are planned for a later release:
-
--   [ ] [React](https://reactjs.org/) as an alternative to plain HTML+CSS for the admin UI (some predefined helpful methods included)
--   [ ] Strongly typed `adapter.config` properties in TypeScript (they are supported in JS though!)
--   [ ] Package scripts for automatic semantic release of new versions
--   [ ] Automatically open the folder in your favorite editor
--   [ ] Scripts/Helpers for remote debugging
+-   Automated testing using Github Actions or Travis CI, including a script for semantic release of new versions
 
 ## Developing
 
