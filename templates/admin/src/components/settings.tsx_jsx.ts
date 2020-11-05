@@ -24,7 +24,7 @@ const templateFunction: TemplateFunction = answers => {
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;
 
 	const template = `
-import ${useTypeScript ? "* as " : ""}React from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 ${useTypeScript ? `import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
 ` : ""}import TextField from "@material-ui/core/TextField";

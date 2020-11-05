@@ -30,6 +30,7 @@ export = (answers => {
 
 		// Support React
 		"jsx": "react",
+		"esModuleInterop": true,
 
 		// Set this to false if you want to disable the very strict rules (not recommended)
 		"strict": true,
