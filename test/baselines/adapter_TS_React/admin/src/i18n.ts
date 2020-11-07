@@ -17,12 +17,12 @@ import en from "./i18n/en.json";
 type AdminWord = keyof typeof en;
 
 interface I18nTypedT {
-  /**
-   * Translate the given string to the selected language.
-   * @param {string} word The (key) word to look up the string. Has to be defined at least in `i18n/en.json`.
-   * @param {string[]} args Optional arguments which will replace the first (second, third, ...) occurence of %s
-   */
-  t: (word: AdminWord, ...args: string[]) => string;
+	/**
+	 * Translate the given string to the selected language.
+	 * @param {string} word The (key) word to look up the string. Has to be defined at least in `i18n/en.json`.
+	 * @param {string[]} args Optional arguments which will replace the first (second, third, ...) occurence of %s
+	 */
+	t: (word: AdminWord, ...args: string[]) => string;
 }
 
 type I18nTyped = Omit<typeof I18n, "t"> & I18nTypedT
