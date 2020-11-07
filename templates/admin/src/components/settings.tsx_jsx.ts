@@ -36,7 +36,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import I18n from "@iobroker/adapter-react/i18n";
+import I18n from "${useTypeScript ? "../i18n" : "@iobroker/adapter-react/i18n"}";
 
 ${useTypeScript ? "" : `/**
  * @type {() => Record<string, import("@material-ui/core/styles/withStyles").CreateCSSProperties>}
@@ -204,5 +204,3 @@ templateFunction.customPath = (answers) => {
 	return `admin/src/components/settings.${useTypeScript ? "tsx" : "jsx"}`;
 }
 export = templateFunction;
-
-

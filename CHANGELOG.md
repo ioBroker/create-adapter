@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (crycode-de) Added better types for the `I18n.t` function based on words in `i18n/en.json` for TypeScript React UI · [Migration guide](docs/updates/20201107_typed-i18n-t.md)
+
 ## 1.30.0 (2020-11-03)
 * (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react (#347) · [Migration guide](docs/updates/20201015_adapter_react.md)
 * (AlCalzone) Add support for JavaScript+React in the Admin UI (#609)
@@ -13,7 +16,7 @@
 * (UncleSamSwiss) Cleaned up `.npmignore` file (#608)
 * (AlCalzone) The GitHub Actions release workflow no longer uses the [deprecated `set-env`](https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/) command (#611) · [Migration guide](docs/updates/20201029_gh_actions_setenv.md)
 * (AlCalzone) Lint and typecheck generated templates during CI testing (#610)
-* (Peter Müller) Fixed CSS React UI height in Firefox · [Migration guide](docs/updates/20201103_css_fix.md)
+* (crycode-de) Fixed CSS React UI height in Firefox · [Migration guide](docs/updates/20201103_css_fix.md)
 
 ## 1.29.1 (2020-09-28)
 * (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)
@@ -111,7 +114,7 @@
 * (bluefox & AlCalzone) Add email address to MIT license (#232)
 
 ## v1.15.1 (2019-06-07)
-* (AlCalzone) Properly fix build breaks from #193.  
+* (AlCalzone) Properly fix build breaks from #193.
 The original "fix" broke the creator instead
 
 ## v1.15.0 (2019-06-07)
@@ -120,7 +123,7 @@ The original "fix" broke the creator instead
 * (AlCalzone) Remove admin dependency, which prevents installation on a slave host (#199)
 
 ## v1.14.0 (2019-05-09)
-* (AlCalzone) Add the option to use Prettier as a formatter in TypeScript (#164)  
+* (AlCalzone) Add the option to use Prettier as a formatter in TypeScript (#164)
 **Note:** This option also enables different auto-formatting settings in VSCode
 * (AlCalzone) Use ESLint to fix quotes in TypeScript (#165)
 * (AlCalzone) Use Prettier to format code if the option is set (#166)
@@ -167,7 +170,7 @@ The original "fix" broke the creator instead
 * (bluefox) Provide `fetchPackageVersions` with a fallback in case of errors (fixes #93)
 * (AlCalzone) Use @iobroker/testing for testing (fixes #89)
 * (AlCalzone & foxriver76) Add issue templates for github (fixes #85)
-* (ldittmar) Add Yandex translator to gulpfile.js (#84).  
+* (ldittmar) Add Yandex translator to gulpfile.js (#84).
 To use it, append `--yandex <yandex_api_key>` to the gulp command.
 * (AlCalzone) Add license to io-package.json (fixes #88)
 
