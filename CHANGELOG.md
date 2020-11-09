@@ -5,8 +5,11 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+
+* (AlCalzone) Fixed compatibility with `@iobroker/adapter-react@1.4.5` (#629) · [Migration guide](docs/updates/20201105_adapter_react_fixes.md)
+
 ## 1.30.0 (2020-11-03)
-* (UncleSamSwiss) React Admin UI now uses @iobroker/adapter-react (#347) · [Migration guide](docs/updates/20201015_adapter_react.md)
+* (UncleSamSwiss) React Admin UI now uses `@iobroker/adapter-react` (#347) · [Migration guide](docs/updates/20201015_adapter_react.md)
 * (AlCalzone) Add support for JavaScript+React in the Admin UI (#609)
 * (AlCalzone) Make ts-node respect the "include" key in tsconfig.json (#603)
 * (UncleSamSwiss) Fixed issue with running parcel in Devcontainer (with WSL2 remote path)

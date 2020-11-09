@@ -7,7 +7,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (!useReact) return;
 
 	const template = `
-import ${useTypeScript ? "* as " : ""}React from "react";
+import React from "react";
 import { ${useTypeScript ? "Theme, " : ""}withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";

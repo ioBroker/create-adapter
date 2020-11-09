@@ -16,11 +16,9 @@
 		"removeComments": false,
 		"module": "commonjs",
 		"moduleResolution": "node",
+		"esModuleInterop": true,
 		// this is necessary for the automatic typing of the adapter config
 		"resolveJsonModule": true,
-
-		// Support React
-		"jsx": "react",
 
 		// Set this to false if you want to disable the very strict rules (not recommended)
 		"strict": true,
