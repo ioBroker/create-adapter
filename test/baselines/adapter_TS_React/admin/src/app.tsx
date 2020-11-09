@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Theme, withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
