@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
-* (crycode-de) Added better types for the `I18n.t` function based on words in `i18n/en.json` for TypeScript React UI · [Migration guide](docs/updates/20201107_typed-i18n-t.md)
+* (crycode-de) Added better types for the `I18n.t` function based on words in `i18n/en.json` for TypeScript React UI (#630) · [Migration guide](docs/updates/20201107_typed_i18n_t.md)
 
 ## 1.30.1 (2020-11-09)
 * (AlCalzone) Fixed compatibility with `@iobroker/adapter-react@1.4.5` (#629) · [Migration guide](docs/updates/20201105_adapter_react_fixes.md)
@@ -117,7 +117,7 @@
 * (bluefox & AlCalzone) Add email address to MIT license (#232)
 
 ## v1.15.1 (2019-06-07)
-* (AlCalzone) Properly fix build breaks from #193.
+* (AlCalzone) Properly fix build breaks from #193.  
 The original "fix" broke the creator instead
 
 ## v1.15.0 (2019-06-07)
@@ -126,7 +126,7 @@ The original "fix" broke the creator instead
 * (AlCalzone) Remove admin dependency, which prevents installation on a slave host (#199)
 
 ## v1.14.0 (2019-05-09)
-* (AlCalzone) Add the option to use Prettier as a formatter in TypeScript (#164)
+* (AlCalzone) Add the option to use Prettier as a formatter in TypeScript (#164)  
 **Note:** This option also enables different auto-formatting settings in VSCode
 * (AlCalzone) Use ESLint to fix quotes in TypeScript (#165)
 * (AlCalzone) Use Prettier to format code if the option is set (#166)
@@ -173,7 +173,7 @@ The original "fix" broke the creator instead
 * (bluefox) Provide `fetchPackageVersions` with a fallback in case of errors (fixes #93)
 * (AlCalzone) Use @iobroker/testing for testing (fixes #89)
 * (AlCalzone & foxriver76) Add issue templates for github (fixes #85)
-* (ldittmar) Add Yandex translator to gulpfile.js (#84).
+* (ldittmar) Add Yandex translator to gulpfile.js (#84).  
 To use it, append `--yandex <yandex_api_key>` to the gulp command.
 * (AlCalzone) Add license to io-package.json (fixes #88)
 
