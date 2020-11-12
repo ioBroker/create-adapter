@@ -86,6 +86,8 @@ ${useReact ? "" :
 				var $this = $(this);
 				if ($this.attr('type') === 'checkbox') {
 					obj[$this.attr('id')] = $this.prop('checked');
+				} else if ($this.attr('type') === 'number') {
+					obj[$this.attr('id')] = parseFloat($this.val());
 				} else {
 					obj[$this.attr('id')] = $this.val();
 				}
