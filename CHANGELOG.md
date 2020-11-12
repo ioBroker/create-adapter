@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (UncleSamSwiss) Add support for number input settings in `index_m.html` (#634)
+
 ## 1.30.1 (2020-11-09)
 * (AlCalzone) Fixed compatibility with `@iobroker/adapter-react@1.4.5` (#629) · [Migration guide](docs/updates/20201105_adapter_react_fixes.md)
 
