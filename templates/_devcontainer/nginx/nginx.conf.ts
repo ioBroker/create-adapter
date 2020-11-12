@@ -6,7 +6,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (!devcontainer) return;
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
-	const needsParcel = answers.language === "TypeScript" && answers.adminReact === "yes";
+	const needsParcel = answers.adminReact === "yes";
 
 	const template = `
 worker_processes 1;
