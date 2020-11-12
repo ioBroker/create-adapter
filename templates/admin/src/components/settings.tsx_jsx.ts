@@ -35,8 +35,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-
-import I18n from "${useTypeScript ? "../i18n" : "@iobroker/adapter-react/i18n"}";
+import I18n from "@iobroker/adapter-react/i18n";
 
 ${useTypeScript ? "" : `/**
  * @type {() => Record<string, import("@material-ui/core/styles/withStyles").CreateCSSProperties>}
@@ -106,8 +105,8 @@ ${useTypeScript ? "" : `/**
 		this.state = {};
 	}
 
-	${useTypeScript ? `renderInput(title: string, attr: string, type: string)` : `/**
-	 * @param {string} title
+	${useTypeScript ? `renderInput(title: AdminWord, attr: string, type: string)` : `/**
+	 * @param {AdminWord} title
 	 * @param {string} attr
 	 * @param {string} type
 	 */
@@ -125,14 +124,14 @@ ${useTypeScript ? "" : `/**
 	}
 
 	${useTypeScript ? `renderSelect(
-		title: string,
+		title: AdminWord,
 		attr: string,
-		options: { value: string; title: string }[],
+		options: { value: string; title: AdminWord }[],
 		style?: React.CSSProperties,
 	)` : `/**
-	 * @param {string} title
+	 * @param {AdminWord} title
 	 * @param {string} attr
-	 * @param {{ value: string; title: string }[]} options
+	 * @param {{ value: string; title: AdminWord }[]} options
 	 * @param {React.CSSProperties} [style]
 	 */
 	renderSelect(title, attr, options, style)`} {
@@ -160,8 +159,8 @@ ${useTypeScript ? "" : `/**
 		);
 	}
 
-	${useTypeScript ? `renderCheckbox(title: string, attr: string, style?: React.CSSProperties)` : `/**
-	 * @param {string} title
+	${useTypeScript ? `renderCheckbox(title: AdminWord, attr: string, style?: React.CSSProperties)` : `/**
+	 * @param {string} AdminWord
 	 * @param {string} attr
 	 * @param {React.CSSProperties} [style]
 	 */
