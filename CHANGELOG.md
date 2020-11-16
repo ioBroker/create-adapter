@@ -7,6 +7,8 @@
 -->
 ## __WORK IN PROGRESS__
 * (crycode-de) Added better types for the `I18n.t` function based on words in `i18n/en.json` for TypeScript React UI (#630) · [Migration guide](docs/updates/20201107_typed_i18n_t.md)
+* (AlCalzone) An adapter with devcontainer but without React no longer contains files for parcel (#635) · **Migration guide:** Delete `.devcontainer/parcel` directory.
+* (UncleSamSwiss) Add support for number input settings in `index_m.html` (#634)
 
 ## 1.30.1 (2020-11-09)
 * (AlCalzone) Fixed compatibility with `@iobroker/adapter-react@1.4.5` (#629) · [Migration guide](docs/updates/20201105_adapter_react_fixes.md)

@@ -3,7 +3,8 @@ import { TemplateFunction } from "../../../src/lib/createAdapter";
 const templateFunction: TemplateFunction = answers => {
 
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
-	if (!devcontainer) return;
+	const needsParcel = answers.adminReact === "yes";
+	if (!devcontainer || !needsParcel) return;
 
 	const template = `
 #!/bin/bash
