@@ -5,8 +5,8 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-
 ## __WORK IN PROGRESS__
+* (crycode-de) Added better types for the `I18n.t` function based on words in `i18n/en.json` for TypeScript React UI (#630) · [Migration guide](docs/updates/20201107_typed_i18n_t.md)
 * (AlCalzone) An adapter with devcontainer but without React no longer contains files for parcel (#635) · **Migration guide:** Delete `.devcontainer/parcel` directory.
 * (UncleSamSwiss) Add support for number input settings in `index_m.html` (#634)
 
@@ -21,7 +21,7 @@
 * (UncleSamSwiss) Cleaned up `.npmignore` file (#608)
 * (AlCalzone) The GitHub Actions release workflow no longer uses the [deprecated `set-env`](https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/) command (#611) · [Migration guide](docs/updates/20201029_gh_actions_setenv.md)
 * (AlCalzone) Lint and typecheck generated templates during CI testing (#610)
-* (Peter Müller) Fixed CSS React UI height in Firefox · [Migration guide](docs/updates/20201103_css_fix.md)
+* (crycode-de) Fixed CSS React UI height in Firefox · [Migration guide](docs/updates/20201103_css_fix.md)
 
 ## 1.29.1 (2020-09-28)
 * (UncleSamSwiss) Remove rsync from parcel devcontainer (#589) · [Migration guide](docs/updates/20200924_devcontainer_parcel.md)

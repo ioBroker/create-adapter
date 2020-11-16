@@ -15,6 +15,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "admin/src/i18n/en.json.ts", templateFunction: require("./admin/src/i18n/en.json") },
 	{ name: "admin/src/i18n/es.json.ts", templateFunction: require("./admin/src/i18n/es.json") },
 	{ name: "admin/src/i18n/fr.json.ts", templateFunction: require("./admin/src/i18n/fr.json") },
+	{ name: "admin/src/i18n/i18n.d.ts.ts", templateFunction: require("./admin/src/i18n/i18n.d.ts") },
 	{ name: "admin/src/i18n/it.json.ts", templateFunction: require("./admin/src/i18n/it.json") },
 	{ name: "admin/src/i18n/nl.json.ts", templateFunction: require("./admin/src/i18n/nl.json") },
 	{ name: "admin/src/i18n/pl.json.ts", templateFunction: require("./admin/src/i18n/pl.json") },

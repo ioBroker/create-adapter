@@ -8,7 +8,6 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-
 import I18n from "@iobroker/adapter-react/i18n";
 
 /**
@@ -69,7 +68,7 @@ class Settings extends React.Component {
 	}
 
 	/**
-	 * @param {string} title
+	 * @param {AdminWord} title
 	 * @param {string} attr
 	 * @param {string} type
 	 */
@@ -87,9 +86,9 @@ class Settings extends React.Component {
 	}
 
 	/**
-	 * @param {string} title
+	 * @param {AdminWord} title
 	 * @param {string} attr
-	 * @param {{ value: string; title: string }[]} options
+	 * @param {{ value: string; title: AdminWord }[]} options
 	 * @param {React.CSSProperties} [style]
 	 */
 	renderSelect(title, attr, options, style) {
@@ -118,7 +117,7 @@ class Settings extends React.Component {
 	}
 
 	/**
-	 * @param {string} title
+	 * @param {string} AdminWord
 	 * @param {string} attr
 	 * @param {React.CSSProperties} [style]
 	 */

@@ -9,7 +9,6 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-
 import I18n from "@iobroker/adapter-react/i18n";
 
 const styles = (): Record<string, CreateCSSProperties> => ({
@@ -63,7 +62,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		this.state = {};
 	}
 
-	renderInput(title: string, attr: string, type: string) {
+	renderInput(title: AdminWord, attr: string, type: string) {
 		return (
 			<TextField
 				label={I18n.t(title)}
@@ -77,9 +76,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 	}
 
 	renderSelect(
-		title: string,
+		title: AdminWord,
 		attr: string,
-		options: { value: string; title: string }[],
+		options: { value: string; title: AdminWord }[],
 		style?: React.CSSProperties,
 	) {
 		return (
@@ -106,7 +105,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		);
 	}
 
-	renderCheckbox(title: string, attr: string, style?: React.CSSProperties) {
+	renderCheckbox(title: AdminWord, attr: string, style?: React.CSSProperties) {
 		return (
 			<FormControlLabel
 				key={attr}
