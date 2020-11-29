@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## 1.31.0 (2020-11-29)
+## __WORK IN PROGRESS__
 * (crycode-de) Added better types for the `I18n.t` function based on words in `i18n/en.json` for TypeScript React UI (#630) · [Migration guide](docs/updates/20201107_typed_i18n_t.md)
 * (AlCalzone) An adapter with devcontainer but without React no longer contains files for parcel (#635) · **Migration guide:** Delete `.devcontainer/parcel` directory.
 * (UncleSamSwiss) Add support for number input settings in `index_m.html` (#634)
