@@ -142,8 +142,7 @@ async function main() {
     });
 }
 
-// @ts-ignore parent is a valid property on module
-if (module.parent) {
+if (require.main !== module) {
     // Export startAdapter in compact mode
     module.exports = startAdapter;
 } else {
