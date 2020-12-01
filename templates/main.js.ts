@@ -160,8 +160,7 @@ ${adapterSettings.map(s => `\tadapter.log.info("config ${s.key}: " + adapter.con
 	});
 }
 
-// @ts-ignore parent is a valid property on module
-if (module.parent) {
+if (require.main !== module) {
 	// Export startAdapter in compact mode
 	module.exports = startAdapter;
 } else {

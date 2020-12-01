@@ -165,7 +165,7 @@ ${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.
 
 }
 
-if (module.parent) {
+if (require.main !== module) {
 	// Export the constructor in compact mode
 	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new ${className}(options);
 } else {

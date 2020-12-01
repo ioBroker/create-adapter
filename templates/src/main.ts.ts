@@ -156,7 +156,7 @@ ${adapterSettings.map(s => `\tadapter.log.info("config ${s.key}: " + adapter.con
 	});
 }
 
-if (module.parent) {
+if (require.main !== module) {
 	// Export startAdapter in compact mode
 	module.exports = startAdapter;
 } else {
