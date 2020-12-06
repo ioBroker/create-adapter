@@ -55,16 +55,15 @@ export = (answers => {
 ![Logo](admin/${answers.adapterName}.png)
 # ioBroker.${answers.adapterName}
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})
+[![NPM version](https://img.shields.io/npm/v/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})
 [![Downloads](https://img.shields.io/npm/dm/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})
-![Number of Installations (latest)](http://iobroker.live/badges/${adapterNameLowerCase}-installed.svg)
-![Number of Installations (stable)](http://iobroker.live/badges/${adapterNameLowerCase}-stable.svg)
+![Number of Installations (latest)](https://iobroker.live/badges/${adapterNameLowerCase}-installed.svg)
+![Number of Installations (stable)](https://iobroker.live/badges/${adapterNameLowerCase}-stable.svg)
 [![Dependency Status](https://img.shields.io/david/${answers.authorGithub}/iobroker.${adapterNameLowerCase}.svg)](https://david-dm.org/${answers.authorGithub}/iobroker.${adapterNameLowerCase})
-[![Known Vulnerabilities](https://snyk.io/test/github/${answers.authorGithub}/ioBroker.${answers.adapterName}/badge.svg)](https://snyk.io/test/github/${answers.authorGithub}/ioBroker.${answers.adapterName})
 
 [![NPM](https://nodei.co/npm/iobroker.${adapterNameLowerCase}.png?downloads=true)](https://nodei.co/npm/iobroker.${adapterNameLowerCase}/)
 ${useTravis ? (`
-**Tests:** [![Travis-CI](http://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`)
+**Tests:** [![Travis-CI](https://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`)
 	: (`
 **Tests:** ![Test and Release](https://github.com/${answers.authorGithub}/ioBroker.${adapterNameLowerCase}/workflows/Test%20and%20Release/badge.svg)`)}
 
