@@ -1,0 +1,29 @@
+.*
+node_modules/
+nbproject/
+*.code-workspace
+Thumbs.db
+gulpfile.js
+
+# CI test files
+test/
+travis/
+appveyor.yaml
+
+# React sources for the Admin UI
+admin/src/
+
+# TypeScript sources and project configuration
+src/
+tsconfig.json
+tsconfig.*.json
+
+# Sourcemaps
+*.map
+
+# npm package files
+iobroker.*.tgz
+package-lock.json
+
+# maintenance scripts
+maintenance/**
