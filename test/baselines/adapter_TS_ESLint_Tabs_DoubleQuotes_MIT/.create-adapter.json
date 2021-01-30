@@ -15,6 +15,7 @@
 	"type": "general",
 	"language": "TypeScript",
 	"adminReact": "no",
+	"tabReact": "no",
 	"tools": [
 		"ESLint"
 	],

@@ -12,6 +12,7 @@
 	"type": "general",
 	"language": "JavaScript",
 	"adminReact": "yes",
+	"tabReact": "no",
 	"tools": [
 		"ESLint"
 	],
