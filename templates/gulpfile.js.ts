@@ -3,8 +3,8 @@ import { TemplateFunction } from "../src/lib/createAdapter";
 export = (answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
-	const useReact = answers.adminReact === "yes";
-	const skipWordsJs = useReact;
+	const hasTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
+	const skipWordsJs = answers.adminReact === "yes" && (!hasTab || answers.tabReact === "yes");
 
 	const template = `
 /*!

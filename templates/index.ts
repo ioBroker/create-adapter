@@ -23,6 +23,8 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "admin/src/i18n/ru.json.ts", templateFunction: require("./admin/src/i18n/ru.json") },
 	{ name: "admin/src/i18n/zh-cn.json.ts", templateFunction: require("./admin/src/i18n/zh-cn.json") },
 	{ name: "admin/src/index.tsx_jsx.ts", templateFunction: require("./admin/src/index.tsx_jsx") },
+	{ name: "admin/src/tab-app.tsx_jsx.ts", templateFunction: require("./admin/src/tab-app.tsx_jsx") },
+	{ name: "admin/src/tab.tsx_jsx.ts", templateFunction: require("./admin/src/tab.tsx_jsx") },
 	{ name: "admin/style.css.ts", templateFunction: require("./admin/style.css") },
 	{ name: "admin/tab_m.html.ts", templateFunction: require("./admin/tab_m.html") },
 	{ name: "admin/tsconfig.json.ts", templateFunction: require("./admin/tsconfig.json") },

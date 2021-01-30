@@ -6,7 +6,8 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
-	const useReact = answers.adminReact === "yes";
+	const useReact =
+		answers.adminReact === "yes" || answers.tabReact === "yes";
 
 	return readFile(
 		useTypeScript && useReact

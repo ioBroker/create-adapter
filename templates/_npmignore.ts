@@ -6,7 +6,8 @@ const templateFunction: TemplateFunction = answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
-	const useReact = answers.adminReact === "yes";
+	const useReact =
+		answers.adminReact === "yes" || answers.tabReact === "yes";
 
 	const template = `
 .*

@@ -6,7 +6,8 @@ const templateFunction: TemplateFunction = answers => {
 	const useTypeChecking = answers.tools?.includes("type checking");
 	if (!useTypeScript && !useTypeChecking) return;
 
-	const useReact = answers.adminReact === "yes";
+	const useReact =
+		answers.adminReact === "yes" || answers.tabReact === "yes";
 	if (!useReact) return;
 
 	const template = `

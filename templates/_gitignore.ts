@@ -4,7 +4,8 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useReact = answers.adminReact === "yes";
+	const useReact =
+		answers.adminReact === "yes" || answers.tabReact === "yes";
 
 	const template = `
 .git

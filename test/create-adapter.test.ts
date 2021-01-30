@@ -61,6 +61,7 @@ const baseAnswers: Answers = {
 	type: "general",
 	language: "TypeScript",
 	adminReact: "no",
+	tabReact: "no",
 	tools: ["ESLint"],
 	indentation: "Tab",
 	quotes: "double",

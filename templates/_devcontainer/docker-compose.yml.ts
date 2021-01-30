@@ -6,7 +6,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (!devcontainer) return;
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
-	const needsParcel = answers.adminReact === "yes";
+	const needsParcel = answers.adminReact === "yes" || answers.tabReact === "yes";
 
 	const template = `
 version: '3'

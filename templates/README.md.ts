@@ -8,7 +8,8 @@ export = (answers => {
 	const useTypeChecking = useTypeScript || answers.tools?.includes("type checking");
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
-	const useReact = answers.adminReact === "yes";
+	const useReact =
+		answers.adminReact === "yes" || answers.tabReact === "yes";
 	const autoInitGit = answers.gitCommit === "yes";
 	const useTravis = answers.ci === "travis";
 	const useGithubActions = answers.ci === "gh-actions";

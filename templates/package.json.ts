@@ -15,7 +15,9 @@ const templateFunction: TemplateFunction = async answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = useTypeScript
 		|| (answers.tools && answers.tools.indexOf("type checking") > -1);
-	const useReact = answers.adminReact === "yes";
+	const useAdminReact = answers.adminReact === "yes";
+	const useTabReact = answers.tabReact === "yes";
+	const useReact = useAdminReact || useTabReact;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
@@ -117,6 +119,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const gitUrl = answers.gitRemoteProtocol === "HTTPS"
 		? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
 		: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
+	const parcelFiles = `${useAdminReact ? "admin/src/index.tsx" : ""} ${useTabReact ? "admin/src/tab.tsx" : ""}`.trim();
 
 	const template = `
 {
@@ -150,16 +153,16 @@ const templateFunction: TemplateFunction = async answers => {
 		${isAdapter ? (`
 			${useTypeScript ? (`
 				"prebuild": "rimraf ./build",
-				${useReact ? `"build:parcel": "parcel build admin/src/index.tsx -d admin/build",` : ""}
+				${useReact ? `"build:parcel": "parcel build ${parcelFiles} -d admin/build",` : ""}
 				"build:ts": "tsc -p tsconfig.build.json",
 				"build": "npm run build:ts${useReact ? " && npm run build:parcel" : ""}",
-				${useReact ? `"watch:parcel": "parcel admin/src/index.tsx -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",` : ""}
+				${useReact ? `"watch:parcel": "parcel ${parcelFiles} -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",` : ""}
 				"watch:ts": "tsc -p tsconfig.build.json --watch",
 				"watch": "npm run watch:ts",
 				"test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
 			`) : (`
-				${useReact ? `"watch:parcel": "parcel admin/src/index.jsx -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",
-				"build:parcel": "parcel build admin/src/index.jsx -d admin/build",
+				${useReact ? `"watch:parcel": "parcel ${parcelFiles.replace('tsx', 'jsx')} -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",
+				"build:parcel": "parcel build ${parcelFiles.replace('tsx', 'jsx')} -d admin/build",
 				"build": "npm run build:parcel",` : ""}
 				"test:js": "mocha --config test/mocharc.custom.json \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
 			`)}
