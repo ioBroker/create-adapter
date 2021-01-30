@@ -66,7 +66,7 @@ class TabApp extends GenericApp {
 	}
 }
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(TabApp);
 `;
 	return template.trim();};
 
