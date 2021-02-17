@@ -176,22 +176,21 @@ ${useTypeScript ? (
 #            # To enable create a API-Token in Sentry (User settings, API keys)
 #            # Enter this token as a GitHub secret (with name SENTRY_AUTH_TOKEN) in the repository options
 #            # Then uncomment and customize the following block:
-#            # - name: Notify Sentry.io about the release
-#            #   run: |
-#            #       npm i -g @sentry/cli
-#            #       export SENTRY_AUTH_TOKEN=\${{ secrets.SENTRY_AUTH_TOKEN }}
-#            #       export SENTRY_URL=https://sentry.iobroker.net
-#            #       export SENTRY_ORG=iobroker
-#            #       export SENTRY_PROJECT=iobroker-${adapterName}
-#            #       export SENTRY_VERSION=iobroker.${adapterName}@\${{ steps.extract_release.outputs.VERSION }}
-#            #       sentry-cli releases new $SENTRY_VERSION
-#            #       sentry-cli releases finalize $SENTRY_VERSION
-#            #       # Add the following line BEFORE finalize if repositories are connected in Sentry
-#            #       # sentry-cli releases set-commits $SENTRY_VERSION --auto
-#            #       # Add the following line BEFORE finalize if sourcemap uploads are needed
-#            #       # sentry-cli releases files $SENTRY_VERSION upload-sourcemaps build/
-`;
-	return template.trimLeft();
+#            #- name: Notify Sentry.io about the release
+#            #  run: |
+#            #      npm i -g @sentry/cli
+#            #      export SENTRY_AUTH_TOKEN=\${{ secrets.SENTRY_AUTH_TOKEN }}
+#            #      export SENTRY_URL=https://sentry.iobroker.net
+#            #      export SENTRY_ORG=iobroker
+#            #      export SENTRY_PROJECT=iobroker-${adapterName}
+#            #      export SENTRY_VERSION=iobroker.${adapterName}@\${{ steps.extract_release.outputs.VERSION }}
+#            #      sentry-cli releases new $SENTRY_VERSION
+#            #      sentry-cli releases finalize $SENTRY_VERSION
+#            #      # Add the following line BEFORE finalize if repositories are connected in Sentry
+#            #      #sentry-cli releases set-commits $SENTRY_VERSION --auto
+#            #      # Add the following line BEFORE finalize if sourcemap uploads are needed
+#            #      #sentry-cli releases files $SENTRY_VERSION upload-sourcemaps build/
+`;	return template.trimLeft();
 };
 
 templateFunction.customPath = ".github/workflows/test-and-release.yml";
