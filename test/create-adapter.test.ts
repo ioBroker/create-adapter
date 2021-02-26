@@ -187,17 +187,6 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_React", answers);
 			});
 
-			it("Adapter, Tab, TypeScript React", async () => {
-				const answers: Answers = {
-					...baseAnswers,
-					adminFeatures: ["tab"],
-					es6class: "yes",
-					adminReact: "yes",
-					tabReact: "yes",
-				};
-				await expectSuccess("adapter_tab_TS_React", answers);
-			});
-
 			it("Adapter, JavaScript React", async () => {
 				const answers: Answers = {
 					...baseAnswers,
@@ -507,6 +496,32 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess("devcontainer", answers, (file) =>
 					file.name.startsWith(".devcontainer/"),
+				);
+			});
+
+			it("TabReact AdminReact TS", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adminFeatures: ["tab"],
+					es6class: "yes",
+					adminReact: "yes",
+					tabReact: "yes",
+				};
+				await expectSuccess("tabReact_adminReact_TS", answers, (file) =>
+					file.name.startsWith("admin/"),
+				);
+			});
+
+			it("TabReact AdminHtml JS", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adminFeatures: ["tab"],
+					tabReact: "yes",
+					language: "JavaScript",
+					ecmaVersion: 2015,
+				};
+				await expectSuccess("tabReact_adminHtml_JS", answers, (file) =>
+					file.name.startsWith("admin/"),
 				);
 			});
 		});
