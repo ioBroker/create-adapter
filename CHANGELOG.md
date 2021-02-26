@@ -7,8 +7,10 @@
 -->
 ## __WORK IN PROGRESS__
 * (AlCalzone) Update Readme: remove snyk.io badge, use https (#655)
+* (Gaudes) Add Sentry notification about new release to workflow (#690)
+* (Gaudes) Fix function declaration for translate function `_` (#691)
 * (UncleSamSwiss) Add support for tab in Admin to use React
-
+ 
 ## 1.31.0 (2020-11-29)
 * (crycode-de) Added better types for the `I18n.t` function based on words in `i18n/en.json` for TypeScript React UI (#630) · [Migration guide](docs/updates/20201107_typed_i18n_t.md)
 * (AlCalzone) An adapter with devcontainer but without React no longer contains files for parcel (#635) · **Migration guide:** Delete `.devcontainer/parcel` directory.

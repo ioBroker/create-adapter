@@ -12,7 +12,7 @@ interface Window {
 declare const instance: number;
 declare const adapter: string;
 /** Translates text */
-declare function _(text: string): string;
+declare function _(text: string, arg1?: string, arg2?: string, arg3?: string): string;
 declare const socket: ioBrokerSocket;
 declare function sendTo(
     instance: any | null,
