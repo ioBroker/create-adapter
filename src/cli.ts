@@ -251,7 +251,9 @@ if (process.env.TEST_STARTUP) {
 	if (installDependencies) {
 		maxSteps++;
 		needsBuildStep =
-			answers.language === "TypeScript" || answers.adminReact === "yes";
+			answers.language === "TypeScript" ||
+			answers.adminReact === "yes" ||
+			answers.tabReact === "yes";
 		if (needsBuildStep) maxSteps++;
 	}
 	gitCommit = answers.gitCommit === "yes";

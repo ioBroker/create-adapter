@@ -46,6 +46,7 @@ const adapterAnswers: Answers = {
 	type: "general",
 	adminFeatures: ["custom", "tab"],
 	adminReact: "no",
+	tabReact: "no",
 };
 
 const templates: Record<string, Answers> = {
@@ -65,6 +66,7 @@ const templates: Record<string, Answers> = {
 		indentation: "Space (4)",
 		quotes: "single",
 		adminReact: "yes",
+		tabReact: "yes",
 	},
 	TypeScript: {
 		...adapterAnswers,
@@ -82,6 +84,7 @@ const templates: Record<string, Answers> = {
 		indentation: "Tab",
 		quotes: "double",
 		adminReact: "yes",
+		tabReact: "yes",
 	},
 	JavaScriptVIS: {
 		...adapterAnswers,

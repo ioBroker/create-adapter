@@ -9,6 +9,7 @@
 * (AlCalzone) Update Readme: remove snyk.io badge, use https (#655)
 * (Gaudes) Add Sentry notification about new release to workflow (#690)
 * (Gaudes) Fix function declaration for translate function `_` (#691)
+* (UncleSamSwiss) Add support for tab in Admin to use React (#674)
 * (AlCalzone) Restore compatibility with `eslint-config-prettier` v8 (#709) · [Migration guide](docs/updates/20210301_prettier_config.md)
  
 ## 1.31.0 (2020-11-29)

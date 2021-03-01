@@ -444,17 +444,14 @@ export const questionsAndText: (
 				initial: "no",
 				choices: ["yes", "no"],
 			},
-
-			// TODO: support admin tab (React)
-			// {
-			// 	condition: { name: "adminTab", value: "yes" },
-			// 	type: "select",
-			// 	name: "tabReact",
-			// 	message: "Use React for the tab?",
-			// 	initial: "no",
-			// 	choices: ["yes", "no"],
-			// },
-
+			{
+				condition: [{ name: "adminFeatures", contains: "tab" }],
+				type: "select",
+				name: "tabReact",
+				message: "Use React for the tab UI?",
+				initial: "no",
+				choices: ["yes", "no"],
+			},
 			styledMultiselect({
 				condition: { name: "language", value: "JavaScript" },
 				name: "tools",
@@ -681,6 +678,7 @@ export interface Answers {
 	license?: string;
 	type: string;
 	adminReact?: "yes" | "no";
+	tabReact?: "yes" | "no";
 	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
 	es6class?: "yes" | "no";

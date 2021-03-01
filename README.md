@@ -67,7 +67,7 @@ All CLI options can also be [provided as environment variables](https://yargs.js
     -   Settings page
     -   An extra tab (optional)
     -   Custom datapoint-specific options (optional)
--   [React](https://reactjs.org/) as an alternative to plain HTML+CSS for the admin UI, based on [`@iobroker/adapter-react`](https://github.com/ioBroker/adapter-react/)
+-   [React](https://reactjs.org/) as an alternative to plain HTML+CSS for the admin and extra tab UI, based on [`@iobroker/adapter-react`](https://github.com/ioBroker/adapter-react/)
 -   Predefined settings page for the admin UI
 -   Choice of an OpenSource license and automatic creation of the license file
 -   Built-in component tests using `mocha`, `chai` (with `chai-as-promised`) and `sinon` (with `sinon-chai`) for:

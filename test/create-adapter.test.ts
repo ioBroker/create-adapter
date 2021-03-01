@@ -61,6 +61,7 @@ const baseAnswers: Answers = {
 	type: "general",
 	language: "TypeScript",
 	adminReact: "no",
+	tabReact: "no",
 	tools: ["ESLint"],
 	indentation: "Tab",
 	quotes: "double",
@@ -495,6 +496,32 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess("devcontainer", answers, (file) =>
 					file.name.startsWith(".devcontainer/"),
+				);
+			});
+
+			it("TabReact AdminReact TS", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adminFeatures: ["tab"],
+					es6class: "yes",
+					adminReact: "yes",
+					tabReact: "yes",
+				};
+				await expectSuccess("tabReact_adminReact_TS", answers, (file) =>
+					file.name.startsWith("admin/"),
+				);
+			});
+
+			it("TabReact AdminHtml JS", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adminFeatures: ["tab"],
+					tabReact: "yes",
+					language: "JavaScript",
+					ecmaVersion: 2015,
+				};
+				await expectSuccess("tabReact_adminHtml_JS", answers, (file) =>
+					file.name.startsWith("admin/"),
 				);
 			});
 		});

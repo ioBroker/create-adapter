@@ -4,13 +4,16 @@ import { getTranslatedSettings } from "../../src/lib/translation";
 
 export = (async answers => {
 
-	const useReact = answers.adminReact === "yes";
+	const hasTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
+	const useAdminReact = answers.adminReact === "yes";
+	const useTabReact = hasTab && answers.tabReact === "yes";
+	const useReact = useAdminReact || useTabReact;
 
 	// Only do the adapter-specific things when not using React
 	const isAdapter = !useReact && answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
 
-	if (useReact && !isWidget) return;
+	if (useAdminReact && (!hasTab || useTabReact) && !isWidget) return;
 
 	let translatedSettingsJson = "";
 	if (isAdapter) {

@@ -42,11 +42,13 @@ export function testCondition(
 			return answers[cond.name] === cond.value;
 		} else if ("contains" in cond) {
 			return (
+				answers[cond.name] &&
 				(answers[cond.name] as AnswerValue[]).indexOf(cond.contains) >
-				-1
+					-1
 			);
 		} else if ("doesNotContain" in cond) {
 			return (
+				!answers[cond.name] ||
 				(answers[cond.name] as AnswerValue[]).indexOf(
 					cond.doesNotContain,
 				) === -1

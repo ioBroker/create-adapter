@@ -92,7 +92,8 @@ export async function getTranslatedSettings(
 export function getI18nJsonTemplate(language: Languages): TemplateFunction {
 	return async (answers) => {
 		const isAdapter = answers.features.indexOf("adapter") > -1;
-		const useReact = answers.adminReact === "yes";
+		const useReact =
+			answers.adminReact === "yes" || answers.tabReact === "yes";
 		if (!isAdapter || !useReact) return;
 
 		const translatedSettings = await getTranslatedSettingsForLanguage(
