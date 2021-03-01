@@ -42,7 +42,7 @@
     "@types/debug": "4.1.5",
     "@types/eslint": "^7.2.0",
     "@types/fs-extra": "^9.0.1",
-    "@types/json5": "0.0.30",
+    "@types/json5": "2.2.0",
     "@types/mocha": "^8.0.1",
     "@types/node": "^14.0.6",
     "@types/prettier": "^2.0.0",
