@@ -144,7 +144,7 @@ class TestAdapter extends utils.Adapter {
 
 }
 
-if (module.parent) {
+if (require.main !== module) {
 	// Export the constructor in compact mode
 	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new TestAdapter(options);
 } else {

@@ -138,7 +138,7 @@ async function main(): Promise<void> {
 	});
 }
 
-if (module.parent) {
+if (require.main !== module) {
 	// Export startAdapter in compact mode
 	module.exports = startAdapter;
 } else {
