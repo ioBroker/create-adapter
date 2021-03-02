@@ -54,7 +54,6 @@ export = (async answers => {
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "${answers.title || answers.adapterName}",
 		"titleLang": ${titleLang},
 		"desc": ${descriptionLang},
 		"authors": [
@@ -63,7 +62,6 @@ export = (async answers => {
 		"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 		"license": "${licenses[answers.license!].id}",
 		"platform": "Javascript/Node.js",
-		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${answers.adapterName}.png",
 		"enabled": true,
 		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${answers.adapterName}.png",
@@ -71,7 +69,7 @@ export = (async answers => {
 		"loglevel": "info",
 		${isWidget ? (`
 			"restartAdapters": ["vis"],
-			"localLink": "%web_protocol%://%ip%:%web_port%/vis/edit.html",
+			"localLinks": {"_default": "%web_protocol%://%ip%:%web_port%/vis/edit.html"},
 		`) : ""}
 		${isAdapter ? (`
 			"mode": "${answers.startMode || "daemon"}",
