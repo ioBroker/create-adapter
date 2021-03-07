@@ -29,11 +29,14 @@ export class MigrationContext {
 	public async hasFilesWithExtension(
 		dirName: string,
 		extension: string,
+		filter?: (fileName: string) => boolean,
 	): Promise<boolean> {
 		return (
 			(await this.directoryExists(dirName)) &&
-			!!(await readdir(path.join(this.baseDir, dirName))).find((f) =>
-				f.toLowerCase().endsWith(extension.toLowerCase()),
+			(await readdir(path.join(this.baseDir, dirName))).some(
+				(f) =>
+					(!filter || filter(f)) &&
+					f.toLowerCase().endsWith(extension.toLowerCase()),
 			)
 		);
 	}

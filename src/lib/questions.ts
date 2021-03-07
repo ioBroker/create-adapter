@@ -495,7 +495,11 @@ export const questionsAndText: (
 					"Which language do you want to use to code the adapter?",
 				choices: ["JavaScript", "TypeScript"],
 				migrate: async (ctx) =>
-					(await ctx.hasFilesWithExtension("src", ".ts"))
+					(await ctx.hasFilesWithExtension(
+						"src",
+						".ts",
+						(f) => !f.endsWith(".d.ts"),
+					))
 						? "TypeScript"
 						: "JavaScript",
 			},
@@ -507,7 +511,18 @@ export const questionsAndText: (
 				initial: "no",
 				choices: ["yes", "no"],
 				migrate: async (ctx) =>
-					(await ctx.directoryExists("admin/src")) ? "yes" : "no",
+					(await ctx.hasFilesWithExtension(
+						"admin/src",
+						".jsx",
+						(f) => !f.endsWith("tab.jsx"),
+					)) ||
+					(await ctx.hasFilesWithExtension(
+						"admin/src",
+						".tsx",
+						(f) => !f.endsWith("tab.tsx"),
+					))
+						? "yes"
+						: "no",
 			},
 			{
 				condition: [{ name: "adminFeatures", contains: "tab" }],

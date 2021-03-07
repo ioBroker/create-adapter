@@ -49,12 +49,26 @@ describe("hasFilesWithExtension()", () => {
 		expect(await context.hasFilesWithExtension("../..", ".json")).to.be
 			.true;
 		expect(await context.hasFilesWithExtension("..", ".ts")).to.be.true;
+		expect(
+			await context.hasFilesWithExtension(
+				"..",
+				".ts",
+				(f) => !f.endsWith("cli.ts"),
+			),
+		).to.be.true;
 	});
 
 	it("should return false if no files exist", async () => {
 		const context = new MigrationContext(__dirname);
 		expect(await context.hasFilesWithExtension("..", ".xls")).to.be.false;
 		expect(await context.hasFilesWithExtension("..", ".dts")).to.be.false;
+		expect(
+			await context.hasFilesWithExtension(
+				"..",
+				".ts",
+				(f) => !f.includes("i"),
+			),
+		).to.be.false;
 	});
 
 	it("should return false if the directory doesn't exist", async () => {
