@@ -1,12 +1,12 @@
 import { existsSync, readdir, readFile, readJson, stat } from "fs-extra";
 import path = require("path");
 
-export class ImportContext {
+export class MigrationContext {
 	public packageJson: any;
 	public ioPackageJson: any;
 
 	constructor(private readonly baseDir: string) {
-		console.log(`Importing from ${baseDir}`);
+		console.log(`Migrating from ${baseDir}`);
 	}
 
 	public async load(): Promise<void> {

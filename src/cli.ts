@@ -9,7 +9,7 @@ import {
 	testCondition,
 	writeFiles,
 } from "./lib/createAdapter";
-import { ImportContext } from "./lib/importContext";
+import { MigrationContext } from "./lib/migrationContext";
 import {
 	Answers,
 	isQuestionGroup,
@@ -44,11 +44,11 @@ const argv = yargs
 			type: "string",
 			desc: "Replay answers from the given .create-adapter.json file",
 		},
-		import: {
-			alias: "i",
+		migrate: {
+			alias: "m",
 			type: "string",
 			desc:
-				"Import answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
+				"Use answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
 		},
 		noInstall: {
 			alias: "n",
@@ -57,7 +57,7 @@ const argv = yargs
 			desc: "Skip installation of dependencies",
 		},
 		install: {
-			alias: "d",
+			alias: "i",
 			hidden: true,
 			type: "boolean",
 			default: false,
@@ -70,13 +70,13 @@ const rootDir = path.resolve(argv.target || process.cwd());
 
 const creatorOptions = {
 	skipAdapterExistenceCheck:
-		!!argv.skipAdapterExistenceCheck || !!argv.import,
+		!!argv.skipAdapterExistenceCheck || !!argv.migrate,
 };
 
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true };
-	let importContext: ImportContext | undefined = undefined;
+	let migrationContext: MigrationContext | undefined = undefined;
 
 	if (!!argv.replay) {
 		const replayFile = path.resolve(argv.replay);
@@ -85,21 +85,21 @@ async function ask(): Promise<Answers> {
 		answers.replay = replayFile;
 	}
 
-	if (!!argv.import) {
+	if (!!argv.migrate) {
 		try {
-			const importDirectory = path.resolve(argv.import);
-			importContext = new ImportContext(importDirectory);
-			await importContext.load();
+			const migrationDir = path.resolve(argv.migrate);
+			migrationContext = new MigrationContext(migrationDir);
+			await migrationContext.load();
 		} catch (error) {
 			console.error(error);
 			throw new Error(
-				"Please ensure that --import points to a valid adapter directory",
+				"Please ensure that --migrate points to a valid adapter directory",
 			);
 		}
-		if (await importContext.fileExists(".create-adapter.json")) {
+		if (await migrationContext.fileExists(".create-adapter.json")) {
 			// it's just not worth trying to figure out things if the adapter was already created with create-adapter
 			throw new Error(
-				"Use --replay instead of --import for an adapter created with a recent version of create-adapter.",
+				"Use --replay instead of --migrate for an adapter created with a recent version of create-adapter.",
 			);
 		}
 	}
@@ -110,12 +110,12 @@ async function ask(): Promise<Answers> {
 			if (typeof q.initial === "function") {
 				q.initial = q.initial(answers);
 			}
-			if (importContext && q.import) {
-				let imported = q.import(importContext, answers, q);
-				if (imported && typeof (imported as any).then === "function") {
-					imported = await imported;
+			if (migrationContext && q.migrate) {
+				let migrated = q.migrate(migrationContext, answers, q);
+				if (migrated && typeof (migrated as any).then === "function") {
+					migrated = await migrated;
 				}
-				q.initial = imported;
+				q.initial = migrated;
 			}
 			while (true) {
 				let answer: Record<string, any>;
