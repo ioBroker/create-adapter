@@ -39,10 +39,7 @@ export class MigrationContext {
 	}
 
 	public hasDevDependency(packageName: string): boolean {
-		return (
-			this.packageJson.devDependencies &&
-			this.packageJson.devDependencies.hasOwnProperty(packageName)
-		);
+		return this.packageJson.devDependencies?.hasOwnProperty(packageName);
 	}
 
 	public async getMainFileContent(): Promise<string> {

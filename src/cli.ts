@@ -113,7 +113,7 @@ async function ask(): Promise<Answers> {
 			}
 			if (migrationContext && q.migrate) {
 				let migrated = q.migrate(migrationContext, answers, q);
-				if (migrated && typeof (migrated as any).then === "function") {
+				if (migrated instanceof Promise) {
 					migrated = await migrated;
 				}
 				q.initial = migrated;

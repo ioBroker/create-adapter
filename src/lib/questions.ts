@@ -470,7 +470,7 @@ export const questionsAndText: (
 				initial: "no",
 				choices: ["yes", "no"],
 				migrate: (ctx) =>
-					ctx.ioPackageJson.instanceObjects?.find(
+					ctx.ioPackageJson.instanceObjects?.some(
 						(o: any) => o._id === "info.connection",
 					)
 						? "yes"
