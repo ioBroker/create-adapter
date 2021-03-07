@@ -1,40 +1,40 @@
-import {
-	existsSync,
-	readdirSync,
-	readFileSync,
-	readJsonSync,
-	statSync,
-} from "fs-extra";
+import { existsSync, readdir, readFile, readJson, stat } from "fs-extra";
 import path = require("path");
 
 export class ImportContext {
-	public readonly packageJson: any;
-	public readonly ioPackageJson: any;
+	public packageJson: any;
+	public ioPackageJson: any;
 
 	constructor(private readonly baseDir: string) {
 		console.log(`Importing from ${baseDir}`);
-		this.packageJson = this.readJsonFile("package.json");
-		this.ioPackageJson = this.readJsonFile("io-package.json");
 	}
 
-	public readJsonFile<T>(fileName: string): T {
-		return readJsonSync(path.join(this.baseDir, fileName)) as T;
+	public async load(): Promise<void> {
+		this.packageJson = await this.readJsonFile("package.json");
+		this.ioPackageJson = await this.readJsonFile("io-package.json");
 	}
 
-	public directoryExists(dirName: string): boolean {
+	public async readJsonFile<T>(fileName: string): Promise<T> {
+		return (await readJson(path.join(this.baseDir, fileName))) as T;
+	}
+
+	public async directoryExists(dirName: string): Promise<boolean> {
 		const fullPath = path.join(this.baseDir, dirName);
-		return existsSync(fullPath) && statSync(fullPath).isDirectory();
+		return existsSync(fullPath) && (await stat(fullPath)).isDirectory();
 	}
 
-	public fileExists(dirName: string): boolean {
+	public async fileExists(dirName: string): Promise<boolean> {
 		const fullPath = path.join(this.baseDir, dirName);
-		return existsSync(fullPath) && statSync(fullPath).isFile();
+		return existsSync(fullPath) && (await stat(fullPath)).isFile();
 	}
 
-	public hasFilesWithExtension(dirName: string, extension: string): boolean {
+	public async hasFilesWithExtension(
+		dirName: string,
+		extension: string,
+	): Promise<boolean> {
 		return (
-			this.directoryExists(dirName) &&
-			!!readdirSync(path.join(this.baseDir, dirName)).find((f) =>
+			(await this.directoryExists(dirName)) &&
+			!!(await readdir(path.join(this.baseDir, dirName))).find((f) =>
 				f.toLowerCase().endsWith(extension.toLowerCase()),
 			)
 		);
@@ -47,11 +47,11 @@ export class ImportContext {
 		);
 	}
 
-	public getMainFileContent(): string {
+	public async getMainFileContent(): Promise<string> {
 		if (
 			!this.packageJson.main ||
 			!this.packageJson.main.endsWith(".js") ||
-			!this.fileExists(this.packageJson.main)
+			!(await this.fileExists(this.packageJson.main))
 		) {
 			// we don't have a main JavaScript file, it will be impossible to find code
 			return "";
@@ -65,9 +65,9 @@ export class ImportContext {
 			);
 			if (existsSync(tsMain)) {
 				// most probably TypeScript
-				return readFileSync(tsMain, { encoding: "utf8" });
+				return await readFile(tsMain, { encoding: "utf8" });
 			} else {
-				return readFileSync(
+				return await readFile(
 					path.join(this.baseDir, this.packageJson.main),
 					{ encoding: "utf8" },
 				);
@@ -78,8 +78,8 @@ export class ImportContext {
 		}
 	}
 
-	public analyzeCode(either: string, or: string): boolean {
-		const content = this.getMainFileContent();
+	public async analyzeCode(either: string, or: string): Promise<boolean> {
+		const content = await this.getMainFileContent();
 		const eitherCount = (content.match(new RegExp(either, "g")) || [])
 			.length;
 		const orCount = (content.match(new RegExp(or, "g")) || []).length;

@@ -41,7 +41,11 @@ interface QuestionMeta {
 		context: ImportContext,
 		answers: Record<string, any>,
 		question: Question,
-	) => AnswerValue | AnswerValue[] | undefined;
+	) =>
+		| Promise<AnswerValue | AnswerValue[] | undefined>
+		| AnswerValue
+		| AnswerValue[]
+		| undefined;
 	resultTransform?: (
 		val: AnswerValue | AnswerValue[],
 	) =>
@@ -203,10 +207,10 @@ export const questionsAndText: (
 					{ message: "Visualization", value: "vis" },
 				],
 				action: checkMinSelections.bind(undefined, "feature", 1),
-				import: (ctx) =>
+				import: async (ctx) =>
 					[
-						ctx.directoryExists("admin") ? "adapter" : null,
-						ctx.directoryExists("widgets") ? "vis" : null,
+						(await ctx.directoryExists("admin")) ? "adapter" : null,
+						(await ctx.directoryExists("widgets")) ? "vis" : null,
 					].filter((f) => !!f) as string[],
 			}),
 			styledMultiselect({
@@ -221,14 +225,14 @@ export const questionsAndText: (
 					{ message: "An extra tab", value: "tab" },
 					{ message: "Custom options for states", value: "custom" },
 				],
-				import: (ctx) =>
+				import: async (ctx) =>
 					[
-						ctx.fileExists("admin/tab.html") ||
-						ctx.fileExists("admin/tab_m.html")
+						(await ctx.fileExists("admin/tab.html")) ||
+						(await ctx.fileExists("admin/tab_m.html"))
 							? "tab"
 							: null,
-						ctx.fileExists("admin/custom.html") ||
-						ctx.fileExists("admin/custom_m.html")
+						(await ctx.fileExists("admin/custom.html")) ||
+						(await ctx.fileExists("admin/custom_m.html"))
 							? "custom"
 							: null,
 					].filter((f) => !!f) as string[],
@@ -466,8 +470,7 @@ export const questionsAndText: (
 				initial: "no",
 				choices: ["yes", "no"],
 				import: (ctx) =>
-					ctx.ioPackageJson.instanceObjects &&
-					ctx.ioPackageJson.instanceObjects.find(
+					ctx.ioPackageJson.instanceObjects?.find(
 						(o: any) => o._id === "info.connection",
 					)
 						? "yes"
@@ -491,8 +494,8 @@ export const questionsAndText: (
 				message:
 					"Which language do you want to use to code the adapter?",
 				choices: ["JavaScript", "TypeScript"],
-				import: (ctx) =>
-					ctx.hasFilesWithExtension("src", ".ts")
+				import: async (ctx) =>
+					(await ctx.hasFilesWithExtension("src", ".ts"))
 						? "TypeScript"
 						: "JavaScript",
 			},
@@ -503,8 +506,8 @@ export const questionsAndText: (
 				message: "Use React for the Admin UI?",
 				initial: "no",
 				choices: ["yes", "no"],
-				import: (ctx) =>
-					ctx.directoryExists("admin/src") ? "yes" : "no",
+				import: async (ctx) =>
+					(await ctx.directoryExists("admin/src")) ? "yes" : "no",
 			},
 			{
 				condition: [{ name: "adminFeatures", contains: "tab" }],
@@ -513,9 +516,9 @@ export const questionsAndText: (
 				message: "Use React for the tab UI?",
 				initial: "no",
 				choices: ["yes", "no"],
-				import: (ctx) =>
-					ctx.fileExists("admin/src/tab.jsx") ||
-					ctx.fileExists("admin/src/tab.tsx")
+				import: async (ctx) =>
+					(await ctx.fileExists("admin/src/tab.jsx")) ||
+					(await ctx.fileExists("admin/src/tab.tsx"))
 						? "yes"
 						: "no",
 			},
@@ -533,13 +536,13 @@ export const questionsAndText: (
 							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
 				],
-				import: (ctx) =>
+				import: async (ctx) =>
 					[
 						ctx.hasDevDependency("eslint") ? "ESLint" : null,
 						ctx.hasDevDependency("typescript")
 							? "type checking"
 							: null,
-						ctx.directoryExists(".devcontainer")
+						(await ctx.directoryExists(".devcontainer"))
 							? "devcontainer"
 							: null,
 					].filter((f) => !!f) as string[],
@@ -564,12 +567,12 @@ export const questionsAndText: (
 					},
 				],
 				action: checkTypeScriptTools,
-				import: (ctx) =>
+				import: async (ctx) =>
 					[
 						ctx.hasDevDependency("eslint") ? "ESLint" : null,
 						ctx.hasDevDependency("prettier") ? "Prettier" : null,
 						ctx.hasDevDependency("nyc") ? "code coverage" : null,
-						ctx.directoryExists(".devcontainer")
+						(await ctx.directoryExists(".devcontainer"))
 							? "devcontainer"
 							: null,
 					].filter((f) => !!f) as string[],
@@ -582,8 +585,8 @@ export const questionsAndText: (
 				message: "Do you prefer tab or space indentation?",
 				initial: "Tab",
 				choices: ["Tab", "Space (4)"],
-				import: (ctx) =>
-					ctx.analyzeCode("\t", "  ") ? "Tab" : "Space (4)",
+				import: async (ctx) =>
+					(await ctx.analyzeCode("\t", "  ")) ? "Tab" : "Space (4)",
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -592,8 +595,8 @@ export const questionsAndText: (
 				message: "Do you prefer double or single quotes?",
 				initial: "double",
 				choices: ["double", "single"],
-				import: (ctx) =>
-					ctx.analyzeCode('"', "'") ? "double" : "single",
+				import: async (ctx) =>
+					(await ctx.analyzeCode('"', "'")) ? "double" : "single",
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -614,8 +617,8 @@ export const questionsAndText: (
 						value: "no",
 					},
 				],
-				import: (ctx) =>
-					ctx.getMainFileContent().match(/^[ \t]*class/gm)
+				import: async (ctx) =>
+					(await ctx.getMainFileContent()).match(/^[ \t]*class/gm)
 						? "yes"
 						: "no",
 			},
@@ -716,9 +719,9 @@ export const questionsAndText: (
 						value: "travis",
 					},
 				],
-				import: (ctx) =>
-					ctx.fileExists(".travis.yml") &&
-					!ctx.directoryExists(".github/workflows")
+				import: async (ctx) =>
+					(await ctx.fileExists(".travis.yml")) &&
+					!(await ctx.directoryExists(".github/workflows"))
 						? "travis"
 						: "gh-actions",
 			},
@@ -731,8 +734,10 @@ export const questionsAndText: (
 				hint: "(recommended)",
 				initial: "no",
 				choices: ["yes", "no"],
-				import: (ctx) =>
-					ctx.fileExists(".github/dependabot.yml") ? "yes" : "no",
+				import: async (ctx) =>
+					(await ctx.fileExists(".github/dependabot.yml"))
+						? "yes"
+						: "no",
 			},
 		],
 	},

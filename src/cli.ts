@@ -89,13 +89,14 @@ async function ask(): Promise<Answers> {
 		try {
 			const importDirectory = path.resolve(argv.import);
 			importContext = new ImportContext(importDirectory);
+			await importContext.load();
 		} catch (error) {
 			console.error(error);
 			throw new Error(
 				"Please ensure that --import points to a valid adapter directory",
 			);
 		}
-		if (importContext.fileExists(".create-adapter.json")) {
+		if (await importContext.fileExists(".create-adapter.json")) {
 			// it's just not worth trying to figure out things if the adapter was already created with create-adapter
 			throw new Error(
 				"Use --replay instead of --import for an adapter created with a recent version of create-adapter.",
@@ -110,7 +111,11 @@ async function ask(): Promise<Answers> {
 				q.initial = q.initial(answers);
 			}
 			if (importContext && q.import) {
-				q.initial = q.import(importContext, answers, q);
+				let imported = q.import(importContext, answers, q);
+				if (imported && typeof (imported as any).then === "function") {
+					imported = await imported;
+				}
+				q.initial = imported;
 			}
 			while (true) {
 				let answer: Record<string, any>;
