@@ -5,9 +5,7 @@ export class MigrationContext {
 	public packageJson: any;
 	public ioPackageJson: any;
 
-	constructor(private readonly baseDir: string) {
-		console.log(`Migrating from ${baseDir}`);
-	}
+	constructor(private readonly baseDir: string) {}
 
 	public async load(): Promise<void> {
 		this.packageJson = await this.readJsonFile("package.json");
@@ -58,20 +56,43 @@ export class MigrationContext {
 		}
 
 		try {
-			const tsMain = path.join(
-				this.baseDir,
-				"src",
-				this.packageJson.main.replace(/\.js$/, ".ts"),
-			);
-			if (existsSync(tsMain)) {
-				// most probably TypeScript
-				return await readFile(tsMain, { encoding: "utf8" });
-			} else {
-				return await readFile(
-					path.join(this.baseDir, this.packageJson.main),
-					{ encoding: "utf8" },
-				);
+			const tsMains = [
+				path.join(
+					this.baseDir,
+					"src",
+					this.packageJson.main.replace(/\.js$/, ".ts"),
+				),
+				path.join(
+					this.baseDir,
+					this.packageJson.main
+						.replace(/\.js$/, ".ts")
+						.replace(/^dist([\\/])/, "src$1"),
+				),
+				path.join(
+					this.baseDir,
+					this.packageJson.main
+						.replace(/\.js$/, ".ts")
+						.replace(/^build([\\/])/, "src$1"),
+				),
+				path.join(
+					this.baseDir,
+					this.packageJson.main
+						.replace(/\.js$/, ".ts")
+						.replace(/^(build|dist)[\\/]/, ""),
+				),
+			];
+			for (let i = 0; i < tsMains.length; i++) {
+				const tsMain = tsMains[i];
+				if (existsSync(tsMain)) {
+					// most probably TypeScript
+					return await readFile(tsMain, { encoding: "utf8" });
+				}
 			}
+
+			return await readFile(
+				path.join(this.baseDir, this.packageJson.main),
+				{ encoding: "utf8" },
+			);
 		} catch {
 			// we don't want this to crash, so just return an empty string
 			return "";

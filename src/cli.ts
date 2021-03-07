@@ -89,6 +89,7 @@ async function ask(): Promise<Answers> {
 		try {
 			const migrationDir = path.resolve(argv.migrate);
 			migrationContext = new MigrationContext(migrationDir);
+			console.log(`Migrating from ${migrationDir}`);
 			await migrationContext.load();
 		} catch (error) {
 			console.error(error);
