@@ -9,6 +9,7 @@ import {
 	testCondition,
 	writeFiles,
 } from "./lib/createAdapter";
+import { ImportContext } from "./lib/importContext";
 import {
 	Answers,
 	isQuestionGroup,
@@ -43,6 +44,12 @@ const argv = yargs
 			type: "string",
 			desc: "Replay answers from the given .create-adapter.json file",
 		},
+		import: {
+			alias: "i",
+			type: "string",
+			desc:
+				"Import answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
+		},
 		noInstall: {
 			alias: "n",
 			type: "boolean",
@@ -50,7 +57,7 @@ const argv = yargs
 			desc: "Skip installation of dependencies",
 		},
 		install: {
-			alias: "i",
+			alias: "d",
 			hidden: true,
 			type: "boolean",
 			default: false,
@@ -62,12 +69,14 @@ const argv = yargs
 const rootDir = path.resolve(argv.target || process.cwd());
 
 const creatorOptions = {
-	skipAdapterExistenceCheck: !!argv.skipAdapterExistenceCheck,
+	skipAdapterExistenceCheck:
+		!!argv.skipAdapterExistenceCheck || !!argv.import,
 };
 
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true };
+	let importContext: ImportContext | undefined = undefined;
 
 	if (!!argv.replay) {
 		const replayFile = path.resolve(argv.replay);
@@ -76,11 +85,32 @@ async function ask(): Promise<Answers> {
 		answers.replay = replayFile;
 	}
 
+	if (!!argv.import) {
+		try {
+			const importDirectory = path.resolve(argv.import);
+			importContext = new ImportContext(importDirectory);
+		} catch (error) {
+			console.error(error);
+			throw new Error(
+				"Please ensure that --import points to a valid adapter directory",
+			);
+		}
+		if (importContext.fileExists(".create-adapter.json")) {
+			// it's just not worth trying to figure out things if the adapter was already created with create-adapter
+			throw new Error(
+				"Use --replay instead of --import for an adapter created with a recent version of create-adapter.",
+			);
+		}
+	}
+
 	async function askQuestion(q: Question): Promise<void> {
 		if (testCondition(q.condition, answers)) {
 			// Make properties dependent on previous answers
 			if (typeof q.initial === "function") {
 				q.initial = q.initial(answers);
+			}
+			if (importContext && q.import) {
+				q.initial = q.import(importContext, answers, q);
 			}
 			while (true) {
 				let answer: Record<string, any>;
@@ -93,7 +123,7 @@ async function ask(): Promise<Answers> {
 						q.expert &&
 						q.initial !== undefined
 					) {
-						// In expert mode, prefill the default answer for expert questions
+						// In non-expert mode, prefill the default answer for expert questions
 						answer = { [q.name as string]: q.initial };
 					} else {
 						// Ask the user for an answer

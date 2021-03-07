@@ -15,6 +15,8 @@ import {
 	transformKeywords,
 } from "./actionsAndTransformers";
 import { testCondition } from "./createAdapter";
+import { ImportContext } from "./importContext";
+import { licenses } from "./licenses";
 import { getOwnVersion } from "./tools";
 
 // This is being used to simulate wrong options for conditions on the type level
@@ -35,6 +37,11 @@ export type Condition = { name: string } & (
 interface QuestionMeta {
 	/** One or more conditions that need(s) to be fulfilled for this question to be asked */
 	condition?: Condition | Condition[];
+	import?: (
+		context: ImportContext,
+		answers: Record<string, any>,
+		question: Question,
+	) => AnswerValue | AnswerValue[] | undefined;
 	resultTransform?: (
 		val: AnswerValue | AnswerValue[],
 	) =>
@@ -109,12 +116,16 @@ export const questionsAndText: (
 				message: "Please enter the name of your project:",
 				resultTransform: transformAdapterName,
 				action: checkAdapterName,
+				import: (ctx) => ctx.ioPackageJson.common?.name,
 			},
 			{
 				type: "input",
 				name: "title",
 				message: "Which title should be shown in the admin UI?",
 				action: checkTitle,
+				import: (ctx) =>
+					ctx.ioPackageJson.common?.titleLang?.en ||
+					ctx.ioPackageJson.common?.title,
 			},
 			{
 				type: "input",
@@ -123,6 +134,9 @@ export const questionsAndText: (
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformDescription,
+				import: (ctx) =>
+					ctx.ioPackageJson.common?.desc?.en ||
+					ctx.ioPackageJson.common?.desc,
 			},
 			{
 				type: "input",
@@ -132,6 +146,12 @@ export const questionsAndText: (
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformKeywords,
+				import: (ctx) =>
+					(
+						ctx.ioPackageJson.common?.keywords ||
+						ctx.packageJson.common?.keywords ||
+						[]
+					).join(","),
 			},
 			{
 				type: "input",
@@ -141,6 +161,11 @@ export const questionsAndText: (
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformContributors,
+				import: (ctx) =>
+					(ctx.packageJson.contributors || [])
+						.map((c: Record<string, string>) => c.name)
+						.filter((name: string) => !!name)
+						.join(","),
 			},
 			{
 				condition: { name: "cli", value: false },
@@ -167,6 +192,7 @@ export const questionsAndText: (
 					{ message: "I want to specify everything!", value: "yes" },
 				],
 				optional: true,
+				import: () => "yes", // always force expert mode for import
 			},
 			styledMultiselect({
 				name: "features",
@@ -177,6 +203,11 @@ export const questionsAndText: (
 					{ message: "Visualization", value: "vis" },
 				],
 				action: checkMinSelections.bind(undefined, "feature", 1),
+				import: (ctx) =>
+					[
+						ctx.directoryExists("admin") ? "adapter" : null,
+						ctx.directoryExists("widgets") ? "vis" : null,
+					].filter((f) => !!f) as string[],
 			}),
 			styledMultiselect({
 				condition: { name: "features", contains: "adapter" },
@@ -190,6 +221,17 @@ export const questionsAndText: (
 					{ message: "An extra tab", value: "tab" },
 					{ message: "Custom options for states", value: "custom" },
 				],
+				import: (ctx) =>
+					[
+						ctx.fileExists("admin/tab.html") ||
+						ctx.fileExists("admin/tab_m.html")
+							? "tab"
+							: null,
+						ctx.fileExists("admin/custom.html") ||
+						ctx.fileExists("admin/custom_m.html")
+							? "custom"
+							: null,
+					].filter((f) => !!f) as string[],
 			}),
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -323,6 +365,7 @@ export const questionsAndText: (
 						value: "weather",
 					},
 				],
+				import: (ctx) => ctx.ioPackageJson.common?.type,
 			},
 			{
 				condition: { name: "features", doesNotContain: "adapter" },
@@ -333,6 +376,7 @@ export const questionsAndText: (
 					{ message: "Icons for VIS", value: "visualization-icons" },
 					{ message: "VIS widgets", value: "visualization-widgets" },
 				],
+				import: (ctx) => ctx.ioPackageJson.common?.type,
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -358,6 +402,7 @@ export const questionsAndText: (
 					},
 					{ message: "never", value: "none" },
 				],
+				import: (ctx) => ctx.ioPackageJson.common?.mode,
 			},
 			{
 				condition: { name: "startMode", value: "schedule" },
@@ -368,6 +413,8 @@ export const questionsAndText: (
 					"Should the adapter also be started when the configuration is changed?",
 				initial: "no",
 				choices: ["yes", "no"],
+				import: (ctx) =>
+					ctx.ioPackageJson.common?.allowInit ? "yes" : "no",
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -382,6 +429,7 @@ export const questionsAndText: (
 						value: "local",
 					},
 				],
+				import: (ctx) => ctx.ioPackageJson.common?.connectionType,
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -406,6 +454,7 @@ export const questionsAndText: (
 						value: "assumption",
 					},
 				],
+				import: (ctx) => ctx.ioPackageJson.common?.dataSource,
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -416,6 +465,13 @@ export const questionsAndText: (
 				hint: "(To some device or some service)",
 				initial: "no",
 				choices: ["yes", "no"],
+				import: (ctx) =>
+					ctx.ioPackageJson.instanceObjects &&
+					ctx.ioPackageJson.instanceObjects.find(
+						(o: any) => o._id === "info.connection",
+					)
+						? "yes"
+						: "no",
 			},
 			{
 				condition: [
@@ -435,6 +491,10 @@ export const questionsAndText: (
 				message:
 					"Which language do you want to use to code the adapter?",
 				choices: ["JavaScript", "TypeScript"],
+				import: (ctx) =>
+					ctx.hasFilesWithExtension("src", ".ts")
+						? "TypeScript"
+						: "JavaScript",
 			},
 			{
 				condition: [{ name: "features", contains: "adapter" }],
@@ -443,6 +503,8 @@ export const questionsAndText: (
 				message: "Use React for the Admin UI?",
 				initial: "no",
 				choices: ["yes", "no"],
+				import: (ctx) =>
+					ctx.directoryExists("admin/src") ? "yes" : "no",
 			},
 			{
 				condition: [{ name: "adminFeatures", contains: "tab" }],
@@ -451,6 +513,11 @@ export const questionsAndText: (
 				message: "Use React for the tab UI?",
 				initial: "no",
 				choices: ["yes", "no"],
+				import: (ctx) =>
+					ctx.fileExists("admin/src/tab.jsx") ||
+					ctx.fileExists("admin/src/tab.tsx")
+						? "yes"
+						: "no",
 			},
 			styledMultiselect({
 				condition: { name: "language", value: "JavaScript" },
@@ -466,6 +533,16 @@ export const questionsAndText: (
 							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
 				],
+				import: (ctx) =>
+					[
+						ctx.hasDevDependency("eslint") ? "ESLint" : null,
+						ctx.hasDevDependency("typescript")
+							? "type checking"
+							: null,
+						ctx.directoryExists(".devcontainer")
+							? "devcontainer"
+							: null,
+					].filter((f) => !!f) as string[],
 			}),
 			styledMultiselect({
 				condition: { name: "language", value: "TypeScript" },
@@ -487,6 +564,15 @@ export const questionsAndText: (
 					},
 				],
 				action: checkTypeScriptTools,
+				import: (ctx) =>
+					[
+						ctx.hasDevDependency("eslint") ? "ESLint" : null,
+						ctx.hasDevDependency("prettier") ? "Prettier" : null,
+						ctx.hasDevDependency("nyc") ? "code coverage" : null,
+						ctx.directoryExists(".devcontainer")
+							? "devcontainer"
+							: null,
+					].filter((f) => !!f) as string[],
 			}),
 
 			{
@@ -496,6 +582,8 @@ export const questionsAndText: (
 				message: "Do you prefer tab or space indentation?",
 				initial: "Tab",
 				choices: ["Tab", "Space (4)"],
+				import: (ctx) =>
+					ctx.analyzeCode("\t", "  ") ? "Tab" : "Space (4)",
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -504,6 +592,8 @@ export const questionsAndText: (
 				message: "Do you prefer double or single quotes?",
 				initial: "double",
 				choices: ["double", "single"],
+				import: (ctx) =>
+					ctx.analyzeCode('"', "'") ? "double" : "single",
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -524,6 +614,10 @@ export const questionsAndText: (
 						value: "no",
 					},
 				],
+				import: (ctx) =>
+					ctx.getMainFileContent().match(/^[ \t]*class/gm)
+						? "yes"
+						: "no",
 			},
 		],
 	},
@@ -535,6 +629,7 @@ export const questionsAndText: (
 				name: "authorName",
 				message: "Please enter your name (or nickname):",
 				action: checkAuthorName,
+				import: (ctx) => ctx.packageJson.author?.name,
 			},
 			{
 				type: "input",
@@ -542,12 +637,18 @@ export const questionsAndText: (
 				message: "What's your name/org on GitHub?",
 				initial: ((answers: Answers) => answers.authorName) as any,
 				action: checkAuthorName,
+				import: (ctx) =>
+					ctx.ioPackageJson.common?.extIcon?.replace(
+						/^.+?\.com\/([^\/]+)\/.+$/,
+						"$1",
+					),
 			},
 			{
 				type: "input",
 				name: "authorEmail",
 				message: "What's your email address?",
 				action: checkEmail,
+				import: (ctx) => ctx.packageJson.author?.email,
 			},
 			{
 				type: "select",
@@ -564,6 +665,10 @@ export const questionsAndText: (
 						hint: "(requires you to setup SSH keys)",
 					},
 				],
+				import: (ctx) =>
+					ctx.packageJson.repository?.url?.match(/^git@/)
+						? "SSH"
+						: "HTTPS",
 			},
 			{
 				condition: { name: "cli", value: true },
@@ -573,6 +678,7 @@ export const questionsAndText: (
 				message: "Initialize the GitHub repo automatically?",
 				initial: "no",
 				choices: ["yes", "no"],
+				import: () => "no",
 			},
 			{
 				type: "select",
@@ -589,6 +695,10 @@ export const questionsAndText: (
 					"MIT License",
 					"The Unlicense",
 				],
+				import: (ctx) =>
+					Object.keys(licenses).find(
+						(k) => licenses[k].id === ctx.packageJson.license,
+					),
 			},
 			{
 				type: "select",
@@ -606,6 +716,11 @@ export const questionsAndText: (
 						value: "travis",
 					},
 				],
+				import: (ctx) =>
+					ctx.fileExists(".travis.yml") &&
+					!ctx.directoryExists(".github/workflows")
+						? "travis"
+						: "gh-actions",
 			},
 			{
 				type: "select",
@@ -616,6 +731,8 @@ export const questionsAndText: (
 				hint: "(recommended)",
 				initial: "no",
 				choices: ["yes", "no"],
+				import: (ctx) =>
+					ctx.fileExists(".github/dependabot.yml") ? "yes" : "no",
 			},
 		],
 	},
