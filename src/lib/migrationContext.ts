@@ -85,14 +85,13 @@ export class MigrationContext {
 				const tsMain = tsMains[i];
 				if (existsSync(tsMain)) {
 					// most probably TypeScript
-					return await readFile(tsMain, { encoding: "utf8" });
+					return readFile(tsMain, { encoding: "utf8" });
 				}
 			}
 
-			return await readFile(
-				path.join(this.baseDir, this.packageJson.main),
-				{ encoding: "utf8" },
-			);
+			return readFile(path.join(this.baseDir, this.packageJson.main), {
+				encoding: "utf8",
+			});
 		} catch {
 			// we don't want this to crash, so just return an empty string
 			return "";
