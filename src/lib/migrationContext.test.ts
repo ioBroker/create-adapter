@@ -108,19 +108,21 @@ describe("hasDevDependency()", () => {
 	});
 });
 
-// not working in GH action - but you can still use this test locally
-describe.skip("getMainFileContent()", () => {
-	it("should return the contents of the TS file if a main JS file is found with a corresponding TS file", async () => {
-		const baseDir = path.resolve(__dirname, "../..");
-		const context = new MigrationContext(baseDir);
-		context.packageJson = {
-			main: "build/src/cli.js",
-		};
-		expect(await context.getMainFileContent()).not.to.be.empty;
-		expect(await context.getMainFileContent()).to.contain(
-			"import * as yargs",
-		);
-	});
+describe("getMainFileContent()", () => {
+	if (!process.env.CI) {
+		// not working in GH action as we don't compile the JS code there
+		it("should return the contents of the TS file if a main JS file is found with a corresponding TS file", async () => {
+			const baseDir = path.resolve(__dirname, "../..");
+			const context = new MigrationContext(baseDir);
+			context.packageJson = {
+				main: "build/src/cli.js",
+			};
+			expect(await context.getMainFileContent()).not.to.be.empty;
+			expect(await context.getMainFileContent()).to.contain(
+				"import * as yargs",
+			);
+		});
+	}
 
 	it("should return the contents of the main file if a main file is found with no corresponding TS file", async () => {
 		const baseDir = path.resolve(__dirname, "../..");
@@ -145,23 +147,26 @@ describe.skip("getMainFileContent()", () => {
 });
 
 // not working in GH action - but you can still use this test locally
-describe.skip("analyzeCode()", () => {
-	it("should return true the first string occurs more than the second", async () => {
-		const baseDir = path.resolve(__dirname, "../..");
-		const context = new MigrationContext(baseDir);
-		context.packageJson = {
-			main: "build/src/cli.js",
-		};
-		expect(await context.analyzeCode("\t", "  ")).to.be.true;
-		expect(await context.analyzeCode('"', "'")).to.be.true;
-	});
-	it("should return false the first string occurs less often than the second", async () => {
-		const baseDir = path.resolve(__dirname, "../..");
-		const context = new MigrationContext(baseDir);
-		context.packageJson = {
-			main: "build/src/cli.js",
-		};
-		expect(await context.analyzeCode("  ", "\t")).to.be.false;
-		expect(await context.analyzeCode("'", '"')).to.be.false;
-	});
+describe("analyzeCode()", () => {
+	if (!process.env.CI) {
+		// not working in GH action as we don't compile the JS code there
+		it("should return true the first string occurs more than the second", async () => {
+			const baseDir = path.resolve(__dirname, "../..");
+			const context = new MigrationContext(baseDir);
+			context.packageJson = {
+				main: "build/src/cli.js",
+			};
+			expect(await context.analyzeCode("\t", "  ")).to.be.true;
+			expect(await context.analyzeCode('"', "'")).to.be.true;
+		});
+		it("should return false the first string occurs less often than the second", async () => {
+			const baseDir = path.resolve(__dirname, "../..");
+			const context = new MigrationContext(baseDir);
+			context.packageJson = {
+				main: "build/src/cli.js",
+			};
+			expect(await context.analyzeCode("  ", "\t")).to.be.false;
+			expect(await context.analyzeCode("'", '"')).to.be.false;
+		});
+	}
 });
