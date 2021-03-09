@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 1.32.0 (2021-03-09)
 * (AlCalzone) Update Readme: remove snyk.io badge, use https (#655)
 * (Gaudes) Add Sentry notification about new release to workflow (#690)
 * (Gaudes) Fix function declaration for translate function `_` (#691)
