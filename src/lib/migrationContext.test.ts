@@ -109,7 +109,7 @@ describe("hasDevDependency()", () => {
 });
 
 // not working in GH action - but you can still use this test locally
-xdescribe("getMainFileContent()", () => {
+describe.skip("getMainFileContent()", () => {
 	it("should return the contents of the TS file if a main JS file is found with a corresponding TS file", async () => {
 		const baseDir = path.resolve(__dirname, "../..");
 		const context = new MigrationContext(baseDir);
@@ -145,7 +145,7 @@ xdescribe("getMainFileContent()", () => {
 });
 
 // not working in GH action - but you can still use this test locally
-xdescribe("analyzeCode()", () => {
+describe.skip("analyzeCode()", () => {
 	it("should return true the first string occurs more than the second", async () => {
 		const baseDir = path.resolve(__dirname, "../..");
 		const context = new MigrationContext(baseDir);
