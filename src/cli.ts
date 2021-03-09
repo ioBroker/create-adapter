@@ -9,6 +9,7 @@ import {
 	testCondition,
 	writeFiles,
 } from "./lib/createAdapter";
+import { MigrationContext } from "./lib/migrationContext";
 import {
 	Answers,
 	isQuestionGroup,
@@ -43,6 +44,12 @@ const argv = yargs
 			type: "string",
 			desc: "Replay answers from the given .create-adapter.json file",
 		},
+		migrate: {
+			alias: "m",
+			type: "string",
+			desc:
+				"Use answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
+		},
 		noInstall: {
 			alias: "n",
 			type: "boolean",
@@ -62,12 +69,14 @@ const argv = yargs
 const rootDir = path.resolve(argv.target || process.cwd());
 
 const creatorOptions = {
-	skipAdapterExistenceCheck: !!argv.skipAdapterExistenceCheck,
+	skipAdapterExistenceCheck:
+		!!argv.skipAdapterExistenceCheck || !!argv.migrate,
 };
 
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true };
+	let migrationContext: MigrationContext | undefined = undefined;
 
 	if (!!argv.replay) {
 		const replayFile = path.resolve(argv.replay);
@@ -76,11 +85,38 @@ async function ask(): Promise<Answers> {
 		answers.replay = replayFile;
 	}
 
+	if (!!argv.migrate) {
+		try {
+			const migrationDir = path.resolve(argv.migrate);
+			migrationContext = new MigrationContext(migrationDir);
+			console.log(`Migrating from ${migrationDir}`);
+			await migrationContext.load();
+		} catch (error) {
+			console.error(error);
+			throw new Error(
+				"Please ensure that --migrate points to a valid adapter directory",
+			);
+		}
+		if (await migrationContext.fileExists(".create-adapter.json")) {
+			// it's just not worth trying to figure out things if the adapter was already created with create-adapter
+			throw new Error(
+				"Use --replay instead of --migrate for an adapter created with a recent version of create-adapter.",
+			);
+		}
+	}
+
 	async function askQuestion(q: Question): Promise<void> {
 		if (testCondition(q.condition, answers)) {
 			// Make properties dependent on previous answers
 			if (typeof q.initial === "function") {
 				q.initial = q.initial(answers);
+			}
+			if (migrationContext && q.migrate) {
+				let migrated = q.migrate(migrationContext, answers, q);
+				if (migrated instanceof Promise) {
+					migrated = await migrated;
+				}
+				q.initial = migrated;
 			}
 			while (true) {
 				let answer: Record<string, any>;
@@ -93,7 +129,7 @@ async function ask(): Promise<Answers> {
 						q.expert &&
 						q.initial !== undefined
 					) {
-						// In expert mode, prefill the default answer for expert questions
+						// In non-expert mode, prefill the default answer for expert questions
 						answer = { [q.name as string]: q.initial };
 					} else {
 						// Ask the user for an answer
