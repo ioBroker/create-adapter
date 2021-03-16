@@ -9,7 +9,6 @@ export = (async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
-	const useTypeScript = answers.language === "TypeScript";
 	const supportCustom = answers.adminFeatures && answers.adminFeatures.indexOf("custom") > -1;
 	const supportTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
 
