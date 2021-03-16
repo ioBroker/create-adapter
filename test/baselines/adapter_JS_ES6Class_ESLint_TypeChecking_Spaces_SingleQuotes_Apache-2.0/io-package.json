@@ -16,7 +16,6 @@
                 "zh-cn": "首次出版"
             }
         },
-        "title": "Is used to test the creator",
         "titleLang": {
             "en": "Mock translation of 'Is used to test the creator' to 'en'",
             "de": "Mock translation of 'Is used to test the creator' to 'de'",
@@ -52,7 +51,6 @@
         ],
         "license": "Apache-2.0",
         "platform": "Javascript/Node.js",
-        "main": "main.js",
         "icon": "test-adapter.png",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-adapter/master/admin/test-adapter.png",
