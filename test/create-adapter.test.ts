@@ -1,13 +1,16 @@
 // Disable API requests while testing
 process.env.TESTING = "true";
 
+import axios from "axios";
 import * as fs from "fs-extra";
+import { validate as validateJSON } from "jsonschema";
 import * as path from "path";
 import { createAdapter } from "../src/index";
 import { File, writeFiles } from "../src/lib/createAdapter";
 import { Answers } from "../src/lib/questions";
 
 const baselineDir = path.join(__dirname, "../test/baselines");
+let ioPackageSchema: unknown;
 
 async function generateBaselines(
 	testName: string,
@@ -15,6 +18,30 @@ async function generateBaselines(
 	filterFilesPredicate?: (file: File) => boolean,
 ) {
 	const files = await createAdapter(answers);
+
+	const ioPackage = files.find((f) => f.name.endsWith("io-package.json"));
+	if (ioPackage) {
+		// Download JSON schema for validation
+		if (!ioPackageSchema) {
+			ioPackageSchema = (
+				await axios({
+					url: "https://json.schemastore.org/io-package",
+				})
+			).data;
+		}
+		// Validate io-package.json
+		const result = validateJSON(
+			JSON.parse(ioPackage.content as string),
+			ioPackageSchema,
+		);
+		if (result.errors.length) {
+			throw new Error(
+				`io-package.json had errors:\n${result.errors
+					.map((e) => e.message)
+					.join("\n")}`,
+			);
+		}
+	}
 
 	const testDir = path.join(baselineDir, testName);
 	await fs.emptyDir(testDir);
