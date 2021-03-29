@@ -1,5 +1,4 @@
 import { yellow } from "ansi-colors";
-import { fetchPackageVersion } from "./packageVersions";
 import { Answers } from "./questions";
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -31,23 +30,14 @@ function isAdapterNameValid(name: string): CheckResult {
 	return true;
 }
 
-async function checkAdapterExistence(name: string): Promise<CheckResult> {
-	try {
-		await fetchPackageVersion(`iobroker.${name}`);
-		return `The adapter ioBroker.${name} already exists!`;
-	} catch (e) {
-		return true;
-	}
-}
-
 export async function checkAdapterName<
-	T extends { skipAdapterExistenceCheck: boolean }
+	T extends { checkAdapterExistence?: (name: string) => Promise<CheckResult> }
 >(name: string, options?: T): Promise<CheckResult> {
 	const validCheck = isAdapterNameValid(name);
 	if (typeof validCheck === "string") return validCheck;
 
-	if (!options || !options.skipAdapterExistenceCheck) {
-		const existenceCheck = await checkAdapterExistence(name);
+	if (options && options.checkAdapterExistence) {
+		const existenceCheck = await options.checkAdapterExistence(name);
 		if (typeof existenceCheck === "string") return existenceCheck;
 	}
 

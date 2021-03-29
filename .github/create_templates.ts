@@ -3,8 +3,8 @@ import { execSync, ExecSyncOptions } from "child_process";
 import * as fs from "fs-extra";
 import * as path from "path";
 import { createAdapter } from "../src";
+import { Answers } from "../src/lib/core/questions";
 import { writeFiles } from "../src/lib/createAdapter";
-import { Answers } from "../src/lib/questions";
 
 const outDir = path.join(process.cwd(), "ioBroker.template");
 

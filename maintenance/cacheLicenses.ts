@@ -5,7 +5,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
-import { License } from "../src/lib/licenses";
+import { License } from "../src/lib/core/licenses";
 import { applyHttpsProxy, getRequestTimeout } from "../src/lib/tools";
 
 // Taken from https://api.github.com/licenses
@@ -21,7 +21,11 @@ const licenseUrls = {
 
 const startMarker = "/** BEGIN LICENSES */";
 const endMarker = "/** END LICENSES */";
-const licenseCacheFile = path.resolve(__dirname, "../src/lib/", "licenses.ts");
+const licenseCacheFile = path.resolve(
+	__dirname,
+	"../src/lib/core/",
+	"licenses.ts",
+);
 
 async function loadLicense(
 	shortName: keyof typeof licenseUrls,

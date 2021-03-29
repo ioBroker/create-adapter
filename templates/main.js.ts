@@ -1,5 +1,5 @@
+import { AdapterSettings, getDefaultAnswer } from "../src/lib/core/questions";
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { AdapterSettings, getDefaultAnswer } from "../src/lib/questions";
 
 export = (async answers => {
 

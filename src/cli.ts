@@ -1,22 +1,23 @@
-import { blueBright, green, red, underline } from "ansi-colors";
+import { blueBright, gray, green, red, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
-import {
-	createFiles,
-	File,
-	testCondition,
-	writeFiles,
-} from "./lib/createAdapter";
-import { MigrationContext } from "./lib/migrationContext";
+import { CheckResult } from "./lib/core/actionsAndTransformers";
+import { MigrationContextBase } from "./lib/core/migrationContextBase";
 import {
 	Answers,
-	isQuestionGroup,
 	Question,
-	questionsAndText,
-} from "./lib/questions";
-import { error, executeCommand, isWindows } from "./lib/tools";
+	QuestionGroup,
+	questionGroups,
+	testCondition,
+} from "./lib/core/questions";
+import { createFiles, File, writeFiles } from "./lib/createAdapter";
+import { LocalMigrationContext } from "./lib/localMigrationContext";
+import { fetchPackageVersion } from "./lib/packageVersions";
+import { error, executeCommand, getOwnVersion, isWindows } from "./lib/tools";
+
+export type ConditionalTitle = (answers: Record<string, any>) => void;
 
 /** Define command line arguments */
 const argv = yargs
@@ -68,15 +69,26 @@ const argv = yargs
 /** Where the output should be written */
 const rootDir = path.resolve(argv.target || process.cwd());
 
+async function checkAdapterExistence(name: string): Promise<CheckResult> {
+	try {
+		await fetchPackageVersion(`iobroker.${name}`);
+		return `The adapter ioBroker.${name} already exists!`;
+	} catch (e) {
+		return true;
+	}
+}
+
 const creatorOptions = {
-	skipAdapterExistenceCheck:
-		!!argv.skipAdapterExistenceCheck || !!argv.migrate,
+	checkAdapterExistence:
+		!argv.skipAdapterExistenceCheck && !argv.migrate
+			? checkAdapterExistence
+			: undefined,
 };
 
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true };
-	let migrationContext: MigrationContext | undefined = undefined;
+	let migrationContext: MigrationContextBase | undefined = undefined;
 
 	if (!!argv.replay) {
 		const replayFile = path.resolve(argv.replay);
@@ -88,9 +100,10 @@ async function ask(): Promise<Answers> {
 	if (!!argv.migrate) {
 		try {
 			const migrationDir = path.resolve(argv.migrate);
-			migrationContext = new MigrationContext(migrationDir);
+			const ctx = new LocalMigrationContext(migrationDir);
 			console.log(`Migrating from ${migrationDir}`);
-			await migrationContext.load();
+			await ctx.load();
+			migrationContext = ctx;
 		} catch (error) {
 			console.error(error);
 			throw new Error(
@@ -172,6 +185,24 @@ async function ask(): Promise<Answers> {
 		}
 	}
 
+	const questionsAndText: (QuestionGroup | string | ConditionalTitle)[] = [
+		"",
+		green.bold("====================================================="),
+		green.bold(
+			`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`,
+		),
+		green.bold("====================================================="),
+		"",
+		gray(`You can cancel at any point by pressing Ctrl+C.`),
+		(answers) => (!!answers.replay ? green(`Replaying file`) : undefined),
+		(answers) => (!!answers.replay ? green(answers.replay) : undefined),
+		...questionGroups,
+		"",
+		underline(
+			"That's it. Please wait a minute while I get this working...",
+		),
+	];
+
 	for (const entry of questionsAndText) {
 		if (typeof entry === "string") {
 			// Headlines
@@ -182,7 +213,7 @@ async function ask(): Promise<Answers> {
 			if (text !== undefined) {
 				console.log(text);
 			}
-		} else if (isQuestionGroup(entry)) {
+		} else {
 			// only print the headline if any of the questions are necessary
 			if (
 				entry.questions.find((qq) =>
@@ -195,9 +226,6 @@ async function ask(): Promise<Answers> {
 			for (const qq of entry.questions) {
 				await askQuestion(qq);
 			}
-		} else {
-			// actual questions
-			await askQuestion(entry);
 		}
 	}
 	return answers as Answers;

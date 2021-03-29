@@ -1,5 +1,5 @@
+import { AdapterSettings, getDefaultAnswer } from "../../src/lib/core/questions";
 import { TemplateFunction } from "../../src/lib/createAdapter";
-import { AdapterSettings, getDefaultAnswer } from "../../src/lib/questions";
 
 function generateSettingsProperty(settings: AdapterSettings): string {
 	if (settings.inputType === "select" && settings.options) {

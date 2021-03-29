@@ -9,8 +9,8 @@ import * as os from "os";
 import * as path from "path";
 import * as prettier from "prettier";
 import * as nodeUrl from "url";
-import { licenses } from "./licenses";
-import { Answers } from "./questions";
+import { licenses } from "./core/licenses";
+import { Answers } from "./core/questions";
 
 export function error(message: string): void {
 	console.error(bold.red(message));
