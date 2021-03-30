@@ -47,7 +47,7 @@ ${useReact ? `
 			 Learn more http://materializecss.com/forms.html-->
 			<div class="row">
 				<div class="input-field col s6">
-					<img src="${answers.adapterName}.png" class="logo">
+					<img src="${answers.adapterName}.${answers.icon?.extension || "png"}" class="logo">
 				</div>
 			</div>
 			<div class="row">

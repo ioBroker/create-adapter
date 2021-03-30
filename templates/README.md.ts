@@ -53,7 +53,7 @@ export = (answers => {
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
-![Logo](admin/${answers.adapterName}.png)
+![Logo](admin/${answers.adapterName}.${answers.icon?.extension || "png"})
 # ioBroker.${answers.adapterName}
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})

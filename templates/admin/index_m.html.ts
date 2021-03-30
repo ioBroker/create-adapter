@@ -111,7 +111,7 @@ ${useReact ? (`
 
 		<div class="row">
 			<div class="col s12 m4 l2">
-				<img src="${answers.adapterName}.png" class="logo">
+				<img src="${answers.adapterName}.${answers.icon?.extension || "png"}" class="logo">
 			</div>
 		</div>
 

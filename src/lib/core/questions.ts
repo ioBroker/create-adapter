@@ -855,6 +855,16 @@ export type AdapterSettings =
 	| BooleanAdapterSettings
 	| SelectAdapterSettings;
 
+/**
+ * An icon in binary or base64-encoded format.
+ */
+export interface UploadedIcon {
+	/** The data icon in binary or base64-encoded format. */
+	data: string | Buffer;
+	/** The file extension to use with the icon. */
+	extension: string;
+}
+
 export interface Answers {
 	adapterName: string;
 	description?: string;
@@ -892,8 +902,7 @@ export interface Answers {
 	connectionIndicator?: "yes" | "no";
 	connectionType?: "cloud" | "local";
 	dataSource?: "poll" | "push" | "assumption";
-	/** An icon in binary or some string-encoded format */
-	icon?: string | Buffer;
+	icon?: UploadedIcon;
 	/** An array of predefined adapter options */
 	adapterSettings?: AdapterSettings[];
 }

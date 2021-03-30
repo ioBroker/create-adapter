@@ -61,9 +61,9 @@ export = (async answers => {
 		"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 		"license": "${licenses[answers.license!].id}",
 		"platform": "Javascript/Node.js",
-		"icon": "${answers.adapterName}.png",
+		"icon": "${answers.adapterName}.${answers.icon?.extension || "png"}",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${answers.adapterName}.png",
+		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${answers.adapterName}.${answers.icon?.extension || "png"}",
 		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
 		"loglevel": "info",
 		${isWidget ? (`
