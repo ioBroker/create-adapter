@@ -4,7 +4,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (answers.icon) {
 		if (typeof answers.icon.data === "string") {
 			// Try to decode Base64
-			const base64Match = answers.icon.data.match(/^data:image\/(\w+);base64,(.+)$/);
+			const base64Match = answers.icon.data.match(/^data:image\/([^;]+);base64,(.+)$/);
 			if (base64Match) {
 				return Buffer.from(base64Match[2], "base64");
 			}
