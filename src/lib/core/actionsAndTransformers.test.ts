@@ -1,25 +1,17 @@
 import { expect } from "chai";
-import * as proxyquireModule from "proxyquire";
 import { stub } from "sinon";
 import {
+	checkAdapterName,
 	checkAuthorName,
 	checkEmail,
 	checkMinSelections,
+	CheckResult,
 	checkTitle,
 	transformAdapterName,
 	transformDescription,
 } from "./actionsAndTransformers";
 
-const fetchPackageVersion = stub();
-const proxyquire = proxyquireModule.noPreserveCache();
-
-const { checkAdapterName } = proxyquire<
-	typeof import("./actionsAndTransformers")
->("./actionsAndTransformers", {
-	"./packageVersions": {
-		fetchPackageVersion,
-	},
-});
+const checkAdapterExistence = stub<string[], Promise<CheckResult>>();
 
 describe("actionsAndTransformers/checkMinSelections()", () => {
 	it("should return true if the answers array has at least <min> entries", async () => {
@@ -39,7 +31,7 @@ describe("actionsAndTransformers/checkMinSelections()", () => {
 });
 
 describe("actionsAndTransformers/checkAdapterName()", () => {
-	beforeEach(() => fetchPackageVersion.reset());
+	beforeEach(() => checkAdapterExistence.reset());
 
 	it("should not accept empty names", async () => {
 		const forbiddenNames = ["", " ", "\t"];
@@ -74,21 +66,26 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 	});
 
 	it("should return an error if the adapter already exists", async () => {
-		fetchPackageVersion.resolves("1.2.3");
-		const result = await checkAdapterName("foo");
+		checkAdapterExistence.resolves(
+			"The adapter ioBroker.foo already exists!",
+		);
+		const result = await checkAdapterName("foo", {
+			checkAdapterExistence,
+		});
 		result.should.be.a("string").and.match(/already exists/);
 	});
 
-	it("should not return an error if the adapter exists and the check is skipped", async () => {
-		fetchPackageVersion.resolves("1.2.3");
+	it("should not return an error if the check is skipped", async () => {
 		await checkAdapterName("foo", {
-			skipAdapterExistenceCheck: true,
+			checkAdapterExistence: undefined,
 		}).should.become(true);
 	});
 
 	it("should return true otherwise", async () => {
-		fetchPackageVersion.rejects("404");
-		await checkAdapterName("foo").should.become(true);
+		checkAdapterExistence.resolves(true);
+		await checkAdapterName("foo", {
+			checkAdapterExistence,
+		}).should.become(true);
 	});
 });
 

@@ -1,8 +1,8 @@
 import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
+import { licenses } from "../src/lib/core/licenses";
+import { AdapterSettings, getDefaultAnswer } from "../src/lib/core/questions";
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { licenses } from "../src/lib/licenses";
-import { AdapterSettings, getDefaultAnswer } from "../src/lib/questions";
 import { translateText } from "../src/lib/tools";
 
 export = (async answers => {
@@ -61,9 +61,9 @@ export = (async answers => {
 		"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 		"license": "${licenses[answers.license!].id}",
 		"platform": "Javascript/Node.js",
-		"icon": "${answers.adapterName}.png",
+		"icon": "${answers.adapterName}.${answers.icon?.extension || "png"}",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${answers.adapterName}.png",
+		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${answers.adapterName}.${answers.icon?.extension || "png"}",
 		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
 		"loglevel": "info",
 		${isWidget ? (`

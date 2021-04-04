@@ -1,9 +1,8 @@
-import { isArray } from "alcalzone-shared/typeguards";
 import * as fs from "fs-extra";
 import * as os from "os";
 import * as path from "path";
 import * as templateFiles from "../../templates";
-import { Answers, AnswerValue, Condition } from "./questions";
+import { Answers } from "./core/questions";
 import {
 	formatWithPrettier,
 	getOwnVersion,
@@ -29,39 +28,6 @@ export interface File {
 	name: string;
 	content: string | Buffer;
 	noReformat: boolean;
-}
-
-export function testCondition(
-	condition: Condition | Condition[] | undefined,
-	answers: Record<string, any>,
-): boolean {
-	if (condition == undefined) return true;
-
-	function testSingleCondition(cond: Condition): boolean {
-		if ("value" in cond) {
-			return answers[cond.name] === cond.value;
-		} else if ("contains" in cond) {
-			return (
-				answers[cond.name] &&
-				(answers[cond.name] as AnswerValue[]).indexOf(cond.contains) >
-					-1
-			);
-		} else if ("doesNotContain" in cond) {
-			return (
-				!answers[cond.name] ||
-				(answers[cond.name] as AnswerValue[]).indexOf(
-					cond.doesNotContain,
-				) === -1
-			);
-		}
-		return false;
-	}
-
-	if (isArray(condition)) {
-		return condition.every((cond) => testSingleCondition(cond));
-	} else {
-		return testSingleCondition(condition);
-	}
 }
 
 export async function createFiles(answers: Answers): Promise<File[]> {

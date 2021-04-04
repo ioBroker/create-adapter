@@ -1,5 +1,5 @@
+import { AdapterSettings, Answers, getDefaultAnswer } from "./core/questions";
 import { TemplateFunction } from "./createAdapter";
-import { AdapterSettings, Answers, getDefaultAnswer } from "./questions";
 import { formatJsonString, translateText } from "./tools";
 
 export type Languages =

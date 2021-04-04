@@ -1,9 +1,9 @@
 import * as JSON5 from "json5";
 import * as pLimit from "p-limit";
+import { licenses } from "../src/lib/core/licenses";
+import { getDefaultAnswer } from "../src/lib/core/questions";
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { licenses } from "../src/lib/licenses";
 import { fetchPackageVersion, getPackageName } from "../src/lib/packageVersions";
-import { getDefaultAnswer } from "../src/lib/questions";
 
 // Limit package version downloads to 10 simultaneous connections
 const downloadLimiter = pLimit(10);

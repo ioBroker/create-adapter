@@ -1,10 +1,10 @@
-import { createFiles, File } from "./lib/createAdapter";
 import {
 	Answers,
 	checkAnswers,
 	formatAnswers,
 	validateAnswers,
-} from "./lib/questions";
+} from "./lib/core/questions";
+import { createFiles, File } from "./lib/createAdapter";
 
 export async function createAdapter(
 	answers: Answers,
