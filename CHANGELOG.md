@@ -8,6 +8,7 @@
 ## __WORK IN PROGRESS__
 * (AlCalzone) The generated `io-package.json` files are now validated with the official JSON schema during tests (#711)
 * (UncleSamSwiss) Source code refactoring for web based create-adapter application (#716)
+* (AlCalzone) Update Dependabot auto-merge workflow to work with recent GitHub changes (#719) · [Migration guide](docs/updates/20210405_automerge_fixes.md)
 
 ## 1.32.0 (2021-03-09)
 * (AlCalzone) Update Readme: remove snyk.io badge, use https (#655)
