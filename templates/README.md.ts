@@ -1,3 +1,4 @@
+import { getIconName } from "../src/lib/core/questions";
 import { TemplateFunction } from "../src/lib/createAdapter";
 import { getFormattedLicense } from "../src/lib/tools";
 
@@ -53,7 +54,7 @@ export = (answers => {
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const template = `
-![Logo](admin/${answers.adapterName}.${answers.icon?.extension || "png"})
+![Logo](admin/${getIconName(answers)})
 # ioBroker.${answers.adapterName}
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})
