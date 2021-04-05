@@ -1,4 +1,4 @@
-import { AdapterSettings, getDefaultAnswer } from "../../src/lib/core/questions";
+import { AdapterSettings, getDefaultAnswer, getIconName } from "../../src/lib/core/questions";
 import { TemplateFunction } from "../../src/lib/createAdapter";
 
 function generateSettingsDiv(settings: AdapterSettings): string {
@@ -111,7 +111,7 @@ ${useReact ? (`
 
 		<div class="row">
 			<div class="col s12 m4 l2">
-				<img src="${answers.adapterName}.${answers.icon?.extension || "png"}" class="logo">
+				<img src="${getIconName(answers)}" class="logo">
 			</div>
 		</div>
 

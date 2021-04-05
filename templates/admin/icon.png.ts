@@ -1,3 +1,4 @@
+import { getIconName } from "../../src/lib/core/questions";
 import { readFileFromRootDir, TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
@@ -18,6 +19,6 @@ const templateFunction: TemplateFunction = answers => {
 	// Fall back to reading the default image
 	return readFileFromRootDir("../../adapter-creator.png", __dirname, true);
 };
-templateFunction.customPath = answers => `admin/${answers.adapterName}.${answers.icon?.extension || "png"}`;
+templateFunction.customPath = answers => `admin/${getIconName(answers)}`;
 templateFunction.noReformat = true; // Don't format binary files
 export = templateFunction;

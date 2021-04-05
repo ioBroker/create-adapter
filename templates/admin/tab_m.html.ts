@@ -1,3 +1,4 @@
+import { getIconName } from "../../src/lib/core/questions";
 import { TemplateFunction } from "../../src/lib/createAdapter";
 
 export = (answers => {
@@ -47,7 +48,7 @@ ${useReact ? `
 			 Learn more http://materializecss.com/forms.html-->
 			<div class="row">
 				<div class="input-field col s6">
-					<img src="${answers.adapterName}.${answers.icon?.extension || "png"}" class="logo">
+					<img src="${getIconName(answers)}" class="logo">
 				</div>
 			</div>
 			<div class="row">

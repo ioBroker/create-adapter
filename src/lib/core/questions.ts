@@ -993,3 +993,7 @@ export function getDefaultAnswer<T extends keyof Answers>(
 		return ["ioBroker", "template", "Smart Home", "home automation"] as any;
 	}
 }
+
+export function getIconName(answers: Answers): string {
+	return `${answers.adapterName}.${answers.icon?.extension || "png"}`;
+}
