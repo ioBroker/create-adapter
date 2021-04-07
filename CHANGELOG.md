@@ -5,6 +5,10 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+
+## __WORK IN PROGRESS__
+* (UncleSamSwiss) Add support for Google Translate V3 API (requires credentials) (#720)
+
 ## 1.33.0 (2021-04-05)
 * (AlCalzone) The generated `io-package.json` files are now validated with the official JSON schema during tests (#711)
 * (UncleSamSwiss) Source code refactoring for web based create-adapter application (#716)
