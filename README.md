@@ -44,6 +44,12 @@ The following CLI options are available:
 
 All CLI options can also be [provided as environment variables](https://yargs.js.org/docs/#api-reference-envprefix) by prepending `CREATE_ADAPTER_`. Example: `CREATE_ADAPTER_TARGET=/tmp/iobroker/create-adapter/`
 
+### Environment variables
+
+Besides all environment variables mentioned above under "Options" the following variables change the behavior of the application:
+
+-   `GOOGLE_APPLICATION_CREDENTIALS` - if this is pointing to a valid JSON file, the Google API v3 will be used for translations, make sure that the credentials are allowed to use the Google Translation API. Check [the documentation](https://cloud.google.com/translate/docs/setup) for more details.
+
 ## Features
 
 -   Choose between: ioBroker adapter, VIS widget or both
