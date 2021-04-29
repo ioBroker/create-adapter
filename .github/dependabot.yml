@@ -5,11 +5,8 @@ updates:
   schedule:
     interval: monthly
     time: "04:00"
-  open-pull-requests-limit: 10
+    timezone: Europe/Berlin
+  open-pull-requests-limit: 5
   assignees:
   - AlCalzone
-  ignore:
-  - dependency-name: "@types/node"
-    versions:
-    - 14.14.22
-    - 14.14.28
+  versioning-strategy: increase
