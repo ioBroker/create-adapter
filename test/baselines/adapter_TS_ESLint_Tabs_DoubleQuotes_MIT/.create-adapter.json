@@ -29,5 +29,5 @@
 	"ci": "gh-actions",
 	"dependabot": "yes",
 	"license": "MIT License",
-	"creatorVersion": "1.32.0"
+	"creatorVersion": "1.33.0"
 }
