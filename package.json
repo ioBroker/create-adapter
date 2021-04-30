@@ -83,7 +83,7 @@
     "p-limit": "^3.0.2",
     "prettier": "^2.0.4",
     "semver": "^7.2.2",
-    "typescript": "^4.0.2",
+    "typescript": "^4.2.4",
     "yargs": "^16.1.0"
   },
   "scripts": {
