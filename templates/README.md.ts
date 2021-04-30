@@ -1,3 +1,5 @@
+// wotan-disable prefer-dot-notation
+
 import { getIconName } from "../src/lib/core/questions";
 import { TemplateFunction } from "../src/lib/createAdapter";
 import { getFormattedLicense } from "../src/lib/tools";

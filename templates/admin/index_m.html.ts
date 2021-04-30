@@ -4,7 +4,7 @@ import { TemplateFunction } from "../../src/lib/createAdapter";
 function generateSettingsDiv(settings: AdapterSettings): string {
 	if (settings.inputType === "select" && settings.options) {
 		const options = settings.options.map(opt => `
-					<option value="${opt.value}">${opt.text}</option>\n`);
+					<option value="${opt.value}">${opt.text}</option>`).join("");
 		return `
 			<div class="col s6 input-field">
 				<select class="value" id="${settings.key}">${options}

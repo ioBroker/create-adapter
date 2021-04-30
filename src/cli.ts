@@ -17,7 +17,9 @@ import { LocalMigrationContext } from "./lib/localMigrationContext";
 import { fetchPackageVersion } from "./lib/packageVersions";
 import { error, executeCommand, getOwnVersion, isWindows } from "./lib/tools";
 
-export type ConditionalTitle = (answers: Record<string, any>) => void;
+export type ConditionalTitle = (
+	answers: Record<string, any>,
+) => string | undefined;
 
 /** Define command line arguments */
 const argv = yargs
@@ -88,7 +90,7 @@ const creatorOptions = {
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true };
-	let migrationContext: MigrationContextBase | undefined = undefined;
+	let migrationContext: MigrationContextBase | undefined;
 
 	if (!!argv.replay) {
 		const replayFile = path.resolve(argv.replay);
@@ -245,7 +247,6 @@ let needsBuildStep: boolean;
 let gitCommit: boolean;
 
 /** CLI-specific functionality for creating the adapter directory */
-// eslint-disable-next-line @typescript-eslint/camelcase
 async function setupProject_CLI(
 	answers: Answers,
 	files: File[],
