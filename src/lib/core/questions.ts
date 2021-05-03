@@ -909,22 +909,24 @@ export interface Answers {
 
 export function checkAnswers(answers: Partial<Answers>): void {
 	for (const q of questions) {
-		const answer = (answers as any)[q.name as string];
+		// We don't use dynamic question names
+		const questionName = q.name as string;
+		const answer = (answers as any)[questionName];
 		const conditionFulfilled = testCondition(q.condition, answers);
 		if (!q.optional && conditionFulfilled && answer == undefined) {
 			// A required answer was not given
-			throw new Error(`Missing answer "${q.name}"!`);
+			throw new Error(`Missing answer "${questionName}"!`);
 		} else if (!conditionFulfilled && answer != undefined) {
 			// TODO: Find a fool-proof way to check for extraneous answers
 			if (
-				questions.filter((qq) => (qq.name as string) === q.name)
+				questions.filter((qq) => (qq.name as string) === questionName)
 					.length > 0
 			) {
 				// For now, don't enforce conditions for questions with multiple branches
 				continue;
 			}
 			// An extraneous answer was given
-			throw new Error(`Extraneous answer "${q.name}" given!`);
+			throw new Error(`Extraneous answer "${questionName}" given!`);
 		}
 	}
 }

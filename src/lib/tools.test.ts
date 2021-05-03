@@ -159,6 +159,7 @@ describe("tools/kebabCaseToUpperCamelCase()", () => {
 
 describe("tools/getOwnVersion()", () => {
 	it("should return the version defined in package.json", () => {
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const expected = require("../../package.json").version;
 		expect(getOwnVersion()).to.equal(expected);
 	});

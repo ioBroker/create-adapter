@@ -12,7 +12,9 @@ declare module "enquirer" {
 		required?: boolean;
 		format?(value: string): string | Promise<string>;
 		result?(value: string): string | Promise<string>;
-		skip?: ((state: object) => boolean | Promise<boolean>) | boolean;
+		skip?:
+			| ((state: Record<string, unknown>) => boolean | Promise<boolean>)
+			| boolean;
 		validate?(
 			value: string,
 		): boolean | Promise<boolean> | string | Promise<string>;
@@ -122,8 +124,8 @@ declare module "enquirer" {
 		run(): Promise<any>;
 	}
 
-	class Enquirer<T = object> extends EventEmitter {
-		constructor(options?: object, answers?: T);
+	class Enquirer<T = Record<string, unknown>> extends EventEmitter {
+		constructor(options?: Record<string, unknown>, answers?: T);
 
 		/**
 		 * Register a custom prompt type.
@@ -165,7 +167,7 @@ declare module "enquirer" {
 	}
 
 	namespace Enquirer {
-		function prompt<T = object>(
+		function prompt<T = Record<string, unknown>>(
 			questions:
 				| PromptOptions
 				| ((this: Enquirer) => PromptOptions)

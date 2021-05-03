@@ -9,7 +9,6 @@ import * as JSON5 from "json5";
 import * as os from "os";
 import * as path from "path";
 import * as prettier from "prettier";
-import * as nodeUrl from "url";
 import { licenses } from "./core/licenses";
 import { Answers } from "./core/questions";
 
@@ -112,19 +111,17 @@ export function executeCommand(
 			if (options.stdout === "pipe") {
 				bufferedStdout = "";
 				cmd.stdout!.on("data", (chunk) => {
-					const buffer = Buffer.isBuffer(chunk)
-						? chunk
-						: Buffer.from(chunk, "utf8");
-					bufferedStdout! += buffer;
+					bufferedStdout += Buffer.isBuffer(chunk)
+						? chunk.toString("utf8")
+						: chunk;
 				});
 			}
 			if (options.stderr === "pipe") {
 				bufferedStderr = "";
 				cmd.stderr!.on("data", (chunk) => {
-					const buffer = Buffer.isBuffer(chunk)
-						? chunk
-						: Buffer.from(chunk, "utf8");
-					bufferedStderr! += buffer;
+					bufferedStderr += Buffer.isBuffer(chunk)
+						? chunk.toString("utf8")
+						: chunk;
 				});
 			}
 		} catch (e) {
@@ -199,12 +196,16 @@ export function applyHttpsProxy(
 	const proxy: string | undefined =
 		process.env.https_proxy || process.env.HTTPS_PROXY;
 	if (proxy) {
-		const proxyUrl = nodeUrl.parse(proxy);
-		if (proxyUrl.hostname) {
-			options.proxy = {
-				host: proxyUrl.hostname,
-				port: proxyUrl.port ? parseInt(proxyUrl.port, 10) : 443,
-			};
+		try {
+			const proxyUrl = new URL(proxy);
+			if (proxyUrl.hostname) {
+				options.proxy = {
+					host: proxyUrl.hostname,
+					port: proxyUrl.port ? parseInt(proxyUrl.port, 10) : 443,
+				};
+			}
+		} catch {
+			// Invalid URL, don't use proxy
 		}
 	}
 	return options;
@@ -310,6 +311,7 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 export function getFormattedLicense(answers: Answers): string {
 	if (answers.license) {
 		const license = licenses[answers.license];
+		// wotan-disable-next-line no-useless-predicate
 		if (license) {
 			return formatLicense(license.text, answers);
 		}
@@ -435,6 +437,7 @@ export function formatWithPrettier(
 export function getOwnVersion(): string {
 	for (const jsonPath of ["../../package.json", "../../../package.json"]) {
 		try {
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			return require(jsonPath).version;
 		} catch (e) {
 			/* OK */

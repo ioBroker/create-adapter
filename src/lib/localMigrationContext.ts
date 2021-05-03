@@ -22,8 +22,8 @@ export class LocalMigrationContext extends MigrationContextBase {
 		});
 	}
 
-	public async readJsonFile<T>(fileName: string): Promise<T> {
-		return (await readJson(path.join(this.baseDir, fileName))) as T;
+	public async readJsonFile(fileName: string): Promise<Record<string, any>> {
+		return readJson(path.join(this.baseDir, fileName));
 	}
 
 	public async directoryExists(dirName: string): Promise<boolean> {
