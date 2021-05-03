@@ -11,6 +11,7 @@
 * (AlCalzone) Fix linter warnings in the creator codebase (#731)
 * (AlCalzone & Dependabot) Updated dependencies
 * (AlCalzone) Use official Docker image for devcontainer (#739) · [Migration guide](docs/updates/20210503_devcontainer_official_docker.md)
+* (AlCalzone) Enable JSON schema support for io-package.json in VSCode (#740) · [Migration guide](docs/updates/20210503_vscode_io-package_schema.md)
 
 ## 1.33.0 (2021-04-05)
 * (AlCalzone) The generated `io-package.json` files are now validated with the official JSON schema during tests (#711)
