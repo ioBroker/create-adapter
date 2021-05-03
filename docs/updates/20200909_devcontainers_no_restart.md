@@ -5,4 +5,4 @@ When restarting the PC, all devcontainers would try to restart which can lead to
 
 Migration guide:
 
--   Remove all lines containing `restart: always` from the file `./.devcontainers/docker-compose.yml` (it should exist two or three times)
+-   Remove all lines containing `restart: always` from the file `./.devcontainer/docker-compose.yml` (it should exist two or three times)

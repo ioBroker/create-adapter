@@ -6,7 +6,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (!devcontainer) return;
 
 	const template = `
-FROM buanet/iobroker:latest
+FROM iobroker/iobroker:latest
 RUN ln -s /opt/iobroker/node_modules/ /root/.node_modules
 `;
 	return template.trim();
