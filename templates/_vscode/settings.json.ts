@@ -24,6 +24,12 @@ ${usePrettier ? (`
 	},
 	`) : ""}
 `) : ""}
+	"json.schemas": [
+		{
+			"fileMatch": ["io-package.json"],
+			"url": "https://json.schemastore.org/io-package"
+		}
+	],
 }
 `;
 return JSON.stringify(JSON5.parse(template), null, 4);
