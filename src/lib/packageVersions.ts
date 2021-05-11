@@ -115,3 +115,31 @@ export async function fetchPackageVersion(
 		return fetchLatestPackageVersion(packageName, fallbackVersion);
 	}
 }
+
+/**
+ * Returns the reference to the version of an npm package
+ * @param packageName The npm package name (may include a version specifier like `abc@1.2.3`)
+ */
+export async function fetchPackageReferenceVersion(
+	packageName: string,
+): Promise<string> {
+	if (hasVersionSpecifier(packageName)) {
+		const versionSpecifier = getVersionSpecifier(packageName)!;
+		const pureVersionSpec = versionSpecifier.replace(/$[\^~]/, "").trim();
+		const versionDepth = pureVersionSpec.replace(/$(0\.)+/, "").split(".")
+			.length;
+		const version = await fetchSpecificPackageVersion(
+			packageName,
+			pureVersionSpec,
+		);
+		if (versionSpecifier.charAt(0) === "^" || versionDepth <= 1) {
+			return `^${version}`;
+		} else if (versionSpecifier.charAt(0) === "~" || versionDepth == 2) {
+			return `~${version}`;
+		} else {
+			return version;
+		}
+	} else {
+		return `^${await fetchLatestPackageVersion(packageName, "0.0.0")}`;
+	}
+}

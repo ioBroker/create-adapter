@@ -12,6 +12,7 @@
 * (AlCalzone & Dependabot) Updated dependencies
 * (AlCalzone) Use official Docker image for devcontainer (#739) · [Migration guide](docs/updates/20210503_devcontainer_official_docker.md)
 * (AlCalzone) Enable JSON schema support for io-package.json in VSCode (#740) · [Migration guide](docs/updates/20210503_vscode_io-package_schema.md)
+* (UncleSamSwiss) Fixed adapter-react dependencies by using `@iobroker/adapter-react` version 1.6.15 · [Migration guide](docs/updates/20210510_adapter-react-fix.md)
 
 ## 1.33.0 (2021-04-05)
 * (AlCalzone) The generated `io-package.json` files are now validated with the official JSON schema during tests (#711)
