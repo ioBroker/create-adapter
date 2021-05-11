@@ -24,7 +24,7 @@
   "devDependencies": {
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.14.0",
-    "@iobroker/adapter-react": "^1.6.14",
+    "@iobroker/adapter-react": "^1.6.15",
     "@iobroker/testing": "^2.4.4",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
@@ -32,7 +32,7 @@
     "axios": "^0.21.1",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^7.25.0",
+    "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2",
     "gulp": "^4.0.2",
     "mocha": "^8.4.0",
