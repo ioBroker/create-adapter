@@ -3,7 +3,7 @@ import * as pLimit from "p-limit";
 import { licenses } from "../src/lib/core/licenses";
 import { getDefaultAnswer } from "../src/lib/core/questions";
 import { TemplateFunction } from "../src/lib/createAdapter";
-import { fetchPackageVersion, getPackageName } from "../src/lib/packageVersions";
+import { fetchPackageReferenceVersion, getPackageName } from "../src/lib/packageVersions";
 
 // Limit package version downloads to 10 simultaneous connections
 const downloadLimiter = pLimit(10);
@@ -26,7 +26,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const dependencyPromises = ([] as string[])
 		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
 		.sort()
-		.map((dep) => (async () => `"${dep}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
+		.map((dep) => (async () => `"${dep}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
 		;
 	const dependencies = await Promise.all(dependencyPromises);
@@ -76,11 +76,9 @@ const templateFunction: TemplateFunction = async answers => {
 			"react@16", // Pinned to v16 for now, don't forget to update @types/react[-dom] aswell
 			"react-dom@16",
 			// ioBroker react framework
-			"@iobroker/adapter-react",
+			"@iobroker/adapter-react@1.6.15",
 			// UI library
-			"react-icons",
 			"@material-ui/core",
-			"@material-ui/icons",
 			// This is needed by parcel to compile JSX/TSX
 			"@babel/cli",
 			"@babel/core",
@@ -111,7 +109,7 @@ const templateFunction: TemplateFunction = async answers => {
 		] : [])
 		.concat(useNyc ? ["nyc"] : [])
 		.sort()
-		.map((dep) => (async () => `"${getPackageName(dep)}": "^${await fetchPackageVersion(dep, "0.0.0")}"`))
+		.map((dep) => (async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
 		;
 	const devDependencies = await Promise.all(devDependencyPromises);
