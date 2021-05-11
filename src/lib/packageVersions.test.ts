@@ -285,7 +285,7 @@ describe("packageVersions/fetchPackageReferenceVersion()", () => {
 
 	it("for status codes other than 200, the requested version is returned", async () => {
 		returnStatus(403);
-		const version = getRandomPackageVersion();
+		const version = "3.13.5";
 		await fetchPackageReferenceVersion(
 			getRandomPackageNameAndVersion(version),
 		).should.become(version);
