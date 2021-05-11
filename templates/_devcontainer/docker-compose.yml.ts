@@ -65,5 +65,6 @@ volumes:
 };
 
 templateFunction.customPath = ".devcontainer/docker-compose.yml";
+// Reformatting this would create mixed tabs and spaces
 templateFunction.noReformat = true;
 export = templateFunction;
