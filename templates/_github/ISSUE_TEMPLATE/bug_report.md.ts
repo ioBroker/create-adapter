@@ -5,4 +5,6 @@ const templateFunction: TemplateFunction = _answers => {
 };
 
 templateFunction.customPath = ".github/ISSUE_TEMPLATE/bug_report.md";
+// Reformatting this would create mixed tabs and spaces
+templateFunction.noReformat = true;
 export = templateFunction;

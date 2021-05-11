@@ -9,4 +9,6 @@ const templateFunction: TemplateFunction = answers => {
 };
 
 templateFunction.customPath = ".github/workflows/dependabot-auto-merge.yml";
+// Reformatting this would create mixed tabs and spaces
+templateFunction.noReformat = true;
 export = templateFunction;
