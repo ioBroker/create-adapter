@@ -15,6 +15,7 @@
 * (AlCalzone) Improve documentation for the Dependabot auto-merge token (#743)
 * (UncleSamSwiss) Fixed adapter-react dependencies by using `@iobroker/adapter-react` version 1.6.15 (#747) · [Migration guide](docs/updates/20210510_adapter-react-fix.md)
 * (AlCalzone) Avoid generating mixed tabs and spaces in `.yml` files (#748)
+* (AlCalzone) The template index no longer changes order when switching between Linux and Windows (#753)
 
 ## 1.33.0 (2021-04-05)
 * (AlCalzone) The generated `io-package.json` files are now validated with the official JSON schema during tests (#711)
