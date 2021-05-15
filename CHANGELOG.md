@@ -15,6 +15,7 @@
 * (AlCalzone) Improve documentation for the Dependabot auto-merge token (#743)
 * (UncleSamSwiss) Fixed adapter-react dependencies by using `@iobroker/adapter-react` version 1.6.15 (#747) · [Migration guide](docs/updates/20210510_adapter-react-fix.md)
 * (AlCalzone) Avoid generating mixed tabs and spaces in `.yml` files (#748)
+* (AlCalzone) The template index no longer changes order when switching between Linux and Windows (#753)
 * (AlCalzone) Enable TypeScript sourcemaps (#755) · [Migration guide](docs/updates/20210515_sourcemaps.md)
 * (AlCalzone) Add Node 16 to test suite, drop Node 10 (#756) · [Migration guide](docs/updates/20210515_test_node_16.md)
 
