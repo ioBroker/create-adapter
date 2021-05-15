@@ -36,11 +36,6 @@ tsconfig.*.json`
 tsconfig.json
 tsconfig.*.json` : ""}
 
-${useTypeScript || useReact ? (`
-# Sourcemaps
-*.map
-`) : ""}
-
 # npm package files
 iobroker.*.tgz
 package-lock.json

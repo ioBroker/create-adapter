@@ -42,7 +42,7 @@ export = (answers => {
 		// Consider targetting es2019 or higher if you only support Node.js 12+
 		"target": "es2018",
 		${useTypeScript ? (`
-		"sourceMap": false,
+		"sourceMap": true,
 		"inlineSourceMap": false,
 		"watch": false`) : ""}
 	},
