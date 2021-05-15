@@ -13,9 +13,6 @@ appveyor.yaml
 # React sources for the Admin UI
 admin/src/
 
-# Sourcemaps
-*.map
-
 # npm package files
 iobroker.*.tgz
 package-lock.json

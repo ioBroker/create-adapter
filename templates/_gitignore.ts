@@ -3,9 +3,6 @@ import { TemplateFunction } from "../src/lib/createAdapter";
 const templateFunction: TemplateFunction = answers => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
-	const useTypeScript = answers.language === "TypeScript";
-	const useReact =
-		answers.adminReact === "yes" || answers.tabReact === "yes";
 
 	const template = `
 .git
@@ -13,11 +10,6 @@ const templateFunction: TemplateFunction = answers => {
 *.code-workspace
 node_modules
 nbproject
-
-${useTypeScript || useReact ? (`
-# Sourcemaps
-maps/
-`) : ""}
 
 # npm package files
 iobroker.*.tgz
