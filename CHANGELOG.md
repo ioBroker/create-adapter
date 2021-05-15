@@ -16,6 +16,7 @@
 * (UncleSamSwiss) Fixed adapter-react dependencies by using `@iobroker/adapter-react` version 1.6.15 (#747) · [Migration guide](docs/updates/20210510_adapter-react-fix.md)
 * (AlCalzone) Avoid generating mixed tabs and spaces in `.yml` files (#748)
 * (AlCalzone) Enable TypeScript sourcemaps (#755) · [Migration guide](docs/updates/20210515_sourcemaps.md)
+* (AlCalzone) Add Node 16 to test suite, drop Node 10 (#756) · [Migration guide](docs/updates/20210515_test_node_16.md)
 
 ## 1.33.0 (2021-04-05)
 * (AlCalzone) The generated `io-package.json` files are now validated with the official JSON schema during tests (#711)
