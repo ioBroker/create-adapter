@@ -10,7 +10,7 @@ const templateFunction: TemplateFunction = answers => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 
 	const latestNodeVersion = "14.x";
-	const adapterTestVersions = ["10.x", "12.x", "14.x"];
+	const adapterTestVersions = ["12.x", "14.x", "16.x"];
 	const adapterTestOS = ["ubuntu-latest", "windows-latest", "macos-latest"]
 
   const adapterName = answers.adapterName;
