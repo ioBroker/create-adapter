@@ -145,8 +145,8 @@ release simply by calling:
 \`\`\`bash
 npm run release
 \`\`\`
-Additional command line options for the release script are explained in 
-[AlCalzone/release-script](https://github.com/AlCalzone/release-script#command-line).
+Additional command line options for the release script are explained in the
+[release-script documentation](https://github.com/AlCalzone/release-script#command-line).
 
 ` : ""}To get your ${isAdapter ? "adapter" : "widget"} released in ioBroker, please refer to the documentation 
 of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
