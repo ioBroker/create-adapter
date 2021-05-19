@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 
-## __WORK IN PROGRESS__
+## 1.34.0 (2021-05-19)
 * (UncleSamSwiss) Add support for Google Translate V3 API (requires credentials) (#720)
 * (AlCalzone) Fix linter warnings in the creator codebase (#731)
 * (AlCalzone & Dependabot) Updated dependencies
