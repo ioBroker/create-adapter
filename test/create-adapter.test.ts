@@ -568,6 +568,19 @@ describe("adapter creation =>", () => {
 						file.name === "README.md",
 				);
 			});
+
+			it("dev-server", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					devServer: "yes",
+					devServerPort: 9003,
+				};
+				await expectSuccess(
+					"dev-server",
+					answers,
+					(file) => file.name === "README.md",
+				);
+			});
 		});
 	});
 });

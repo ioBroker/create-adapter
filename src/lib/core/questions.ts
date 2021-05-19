@@ -655,7 +655,33 @@ export const questionGroups: QuestionGroup[] = [
 						? "yes"
 						: "no",
 			},
-
+			{
+				condition: [
+					{ name: "features", contains: "adapter" },
+					{ name: "cli", value: true },
+				],
+				type: "select",
+				name: "devServer",
+				label: "ioBroker dev-server",
+				optional: true,
+				message:
+					"Would you like to use dev-server to develop and test your code with a simple command line tool?",
+				initial: "yes",
+				choices: ["yes", "no"],
+				migrate: () => "yes",
+			},
+			{
+				condition: { name: "devServer", contains: "yes" },
+				type: "numeral",
+				name: "devServerPort",
+				label: "dev-server Admin Port",
+				message:
+					"Please choose the port number on which dev-server should present the admin web interface:",
+				initial: 8081,
+				min: 1024,
+				max: 0xffff,
+				migrate: () => 8081,
+			},
 			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
@@ -904,6 +930,8 @@ export interface Answers {
 	adminReact?: "yes" | "no";
 	tabReact?: "yes" | "no";
 	releaseScript?: "yes" | "no";
+	devServer?: "yes" | "no";
+	devServerPort?: number;
 	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
 	es6class?: "yes" | "no";
