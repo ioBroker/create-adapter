@@ -5,6 +5,7 @@
 		"vis"
 	],
 	"type": "visualization-widgets",
+	"releaseScript": "no",
 	"indentation": "Tab",
 	"quotes": "double",
 	"authorName": "Al Calzone",

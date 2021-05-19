@@ -642,6 +642,19 @@ export const questionGroups: QuestionGroup[] = [
 							: null,
 					].filter((f) => !!f) as string[],
 			}),
+			{
+				type: "select",
+				name: "releaseScript",
+				label: "Release Script",
+				message:
+					"Would you like to create new releases directly from the command line?",
+				initial: "yes",
+				choices: ["yes", "no"],
+				migrate: async (ctx) =>
+					ctx.hasDevDependency("@alcalzone/release-script")
+						? "yes"
+						: "no",
+			},
 
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -890,6 +903,7 @@ export interface Answers {
 	type: string;
 	adminReact?: "yes" | "no";
 	tabReact?: "yes" | "no";
+	releaseScript?: "yes" | "no";
 	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
 	es6class?: "yes" | "no";

@@ -16,6 +16,7 @@ export = (answers => {
 	const autoInitGit = answers.gitCommit === "yes";
 	const useTravis = answers.ci === "travis";
 	const useGithubActions = answers.ci === "gh-actions";
+	const useReleaseScript = answers.releaseScript === "yes";
 	const useDependabot = answers.dependabot === "yes";
 
 	const npmScripts: Record<string, string> = {};
@@ -52,6 +53,9 @@ export = (answers => {
 	}
 	if (useESLint) {
 		npmScripts["lint"] = "Runs \`ESLint\` to check your code for formatting errors and potential bugs.";
+	}
+	if (useReleaseScript) {
+		npmScripts["release"] = "Creates a new release, see [@alcalzone/release-script](https://github.com/AlCalzone/release-script#usage) for more details.";
 	}
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
@@ -136,7 +140,15 @@ ${useGithubActions ? `Since you have chosen GitHub Actions as your CI service, y
 enable automatic releases on npm whenever you push a new git tag that matches the form 
 \`v<major>.<minor>.<patch>\`. The necessary steps are described in \`.github/workflows/test-and-release.yml\`.
 
-`: ""}To get your ${isAdapter ? "adapter" : "widget"} released in ioBroker, please refer to the documentation 
+`: ""}${useReleaseScript ? `Since you installed the release script, you can create a new
+release simply by calling:
+\`\`\`bash
+npm run release
+\`\`\`
+Additional command line options for the release script are explained in 
+[AlCalzone/release-script](https://github.com/AlCalzone/release-script#command-line).
+
+` : ""}To get your ${isAdapter ? "adapter" : "widget"} released in ioBroker, please refer to the documentation 
 of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
 
 
@@ -158,8 +170,12 @@ For later updates, the above procedure is not necessary. Just do the following:
 1. Execute \`iobroker upload ${adapterNameLowerCase}\` on the ioBroker host
 
 ## Changelog
-
-### 0.0.1
+${useReleaseScript ? `<!--
+    Placeholder for the next version (at the beginning of the line):
+    ### **WORK IN PROGRESS**
+-->
+` : ""}
+### ${useReleaseScript ? "**WORK IN PROGRESS**" : "0.0.1"}
 * (${answers.authorName}) initial release
 
 ## License
