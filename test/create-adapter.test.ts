@@ -89,6 +89,7 @@ const baseAnswers: Answers = {
 	language: "TypeScript",
 	adminReact: "no",
 	tabReact: "no",
+	releaseScript: "no",
 	tools: ["ESLint"],
 	indentation: "Tab",
 	quotes: "double",
@@ -261,6 +262,7 @@ describe("adapter creation =>", () => {
 					title: "Is used to test the creator",
 					features: ["vis"],
 					type: "visualization-widgets",
+					releaseScript: "no",
 					indentation: "Tab",
 					quotes: "double",
 					authorName: "Al Calzone",
@@ -280,6 +282,7 @@ describe("adapter creation =>", () => {
 					title: "Is used to test the creator",
 					features: ["vis"],
 					type: "visualization-widgets",
+					releaseScript: "no",
 					indentation: "Tab",
 					quotes: "double",
 					authorName: "Al Calzone",
@@ -549,6 +552,20 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess("tabReact_adminHtml_JS", answers, (file) =>
 					file.name.startsWith("admin/"),
+				);
+			});
+
+			it("Release Script", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					releaseScript: "yes",
+				};
+				await expectSuccess(
+					"releaseScript",
+					answers,
+					(file) =>
+						file.name === "package.json" ||
+						file.name === "README.md",
 				);
 			});
 		});

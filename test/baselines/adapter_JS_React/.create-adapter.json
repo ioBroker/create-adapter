@@ -13,6 +13,7 @@
 	"language": "JavaScript",
 	"adminReact": "yes",
 	"tabReact": "no",
+	"releaseScript": "no",
 	"tools": [
 		"ESLint"
 	],

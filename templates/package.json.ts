@@ -21,6 +21,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
+	const useReleaseScript = answers.releaseScript === "yes";
 	const useDevcontainer = !!answers.tools?.includes("devcontainer");
 
 	const dependencyPromises = ([] as string[])
@@ -108,6 +109,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"prettier",
 		] : [])
 		.concat(useNyc ? ["nyc"] : [])
+		.concat(useReleaseScript ? ["@alcalzone/release-script"] : [])
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
@@ -180,6 +182,8 @@ const templateFunction: TemplateFunction = async answers => {
 			"test:package": "mocha test/package --exit",
 			"test": "npm run test:package",
 		`) : ""}
+		${useReleaseScript ? `
+			"release": "release-script",` : ""}
 	},
 	${useNyc ? `"nyc": {
 		"include": [

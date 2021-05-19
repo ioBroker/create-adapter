@@ -35,6 +35,7 @@ const baseAnswers = {
 	ci: "gh-actions",
 	dependabot: "yes",
 	license: "MIT License" as any,
+	releaseScript: "yes",
 } as Answers;
 
 const adapterAnswers: Answers = {
