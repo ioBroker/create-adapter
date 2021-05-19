@@ -18,7 +18,7 @@
 * (AlCalzone) The template index no longer changes order when switching between Linux and Windows (#753)
 * (AlCalzone) Enable TypeScript sourcemaps (#755) · [Migration guide](docs/updates/20210515_sourcemaps.md)
 * (AlCalzone) Add Node 16 to test suite, drop Node 10 (#756) · [Migration guide](docs/updates/20210515_test_node_16.md)
-* (UncleSamSwiss) Add option for release script (#693)
+* (UncleSamSwiss) Add option for release script (#759) · [Migration guide](docs/updates/20210519_release_script.md)
 * (UncleSamSwiss) Add option for dev-server (#760) · [Migration guide](docs/updates/20210519_dev_server.md)
 
 ## 1.33.0 (2021-04-05)

@@ -682,7 +682,6 @@ export const questionGroups: QuestionGroup[] = [
 				max: 0xffff,
 				migrate: () => 8081,
 			},
-
 			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
