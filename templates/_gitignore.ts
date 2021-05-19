@@ -14,6 +14,9 @@ nbproject
 # npm package files
 iobroker.*.tgz
 
+# ioBroker dev-server
+.dev-server/
+
 Thumbs.db
 ${useNyc ? `
 # NYC coverage files

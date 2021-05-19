@@ -245,6 +245,8 @@ const installDependencies = !argv.noInstall || !!argv.install;
 let needsBuildStep: boolean;
 /** Whether the initial commit should be performed automatically */
 let gitCommit: boolean;
+/** Whether dev-server should be installed */
+let devServer: boolean;
 
 /** CLI-specific functionality for creating the adapter directory */
 async function setupProject_CLI(
@@ -276,6 +278,20 @@ async function setupProject_CLI(
 				{ cwd: targetDir, stdout: "ignore" },
 			);
 		}
+	}
+
+	if (devServer) {
+		logProgress("Installing dev-server");
+		await executeCommand(
+			isWindows ? "npm.cmd" : "npm",
+			["install", "--quiet", "--global", "@iobroker/dev-server"],
+			{ cwd: targetDir },
+		);
+		await executeCommand(
+			isWindows ? "iobroker-dev-server.cmd" : "iobroker-dev-server",
+			["setup", "--adminPort", `${answers.devServerPort}`],
+			{ cwd: targetDir },
+		);
 	}
 
 	if (gitCommit) {
@@ -321,6 +337,8 @@ if (process.env.TEST_STARTUP) {
 			answers.tabReact === "yes";
 		if (needsBuildStep) maxSteps++;
 	}
+	devServer = answers.devServer === "yes";
+	if (devServer) maxSteps++;
 	gitCommit = answers.gitCommit === "yes";
 	if (gitCommit) maxSteps++;
 
