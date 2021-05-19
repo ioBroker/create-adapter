@@ -7,6 +7,9 @@ nbproject
 # npm package files
 iobroker.*.tgz
 
+# ioBroker dev-server
+.dev-server/
+
 Thumbs.db
 
 # i18n intermediate files
