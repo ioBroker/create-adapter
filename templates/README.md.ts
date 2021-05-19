@@ -55,7 +55,7 @@ export = (answers => {
 		npmScripts["lint"] = "Runs \`ESLint\` to check your code for formatting errors and potential bugs.";
 	}
 	if (useReleaseScript) {
-		npmScripts["release"] = "Creates a new release, see [@alcalzone/release-script](https://github.com/AlCalzone/release-script#usage) for more details.";
+		npmScripts["release"] = "Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details.";
 	}
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
