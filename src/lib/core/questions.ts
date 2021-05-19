@@ -647,7 +647,7 @@ export const questionGroups: QuestionGroup[] = [
 				name: "releaseScript",
 				label: "Release Script",
 				message:
-					"Would you like to create new releases directly from the command line?",
+					"Would you like to automate new releases with one simple command?",
 				initial: "yes",
 				choices: ["yes", "no"],
 				migrate: async (ctx) =>
