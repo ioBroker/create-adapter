@@ -5,6 +5,8 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Require Node.js 12+ to execute the creator (#767)
 
 ## 1.34.0 (2021-05-19)
 * (UncleSamSwiss) Add support for Google Translate V3 API (requires credentials) (#720)
