@@ -27,7 +27,7 @@
     "url": "https://github.com/ioBroker/create-adapter/issues"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12"
   },
   "publishConfig": {
     "access": "public"
