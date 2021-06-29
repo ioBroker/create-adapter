@@ -66,7 +66,8 @@ const argv = yargs
 			default: false,
 			desc: "Force installation of dependencies",
 		},
-	}).argv;
+	})
+	.parseSync();
 
 /** Where the output should be written */
 const rootDir = path.resolve(argv.target || process.cwd());
