@@ -62,11 +62,12 @@ async function loadLicenses() {
 }
 
 (async function main() {
+	const argv = await yargs.option("force", { type: "boolean" }).parseAsync();
 	let templateContent = await fs.readFile(licenseCacheFile, "utf8");
 	const startMarkerEnd =
 		templateContent.indexOf(startMarker) + startMarker.length;
 	const endMarkerStart = templateContent.indexOf(endMarker);
-	if (endMarkerStart < startMarkerEnd + 100 || !!yargs.argv.force) {
+	if (endMarkerStart < startMarkerEnd + 100 || !!argv.force) {
 		// < 100 Bytes is not enough for all licenses, so we need to fetch them
 		const licenses = await loadLicenses();
 		templateContent =
