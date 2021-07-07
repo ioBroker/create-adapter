@@ -21,7 +21,7 @@
   "dependencies": {},
   "devDependencies": {
     "@iobroker/testing": "^2.4.4",
-    "@types/gulp": "^4.0.8",
+    "@types/gulp": "^4.0.9",
     "axios": "^0.21.1",
     "gulp": "^4.0.2"
   },
