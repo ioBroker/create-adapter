@@ -7,6 +7,8 @@
 -->
 ## __WORK IN PROGRESS__
 * (AlCalzone) Require Node.js 12+ to execute the creator (#767)
+
+## 1.34.1 (2021-07-07)
 * (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)
 
 ## 1.34.0 (2021-05-19)
