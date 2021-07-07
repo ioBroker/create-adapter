@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 1.34.1 (2021-07-07)
 * (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)
 
 ## 1.34.0 (2021-05-19)
