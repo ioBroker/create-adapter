@@ -5,6 +5,8 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)
 
 ## 1.34.0 (2021-05-19)
 * (UncleSamSwiss) Add support for Google Translate V3 API (requires credentials) (#720)
