@@ -7,6 +7,7 @@
 -->
 ## __WORK IN PROGRESS__
 * (AlCalzone) Require Node.js 12+ to execute the creator (#767)
+* (AlCalzone) Add `common.title` property back into `io-package.json` (#796)
 
 ## 1.34.1 (2021-07-07)
 * (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)
