@@ -25,7 +25,6 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "_npmignore.ts", templateFunction: require("./_npmignore") },
 	{ name: "_prettierignore.ts", templateFunction: require("./_prettierignore") },
 	{ name: "_prettierrc.js.ts", templateFunction: require("./_prettierrc.js") },
-	{ name: "_travis.yml.ts", templateFunction: require("./_travis.yml") },
 	{ name: "_vscode/extensions.json.ts", templateFunction: require("./_vscode/extensions.json") },
 	{ name: "_vscode/settings.json.ts", templateFunction: require("./_vscode/settings.json") },
 	{ name: "admin/admin.d.ts.ts", templateFunction: require("./admin/admin.d.ts") },

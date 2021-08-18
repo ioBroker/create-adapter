@@ -819,29 +819,6 @@ export const questionGroups: QuestionGroup[] = [
 			},
 			{
 				type: "select",
-				name: "ci",
-				label: "Continuous Integration",
-				expert: true,
-				message: "Which continuous integration service should be used?",
-				initial: "gh-actions",
-				choices: [
-					{
-						message: "GitHub Actions",
-						value: "gh-actions",
-					},
-					{
-						message: "Travis CI",
-						value: "travis",
-					},
-				],
-				migrate: async (ctx) =>
-					(await ctx.fileExists(".travis.yml")) &&
-					!(await ctx.directoryExists(".github/workflows"))
-						? "travis"
-						: "gh-actions",
-			},
-			{
-				type: "select",
 				name: "dependabot",
 				label: "Dependabot",
 				expert: true,
@@ -937,7 +914,6 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
-	ci?: "gh-actions" | "travis";
 	dependabot?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";

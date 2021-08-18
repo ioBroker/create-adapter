@@ -20,6 +20,7 @@ ${isAdapter ? `gulpfile.js` : ""}
 # CI test files
 test/
 travis/
+.github/
 appveyor.yaml
 
 ${useReact ? `
