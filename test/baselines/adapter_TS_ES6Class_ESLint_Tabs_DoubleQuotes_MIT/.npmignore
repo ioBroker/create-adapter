@@ -8,6 +8,7 @@ gulpfile.js
 # CI test files
 test/
 travis/
+.github/
 appveyor.yaml
 
 # TypeScript sources and project configuration
