@@ -54,6 +54,7 @@ export = (async answers => {
 				"zh-cn": "首次出版"
 			}
 		},
+		"title": "${title}",
 		"titleLang": ${titleLang},
 		"desc": ${descriptionLang},
 		"authors": [
