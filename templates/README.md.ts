@@ -14,8 +14,6 @@ export = (answers => {
 	const useReact =
 		answers.adminReact === "yes" || answers.tabReact === "yes";
 	const autoInitGit = answers.gitCommit === "yes";
-	const useTravis = answers.ci === "travis";
-	const useGithubActions = answers.ci === "gh-actions";
 	const useReleaseScript = answers.releaseScript === "yes";
 	const useDevServer = answers.devServer === "yes";
 	const useDependabot = answers.dependabot === "yes";
@@ -71,10 +69,8 @@ export = (answers => {
 [![Dependency Status](https://img.shields.io/david/${answers.authorGithub}/iobroker.${adapterNameLowerCase}.svg)](https://david-dm.org/${answers.authorGithub}/iobroker.${adapterNameLowerCase})
 
 [![NPM](https://nodei.co/npm/iobroker.${adapterNameLowerCase}.png?downloads=true)](https://nodei.co/npm/iobroker.${adapterNameLowerCase}/)
-${useTravis ? (`
-**Tests:** [![Travis-CI](https://img.shields.io/travis/${answers.authorGithub}/ioBroker.${answers.adapterName}/master.svg)](https://travis-ci.org/${answers.authorGithub}/ioBroker.${answers.adapterName})`)
-	: (`
-**Tests:** ![Test and Release](https://github.com/${answers.authorGithub}/ioBroker.${adapterNameLowerCase}/workflows/Test%20and%20Release/badge.svg)`)}
+
+**Tests:** ![Test and Release](https://github.com/${answers.authorGithub}/ioBroker.${adapterNameLowerCase}/workflows/Test%20and%20Release/badge.svg)
 
 ## ${answers.adapterName} adapter for ioBroker
 
@@ -137,11 +133,10 @@ The template provides you with basic tests for the adapter startup and package f
 It is recommended that you add your own tests into the mix.
 
 ` : ""}### Publishing the ${isAdapter ? "adapter" : "widget"}
-${useGithubActions ? `Since you have chosen GitHub Actions as your CI service, you can 
-enable automatic releases on npm whenever you push a new git tag that matches the form 
-\`v<major>.<minor>.<patch>\`. The necessary steps are described in \`.github/workflows/test-and-release.yml\`.
+Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form 
+\`v<major>.<minor>.<patch>\`. We **strongly recommend** that you do. The necessary steps are described in \`.github/workflows/test-and-release.yml\`.
 
-`: ""}${useReleaseScript ? `Since you installed the release script, you can create a new
+${useReleaseScript ? `Since you installed the release script, you can create a new
 release simply by calling:
 \`\`\`bash
 npm run release

@@ -80,7 +80,7 @@ Besides all environment variables mentioned above under "Options" the following 
 -   Built-in component tests using `mocha`, `chai` (with `chai-as-promised`) and `sinon` (with `sinon-chai`) for:
     -   Correctly defined package files
     -   and your own tests...
--   Automated testing using Github Actions or Travis CI, including a script for semantic release of new versions
+-   Automated testing using Github Actions, including a script for semantic release of new versions
 
 ## Developing
 
@@ -99,7 +99,7 @@ For developers of this package, there are a few things to know:
 
 ## Publishing
 
-Do not publish directly using `npm`. Instead create a new release with the release script `npm run release ...`. This creates a tag on github, performs a test run on TravisCI and after a successful build automatically publishes to npm.
+Do not publish directly using `npm`. Instead create a new release with the release script `npm run release ...`. This creates a tag on github, performs a test run on Github Actions and after a successful build automatically publishes to npm.
 
 You can semantically increase the version and publish it by using
 
