@@ -237,7 +237,7 @@ async function translateGoogleLegacy(
 			return response.data[0][0][0];
 		}
 		error(`Invalid response for translate request`);
-	} catch (e) {
+	} catch (e: any) {
 		if (e.response?.status === 429) {
 			error(
 				`Could not translate to "${targetLang}": Rate-limited by Google Translate`,
@@ -276,7 +276,7 @@ async function translateGoogleV3(
 		if (response.translations && response.translations[0]?.translatedText) {
 			return response.translations[0].translatedText;
 		}
-	} catch (e) {
+	} catch (e: any) {
 		error(`Could not translate to "${targetLang}": ${e}`);
 	}
 
