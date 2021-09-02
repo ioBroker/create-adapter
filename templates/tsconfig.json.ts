@@ -38,6 +38,10 @@ export = (answers => {
 		${useTypeScript ? `// "noImplicitAny": true,` : `"noImplicitAny": false,`}
 		// "noUnusedLocals": true,
 		// "noUnusedParameters": true,
+		${useTypeScript ? (
+		`// Uncomment this if you want the old behavior of catch variables being \`any\`
+		// "useUnknownInCatchVariables": false,`) : (
+		`"useUnknownInCatchVariables": false,`)}
 
 		// Consider targetting es2019 or higher if you only support Node.js 12+
 		"target": "es2018",
