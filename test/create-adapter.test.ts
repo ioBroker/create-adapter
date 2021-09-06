@@ -2,6 +2,7 @@
 process.env.TESTING = "true";
 
 import axios from "axios";
+import * as execa from "execa";
 import * as fs from "fs-extra";
 import { validate as validateJSON } from "jsonschema";
 import * as path from "path";
@@ -51,6 +52,25 @@ async function generateBaselines(
 			? files.filter(filterFilesPredicate)
 			: files,
 	);
+
+	// Include the npm package content in the baselines (only for full adapter tests)
+	if (!filterFilesPredicate && files.some((f) => f.name === "package.json")) {
+		let packageContent = execa
+			.sync("npm", ["pack", "--dry-run"], {
+				cwd: testDir,
+				encoding: "utf8",
+			})
+			.stderr.replace(/^npm notice /gim, "")
+			.trim();
+		packageContent = packageContent.substr(
+			packageContent.indexOf("=== Tarball"),
+		);
+		await fs.ensureDir(path.join(testDir, "__meta__"));
+		await fs.writeFile(
+			path.join(testDir, "__meta__/npm_package_files.txt"),
+			packageContent,
+		);
+	}
 }
 
 // TODO: Mock network requests
