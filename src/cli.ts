@@ -155,7 +155,10 @@ async function ask(): Promise<Answers> {
 							if (answer[q.name as string] == undefined)
 								throw new Error();
 						} catch (e) {
-							error(e.message || "Adapter creation canceled!");
+							error(
+								(e as Error).message ||
+									"Adapter creation canceled!",
+							);
 							return process.exit(1);
 						}
 					}
