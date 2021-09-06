@@ -11,7 +11,6 @@ const downloadLimiter = pLimit(10);
 const templateFunction: TemplateFunction = async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
-	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = useTypeScript
@@ -130,14 +129,11 @@ const templateFunction: TemplateFunction = async answers => {
 		"www/",
 		...(useTypeScript ? ["build/"] : [
 			"main.js",
-			`${adapterNameLowerCase}.js`,
 			"lib/"
 		]),
 		...(isAdapter ? [
-			// Non-JS web files in all subdirectories
-			"admin/**/*.{html,css,png,svg,jpg}",
-			// and JS files in the admin root (not src!)
-			"admin/*.js",
+			// Web files in the admin root and all subdirectories except src
+			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
 		] : []),
 		...(isAdapter && useReact ? ["admin/build/"] : []),
 		...(isWidget ? ["widgets/"] : [])
