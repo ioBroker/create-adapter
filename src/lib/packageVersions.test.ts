@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import * as proxyquireModule from "proxyquire";
+import proxyquireModule from "proxyquire";
 import { stub } from "sinon";
 import { getPackageName, getVersionSpecifier } from "./packageVersions";
 
@@ -9,9 +9,7 @@ const proxyquire = proxyquireModule.noPreserveCache();
 const { fetchPackageVersion, fetchPackageReferenceVersion } = proxyquire<
 	typeof import("./packageVersions")
 >("./packageVersions", {
-	axios: {
-		default: axiosMock,
-	},
+	axios: axiosMock,
 });
 
 function returnVersions(versions: string[]) {

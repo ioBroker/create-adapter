@@ -9,8 +9,9 @@ import * as JSON5 from "json5";
 import * as os from "os";
 import * as path from "path";
 import * as prettier from "prettier";
+import { URL } from "url";
 import { licenses } from "./core/licenses";
-import { Answers } from "./core/questions";
+import type { Answers } from "./core/questions";
 
 export function error(message: string): void {
 	console.error(bold.red(message));

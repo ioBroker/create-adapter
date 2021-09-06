@@ -1,5 +1,5 @@
 import * as JSON5 from "json5";
-import { TemplateFunction } from "../src/lib/createAdapter";
+import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 

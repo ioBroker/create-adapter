@@ -6,7 +6,7 @@ import * as fs from "fs-extra";
 import { validate as validateJSON } from "jsonschema";
 import * as path from "path";
 import { createAdapter } from "../src/index";
-import { Answers } from "../src/lib/core/questions";
+import type { Answers } from "../src/lib/core/questions";
 import { File, writeFiles } from "../src/lib/createAdapter";
 
 const baselineDir = path.join(__dirname, "../test/baselines");

@@ -1,4 +1,4 @@
-import { TemplateFunction } from "../../src/lib/createAdapter";
+import type { TemplateFunction } from "../../src/lib/createAdapter";
 import { formatJsonString } from "../../src/lib/tools";
 import { getTranslatedSettings } from "../../src/lib/translation";
 

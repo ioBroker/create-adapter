@@ -3,8 +3,8 @@ import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
-import { CheckResult } from "./lib/core/actionsAndTransformers";
-import { MigrationContextBase } from "./lib/core/migrationContextBase";
+import type { CheckResult } from "./lib/core/actionsAndTransformers";
+import type { MigrationContextBase } from "./lib/core/migrationContextBase";
 import {
 	Answers,
 	Question,

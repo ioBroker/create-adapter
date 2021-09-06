@@ -41,7 +41,7 @@ const indexContent = `
 // and contains references to all defined templates.
 // Do not edit it by hand or your changes will be lost!
 
-import { TemplateFunction } from "../src/lib/createAdapter";
+import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templates: { name: string, templateFunction: TemplateFunction }[] = [
 ${templatePaths.join(os.EOL)}

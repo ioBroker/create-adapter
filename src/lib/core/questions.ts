@@ -1,6 +1,6 @@
 import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green } from "ansi-colors";
-import { SpecificPromptOptions } from "enquirer";
+import type { SpecificPromptOptions } from "enquirer";
 import {
 	checkAdapterName,
 	checkAuthorName,
@@ -15,7 +15,7 @@ import {
 	transformKeywords,
 } from "./actionsAndTransformers";
 import { licenses } from "./licenses";
-import { MigrationContextBase } from "./migrationContextBase";
+import type { MigrationContextBase } from "./migrationContextBase";
 
 // This is being used to simulate wrong options for conditions on the type level
 const __misused: unique symbol = Symbol.for("__misused");

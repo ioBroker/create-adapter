@@ -2,7 +2,7 @@ import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
 import { licenses } from "../src/lib/core/licenses";
 import { AdapterSettings, getDefaultAnswer, getIconName } from "../src/lib/core/questions";
-import { TemplateFunction } from "../src/lib/createAdapter";
+import type { TemplateFunction } from "../src/lib/createAdapter";
 import { translateText } from "../src/lib/tools";
 
 export = (async answers => {
