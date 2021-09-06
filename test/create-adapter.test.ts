@@ -549,6 +549,19 @@ describe("adapter creation =>", () => {
 					(file) => file.name === "README.md",
 				);
 			});
+
+			it("Start mode: schedule", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					startMode: "schedule",
+					scheduleStartOnChange: "yes",
+				};
+				await expectSuccess(
+					"schedule",
+					answers,
+					(file) => file.name === "test/integration.js",
+				);
+			});
 		});
 	});
 });
