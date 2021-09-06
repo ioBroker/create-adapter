@@ -11,6 +11,7 @@ const downloadLimiter = pLimit(10);
 const templateFunction: TemplateFunction = async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
+	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = useTypeScript
@@ -121,6 +122,34 @@ const templateFunction: TemplateFunction = async answers => {
 		: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
 	const parcelFiles = `${useAdminReact ? "admin/src/index.tsx" : ""} ${useTabReact ? "admin/src/tab.tsx" : ""}`.trim();
 
+	// Generate whitelist for package files
+	const packageFiles = [
+		"LICENSE",
+		"io-package.json",
+		// We currently don't have web templates, but users might want to add them
+		"www/",
+		...(useTypeScript ? ["build/"] : [
+			"main.js",
+			`${adapterNameLowerCase}.js`,
+			"lib/"
+		]),
+		...(isAdapter ? [
+			// Non-JS web files in all subdirectories
+			"admin/**/*.{html,css,png,svg,jpg}",
+			// and JS files in the admin root (not src!)
+			"admin/*.js",
+		] : []),
+		...(isAdapter && useReact ? ["admin/build/"] : []),
+		...(isWidget ? ["widgets/"] : [])
+	].sort((a, b) => {
+		// Put directories on top
+		const isDirA = a.includes("/");
+		const isDirB = b.includes("/");
+		if (isDirA && !isDirB) return -1;
+		if (isDirB && !isDirA) return 1;
+		return a.localeCompare(b);
+	});
+
 	const template = `
 {
 	"name": "iobroker.${answers.adapterName.toLowerCase()}",
@@ -149,6 +178,7 @@ const templateFunction: TemplateFunction = async answers => {
 	`) : isWidget ? (`
 		"main": "widgets/${answers.adapterName}.html",
 	`) : ""}
+	"files": ${JSON.stringify(packageFiles)},
 	"scripts": {
 		${isAdapter ? (`
 			${useTypeScript ? (`
