@@ -13,6 +13,7 @@
 * (AlCalzone) Restore compatibility with TypeScript 4.4+ (#808) · [Migration guide](docs/updates/20210902_typescript_44.md)
 * (AlCalzone) Fix ESLint auto-formatting to generate correct quotes in React (#812)
 * (AlCalzone) Allow exitCode 11 by default for schedule adapters during testing (#811)
+* (AlCalzone) Updated `.gitignore`, added `.eslintignore` file (#813) · [Migration guide](docs/updates/20210906_ignore-files.md)
 
 ## 1.34.1 (2021-07-07)
 * (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)

@@ -5,8 +5,11 @@ const templateFunction: TemplateFunction = answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 
 	const template = `
-.git
-.idea
+# No dot-directories except github/vscode
+.*/
+!.vscode/
+!.github/
+
 *.code-workspace
 node_modules
 nbproject
@@ -14,14 +17,10 @@ nbproject
 # npm package files
 iobroker.*.tgz
 
-# ioBroker dev-server
-.dev-server/
-
 Thumbs.db
 ${useNyc ? `
 # NYC coverage files
 coverage
-.nyc*
 
 ` : ""}
 # i18n intermediate files
