@@ -20,9 +20,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@iobroker/testing": "^2.4.4",
+    "@iobroker/testing": "^2.5.1",
     "@types/gulp": "^4.0.9",
-    "axios": "^0.21.1",
+    "axios": "^0.21.3",
     "gulp": "^4.0.2"
   },
   "main": "widgets/test-widget.html",
