@@ -361,6 +361,9 @@ function createESLintOptions(
 		},
 		parserOptions: {
 			ecmaVersion: 2018,
+			ecmaFeatures: {
+				jsx: true,
+			},
 		},
 		rules: {
 			quotes: [
