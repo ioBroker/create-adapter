@@ -43,6 +43,17 @@
     "sinon-chai": "^3.7.0"
   },
   "main": "main.js",
+  "files": [
+    "admin/*.js",
+    "admin/**/*.{html,css,png,svg,jpg}",
+    "admin/build/",
+    "lib/",
+    "www/",
+    "io-package.json",
+    "LICENSE",
+    "main.js",
+    "test-adapter.js"
+  ],
   "scripts": {
     "watch:parcel": "parcel admin/src/index.jsx -d admin/build",
     "build:parcel": "parcel build admin/src/index.jsx -d admin/build",

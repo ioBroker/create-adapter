@@ -26,6 +26,15 @@
     "gulp": "^4.0.2"
   },
   "main": "widgets/test-widget.html",
+  "files": [
+    "lib/",
+    "widgets/",
+    "www/",
+    "io-package.json",
+    "LICENSE",
+    "main.js",
+    "test-widget.js"
+  ],
   "scripts": {
     "test:package": "mocha test/package --exit",
     "test": "npm run test:package"

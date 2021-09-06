@@ -43,6 +43,16 @@
     "typescript": "~4.4.2"
   },
   "main": "main.js",
+  "files": [
+    "admin/*.js",
+    "admin/**/*.{html,css,png,svg,jpg}",
+    "lib/",
+    "www/",
+    "io-package.json",
+    "LICENSE",
+    "main.js",
+    "test-adapter.js"
+  ],
   "scripts": {
     "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
     "test:package": "mocha test/package --exit",

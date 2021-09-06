@@ -56,6 +56,14 @@
     "typescript": "~4.4.2"
   },
   "main": "build/main.js",
+  "files": [
+    "admin/*.js",
+    "admin/**/*.{html,css,png,svg,jpg}",
+    "build/",
+    "www/",
+    "io-package.json",
+    "LICENSE"
+  ],
   "scripts": {
     "prebuild": "rimraf ./build",
     "build:ts": "tsc -p tsconfig.build.json",
