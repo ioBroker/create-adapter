@@ -11,6 +11,7 @@
 * (AlCalzone) Drop support for Travis CI (#797) · [Migration guide](docs/updates/20210818_no_travis.md)
 * (AlCalzone) Use dependency caching on Github Actions (#809) · [Migration guide](docs/updates/20210902_github_dependency_caching.md)
 * (AlCalzone) Restore compatibility with TypeScript 4.4+ (#808) · [Migration guide](docs/updates/20210902_typescript_44.md)
+* (AlCalzone) Fix ESLint auto-formatting to generate correct quotes in React (#812)
 
 ## 1.34.1 (2021-07-07)
 * (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)
