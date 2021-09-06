@@ -9,8 +9,7 @@ Here's an example for a TypeScript adapter:
 ```diff
    "main": "build/main.js",
 +  "files": [
-+    "admin/*.js",
-+    "admin/**/*.{html,css,png,svg,jpg}",
++    "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
 +    "admin/build/",
 +    "build/",
 +    "www/",
@@ -22,7 +21,8 @@ Here's an example for a TypeScript adapter:
 Depending on your used features, these entries should work in 99% of the cases:
 
 -   All adapters/widgets/etc.: `"io-package.json"` and `"LICENSE"`
--   Any adapter with an admin config page: `"admin/*.js"` and `"admin/**/*.{html,css,png,svg,jpg}"`
+-   Any adapter with an admin config page: `"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}"`  
+    This includes all html, css, png, svg, jpg and javascript files in the admin directory, **except** the `src` subdirectory.
 -   An adapter with a React UI: `"admin/build/"`
 -   TypeScript adapters: `"build/"`
 -   Non-TypeScript adapters: `"main.js"` (or however your main file is called) and (probably) `"lib/"`
