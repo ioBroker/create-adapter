@@ -61,7 +61,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/node@14",
 		] : [])
 		.concat(useTypeChecking ? [
-			"typescript",
+			"typescript@~4.4",
 		] : [])
 		.concat(useTypeScript ? [
 			// enhance testing through TS tools
