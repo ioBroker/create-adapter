@@ -25,7 +25,7 @@ const options: AxiosRequestConfig = {
 				base: "master",
 			},
 		});
-	} catch (e) {
+	} catch (e: any) {
 		createPrResponse = e.response;
 		console.error(
 			red(`PR creation failed with code ${createPrResponse.status}:

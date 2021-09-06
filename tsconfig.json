@@ -8,26 +8,30 @@
 		"noEmit": true,
 		// Never emit faulty JS
 		"noEmitOnError": true,
-
 		"outDir": "./build/",
 		"removeComments": false,
-
 		// Avoid runtime imports that are unnecessary
 		"importsNotUsedAsValues": "error",
-
 		// The way we use `enquirer` is incompatible with strictFunctionTypes
 		"strictFunctionTypes": false,
-
 		// We import some .json files and TS should pick them up correctly
 		"resolveJsonModule": true,
-
 		// Required for TS debugging
 		"sourceMap": true,
 		"inlineSourceMap": false,
-
 		// Fix enquirer typings
-		"typeRoots": ["./src/@types", "./node_modules/@types"]
+		"typeRoots": [
+			"./src/@types",
+			"./node_modules/@types"
+		]
 	},
-	"include": ["**/*.ts"],
-	"exclude": ["build/**", "node_modules/**", "test/baselines/**"]
+	"include": [
+		"**/*.ts",
+		".github/*.ts"
+	],
+	"exclude": [
+		"build/**",
+		"node_modules/**",
+		"test/baselines/**"
+	]
 }
