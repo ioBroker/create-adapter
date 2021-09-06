@@ -44,9 +44,10 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Use Node.js \${{ matrix.node-version }}
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: \${{ matrix.node-version }}
+                  cache: 'npm'
 
             - name: Install Dependencies
               run: npm ci
@@ -86,9 +87,10 @@ ${(adapterTestOS.includes("windows-latest") && adapterTestVersions.includes("8.x
               uses: actions/checkout@v2
 
             - name: Use Node.js \${{ matrix.node-version }}
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   node-version: \${{ matrix.node-version }}
+                  cache: 'npm'
 
             - name: Install Dependencies
               run: npm ci
@@ -128,9 +130,10 @@ ${(adapterTestOS.includes("windows-latest")) ? (`
 #              uses: actions/checkout@v2
 #
 #            - name: Use Node.js \${{ matrix.node-version }}
-#              uses: actions/setup-node@v1
+#              uses: actions/setup-node@v2
 #              with:
 #                  node-version: \${{ matrix.node-version }}
+#                  cache: 'npm'
 #
 #            - name: Extract the version and commit body from the tag
 #              id: extract_release
