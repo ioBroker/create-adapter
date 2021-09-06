@@ -1,5 +1,5 @@
 import { AdapterSettings, getDefaultAnswer, getIconName } from "../../src/lib/core/questions";
-import { TemplateFunction } from "../../src/lib/createAdapter";
+import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 function generateSettingsDiv(settings: AdapterSettings): string {
 	if (settings.inputType === "select" && settings.options) {

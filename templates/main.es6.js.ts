@@ -1,5 +1,5 @@
 import { AdapterSettings, getDefaultAnswer } from "../src/lib/core/questions";
-import { TemplateFunction } from "../src/lib/createAdapter";
+import type { TemplateFunction } from "../src/lib/createAdapter";
 import { kebabCaseToUpperCamelCase } from "../src/lib/tools";
 
 const templateFunction: TemplateFunction = async answers => {

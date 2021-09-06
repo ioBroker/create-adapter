@@ -27,13 +27,14 @@
     "url": "https://github.com/ioBroker/create-adapter/issues"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=12.20"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^1.10.0",
+    "@tsconfig/node12": "^1.0.9",
     "@types/ansi-colors": "^3.2.2",
     "@types/chai": "^4.2.19",
     "@types/chai-as-promised": "^7.1.4",
