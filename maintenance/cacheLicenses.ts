@@ -5,7 +5,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";
-import { License } from "../src/lib/core/licenses";
+import type { License } from "../src/lib/core/licenses";
 import { applyHttpsProxy, getRequestTimeout } from "../src/lib/tools";
 
 // Taken from https://api.github.com/licenses
