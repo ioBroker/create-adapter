@@ -311,7 +311,6 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 export function getFormattedLicense(answers: Answers): string {
 	if (answers.license) {
 		const license = licenses[answers.license];
-		// wotan-disable-next-line no-useless-predicate
 		if (license) {
 			return formatLicense(license.text, answers);
 		}

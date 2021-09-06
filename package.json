@@ -34,8 +34,6 @@
   },
   "devDependencies": {
     "@alcalzone/release-script": "^1.10.0",
-    "@fimbul/mithotyn": "^0.24.0",
-    "@fimbul/wotan": "^0.24.0",
     "@types/ansi-colors": "^3.2.2",
     "@types/chai": "^4.2.19",
     "@types/chai-as-promised": "^7.1.4",
@@ -103,8 +101,7 @@
     "coveralls": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls -v",
     "show-coverage": "npm run coverage && start ./coverage/index.html",
     "lint:ts": "eslint {src,test,.github,maintenance}/**/*.ts",
-    "lint:wotan": "wotan",
-    "lint": "npm run lint:ts && npm run lint:wotan",
+    "lint": "npm run lint:ts",
     "release": "release-script",
     "prepublishOnly": "npm run build"
   },
