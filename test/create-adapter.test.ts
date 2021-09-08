@@ -568,6 +568,22 @@ describe("adapter creation =>", () => {
 					(file) => file.name === "test/integration.js",
 				);
 			});
+
+			it("Portal w/ GitHub", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					cli: false,
+					target: "github",
+					releaseScript: "yes",
+				};
+				await expectSuccess(
+					"portal-github",
+					answers,
+					(file) =>
+						file.name === "README.md" ||
+						file.name.endsWith("test-and-release.yml"),
+				);
+			});
 		});
 	});
 });
