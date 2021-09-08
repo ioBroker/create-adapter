@@ -127,13 +127,16 @@ const templateFunction: TemplateFunction = async answers => {
 		"io-package.json",
 		// We currently don't have web templates, but users might want to add them
 		"www/",
-		...(useTypeScript ? ["build/"] : [
-			"main.js",
-			"lib/"
-		]),
+		...(isAdapter ? (
+			useTypeScript
+				? ["build/"]
+				: ["main.js", "lib/"]
+		) : []),
 		...(isAdapter ? [
 			// Web files in the admin root and all subdirectories except src
 			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
+			// JSON files, but not tsconfig.*.json
+			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json"
 		] : []),
 		...(isAdapter && useReact ? ["admin/build/"] : []),
 		...(isWidget ? ["widgets/"] : [])

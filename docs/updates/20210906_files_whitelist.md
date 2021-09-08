@@ -10,6 +10,7 @@ Here's an example for a TypeScript adapter:
    "main": "build/main.js",
 +  "files": [
 +    "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
++    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json",
 +    "admin/build/",
 +    "build/",
 +    "www/",
@@ -21,8 +22,8 @@ Here's an example for a TypeScript adapter:
 Depending on your used features, these entries should work in 99% of the cases:
 
 -   All adapters/widgets/etc.: `"io-package.json"` and `"LICENSE"`
--   Any adapter with an admin config page: `"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}"`  
-    This includes all html, css, png, svg, jpg and javascript files in the admin directory, **except** the `src` subdirectory.
+-   Any adapter with an admin config page: `"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}"` and `"admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json"`  
+    This includes all html, css, png, svg, jpg and javascript files in the admin directory, **except** the `src` subdirectory. Furthermore, this includes all `.json` files, except the `src` directory and `tsconfig` files.
 -   An adapter with a React UI: `"admin/build/"`
 -   TypeScript adapters: `"build/"`
 -   Non-TypeScript adapters: `"main.js"` (or however your main file is called) and (probably) `"lib/"`
