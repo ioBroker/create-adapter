@@ -26,6 +26,8 @@ async function generateTemplates(
 /* Define the desired templates here */
 
 const baseAnswers = {
+	cli: true,
+	target: "directory",
 	adapterName: "template",
 	description: "Template for adapter development",
 	authorName: "Author",
