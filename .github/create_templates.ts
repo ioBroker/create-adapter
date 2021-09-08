@@ -37,6 +37,7 @@ const baseAnswers = {
 	dependabot: "yes",
 	license: "MIT License" as any,
 	releaseScript: "yes",
+	gitCommit: "no",
 } as Answers;
 
 const adapterAnswers: Answers = {
