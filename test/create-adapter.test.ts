@@ -77,6 +77,8 @@ async function expectFail(
 }
 
 const baseAnswers: Answers = {
+	cli: true,
+	target: "directory",
 	adapterName: "test-adapter",
 	title: "Is used to test the creator",
 	startMode: "daemon",
@@ -99,6 +101,7 @@ const baseAnswers: Answers = {
 	authorEmail: "al@calzo.ne",
 	gitRemoteProtocol: "HTTPS",
 	dependabot: "yes",
+	gitCommit: "no",
 	license: "MIT License",
 };
 
@@ -257,6 +260,8 @@ describe("adapter creation =>", () => {
 
 			it("Widget", async () => {
 				const answers: Answers = {
+					cli: true,
+					target: "directory",
 					adapterName: "test-widget",
 					title: "Is used to test the creator",
 					features: ["vis"],
@@ -269,6 +274,7 @@ describe("adapter creation =>", () => {
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
 					dependabot: "yes",
+					gitCommit: "no",
 					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget", answers);
