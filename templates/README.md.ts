@@ -102,7 +102,7 @@ ${autoInitGit ? "" : (
 `)}
 1. Push all files to the GitHub repo${autoInitGit ? ". The creator has already set up the local repository for you" : ""}:  
 	\`\`\`bash
-	git push origin master
+	git push origin main
 	\`\`\`
 ${useDependabot ? (
 `1. Add a new secret under https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/settings/secrets. It must be named \`AUTO_MERGE_TOKEN\` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.

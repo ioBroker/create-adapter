@@ -66,8 +66,8 @@ export = (async answers => {
 		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${getIconName(answers)}",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/master/admin/${getIconName(answers)}",
-		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/master/README.md",
+		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/main/admin/${getIconName(answers)}",
+		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/main/README.md",
 		"loglevel": "info",
 		${isWidget ? (`
 			"restartAdapters": ["vis"],
