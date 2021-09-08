@@ -882,6 +882,10 @@ export interface UploadedIcon {
 }
 
 export interface Answers {
+	/** false is used in the portal */
+	cli: boolean;
+	/** "github" and "zip" are used in the portal */
+	target: "directory" | "github" | "zip";
 	adapterName: string;
 	description?: string;
 	keywords?: string[];

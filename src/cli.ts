@@ -90,7 +90,7 @@ const creatorOptions = {
 
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
-	let answers: Record<string, any> = { cli: true };
+	let answers: Record<string, any> = { cli: true, target: "directory" };
 	let migrationContext: MigrationContextBase | undefined;
 
 	if (!!argv.replay) {
