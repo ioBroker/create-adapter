@@ -1,4 +1,6 @@
 {
+	"cli": true,
+	"target": "directory",
 	"adapterName": "test-adapter",
 	"title": "Is used to test the creator",
 	"startMode": "daemon",
@@ -28,6 +30,7 @@
 	"authorEmail": "al@calzo.ne",
 	"gitRemoteProtocol": "HTTPS",
 	"dependabot": "yes",
+	"gitCommit": "no",
 	"license": "MIT License",
 	"creatorVersion": "1.34.0"
 }
