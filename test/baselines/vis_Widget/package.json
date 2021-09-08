@@ -27,12 +27,10 @@
   },
   "main": "widgets/test-widget.html",
   "files": [
-    "lib/",
     "widgets/",
     "www/",
     "io-package.json",
-    "LICENSE",
-    "main.js"
+    "LICENSE"
   ],
   "scripts": {
     "test:package": "mocha test/package --exit",

@@ -6,7 +6,7 @@
 3.5kB  lib/tools.js           
 1.9kB  admin/words.js         
 3.2kB  io-package.json        
-1.8kB  package.json           
+1.9kB  package.json           
 16.5kB README.md              
 62.4kB admin/test-adapter.png 
 607B   lib/adapter-config.d.ts
@@ -15,7 +15,7 @@ name:          iobroker.test-adapter
 version:       0.0.1                                   
 filename:      iobroker.test-adapter-0.0.1.tgz         
 package size:  79.4 kB                                 
-unpacked size: 111.7 kB                                
-shasum:        39ccd391ccdb1c6c1e7adcffadf07ef67d7de42f
-integrity:     sha512-JpXqkDLQeUKYR[...]w8S7aEsbXmiDA==
+unpacked size: 111.8 kB                                
+shasum:        c5a6e01c32b3db7b88af9000c01e8a83d4c54022
+integrity:     sha512-ZohnE7+jj3LCf[...]reetUSULswu/w==
 total files:   11

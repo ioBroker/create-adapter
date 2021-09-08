@@ -14,7 +14,7 @@ name:          iobroker.test-adapter
 version:       0.0.1                                   
 filename:      iobroker.test-adapter-0.0.1.tgz         
 package size:  71.2 kB                                 
-unpacked size: 84.9 kB                                 
-shasum:        3b2c9609b09a1d2711dbd4857bcc83083ec0c066
-integrity:     sha512-mICJrY3QYQWvs[...]0otToYDnaeYiw==
+unpacked size: 85.0 kB                                 
+shasum:        4f1d76cf87b3e143e5f25c18f9d379368081e8ea
+integrity:     sha512-0apozf0aVqeFe[...]QsI2mNGXwfJ3g==
 total files:   10

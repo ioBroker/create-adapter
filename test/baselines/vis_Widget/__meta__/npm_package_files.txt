@@ -3,16 +3,15 @@
 75B   widgets/test-widget/css/style.css    
 7.5kB widgets/test-widget.html             
 2.1kB widgets/test-widget/js/test-widget.js
-3.2kB lib/tools.js                         
 2.7kB io-package.json                      
-978B  package.json                         
+951B  package.json                         
 5.0kB README.md                            
 === Tarball Details === 
 name:          iobroker.test-widget                    
 version:       0.0.1                                   
 filename:      iobroker.test-widget-0.0.1.tgz          
-package size:  7.8 kB                                  
-unpacked size: 22.6 kB                                 
-shasum:        308242b984dbb9df7606134c7381ce55baab6ad4
-integrity:     sha512-uPjHAIP5ZCj8s[...]wdAjW1cVRQIwg==
-total files:   8
+package size:  6.8 kB                                  
+unpacked size: 19.4 kB                                 
+shasum:        444b5664bb6bf23be2babb553cfe4b925c8cef16
+integrity:     sha512-BnF4AY76UK2z0[...]l5CoV4kck+Ohg==
+total files:   7
