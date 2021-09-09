@@ -3,8 +3,8 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.test-widget.svg)](https://www.npmjs.com/package/iobroker.test-widget)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.test-widget.svg)](https://www.npmjs.com/package/iobroker.test-widget)
-![Number of Installations (latest)](https://iobroker.live/badges/test-widget-installed.svg)
-![Number of Installations (stable)](https://iobroker.live/badges/test-widget-stable.svg)
+![Number of Installations](https://iobroker.live/badges/test-widget-installed.svg)
+![Current version in stable repository](https://iobroker.live/badges/test-widget-stable.svg)
 [![Dependency Status](https://img.shields.io/david/AlCalzone/iobroker.test-widget.svg)](https://david-dm.org/AlCalzone/iobroker.test-widget)
 
 [![NPM](https://nodei.co/npm/iobroker.test-widget.png?downloads=true)](https://nodei.co/npm/iobroker.test-widget/)
