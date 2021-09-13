@@ -12,7 +12,7 @@ a) creating a new adapter directory with the creator and copying `.github/workfl
 b) using the replay function to shorten this process:
 
 ```
-npx @iobroker/create-adapter --target=/somewhere/else --replay=/your/adapter/.    create-adapter.json
+npx @iobroker/create-adapter --target=/somewhere/else --replay=/your/adapter/.create-adapter.json
 ```
 
 ---
