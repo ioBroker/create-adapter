@@ -55,20 +55,26 @@ async function generateBaselines(
 
 	// Include the npm package content in the baselines (only for full adapter tests)
 	if (!filterFilesPredicate && files.some((f) => f.name === "package.json")) {
-		let packageContent = execa
-			.sync("npm", ["pack", "--dry-run"], {
+		const packageContent = JSON.parse(
+			execa.sync("npm", ["pack", "--dry-run", "--json"], {
 				cwd: testDir,
 				encoding: "utf8",
-			})
-			.stderr.replace(/^npm notice /gim, "")
-			.trim();
-		packageContent = packageContent.substr(
-			packageContent.indexOf("=== Tarball"),
+			}).stdout,
 		);
+		const packageFiles = packageContent[0].files
+			.map((f: any) => f.path)
+			.sort((a: string, b: string) => {
+				// Put directories on top
+				const isDirA = a.includes("/");
+				const isDirB = b.includes("/");
+				if (isDirA && !isDirB) return -1;
+				if (isDirB && !isDirA) return 1;
+				return a.localeCompare(b);
+			});
 		await fs.ensureDir(path.join(testDir, "__meta__"));
 		await fs.writeFile(
 			path.join(testDir, "__meta__/npm_package_files.txt"),
-			packageContent,
+			packageFiles.join("\n"),
 		);
 	}
 }
