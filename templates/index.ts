@@ -23,7 +23,6 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "_github/workflows/dependabot-auto-merge.yml.ts", templateFunction: require("./_github/workflows/dependabot-auto-merge.yml") },
 	{ name: "_github/workflows/test-and-release.yml.ts", templateFunction: require("./_github/workflows/test-and-release.yml") },
 	{ name: "_gitignore.ts", templateFunction: require("./_gitignore") },
-	{ name: "_npmignore.ts", templateFunction: require("./_npmignore") },
 	{ name: "_prettierignore.ts", templateFunction: require("./_prettierignore") },
 	{ name: "_prettierrc.js.ts", templateFunction: require("./_prettierrc.js") },
 	{ name: "_vscode/extensions.json.ts", templateFunction: require("./_vscode/extensions.json") },

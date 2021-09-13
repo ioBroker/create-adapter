@@ -43,6 +43,16 @@
     "sinon-chai": "^3.7.0"
   },
   "main": "main.js",
+  "files": [
+    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json",
+    "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
+    "admin/build/",
+    "lib/",
+    "www/",
+    "io-package.json",
+    "LICENSE",
+    "main.js"
+  ],
   "scripts": {
     "watch:parcel": "parcel admin/src/index.jsx -d admin/build",
     "build:parcel": "parcel build admin/src/index.jsx -d admin/build",

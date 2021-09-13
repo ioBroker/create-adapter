@@ -121,6 +121,34 @@ const templateFunction: TemplateFunction = async answers => {
 		: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
 	const parcelFiles = `${useAdminReact ? "admin/src/index.tsx" : ""} ${useTabReact ? "admin/src/tab.tsx" : ""}`.trim();
 
+	// Generate whitelist for package files
+	const packageFiles = [
+		"LICENSE",
+		"io-package.json",
+		// We currently don't have web templates, but users might want to add them
+		"www/",
+		...(isAdapter ? (
+			useTypeScript
+				? ["build/"]
+				: ["main.js", "lib/"]
+		) : []),
+		...(isAdapter ? [
+			// Web files in the admin root and all subdirectories except src
+			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
+			// JSON files, but not tsconfig.*.json
+			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json"
+		] : []),
+		...(isAdapter && useReact ? ["admin/build/"] : []),
+		...(isWidget ? ["widgets/"] : [])
+	].sort((a, b) => {
+		// Put directories on top
+		const isDirA = a.includes("/");
+		const isDirB = b.includes("/");
+		if (isDirA && !isDirB) return -1;
+		if (isDirB && !isDirA) return 1;
+		return a.localeCompare(b);
+	});
+
 	const template = `
 {
 	"name": "iobroker.${answers.adapterName.toLowerCase()}",
@@ -149,6 +177,7 @@ const templateFunction: TemplateFunction = async answers => {
 	`) : isWidget ? (`
 		"main": "widgets/${answers.adapterName}.html",
 	`) : ""}
+	"files": ${JSON.stringify(packageFiles)},
 	"scripts": {
 		${isAdapter ? (`
 			${useTypeScript ? (`
