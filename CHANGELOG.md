@@ -14,6 +14,8 @@
 * (AlCalzone) Fix ESLint auto-formatting to generate correct quotes in React (#812)
 * (AlCalzone) Allow exitCode 11 by default for schedule adapters during testing (#811)
 * (AlCalzone) Updated `.gitignore`, added `.eslintignore` file (#813) · [Migration guide](docs/updates/20210906_ignore-files.md)
+* (UncleSamSwiss) Updated alt texts of ioBroker badges in readme (#722)
+* (AlCalzone) Shared testing workflows (#822) · [Migration guide](docs/updates/20210913_shared_testing_workflows.md)
 * (UncleSamSwiss) Readme for adapter created using portal reflects the fact that the repository already exists (#788)
 * (UncleSamSwiss) The default branch can now be chosen, default is "main", but it is possible to change to "master" (#631)
 
