@@ -24,7 +24,7 @@ You are almost done, only a few steps left:
 1. Create a new repository on GitHub with the name `ioBroker.test-adapter`
 1. Initialize the current folder as a new git repository:  
     ```bash
-    git init
+    git init -b main
     git add .
     git commit -m "Initial commit"
     ```

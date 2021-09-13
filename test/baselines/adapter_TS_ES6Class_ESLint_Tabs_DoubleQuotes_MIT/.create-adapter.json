@@ -28,6 +28,7 @@
 	"gitRemoteProtocol": "HTTPS",
 	"dependabot": "yes",
 	"gitCommit": "no",
+	"defaultBranch": "main",
 	"license": "MIT License",
 	"creatorVersion": "1.34.0"
 }
