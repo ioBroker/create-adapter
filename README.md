@@ -8,9 +8,7 @@ Command line utility to quickly create a new adapter or VIS widget for [ioBroker
 ![node](https://img.shields.io/node/v/@iobroker/create-adapter.svg)
 ![npm](https://img.shields.io/npm/v/@iobroker/create-adapter.svg)
 ](https://www.npmjs.com/package/@iobroker/create-adapter)
-[
-![Build Status](https://img.shields.io/travis/ioBroker/create-adapter/master.svg)
-](https://travis-ci.org/ioBroker/create-adapter)
+![Test and Release](https://github.com/ioBroker/create-adapter/workflows/Test%20and%20Release/badge.svg)
 ![License](https://img.shields.io/npm/l/@iobroker/create-adapter.svg)
 [
 ![Changelog](https://img.shields.io/badge/read-Changelog-blue.svg)

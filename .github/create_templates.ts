@@ -26,6 +26,8 @@ async function generateTemplates(
 /* Define the desired templates here */
 
 const baseAnswers = {
+	cli: true,
+	target: "directory",
 	adapterName: "template",
 	description: "Template for adapter development",
 	authorName: "Author",
@@ -35,6 +37,8 @@ const baseAnswers = {
 	dependabot: "yes",
 	license: "MIT License" as any,
 	releaseScript: "yes",
+	gitCommit: "no",
+	defaultBranch: "main",
 } as Answers;
 
 const adapterAnswers: Answers = {

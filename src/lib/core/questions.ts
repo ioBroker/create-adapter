@@ -797,6 +797,28 @@ export const questionGroups: QuestionGroup[] = [
 				migrate: () => "no",
 			},
 			{
+				condition: { name: "cli", value: true },
+				type: "select",
+				name: "defaultBranch",
+				label: "Git Default Branch",
+				expert: true,
+				message: "How should your default Git branch be called?",
+				initial: "main",
+				choices: [
+					{
+						message: "main",
+					},
+					{
+						message: "master",
+						hint: "(deprecated)",
+					},
+				],
+				migrate: (ctx) =>
+					ctx.ioPackageJson.common?.extIcon?.match(/\/main\/admin\//i)
+						? "main"
+						: "master",
+			},
+			{
 				type: "select",
 				name: "license",
 				label: "License",
@@ -882,6 +904,10 @@ export interface UploadedIcon {
 }
 
 export interface Answers {
+	/** false is used in the portal */
+	cli: boolean;
+	/** "github" and "zip" are used in the portal */
+	target: "directory" | "github" | "zip";
 	adapterName: string;
 	description?: string;
 	keywords?: string[];
@@ -914,6 +940,7 @@ export interface Answers {
 	es6class?: "yes" | "no";
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
+	defaultBranch?: "main" | "master";
 	dependabot?: "yes" | "no";
 	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";

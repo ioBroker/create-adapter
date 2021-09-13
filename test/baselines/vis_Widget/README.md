@@ -24,7 +24,7 @@ You are almost done, only a few steps left:
 1. Create a new repository on GitHub with the name `ioBroker.test-widget`
 1. Initialize the current folder as a new git repository:  
 	```bash
-	git init
+	git init -b main
 	git add .
 	git commit -m "Initial commit"
 	```
@@ -35,7 +35,7 @@ You are almost done, only a few steps left:
 
 1. Push all files to the GitHub repo:  
 	```bash
-	git push origin master
+	git push origin main
 	```
 1. Add a new secret under https://github.com/AlCalzone/ioBroker.test-widget/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
 

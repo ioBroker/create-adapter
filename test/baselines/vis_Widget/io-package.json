@@ -55,8 +55,8 @@
 		"main": "main.js",
 		"icon": "test-widget.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-widget/master/admin/test-widget.png",
-		"readme": "https://github.com/AlCalzone/ioBroker.test-widget/blob/master/README.md",
+		"extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-widget/main/admin/test-widget.png",
+		"readme": "https://github.com/AlCalzone/ioBroker.test-widget/blob/main/README.md",
 		"loglevel": "info",
 		"restartAdapters": [
 			"vis"

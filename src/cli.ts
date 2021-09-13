@@ -90,7 +90,7 @@ const creatorOptions = {
 
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
-	let answers: Record<string, any> = { cli: true };
+	let answers: Record<string, any> = { cli: true, target: "directory" };
 	let migrationContext: MigrationContextBase | undefined;
 
 	if (!!argv.replay) {
@@ -306,7 +306,7 @@ async function setupProject_CLI(
 				? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
 				: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
 		const gitCommandArgs = [
-			["init"],
+			["init", "-b", answers.defaultBranch || "main"],
 			["add", "."],
 			["commit", "-m", "Initial commit"],
 			["remote", "add", "origin", gitUrl],

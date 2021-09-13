@@ -103,6 +103,8 @@ async function expectFail(
 }
 
 const baseAnswers: Answers = {
+	cli: true,
+	target: "directory",
 	adapterName: "test-adapter",
 	title: "Is used to test the creator",
 	startMode: "daemon",
@@ -125,6 +127,8 @@ const baseAnswers: Answers = {
 	authorEmail: "al@calzo.ne",
 	gitRemoteProtocol: "HTTPS",
 	dependabot: "yes",
+	gitCommit: "no",
+	defaultBranch: "main",
 	license: "MIT License",
 };
 
@@ -283,6 +287,8 @@ describe("adapter creation =>", () => {
 
 			it("Widget", async () => {
 				const answers: Answers = {
+					cli: true,
+					target: "directory",
 					adapterName: "test-widget",
 					title: "Is used to test the creator",
 					features: ["vis"],
@@ -295,6 +301,8 @@ describe("adapter creation =>", () => {
 					authorEmail: "al@calzo.ne",
 					gitRemoteProtocol: "HTTPS",
 					dependabot: "yes",
+					gitCommit: "no",
+					defaultBranch: "main",
 					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget", answers);
@@ -586,6 +594,22 @@ describe("adapter creation =>", () => {
 					"schedule",
 					answers,
 					(file) => file.name === "test/integration.js",
+				);
+			});
+
+			it("Portal w/ GitHub", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					cli: false,
+					target: "github",
+					releaseScript: "yes",
+				};
+				await expectSuccess(
+					"portal-github",
+					answers,
+					(file) =>
+						file.name === "README.md" ||
+						file.name.endsWith("test-and-release.yml"),
 				);
 			});
 		});
