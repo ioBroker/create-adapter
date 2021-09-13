@@ -12,6 +12,7 @@ export = (answers => {
 	const useReact =
 		answers.adminReact === "yes" || answers.tabReact === "yes";
 	const autoInitGit = answers.gitCommit === "yes";
+	const defaultBranch = answers.defaultBranch || "main";
 	const useReleaseScript = answers.releaseScript === "yes";
 	const useDevServer = answers.devServer === "yes";
 	const useDependabot = answers.dependabot === "yes";
@@ -91,7 +92,7 @@ ${isGitHub ?
 ${autoInitGit ? "" : (
 `1. Initialize the current folder as a new git repository:  
 	\`\`\`bash
-	git init
+	git init -b ${defaultBranch}
 	git add .
 	git commit -m "Initial commit"
 	\`\`\`
@@ -102,7 +103,7 @@ ${autoInitGit ? "" : (
 `)}
 1. Push all files to the GitHub repo${autoInitGit ? ". The creator has already set up the local repository for you" : ""}:  
 	\`\`\`bash
-	git push origin main
+	git push origin ${defaultBranch}
 	\`\`\`
 ${useDependabot ? (
 `1. Add a new secret under https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/settings/secrets. It must be named \`AUTO_MERGE_TOKEN\` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.

@@ -38,6 +38,7 @@ const baseAnswers = {
 	license: "MIT License" as any,
 	releaseScript: "yes",
 	gitCommit: "no",
+	defaultBranch: "main",
 } as Answers;
 
 const adapterAnswers: Answers = {

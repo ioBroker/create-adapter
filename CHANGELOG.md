@@ -15,7 +15,7 @@
 * (AlCalzone) Allow exitCode 11 by default for schedule adapters during testing (#811)
 * (AlCalzone) Updated `.gitignore`, added `.eslintignore` file (#813) · [Migration guide](docs/updates/20210906_ignore-files.md)
 * (UncleSamSwiss) Readme for adapter created using portal reflects the fact that the repository already exists (#788)
-* (UncleSamSwiss) Replaced all occurrences of "master" for newly created adapters with "main" (#631)
+* (UncleSamSwiss) The default branch can now be chosen, default is "main", but it is possible to change to "master" (#631)
 
 ## 1.34.1 (2021-07-07)
 * (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)

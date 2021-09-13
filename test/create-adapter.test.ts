@@ -102,6 +102,7 @@ const baseAnswers: Answers = {
 	gitRemoteProtocol: "HTTPS",
 	dependabot: "yes",
 	gitCommit: "no",
+	defaultBranch: "main",
 	license: "MIT License",
 };
 
@@ -275,6 +276,7 @@ describe("adapter creation =>", () => {
 					gitRemoteProtocol: "HTTPS",
 					dependabot: "yes",
 					gitCommit: "no",
+					defaultBranch: "main",
 					license: "MIT License",
 				};
 				await expectSuccess("vis_Widget", answers);

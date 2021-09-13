@@ -12,6 +12,7 @@ export = (async answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	const supportCustom = answers.adminFeatures && answers.adminFeatures.indexOf("custom") > -1;
 	const supportTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
+	const defaultBranch = answers.defaultBranch || "main";
 
 	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
 
@@ -66,8 +67,8 @@ export = (async answers => {
 		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${getIconName(answers)}",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/main/admin/${getIconName(answers)}",
-		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/main/README.md",
+		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/${defaultBranch}/admin/${getIconName(answers)}",
+		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/${defaultBranch}/README.md",
 		"loglevel": "info",
 		${isWidget ? (`
 			"restartAdapters": ["vis"],
