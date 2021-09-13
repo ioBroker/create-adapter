@@ -6,10 +6,16 @@ Github recently added support for [composite actions](https://github.blog/change
 -   https://github.com/ioBroker/testing-action-adapter - Adapter integration tests
 -   https://github.com/ioBroker/testing-action-deploy - Automatic deploy to npm, Github Releases and Sentry
 
-This leads to a greatly simplified testing workflow file. To migrate, we recommend:
+This leads to a greatly simplified testing workflow file. To migrate, we recommend:  
 a) creating a new adapter directory with the creator and copying `.github/workflows/test-and-release.yml` to your adapter directory  
-**or**  
-b) using the replay function.
+**- or -**  
+b) using the replay function to shorten this process:
+
+```
+npx @iobroker/create-adapter --target=/somewhere/else --replay=/your/adapter/.    create-adapter.json
+```
+
+---
 
 Here's an example for a **TypeScript** adapter:
 

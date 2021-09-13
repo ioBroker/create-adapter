@@ -60,14 +60,7 @@ ${isAdapter ? (
       matrix:
         node-version: [${adapterTestVersions.join(", ")}]
         os: [${adapterTestOS.join(", ")}]
-${(adapterTestOS.includes("windows-latest") && adapterTestVersions.includes("8.x")) ? (
-  // This is unnecessary but I'm leaving it here in case we need it again.
-  // The else branch will never trigger
-`        exclude:
-          # Don't test Node.js 8 on Windows. npm is weird here
-          - os: windows-latest
-            node-version: 8.x`
-) :""}
+
     steps:
       - uses: ioBroker/testing-action-adapter@v1
         with:
