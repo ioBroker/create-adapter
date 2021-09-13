@@ -1,17 +1,7 @@
-=== Tarball Contents === 
-1.1kB  LICENSE               
-707B   admin/style.css       
-569B   admin/index_m.html    
-2.6kB  io-package.json       
-2.8kB  package.json          
-6.4kB  README.md             
-62.4kB admin/test-adapter.png
-=== Tarball Details === 
-name:          iobroker.test-adapter                   
-version:       0.0.1                                   
-filename:      iobroker.test-adapter-0.0.1.tgz         
-package size:  68.0 kB                                 
-unpacked size: 76.6 kB                                 
-shasum:        f780325a972645d389494e6004b1472221de279c
-integrity:     sha512-bqZh+Sq0yAsdT[...]FSZ2fxV730t0A==
-total files:   7
+admin/index_m.html
+admin/style.css
+admin/test-adapter.png
+io-package.json
+LICENSE
+package.json
+README.md
