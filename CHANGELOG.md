@@ -15,6 +15,8 @@
 * (AlCalzone) Allow exitCode 11 by default for schedule adapters during testing (#811)
 * (AlCalzone) Updated `.gitignore`, added `.eslintignore` file (#813) · [Migration guide](docs/updates/20210906_ignore-files.md)
 * (AlCalzone) Remove `.npmignore` blacklist, use `files` whitelist in `package.json` instead (#816) · [Migration guide](docs/updates/20210906_files_whitelist.md)
+* (UncleSamSwiss) Updated alt texts of ioBroker badges in readme (#722)
+* (AlCalzone) Shared testing workflows (#822) · [Migration guide](docs/updates/20210913_shared_testing_workflows.md)
 
 ## 1.34.1 (2021-07-07)
 * (UncleSamSwiss) Fix missing `common.main` in `io-package.json` (#778)
