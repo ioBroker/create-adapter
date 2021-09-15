@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.0.0 (2021-09-15)
 * (AlCalzone) Require Node.js 12+ to execute the creator (#767)
 * (AlCalzone) Add `common.title` property back into `io-package.json` (#796)
 * (AlCalzone) Drop support for Travis CI (#797) · [Migration guide](docs/updates/20210818_no_travis.md)
