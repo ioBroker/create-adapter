@@ -27,7 +27,7 @@
     "@babel/plugin-proposal-decorators": "^7.15.4",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-typescript": "^7.15.0",
-    "@iobroker/adapter-react": "1.6.15",
+    "@iobroker/adapter-react": "2.0.13",
     "@iobroker/testing": "^2.5.1",
     "@material-ui/core": "^4.12.3",
     "@types/chai": "^4.2.21",
