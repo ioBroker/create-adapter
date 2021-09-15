@@ -55,7 +55,7 @@ jobs:
           node-version: '${latestNodeVersion}'
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           # install-command: 'npm install'${useTypeScript ? (`
-          check: true`) : ""}${useESLint ? (`
+          type-checking: true`) : ""}${useESLint ? (`
           lint: true`) : ""}
 
 ${isAdapter ? (
