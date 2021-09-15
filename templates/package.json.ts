@@ -77,7 +77,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"react@16", // Pinned to v16 for now, don't forget to update @types/react[-dom] aswell
 			"react-dom@16",
 			// ioBroker react framework
-			"@iobroker/adapter-react@1.6.15",
+			"@iobroker/adapter-react@2.0.13",
 			// UI library
 			"@material-ui/core",
 			// This is needed by parcel to compile JSX/TSX
@@ -109,7 +109,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"prettier",
 		] : [])
 		.concat(useNyc ? ["nyc"] : [])
-		.concat(useReleaseScript ? ["@alcalzone/release-script"] : [])
+		.concat(useReleaseScript ? ["@alcalzone/release-script@2"] : [])
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
