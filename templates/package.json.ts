@@ -109,7 +109,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"prettier",
 		] : [])
 		.concat(useNyc ? ["nyc"] : [])
-		.concat(useReleaseScript ? ["@alcalzone/release-script"] : [])
+		.concat(useReleaseScript ? ["@alcalzone/release-script@2"] : [])
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
