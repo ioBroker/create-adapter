@@ -8,6 +8,7 @@
 ## __WORK IN PROGRESS__
 * (UncleSamSwiss) Release script is currently fixed to version 2 as we don't support the new command line format yet (#823)
 * (UncleSamSwiss) Fixed test-and-release workflow for TypeScript (#823)
+* (UncleSamSwiss) Updated adapter-react to 2.0.13 (#823)
 
 ## 2.0.0 (2021-09-15)
 * (AlCalzone) Require Node.js 12+ to execute the creator (#767)
