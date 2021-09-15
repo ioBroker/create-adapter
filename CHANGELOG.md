@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.0.1 (2021-09-15)
 * (UncleSamSwiss) Release script is currently fixed to version 2 as we don't support the new command line format yet (#823)
 * (UncleSamSwiss) Fixed test-and-release workflow for TypeScript (#823)
 * (UncleSamSwiss) Updated adapter-react to 2.0.13 (#823)
