@@ -67,7 +67,7 @@
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "source-map-support": "^0.5.19",
-    "ts-node": "^10.0.0"
+    "ts-node": "^10.2.1"
   },
   "dependencies": {
     "@google-cloud/translate": "^6.2.4",
