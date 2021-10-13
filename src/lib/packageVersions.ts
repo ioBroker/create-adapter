@@ -42,7 +42,7 @@ async function fetchAllPackageVersions(packageName: string): Promise<string[]> {
 	// If an https-proxy is defined as an env variable, use it
 	options = applyHttpsProxy(options);
 
-	const response = await axios(options);
+	const response = await axios.request<any>(options);
 	if (response.status !== 200) {
 		throw new Error(
 			`Failed to fetch the versions for ${packageName} (${response.status})`,
@@ -88,7 +88,7 @@ async function fetchLatestPackageVersion(
 	// If an https-proxy is defined as an env variable, use it
 	options = applyHttpsProxy(options);
 
-	const response = await axios(options);
+	const response = await axios.request<any>(options);
 	if (response.status !== 200) {
 		if (fallbackVersion) return fallbackVersion;
 		throw new Error(

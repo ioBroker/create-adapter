@@ -25,7 +25,7 @@ async function generateBaselines(
 		// Download JSON schema for validation
 		if (!ioPackageSchema) {
 			ioPackageSchema = (
-				await axios({
+				await axios.request<any>({
 					url: "https://json.schemastore.org/io-package",
 				})
 			).data;
