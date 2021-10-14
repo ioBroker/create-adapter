@@ -1,6 +1,7 @@
+import { translateText } from "@iobroker/adapter-dev/build/translate";
 import { AdapterSettings, Answers, getDefaultAnswer } from "./core/questions";
 import type { TemplateFunction } from "./createAdapter";
-import { formatJsonString, translateText } from "./tools";
+import { formatJsonString } from "./tools";
 
 export type Languages =
 	| "en"

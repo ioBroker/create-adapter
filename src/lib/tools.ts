@@ -1,7 +1,6 @@
-import { TranslationServiceClient } from "@google-cloud/translate";
 import { isArray, isObject } from "alcalzone-shared/typeguards";
 import { bold } from "ansi-colors";
-import axios, { AxiosRequestConfig } from "axios";
+import type { AxiosRequestConfig } from "axios";
 import { spawn, SpawnOptions } from "child_process";
 import { Linter } from "eslint";
 import * as fs from "fs-extra";
@@ -19,8 +18,6 @@ export function error(message: string): void {
 }
 
 export const isWindows = /^win/.test(os.platform());
-const isTesting = !!process.env.TESTING;
-const useGoogleTranslateV3 = !!process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
 export interface ExecuteCommandOptions {
 	/** Whether the executed command should be logged to the stdout. Default: false */
@@ -210,96 +207,6 @@ export function applyHttpsProxy(
 		}
 	}
 	return options;
-}
-
-const translationCache = new Map<string, Map<string, string>>();
-
-async function translateGoogleLegacy(
-	text: string,
-	targetLang: string,
-): Promise<string> {
-	if (isTesting) return `Mock translation of '${text}' to '${targetLang}'`;
-	if (targetLang === "en") return text;
-	try {
-		const url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(
-			text,
-		)}&ie=UTF-8&oe=UTF-8`;
-		let options: AxiosRequestConfig = {
-			url,
-			timeout: getRequestTimeout(),
-		};
-
-		// If an https-proxy is defined as an env variable, use it
-		options = applyHttpsProxy(options);
-
-		const response = await axios(options);
-		if (isArray(response.data)) {
-			// we got a valid response
-			return response.data[0][0][0];
-		}
-		error(`Invalid response for translate request`);
-	} catch (e: any) {
-		if (e.response?.status === 429) {
-			error(
-				`Could not translate to "${targetLang}": Rate-limited by Google Translate`,
-			);
-		} else {
-			error(`Could not translate to "${targetLang}": ${e}`);
-		}
-	}
-	return text;
-}
-
-async function translateGoogleV3(
-	text: string,
-	targetLang: string,
-): Promise<string> {
-	if (targetLang === "en") return text;
-	let credentials;
-	try {
-		credentials = await fs.readJson(
-			process.env.GOOGLE_APPLICATION_CREDENTIALS || "",
-		);
-	} catch (error) {
-		// if the credentials file is not found, use legacy translation
-		return translateGoogleLegacy(text, targetLang);
-	}
-	try {
-		const translationClient = new TranslationServiceClient();
-		const request = {
-			parent: `projects/${credentials.project_id}/locations/global`,
-			contents: [text],
-			mimeType: "text/plain",
-			sourceLanguageCode: "en",
-			targetLanguageCode: targetLang,
-		};
-		const [response] = await translationClient.translateText(request);
-		if (response.translations && response.translations[0]?.translatedText) {
-			return response.translations[0].translatedText;
-		}
-	} catch (e: any) {
-		error(`Could not translate to "${targetLang}": ${e}`);
-	}
-
-	return text;
-}
-
-export async function translateText(
-	text: string,
-	targetLang: string,
-): Promise<string> {
-	// Try to read the translation from the translation cache
-	if (!translationCache.has(targetLang))
-		translationCache.set(targetLang, new Map());
-	const langCache = translationCache.get(targetLang)!;
-	// or fall back to an online translation
-	if (!langCache.has(text)) {
-		const doTranslateText = useGoogleTranslateV3
-			? translateGoogleV3
-			: translateGoogleLegacy;
-		langCache.set(text, await doTranslateText(text, targetLang));
-	}
-	return langCache.get(text)!;
 }
 
 export function formatLicense(licenseText: string, answers: Answers): string {
