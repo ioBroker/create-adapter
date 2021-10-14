@@ -95,7 +95,11 @@ const templateFunction: TemplateFunction = async answers => {
 			"@babel/preset-env",
 			"@babel/preset-typescript",
 		]: [])
-		.concat(useESLint ? ["eslint"] : [])
+		.concat(useESLint ? [
+			// The downstream packages like typescript-eslint don't support ESLint 8 yet.
+			// Until they do, pin the version
+			"eslint@7"
+		] : [])
 		.concat((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
 			"@typescript-eslint/parser",
