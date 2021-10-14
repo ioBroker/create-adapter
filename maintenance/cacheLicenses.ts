@@ -38,7 +38,7 @@ async function loadLicense(
 		// If an https-proxy is defined as an env variable, use it
 		options = applyHttpsProxy(options);
 
-		const response = await axios(options);
+		const response = await axios.request<any>(options);
 		return {
 			id: response.data.spdx_id,
 			name: response.data.name,

@@ -15,7 +15,7 @@ const options: AxiosRequestConfig = {
 
 	let createPrResponse: AxiosResponse<any>;
 	try {
-		createPrResponse = await axios({
+		createPrResponse = await axios.request<any>({
 			...options,
 			url: `https://api.github.com/repos/ioBroker/ioBroker.template/pulls`,
 			data: {
@@ -40,7 +40,7 @@ ${JSON.stringify(createPrResponse.data, null, 4)}`),
 
 	// Add assignees
 	/* const assignResponse: Record<string, any> = */
-	await axios({
+	await axios.request<any>({
 		...options,
 		url: `https://api.github.com/repos/ioBroker/ioBroker.template/issues/${issueNumber}/assignees`,
 		data: {

@@ -232,7 +232,7 @@ async function translateGoogleLegacy(
 		// If an https-proxy is defined as an env variable, use it
 		options = applyHttpsProxy(options);
 
-		const response = await axios(options);
+		const response = await axios.request<any>(options);
 		if (isArray(response.data)) {
 			// we got a valid response
 			return response.data[0][0][0];

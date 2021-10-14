@@ -9,7 +9,7 @@ const proxyquire = proxyquireModule.noPreserveCache();
 const { fetchPackageVersion, fetchPackageReferenceVersion } = proxyquire<
 	typeof import("./packageVersions")
 >("./packageVersions", {
-	axios: axiosMock,
+	axios: { request: axiosMock },
 });
 
 function returnVersions(versions: string[]) {
