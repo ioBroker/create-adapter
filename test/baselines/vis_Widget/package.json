@@ -20,10 +20,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@iobroker/testing": "^2.5.2",
-    "@types/gulp": "^4.0.9",
-    "axios": "^0.23.0",
-    "gulp": "^4.0.2"
+    "@iobroker/adapter-dev": "^0.1.0",
+    "@iobroker/testing": "^2.5.2"
   },
   "main": "widgets/test-widget.html",
   "files": [
@@ -34,7 +32,8 @@
   ],
   "scripts": {
     "test:package": "mocha test/package --exit",
-    "test": "npm run test:package"
+    "test": "npm run test:package",
+    "translate": "translate-adapter"
   },
   "bugs": {
     "url": "https://github.com/AlCalzone/ioBroker.test-widget/issues"
