@@ -84,12 +84,10 @@ describe("LocalMigrationContext.hasDevDependency()", () => {
 		const context = new LocalMigrationContext(__dirname);
 		context.packageJson = {
 			devDependencies: {
-				gulp: "^3.9.1",
 				mocha: "^4.1.0",
 				chai: "^4.1.2",
 			},
 		};
-		expect(context.hasDevDependency("gulp")).to.be.true;
 		expect(context.hasDevDependency("mocha")).to.be.true;
 		expect(context.hasDevDependency("chai")).to.be.true;
 	});
@@ -98,7 +96,6 @@ describe("LocalMigrationContext.hasDevDependency()", () => {
 		const context = new LocalMigrationContext(__dirname);
 		context.packageJson = {
 			devDependencies: {
-				gulp: "^3.9.1",
 				mocha: "^4.1.0",
 				chai: "^4.1.2",
 			},

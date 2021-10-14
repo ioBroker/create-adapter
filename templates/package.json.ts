@@ -34,12 +34,9 @@ const templateFunction: TemplateFunction = async answers => {
 
 	const devDependencyPromises = ([] as string[])
 		.concat([
-			// gulp is required for repo maintenance
-			"@types/gulp",
-			"gulp",
-			"axios",
-			// testing is always required
+			// testing and translations are always required
 			"@iobroker/testing",
+			"@iobroker/adapter-dev",
 		])
 		.concat(isAdapter ? [
 			// support adapter testing by default
@@ -211,6 +208,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"test:package": "mocha test/package --exit",
 			"test": "npm run test:package",
 		`) : ""}
+			"translate": "translate-adapter",
 		${useReleaseScript ? `
 			"release": "release-script",` : ""}
 	},

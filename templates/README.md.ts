@@ -53,6 +53,7 @@ export = (answers => {
 	if (useESLint) {
 		npmScripts["lint"] = "Runs \`ESLint\` to check your code for formatting errors and potential bugs.";
 	}
+	npmScripts["translate"] = "Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details.";
 	if (useReleaseScript) {
 		npmScripts["release"] = "Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details.";
 	}
