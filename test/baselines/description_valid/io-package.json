@@ -18,7 +18,7 @@
 		},
 		"title": "Is used to test the creator",
 		"titleLang": {
-			"en": "Mock translation of 'Is used to test the creator' to 'en'",
+			"en": "Is used to test the creator",
 			"de": "Mock translation of 'Is used to test the creator' to 'de'",
 			"ru": "Mock translation of 'Is used to test the creator' to 'ru'",
 			"pt": "Mock translation of 'Is used to test the creator' to 'pt'",
@@ -30,7 +30,7 @@
 			"zh-cn": "Mock translation of 'Is used to test the creator' to 'zh-cn'"
 		},
 		"desc": {
-			"en": "Mock translation of 'This is a short description' to 'en'",
+			"en": "This is a short description",
 			"de": "Mock translation of 'This is a short description' to 'de'",
 			"ru": "Mock translation of 'This is a short description' to 'ru'",
 			"pt": "Mock translation of 'This is a short description' to 'pt'",
