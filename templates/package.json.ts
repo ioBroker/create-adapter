@@ -22,23 +22,23 @@ const templateFunction: TemplateFunction = async answers => {
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
-	const useDevcontainer = !!answers.tools?.includes("devcontainer");
 
-	const dependencyPromises = ([] as string[])
-		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
+	const dependencyPromises = [
+		...(isAdapter ? ["@iobroker/adapter-core"] : [])
+	]
 		.sort()
 		.map((dep) => (async () => `"${dep}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
 		;
 	const dependencies = await Promise.all(dependencyPromises);
 
-	const devDependencyPromises = ([] as string[])
-		.concat([
+	const devDependencyPromises = [
+		...([
 			// testing and translations are always required
 			"@iobroker/testing",
 			"@iobroker/adapter-dev",
-		])
-		.concat(isAdapter ? [
+		]),
+		...(isAdapter ? [
 			// support adapter testing by default
 			"chai",
 			"chai-as-promised",
@@ -46,8 +46,8 @@ const templateFunction: TemplateFunction = async answers => {
 			"sinon",
 			"sinon-chai",
 			"proxyquire",
-		] : [])
-		.concat(isAdapter && useTypeChecking ? [
+		] : []),
+		...(isAdapter && useTypeChecking ? [
 			"@types/chai",
 			"@types/chai-as-promised",
 			"@types/mocha",
@@ -56,20 +56,25 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/proxyquire",
 			// and NodeJS typings
 			"@types/node@14",
-		] : [])
-		.concat(useTypeChecking ? [
+		] : []),
+		...(useTypeChecking ? [
 			"typescript@~4.4",
-		] : [])
-		.concat(useTypeScript ? [
+		] : []),
+		...((useTypeScript || useReact) ? [
+			// If we need to compile anything, do it with ESBuild/Estrella
+			"estrella",
+			// TODO: when https://github.com/rsms/estrella/pull/47/files is merged,
+			// add esbuild as a devDependency
+			"tiny-glob",
+		] : []),
+		...(useTypeScript ? [
 			// enhance testing through TS tools
 			"source-map-support",
 			"ts-node",
 			// to clean the build dir
 			"rimraf",
-		] : [])
-		.concat(useReact ? [
-			// We use parcel as the bundler
-			"parcel-bundler",
+		] : []),
+		...(useReact ? [
 			// React
 			"react@16", // Pinned to v16 for now, don't forget to update @types/react[-dom] aswell
 			"react-dom@16",
@@ -77,40 +82,32 @@ const templateFunction: TemplateFunction = async answers => {
 			"@iobroker/adapter-react@2.0.13",
 			// UI library
 			"@material-ui/core",
-			// This is needed by parcel to compile JSX/TSX
-			"@babel/cli",
-			"@babel/core",
-		]: [])
-		.concat(useTypeChecking && useReact ? [
+		] : []),
+		...(useTypeChecking && useReact ? [
 			// React's type definitions
 			"@types/react@16",
 			"@types/react-dom@16",
-		]: [])
-		.concat(useTypeScript && useReact ? [
-			// We need this for parcel to support some TypeScript features
-			"@babel/plugin-proposal-decorators",
-			"@babel/preset-env",
-			"@babel/preset-typescript",
-		]: [])
-		.concat(useESLint ? [
+		] : []),
+		...(useESLint ? [
 			// The downstream packages like typescript-eslint don't support ESLint 8 yet.
 			// Until they do, pin the version
 			"eslint@7"
-		] : [])
-		.concat((useESLint && useTypeScript) ? [
+		] : []),
+		...((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
 			"@typescript-eslint/parser",
-		] : [])
-		.concat((useESLint && useReact) ? [
+		] : []),
+		...((useESLint && useReact) ? [
 			"eslint-plugin-react",
-		] : [])
-		.concat((useESLint && usePrettier) ? [
+		] : []),
+		...((useESLint && usePrettier) ? [
 			"eslint-config-prettier",
 			"eslint-plugin-prettier",
 			"prettier",
-		] : [])
-		.concat(useNyc ? ["nyc"] : [])
-		.concat(useReleaseScript ? ["@alcalzone/release-script@2"] : [])
+		] : []),
+		...(useNyc ? ["nyc"] : []),
+		...(useReleaseScript ? ["@alcalzone/release-script@2"] : [])
+	]
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
@@ -120,7 +117,6 @@ const templateFunction: TemplateFunction = async answers => {
 	const gitUrl = answers.gitRemoteProtocol === "HTTPS"
 		? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
 		: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
-	const parcelFiles = `${useAdminReact ? "admin/src/index.tsx" : ""} ${useTabReact ? "admin/src/tab.tsx" : ""}`.trim();
 
 	// Generate whitelist for package files
 	const packageFiles = [
@@ -181,19 +177,22 @@ const templateFunction: TemplateFunction = async answers => {
 	"files": ${JSON.stringify(packageFiles)},
 	"scripts": {
 		${isAdapter ? (`
+			${(useTypeScript || useReact) ? (`
+				"prebuild": "rimraf${useTypeScript ? " build" : ""}${useReact ? " admin/build" : ""}",
+				"build": "node .build.js${useTypeScript ? " -typescript" : ""}${useReact ? " -react" : ""}",
+				"watch": "npm run build -- --watch",
+			`) : ""}
 			${useTypeScript ? (`
-				"prebuild": "rimraf ./build",
-				${useReact ? `"build:parcel": "parcel build ${parcelFiles} -d admin/build",` : ""}
-				"build:ts": "tsc -p tsconfig.build.json",
-				"build": "npm run build:ts${useReact ? " && npm run build:parcel" : ""}",
-				${useReact ? `"watch:parcel": "parcel ${parcelFiles} -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",` : ""}
-				"watch:ts": "tsc -p tsconfig.build.json --watch",
-				"watch": "npm run watch:ts",
+				"build:ts": "node .build.js -typescript",
+				"watch:ts": "npm run build:ts -- --watch",
+			`) : ""}
+			${useReact ? (`
+				"build:react": "node .build.js -react",
+				"watch:react": "npm run build:react -- --watch",
+			`) : ""}
+			${useTypeScript ? (`
 				"test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
 			`) : (`
-				${useReact ? `"watch:parcel": "parcel ${parcelFiles.replace('tsx', 'jsx')} -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",
-				"build:parcel": "parcel build ${parcelFiles.replace('tsx', 'jsx')} -d admin/build",
-				"build": "npm run build:parcel",` : ""}
 				"test:js": "mocha --config test/mocharc.custom.json \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
 			`)}
 			"test:package": "mocha test/package --exit",
