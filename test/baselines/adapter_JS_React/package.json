@@ -22,8 +22,6 @@
     "@iobroker/adapter-core": "^2.5.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.3",
-    "@babel/core": "^7.17.3",
     "@iobroker/adapter-dev": "^1.0.0",
     "@iobroker/adapter-react": "2.0.13",
     "@iobroker/testing": "^2.5.4",
@@ -32,13 +30,14 @@
     "chai-as-promised": "^7.1.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint": "^7.32.0",
+    "estrella": "^1.4.1",
     "mocha": "^9.2.0",
-    "parcel-bundler": "^1.12.5",
     "proxyquire": "^2.1.3",
     "react-dom": "^16.14.0",
     "react": "^16.14.0",
     "sinon": "^13.0.1",
-    "sinon-chai": "^3.7.0"
+    "sinon-chai": "^3.7.0",
+    "tiny-glob": "^0.2.9"
   },
   "main": "main.js",
   "files": [
@@ -52,9 +51,11 @@
     "main.js"
   ],
   "scripts": {
-    "watch:parcel": "parcel admin/src/index.jsx -d admin/build",
-    "build:parcel": "parcel build admin/src/index.jsx -d admin/build",
-    "build": "npm run build:parcel",
+    "prebuild": "rimraf admin/build",
+    "build": "node .build.js -react",
+    "watch": "npm run build -- --watch",
+    "build:react": "node .build.js -react",
+    "watch:react": "npm run build:react -- --watch",
     "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
