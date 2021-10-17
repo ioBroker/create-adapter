@@ -56,6 +56,7 @@ async function translateYandex(text, targetLang, apiKey) {
     }
     try {
         const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${apiKey}&text=${encodeURIComponent(text)}&lang=en-${targetLang}`;
+        /** @type {any} */
         const response = await axios({url, timeout: 15000});
         if (response.data && response.data.text && isArray(response.data.text)) {
             return response.data.text[0];
