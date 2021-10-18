@@ -90,12 +90,21 @@ export async function getTranslatedSettings(
 	return translatedSettings;
 }
 
-export function getI18nJsonTemplate(language: Languages): TemplateFunction {
+export function getI18nJsonTemplate(
+	language: Languages,
+	forReact: boolean,
+): TemplateFunction {
 	return async (answers) => {
 		const isAdapter = answers.features.indexOf("adapter") > -1;
-		const useReact =
-			answers.adminReact === "yes" || answers.tabReact === "yes";
-		if (!isAdapter || !useReact) return;
+		if (!isAdapter) return;
+		if (forReact) {
+			const useReact =
+				answers.adminReact === "yes" || answers.tabReact === "yes";
+			if (!useReact) return;
+		} else {
+			const i18nJson = answers.i18n === "JSON";
+			if (!i18nJson) return;
+		}
 
 		const translatedSettings = await getTranslatedSettingsForLanguage(
 			language,
