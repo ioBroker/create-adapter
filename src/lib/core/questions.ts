@@ -652,10 +652,20 @@ export const questionGroups: QuestionGroup[] = [
 				label: "Translation Management",
 				optional: true,
 				expert: true,
-				message:
-					"Would you like to use JSON files (required for Weblate) or directly words.js to manage translations?",
+				message: "How would you like to manage translations?",
 				initial: "words.js",
-				choices: ["words.js", "JSON"],
+				choices: [
+					{
+						message: "JSON files",
+						hint: "(recommended, required for Weblate)",
+						value: "JSON",
+					},
+					{
+						message: "words.js",
+						hint: "(legacy)",
+						value: "words.js",
+					},
+				],
 				migrate: async (ctx) =>
 					(await ctx.fileExists("admin/i18n/en/translations.json"))
 						? "JSON"
