@@ -10,7 +10,7 @@ Simply follow these steps to switch from `gulp` to `@iobroker/adapter-dev`:
 1. Remove the following dev-dependencies from your `package.json`:
     - `gulp`
     - `@types/gulp` (if available)
-    - `axios` (except if you are using it in other development tasks)
+    - `axios` (except if you are using it in other development tasks or in production)
 1. Add the dev-dependency `@iobroker/adapter-dev`
 1. Add the following to the `"scripts"` section of your `package.json`:
 
