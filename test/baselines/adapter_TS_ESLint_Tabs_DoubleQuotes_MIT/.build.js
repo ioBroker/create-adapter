@@ -24,5 +24,8 @@ if (opts.typescript) {
 			format: "cjs",
 			target: "node12",
 		});
-	})().catch(() => process.exit(1));
+	})().catch((e) => {
+		console.error(e);
+		process.exit(1)
+	});
 }

@@ -16,6 +16,7 @@ if (opts.react) {
 			bundle: true,
 			splitting: true,
 			format: "esm",
+			target: "es2018",
 			minify: !cliopts.watch,
 			outdir: "admin/build",
 			sourcemap: true,
@@ -27,7 +28,10 @@ if (opts.react) {
 					: '"production"',
 			},
 		});
-	})().catch(() => process.exit(1));
+	})().catch((e) => {
+		console.error(e);
+		process.exit(1)
+	});
 }
 
 if (opts.typescript) {
@@ -48,5 +52,8 @@ if (opts.typescript) {
 			format: "cjs",
 			target: "node12",
 		});
-	})().catch(() => process.exit(1));
+	})().catch((e) => {
+		console.error(e);
+		process.exit(1)
+	});
 }
