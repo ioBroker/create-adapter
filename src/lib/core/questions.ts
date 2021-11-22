@@ -657,7 +657,8 @@ export const questionGroups: QuestionGroup[] = [
 				choices: [
 					{
 						message: "JSON files",
-						hint: "(recommended for React, required for Weblate)",
+						hint:
+							"(required for Weblate; words.js will be generated using @iobroker/adapter-dev)",
 						value: "JSON",
 					},
 					{
