@@ -109,6 +109,7 @@ ${escapeDeploy(
           # To enable create a API-Token in Sentry (User settings, API keys)
           # Enter this token as a GitHub secret (with name SENTRY_AUTH_TOKEN) in the repository options
           # Then uncomment and customize the following block:
+          sentry: true
           sentry-token: \${{ secrets.SENTRY_AUTH_TOKEN }}
           sentry-project: "iobroker-${adapterName}"
           sentry-version-prefix: "iobroker.${adapterName}"${needsBuild ? (`
