@@ -34,13 +34,13 @@ name: Test and Release
 on:
   push:
     branches:
-      - "*"
+      - "${answers.defaultBranch ?? "main"}"
     tags:
       # normal versions
       - "v[0-9]+.[0-9]+.[0-9]+"
       # pre-releases
       - "v[0-9]+.[0-9]+.[0-9]+-**"
-    pull_request: {}
+  pull_request: {}
 
 jobs:
   # Performs quick checks before the expensive test runs
