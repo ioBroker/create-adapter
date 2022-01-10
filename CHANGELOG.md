@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.0.2 (2022-01-10)
 * (UncleSamSwiss) Updated axios to version 0.23.0 including generated typescript code (#833) · [Migration guide](docs/updates/20211013_axios_0_23.md)
 * (AlCalzone) Add missing `sentry: true` to deploy workflow template (#849)
 * (AlCalzone) Fixed a syntax error in the testing workflow file (#861) · [Migration guide](docs/updates/20220109_testing_workflow_fixes.md)
