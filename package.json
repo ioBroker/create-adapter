@@ -57,7 +57,7 @@
     "coveralls": "^3.0.11",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "execa": "^5.1.1",
+    "execa": "^6.0.0",
     "jsonschema": "^1.4.0",
     "mocha": "^9.1.2",
     "nyc": "^15.0.1",
