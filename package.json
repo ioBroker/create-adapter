@@ -71,7 +71,7 @@
   "dependencies": {
     "@google-cloud/translate": "^6.2.4",
     "@typescript-eslint/parser": "^4.22.0",
-    "alcalzone-shared": "^3.0.4",
+    "alcalzone-shared": "^4.0.1",
     "ansi-colors": "^4.1.1",
     "axios": "^0.24.0",
     "debug": "^4.1.1",
