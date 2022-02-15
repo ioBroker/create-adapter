@@ -7,6 +7,7 @@
 -->
 ## __WORK IN PROGRESS__
 * (UncleSamSwiss) Switched from `gulp` to `@iobroker/adapter-dev` (#839) · [Migration guide](docs/updates/20211018_adapter-dev.md)
+* (AlCalzone) Add link to generated adapter in console output (#879)
 
 ## 2.0.2 (2022-01-10)
 * (UncleSamSwiss) Updated axios to version 0.23.0 including generated typescript code (#833) · [Migration guide](docs/updates/20211013_axios_0_23.md)
