@@ -58,7 +58,7 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/node@14",
 		] : []),
 		...(useTypeChecking ? [
-			"typescript@~4.4",
+			"typescript@~4.5",
 		] : []),
 		...(useTypeScript ? [
 			// enhance testing through TS tools
@@ -69,22 +69,20 @@ const templateFunction: TemplateFunction = async answers => {
 		] : []),
 		...(useReact ? [
 			// React
-			"react@16", // Pinned to v16 for now, don't forget to update @types/react[-dom] aswell
-			"react-dom@16",
+			"react",
+			"react-dom",
 			// ioBroker react framework
-			"@iobroker/adapter-react@2.0.13",
+			"@iobroker/adapter-react@2.0.19",
 			// UI library
 			"@material-ui/core",
 		] : []),
 		...(useTypeChecking && useReact ? [
 			// React's type definitions
-			"@types/react@16",
-			"@types/react-dom@16",
+			"@types/react",
+			"@types/react-dom",
 		] : []),
 		...(useESLint ? [
-			// The downstream packages like typescript-eslint don't support ESLint 8 yet.
-			// Until they do, pin the version
-			"eslint@7"
+			"eslint"
 		] : []),
 		...((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
