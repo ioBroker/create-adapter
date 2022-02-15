@@ -2,7 +2,6 @@ admin/index_m.html
 admin/style.css
 admin/test-adapter.png
 lib/adapter-config.d.ts
-lib/tools.js
 io-package.json
 LICENSE
 main.js

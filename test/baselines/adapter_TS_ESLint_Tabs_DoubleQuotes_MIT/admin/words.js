@@ -15,7 +15,7 @@ systemDictionary = {
 		"zh-cn": "test-adapter的适配器设置"
 	},
 	"option1": {
-		"en": "Mock translation of 'option1' to 'en'",
+		"en": "option1",
 		"de": "Mock translation of 'option1' to 'de'",
 		"ru": "Mock translation of 'option1' to 'ru'",
 		"pt": "Mock translation of 'option1' to 'pt'",
@@ -27,7 +27,7 @@ systemDictionary = {
 		"zh-cn": "Mock translation of 'option1' to 'zh-cn'"
 	},
 	"option2": {
-		"en": "Mock translation of 'option2' to 'en'",
+		"en": "option2",
 		"de": "Mock translation of 'option2' to 'de'",
 		"ru": "Mock translation of 'option2' to 'ru'",
 		"pt": "Mock translation of 'option2' to 'pt'",

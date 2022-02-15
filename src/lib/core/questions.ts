@@ -643,6 +643,36 @@ export const questionGroups: QuestionGroup[] = [
 					].filter((f) => !!f) as string[],
 			}),
 			{
+				condition: [
+					{ name: "features", contains: "adapter" },
+					{ name: "adminReact", value: "no" },
+				],
+				type: "select",
+				name: "i18n",
+				label: "Translation Management",
+				optional: true,
+				expert: true,
+				message: "How would you like to manage translations?",
+				initial: "words.js",
+				choices: [
+					{
+						message: "JSON files",
+						hint:
+							"(required for Weblate; words.js will be generated using @iobroker/adapter-dev)",
+						value: "JSON",
+					},
+					{
+						message: "words.js",
+						hint: "(legacy)",
+						value: "words.js",
+					},
+				],
+				migrate: async (ctx) =>
+					(await ctx.fileExists("admin/i18n/en/translations.json"))
+						? "JSON"
+						: "words.js",
+			},
+			{
 				type: "select",
 				name: "releaseScript",
 				label: "Release Script",
@@ -932,6 +962,7 @@ export interface Answers {
 	type: string;
 	adminReact?: "yes" | "no";
 	tabReact?: "yes" | "no";
+	i18n?: "words.js" | "JSON";
 	releaseScript?: "yes" | "no";
 	devServer?: "yes" | "no";
 	devServerPort?: number;

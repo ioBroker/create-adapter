@@ -51,6 +51,7 @@ Several npm scripts are predefined for your convenience. You can run them using 
 |-------------|-------------|
 | `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
 | `test` | Performs a minimal test run on package files. |
+| `translate` | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
 
 ### Publishing the widget
 Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form 

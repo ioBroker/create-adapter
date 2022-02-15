@@ -557,6 +557,16 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it("I18n with JSON", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					i18n: "JSON",
+				};
+				await expectSuccess("i18n_json", answers, (file) =>
+					file.name.startsWith("admin/"),
+				);
+			});
+
 			it("Release Script", async () => {
 				const answers: Answers = {
 					...baseAnswers,
