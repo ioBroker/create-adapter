@@ -20,8 +20,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@iobroker/adapter-dev": "^0.1.0",
-    "@iobroker/testing": "^2.5.2"
+    "@iobroker/adapter-dev": "^1.0.0",
+    "@iobroker/testing": "^2.5.4"
   },
   "main": "widgets/test-widget.html",
   "files": [
