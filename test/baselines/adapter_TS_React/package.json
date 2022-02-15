@@ -54,8 +54,8 @@
   },
   "main": "build/main.js",
   "files": [
-    "admin{,/!(src|.*)/**}/!(tsconfig|tsconfig.*).json",
-    "admin{,/!(src|.*)/**}/*.{html,css,png,svg,jpg,js}",
+    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json",
+    "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
     "admin/build/",
     "build/",
     "www/",
@@ -63,13 +63,13 @@
     "LICENSE"
   ],
   "scripts": {
-    "prebuild": "rimraf build/ admin/build/",
+    "prebuild": "rimraf build admin/build",
     "build": "build-adapter all",
     "watch": "build-adapter all --watch",
-    "prebuild:ts": "rimraf build/",
+    "prebuild:ts": "rimraf build",
     "build:ts": "build-adapter ts",
     "watch:ts": "build-adapter ts --watch",
-    "prebuild:react": "rimraf admin/build/",
+    "prebuild:react": "rimraf admin/build",
     "build:react": "build-adapter react",
     "watch:react": "build-adapter react --watch",
     "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",

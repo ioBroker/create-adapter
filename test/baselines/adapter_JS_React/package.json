@@ -39,8 +39,8 @@
   },
   "main": "main.js",
   "files": [
-    "admin{,/!(src|.*)/**}/!(tsconfig|tsconfig.*).json",
-    "admin{,/!(src|.*)/**}/*.{html,css,png,svg,jpg,js}",
+    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json",
+    "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
     "admin/build/",
     "lib/",
     "www/",
@@ -49,9 +49,12 @@
     "main.js"
   ],
   "scripts": {
-    "prebuild": "rimraf admin/build/",
+    "prebuild": "rimraf admin/build",
     "build": "build-adapter react",
     "watch": "build-adapter react --watch",
+    "prebuild:react": "rimraf admin/build",
+    "build:react": "build-adapter react",
+    "watch:react": "build-adapter react --watch",
     "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
