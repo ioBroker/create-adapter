@@ -1,4 +1,12 @@
-import { blueBright, gray, green, red, underline } from "ansi-colors";
+import {
+	blueBright,
+	bold,
+	gray,
+	green,
+	red,
+	reset,
+	underline,
+} from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
@@ -321,7 +329,19 @@ async function setupProject_CLI(
 	}
 
 	console.log();
+	console.log();
 	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
+	console.log(
+		blueBright(`Just open `) +
+			bold(reset(targetDir)) +
+			blueBright(` in your favorite editor.`),
+	);
+	console.log();
+	console.log(
+		gray(
+			"Hint: try CTRL-clicking the path if you have the editor open already.",
+		),
+	);
 }
 
 // Enable CI testing without stalling
