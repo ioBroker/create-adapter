@@ -60,13 +60,6 @@ const templateFunction: TemplateFunction = async answers => {
 		...(useTypeChecking ? [
 			"typescript@~4.4",
 		] : []),
-		...((useTypeScript || useReact) ? [
-			// If we need to compile anything, do it with ESBuild/Estrella
-			"estrella@1",
-			// TODO: when https://github.com/rsms/estrella/pull/47/files is merged,
-			// add esbuild as a devDependency
-			"tiny-glob",
-		] : []),
 		...(useTypeScript ? [
 			// enhance testing through TS tools
 			"source-map-support",
@@ -130,10 +123,10 @@ const templateFunction: TemplateFunction = async answers => {
 				: ["main.js", "lib/"]
 		) : []),
 		...(isAdapter ? [
-			// Web files in the admin root and all subdirectories except src
-			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
+			// Web files in the admin root and all subdirectories except src and dot-directories
+			"admin{,/!(src|.*)/**}/*.{html,css,png,svg,jpg,js}",
 			// JSON files, but not tsconfig.*.json
-			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json"
+			"admin{,/!(src|.*)/**}/!(tsconfig|tsconfig.*).json"
 		] : []),
 		...(isAdapter && useReact ? ["admin/build/"] : []),
 		...(isWidget ? ["widgets/"] : [])
@@ -145,6 +138,61 @@ const templateFunction: TemplateFunction = async answers => {
 		if (isDirB && !isDirA) return 1;
 		return a.localeCompare(b);
 	});
+
+
+	const npmScripts: Record<string, string> = {};
+	if (isAdapter) {
+		if (useTypeScript && !useReact) {
+			npmScripts["prebuild"] = `rimraf build/`;
+			npmScripts["build"] = "build-adapter ts";
+			npmScripts["watch"] = "build-adapter ts --watch";
+		} else if (useReact && !useTypeScript) {
+			npmScripts["prebuild"] = `rimraf admin/build/`;
+			npmScripts["build"] = "build-adapter react";
+			npmScripts["watch"] = "build-adapter react --watch";
+		} else if (useReact && useTypeScript) {
+			npmScripts["prebuild"] = `rimraf build/ admin/build/`;
+			npmScripts["build"] = "build-adapter all";
+			npmScripts["watch"] = "build-adapter all --watch";
+			npmScripts["prebuild:ts"] = `rimraf build/`;
+			npmScripts["build:ts"] = "build-adapter ts";
+			npmScripts["watch:ts"] = "build-adapter ts --watch";
+			npmScripts["prebuild:react"] = `rimraf admin/build/`;
+			npmScripts["build:react"] = "build-adapter react";
+			npmScripts["watch:react"] = "build-adapter react --watch";
+		}
+
+		if (useTypeScript) {
+			npmScripts["test:ts"] = "mocha --config test/mocharc.custom.json src/**/*.test.ts"
+		} else {
+			npmScripts["test:js"] = `mocha --config test/mocharc.custom.json "{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}"`
+		}
+		npmScripts["test:package"] = "mocha test/package --exit";
+		npmScripts["test:unit"] = "mocha test/unit --exit";
+		npmScripts["test:integration"] = "mocha test/integration --exit";
+		npmScripts["test"] = `${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package`;
+
+		if (useTypeChecking) {
+			npmScripts["check"] = `tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}`;
+		}
+		if (useNyc) {
+			npmScripts["coverage"] = "nyc npm run test:ts";
+		}
+		if (useESLint) {
+			if (useTypeScript) {
+				npmScripts["lint"] = `eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}`;
+			} else {
+				npmScripts["lint"] = `eslint${useReact ? " --ext .js,.jsx" : ""}`;
+			}
+		}
+	} else if (isWidget) {
+		npmScripts["test:package"] = "mocha test/package --exit";
+		npmScripts["test"] = "npm run test:package";
+	}
+	npmScripts["translate"] = "translate-adapter";
+	if (useReleaseScript) {
+		npmScripts["release"] = "release-script";
+	}
 
 	const template = `
 {
@@ -175,46 +223,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"main": "widgets/${answers.adapterName}.html",
 	`) : ""}
 	"files": ${JSON.stringify(packageFiles)},
-	"scripts": {
-		${isAdapter ? (`
-			${(useTypeScript || useReact) ? (`
-				"prebuild": "rimraf${useTypeScript ? " build" : ""}${useReact ? " admin/build" : ""}",
-				"build": "node .build.js${useTypeScript ? " -typescript" : ""}${useReact ? " -react" : ""}",
-				"watch": "npm run build -- --watch",
-			`) : ""}
-			${useTypeScript ? (`
-				"build:ts": "node .build.js -typescript",
-				"watch:ts": "npm run build:ts -- --watch",
-			`) : ""}
-			${useReact ? (`
-				"build:react": "node .build.js -react",
-				"watch:react": "npm run build:react -- --watch",
-			`) : ""}
-			${useTypeScript ? (`
-				"test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
-			`) : (`
-				"test:js": "mocha --config test/mocharc.custom.json \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
-			`)}
-			"test:package": "mocha test/package --exit",
-			"test:unit": "mocha test/unit --exit",
-			"test:integration": "mocha test/integration --exit",
-			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
-			${useTypeChecking ? `"check": "tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}",` : ""}
-			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
-			${useESLint && useTypeScript ? (`
-				"lint": "eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}",
-			`) : ""}
-			${useESLint && !useTypeScript ? (`
-				"lint": "eslint${useReact ? " --ext .js,.jsx" : ""}",
-			`) : ""}
-		`) : isWidget ? (`
-			"test:package": "mocha test/package --exit",
-			"test": "npm run test:package",
-		`) : ""}
-			"translate": "translate-adapter",
-		${useReleaseScript ? `
-			"release": "release-script",` : ""}
-	},
+	"scripts": ${JSON.stringify(npmScripts)},
 	${useNyc ? `"nyc": {
 		"include": [
 			"src/**/*.ts",

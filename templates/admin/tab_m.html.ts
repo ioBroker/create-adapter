@@ -40,7 +40,7 @@ ${useReact ? `
 	<div class="m adapter-container" id="root"></div>
 
 	<!-- load compiled React scripts -->
-	<script type="module" src="build/tab.js"></script>
+	<script type="text/javascript" src="build/tab.js"></script>
 ` : `
 	<div class="m adapter-container">
 		<div class="row">

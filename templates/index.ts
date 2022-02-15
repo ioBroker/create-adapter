@@ -5,7 +5,6 @@
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templates: { name: string, templateFunction: TemplateFunction }[] = [
-	{ name: "_build.js.ts", templateFunction: require("./_build.js") },
 	{ name: "_create-adapter.json.ts", templateFunction: require("./_create-adapter.json") },
 	{ name: "_devcontainer/devcontainer.json.ts", templateFunction: require("./_devcontainer/devcontainer.json") },
 	{ name: "_devcontainer/docker-compose.yml.ts", templateFunction: require("./_devcontainer/docker-compose.yml") },
