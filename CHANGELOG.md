@@ -7,6 +7,7 @@
 -->
 ## __WORK IN PROGRESS__
 * (UncleSamSwiss) Switched from `gulp` to `@iobroker/adapter-dev` (#839) · [Migration guide](docs/updates/20211018_adapter-dev.md)
+* (AlCalzone) Updated the creator's dependencies (#877)
 * (AlCalzone) Suppress npm messages for deprecated packages, audit and funding (#878)
 * (AlCalzone) Add link to generated adapter in console output (#879)
 
