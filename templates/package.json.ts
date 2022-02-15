@@ -123,10 +123,10 @@ const templateFunction: TemplateFunction = async answers => {
 				: ["main.js", "lib/"]
 		) : []),
 		...(isAdapter ? [
-			// Web files in the admin root and all subdirectories except src and dot-directories
-			"admin{,/!(src|.*)/**}/*.{html,css,png,svg,jpg,js}",
+			// Web files in the admin root and all subdirectories except src/
+			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
 			// JSON files, but not tsconfig.*.json
-			"admin{,/!(src|.*)/**}/!(tsconfig|tsconfig.*).json"
+			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json"
 		] : []),
 		...(isAdapter && useReact ? ["admin/build/"] : []),
 		...(isWidget ? ["widgets/"] : [])
@@ -143,21 +143,27 @@ const templateFunction: TemplateFunction = async answers => {
 	const npmScripts: Record<string, string> = {};
 	if (isAdapter) {
 		if (useTypeScript && !useReact) {
-			npmScripts["prebuild"] = `rimraf build/`;
+			npmScripts["prebuild"] = `rimraf build`;
 			npmScripts["build"] = "build-adapter ts";
 			npmScripts["watch"] = "build-adapter ts --watch";
-		} else if (useReact && !useTypeScript) {
-			npmScripts["prebuild"] = `rimraf admin/build/`;
-			npmScripts["build"] = "build-adapter react";
-			npmScripts["watch"] = "build-adapter react --watch";
-		} else if (useReact && useTypeScript) {
-			npmScripts["prebuild"] = `rimraf build/ admin/build/`;
-			npmScripts["build"] = "build-adapter all";
-			npmScripts["watch"] = "build-adapter all --watch";
-			npmScripts["prebuild:ts"] = `rimraf build/`;
+			npmScripts["prebuild:ts"] = `rimraf build`;
 			npmScripts["build:ts"] = "build-adapter ts";
 			npmScripts["watch:ts"] = "build-adapter ts --watch";
-			npmScripts["prebuild:react"] = `rimraf admin/build/`;
+		} else if (useReact && !useTypeScript) {
+			npmScripts["prebuild"] = `rimraf admin/build`;
+			npmScripts["build"] = "build-adapter react";
+			npmScripts["watch"] = "build-adapter react --watch";
+			npmScripts["prebuild:react"] = `rimraf admin/build`;
+			npmScripts["build:react"] = "build-adapter react";
+			npmScripts["watch:react"] = "build-adapter react --watch";
+		} else if (useReact && useTypeScript) {
+			npmScripts["prebuild"] = `rimraf build admin/build`;
+			npmScripts["build"] = "build-adapter all";
+			npmScripts["watch"] = "build-adapter all --watch";
+			npmScripts["prebuild:ts"] = `rimraf build`;
+			npmScripts["build:ts"] = "build-adapter ts";
+			npmScripts["watch:ts"] = "build-adapter ts --watch";
+			npmScripts["prebuild:react"] = `rimraf admin/build`;
 			npmScripts["build:react"] = "build-adapter react";
 			npmScripts["watch:react"] = "build-adapter react --watch";
 		}
