@@ -278,7 +278,7 @@ async function setupProject_CLI(
 		logProgress("Installing dependencies");
 		await executeCommand(
 			isWindows ? "npm.cmd" : "npm",
-			["install", "--quiet"],
+			["install", "--loglevel", "error", "--audit=false", "--fund=false"],
 			{ cwd: targetDir },
 		);
 
@@ -296,7 +296,15 @@ async function setupProject_CLI(
 		logProgress("Installing dev-server");
 		await executeCommand(
 			isWindows ? "npm.cmd" : "npm",
-			["install", "--quiet", "--global", "@iobroker/dev-server"],
+			[
+				"install",
+				"--loglevel",
+				"error",
+				"--global",
+				"--audit=false",
+				"--fund=false",
+				"@iobroker/dev-server",
+			],
 			{ cwd: targetDir },
 		);
 		await executeCommand(
