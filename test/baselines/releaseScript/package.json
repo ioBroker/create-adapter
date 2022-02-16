@@ -56,11 +56,12 @@
     "LICENSE"
   ],
   "scripts": {
-    "prebuild": "rimraf ./build",
-    "build:ts": "tsc -p tsconfig.build.json",
-    "build": "npm run build:ts",
-    "watch:ts": "tsc -p tsconfig.build.json --watch",
-    "watch": "npm run watch:ts",
+    "prebuild": "rimraf build",
+    "build": "build-adapter ts",
+    "watch": "build-adapter ts --watch",
+    "prebuild:ts": "rimraf build",
+    "build:ts": "build-adapter ts",
+    "watch:ts": "build-adapter ts --watch",
     "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",

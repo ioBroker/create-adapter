@@ -22,23 +22,23 @@ const templateFunction: TemplateFunction = async answers => {
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
-	const useDevcontainer = !!answers.tools?.includes("devcontainer");
 
-	const dependencyPromises = ([] as string[])
-		.concat(isAdapter ? ["@iobroker/adapter-core"] : [])
+	const dependencyPromises = [
+		...(isAdapter ? ["@iobroker/adapter-core"] : [])
+	]
 		.sort()
 		.map((dep) => (async () => `"${dep}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
 		;
 	const dependencies = await Promise.all(dependencyPromises);
 
-	const devDependencyPromises = ([] as string[])
-		.concat([
+	const devDependencyPromises = [
+		...([
 			// testing and translations are always required
 			"@iobroker/testing",
 			"@iobroker/adapter-dev",
-		])
-		.concat(isAdapter ? [
+		]),
+		...(isAdapter ? [
 			// support adapter testing by default
 			"chai",
 			"chai-as-promised",
@@ -46,8 +46,8 @@ const templateFunction: TemplateFunction = async answers => {
 			"sinon",
 			"sinon-chai",
 			"proxyquire",
-		] : [])
-		.concat(isAdapter && useTypeChecking ? [
+		] : []),
+		...(isAdapter && useTypeChecking ? [
 			"@types/chai",
 			"@types/chai-as-promised",
 			"@types/mocha",
@@ -56,20 +56,18 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/proxyquire",
 			// and NodeJS typings
 			"@types/node@14",
-		] : [])
-		.concat(useTypeChecking ? [
+		] : []),
+		...(useTypeChecking ? [
 			"typescript@~4.4",
-		] : [])
-		.concat(useTypeScript ? [
+		] : []),
+		...(useTypeScript ? [
 			// enhance testing through TS tools
 			"source-map-support",
 			"ts-node",
 			// to clean the build dir
 			"rimraf",
-		] : [])
-		.concat(useReact ? [
-			// We use parcel as the bundler
-			"parcel-bundler",
+		] : []),
+		...(useReact ? [
 			// React
 			"react@16", // Pinned to v16 for now, don't forget to update @types/react[-dom] aswell
 			"react-dom@16",
@@ -77,40 +75,32 @@ const templateFunction: TemplateFunction = async answers => {
 			"@iobroker/adapter-react@2.0.13",
 			// UI library
 			"@material-ui/core",
-			// This is needed by parcel to compile JSX/TSX
-			"@babel/cli",
-			"@babel/core",
-		]: [])
-		.concat(useTypeChecking && useReact ? [
+		] : []),
+		...(useTypeChecking && useReact ? [
 			// React's type definitions
 			"@types/react@16",
 			"@types/react-dom@16",
-		]: [])
-		.concat(useTypeScript && useReact ? [
-			// We need this for parcel to support some TypeScript features
-			"@babel/plugin-proposal-decorators",
-			"@babel/preset-env",
-			"@babel/preset-typescript",
-		]: [])
-		.concat(useESLint ? [
+		] : []),
+		...(useESLint ? [
 			// The downstream packages like typescript-eslint don't support ESLint 8 yet.
 			// Until they do, pin the version
 			"eslint@7"
-		] : [])
-		.concat((useESLint && useTypeScript) ? [
+		] : []),
+		...((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
 			"@typescript-eslint/parser",
-		] : [])
-		.concat((useESLint && useReact) ? [
+		] : []),
+		...((useESLint && useReact) ? [
 			"eslint-plugin-react",
-		] : [])
-		.concat((useESLint && usePrettier) ? [
+		] : []),
+		...((useESLint && usePrettier) ? [
 			"eslint-config-prettier",
 			"eslint-plugin-prettier",
 			"prettier",
-		] : [])
-		.concat(useNyc ? ["nyc"] : [])
-		.concat(useReleaseScript ? ["@alcalzone/release-script@2"] : [])
+		] : []),
+		...(useNyc ? ["nyc"] : []),
+		...(useReleaseScript ? ["@alcalzone/release-script@2"] : [])
+	]
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`))
 		.map(task => downloadLimiter(task))
@@ -120,7 +110,6 @@ const templateFunction: TemplateFunction = async answers => {
 	const gitUrl = answers.gitRemoteProtocol === "HTTPS"
 		? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
 		: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
-	const parcelFiles = `${useAdminReact ? "admin/src/index.tsx" : ""} ${useTabReact ? "admin/src/tab.tsx" : ""}`.trim();
 
 	// Generate whitelist for package files
 	const packageFiles = [
@@ -134,7 +123,7 @@ const templateFunction: TemplateFunction = async answers => {
 				: ["main.js", "lib/"]
 		) : []),
 		...(isAdapter ? [
-			// Web files in the admin root and all subdirectories except src
+			// Web files in the admin root and all subdirectories except src/
 			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
 			// JSON files, but not tsconfig.*.json
 			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json"
@@ -149,6 +138,67 @@ const templateFunction: TemplateFunction = async answers => {
 		if (isDirB && !isDirA) return 1;
 		return a.localeCompare(b);
 	});
+
+
+	const npmScripts: Record<string, string> = {};
+	if (isAdapter) {
+		if (useTypeScript && !useReact) {
+			npmScripts["prebuild"] = `rimraf build`;
+			npmScripts["build"] = "build-adapter ts";
+			npmScripts["watch"] = "build-adapter ts --watch";
+			npmScripts["prebuild:ts"] = `rimraf build`;
+			npmScripts["build:ts"] = "build-adapter ts";
+			npmScripts["watch:ts"] = "build-adapter ts --watch";
+		} else if (useReact && !useTypeScript) {
+			npmScripts["prebuild"] = `rimraf admin/build`;
+			npmScripts["build"] = "build-adapter react";
+			npmScripts["watch"] = "build-adapter react --watch";
+			npmScripts["prebuild:react"] = `rimraf admin/build`;
+			npmScripts["build:react"] = "build-adapter react";
+			npmScripts["watch:react"] = "build-adapter react --watch";
+		} else if (useReact && useTypeScript) {
+			npmScripts["prebuild"] = `rimraf build admin/build`;
+			npmScripts["build"] = "build-adapter all";
+			npmScripts["watch"] = "build-adapter all --watch";
+			npmScripts["prebuild:ts"] = `rimraf build`;
+			npmScripts["build:ts"] = "build-adapter ts";
+			npmScripts["watch:ts"] = "build-adapter ts --watch";
+			npmScripts["prebuild:react"] = `rimraf admin/build`;
+			npmScripts["build:react"] = "build-adapter react";
+			npmScripts["watch:react"] = "build-adapter react --watch";
+		}
+
+		if (useTypeScript) {
+			npmScripts["test:ts"] = "mocha --config test/mocharc.custom.json src/**/*.test.ts"
+		} else {
+			npmScripts["test:js"] = `mocha --config test/mocharc.custom.json "{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}"`
+		}
+		npmScripts["test:package"] = "mocha test/package --exit";
+		npmScripts["test:unit"] = "mocha test/unit --exit";
+		npmScripts["test:integration"] = "mocha test/integration --exit";
+		npmScripts["test"] = `${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package`;
+
+		if (useTypeChecking) {
+			npmScripts["check"] = `tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}`;
+		}
+		if (useNyc) {
+			npmScripts["coverage"] = "nyc npm run test:ts";
+		}
+		if (useESLint) {
+			if (useTypeScript) {
+				npmScripts["lint"] = `eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}`;
+			} else {
+				npmScripts["lint"] = `eslint${useReact ? " --ext .js,.jsx" : ""}`;
+			}
+		}
+	} else if (isWidget) {
+		npmScripts["test:package"] = "mocha test/package --exit";
+		npmScripts["test"] = "npm run test:package";
+	}
+	npmScripts["translate"] = "translate-adapter";
+	if (useReleaseScript) {
+		npmScripts["release"] = "release-script";
+	}
 
 	const template = `
 {
@@ -179,43 +229,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"main": "widgets/${answers.adapterName}.html",
 	`) : ""}
 	"files": ${JSON.stringify(packageFiles)},
-	"scripts": {
-		${isAdapter ? (`
-			${useTypeScript ? (`
-				"prebuild": "rimraf ./build",
-				${useReact ? `"build:parcel": "parcel build ${parcelFiles} -d admin/build",` : ""}
-				"build:ts": "tsc -p tsconfig.build.json",
-				"build": "npm run build:ts${useReact ? " && npm run build:parcel" : ""}",
-				${useReact ? `"watch:parcel": "parcel ${parcelFiles} -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",` : ""}
-				"watch:ts": "tsc -p tsconfig.build.json --watch",
-				"watch": "npm run watch:ts",
-				"test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
-			`) : (`
-				${useReact ? `"watch:parcel": "parcel ${parcelFiles.replace('tsx', 'jsx')} -d admin/build${useDevcontainer ? ` --hmr-port 1235` : ""}",
-				"build:parcel": "parcel build ${parcelFiles.replace('tsx', 'jsx')} -d admin/build",
-				"build": "npm run build:parcel",` : ""}
-				"test:js": "mocha --config test/mocharc.custom.json \\"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\\"",
-			`)}
-			"test:package": "mocha test/package --exit",
-			"test:unit": "mocha test/unit --exit",
-			"test:integration": "mocha test/integration --exit",
-			"test": "${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package",
-			${useTypeChecking ? `"check": "tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}",` : ""}
-			${useNyc ? `"coverage": "nyc npm run test:ts",` : ""}
-			${useESLint && useTypeScript ? (`
-				"lint": "eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}",
-			`) : ""}
-			${useESLint && !useTypeScript ? (`
-				"lint": "eslint${useReact ? " --ext .js,.jsx" : ""}",
-			`) : ""}
-		`) : isWidget ? (`
-			"test:package": "mocha test/package --exit",
-			"test": "npm run test:package",
-		`) : ""}
-			"translate": "translate-adapter",
-		${useReleaseScript ? `
-			"release": "release-script",` : ""}
-	},
+	"scripts": ${JSON.stringify(npmScripts)},
 	${useNyc ? `"nyc": {
 		"include": [
 			"src/**/*.ts",

@@ -12,16 +12,12 @@
 			"es2018",
 			"DOM"
 		],
-
-		// Support React - both must be here because parcel v1 does not
-		// evaluate the "extends" option
-		"jsx": "react",
-		"esModuleInterop": true
+		"jsx": "react"
 	},
 	"include": [
 		"./**/*.d.ts",
 		"./**/*.jsx",
-		"../src/lib/adapter-config.d.ts"
+		"../lib/adapter-config.d.ts"
 	],
 	"exclude": [
 		"./**/*.test.jsx"

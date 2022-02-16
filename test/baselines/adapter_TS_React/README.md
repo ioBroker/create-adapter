@@ -49,12 +49,12 @@ check them out. If you're already experienced, you should also take a look at th
 Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
 | Script name | Description |
 |-------------|-------------|
-| `build:parcel` | Compile the React sources. |
-| `watch:parcel` | Compile the React sources and watch for changes. |
+| `build` | Compile the TypeScript and React sources. |
+| `watch` | Compile the TypeScript and React sources and watch for changes. |
 | `build:ts` | Compile the TypeScript sources. |
 | `watch:ts` | Compile the TypeScript sources and watch for changes. |
-| `watch` | Shortcut for `npm run watch:ts` |
-| `build` | Compile the TypeScript and the React sources. |
+| `build:react` | Compile the React sources. |
+| `watch:react` | Compile the React sources and watch for changes. |
 | `test:ts` | Executes the tests you defined in `*.test.ts` files. |
 | `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
 | `test:unit` | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
@@ -63,6 +63,11 @@ Several npm scripts are predefined for your convenience. You can run them using 
 | `check` | Performs a type-check on your code (without compiling anything). |
 | `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
 | `translate` | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
+
+### Configuring the compilation
+The adapter template uses [esbuild](https://esbuild.github.io/) to compile TypeScript and/or React code. You can configure many compilation settings 
+either in `tsconfig.json` or by changing options for the build tasks. These options are described in detail in the
+[`@iobroker/adapter-dev` documentation](https://github.com/ioBroker/adapter-dev#compile-adapter-files).
 
 ### Writing tests
 When done right, testing code is invaluable, because it gives you the 

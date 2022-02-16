@@ -19,18 +19,21 @@ export = (answers => {
 	const isGitHub = answers.target === "github";
 
 	const npmScripts: Record<string, string> = {};
-	if (useReact) {
-		npmScripts["build:parcel"] = "Compile the React sources.";
-		npmScripts["watch:parcel"] = "Compile the React sources and watch for changes.";
-	}
-	if (useTypeScript) {
+	if (useTypeScript && !useReact) {
+		npmScripts["build"] = "Compile the TypeScript sources.";
+		npmScripts["watch"] = "Compile the TypeScript sources and watch for changes.";
+	} else if (useReact && !useTypeScript) {
+		npmScripts["build"] = "Compile the React sources.";
+		npmScripts["watch"] = "Compile the React sources and watch for changes.";
+	} else if (useReact && useTypeScript) {
+		npmScripts["build"] = "Compile the TypeScript and React sources.";
+		npmScripts["watch"] = "Compile the TypeScript and React sources and watch for changes.";
 		npmScripts["build:ts"] = "Compile the TypeScript sources.";
 		npmScripts["watch:ts"] = "Compile the TypeScript sources and watch for changes.";
-		npmScripts["watch"] = "Shortcut for `npm run watch:ts`";
+		npmScripts["build:react"] = "Compile the React sources.";
+		npmScripts["watch:react"] = "Compile the React sources and watch for changes.";
 	}
-	if (useTypeScript && useReact) {
-		npmScripts["build"] = "Compile the TypeScript and the React sources.";
-	}
+
 	if (isAdapter) {
 		if (useTypeScript) {
 			npmScripts["test:ts"] = "Executes the tests you defined in \`*.test.ts\` files.";
@@ -128,6 +131,11 @@ Several npm scripts are predefined for your convenience. You can run them using 
 ${Object.entries(npmScripts).map(([name, desc]) => (
 	`| \`${name}\` | ${desc} |`
 )).join("\n")}
+
+${useTypeScript || useReact ? `### Configuring the compilation
+The adapter template uses [esbuild](https://esbuild.github.io/) to compile TypeScript and/or React code. You can configure many compilation settings 
+either in \`tsconfig.json\` or by changing options for the build tasks. These options are described in detail in the
+[\`@iobroker/adapter-dev\` documentation](https://github.com/ioBroker/adapter-dev#compile-adapter-files).` : ""}
 
 ${isAdapter ? `### Writing tests
 When done right, testing code is invaluable, because it gives you the 
