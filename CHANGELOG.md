@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.1.0 (2022-02-16)
 * (UncleSamSwiss) Switched from `gulp` to `@iobroker/adapter-dev` (#839) · [Migration guide](docs/updates/20211018_adapter-dev.md)
 * (AlCalzone) Switch build process (React, TypeScript) from `parcel` to `@iobroker/adapter-dev` using `esbuild` (#838) · [Migration guide](docs/updates/20220215_esbuild.md)
 * (AlCalzone) Updated the creator's dependencies (#877)
