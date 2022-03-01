@@ -10,6 +10,9 @@ export = (async answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
+	const useAdminReact = answers.adminReact === "yes";
+	const useTabReact = answers.tabReact === "yes";
+	const useReact = useAdminReact || useTabReact;
 	const supportCustom = answers.adminFeatures && answers.adminFeatures.indexOf("custom") > -1;
 	const supportTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
 	const defaultBranch = answers.defaultBranch || "main";
@@ -105,6 +108,7 @@ export = (async answers => {
 		},
 		`) : ""}
 		${supportCustom ? `"supportCustoms": true,` : ""}
+		${useReact ? `"eraseOnUpload": true,` : ""}
 		"dependencies": [
 			${isAdapter ? `{ "js-controller": ">=2.0.0" },` : ""}
 			${isWidget ? `"vis",` : ""}
