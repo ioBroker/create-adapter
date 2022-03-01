@@ -2,7 +2,7 @@
 
 Since `@iobroker/adapter-dev` version 1.1.0 the output from `npm run build` might be split into multiple output files with random names.
 
-As `ioBroker.js-controller` with versions below 4.1 will not erase old files on upload, new adapter versions might upload more and more files to the `admin` directory.
+Since all available `ioBroker.js-controller` versions do not erase old files on upload, new adapter versions might upload more and more files to the `admin` directory.
 
 Therefore, you should explicitly set `common.eraseOnUpload` in `io-package.json` to `true` for React adapters.
 
