@@ -64,6 +64,7 @@
 		"connectionType": "local",
 		"dataSource": "push",
 		"materialize": true,
+		"eraseOnUpload": true,
 		"dependencies": [
 			{
 				"js-controller": ">=2.0.0"
