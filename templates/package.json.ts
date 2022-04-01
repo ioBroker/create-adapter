@@ -69,17 +69,17 @@ const templateFunction: TemplateFunction = async answers => {
 		] : []),
 		...(useReact ? [
 			// React
-			"react",
-			"react-dom",
+			"react@17",
+			"react-dom@17",
 			// ioBroker react framework
-			"@iobroker/adapter-react@2.0.19",
+			"@iobroker/adapter-react@2.0.22",
 			// UI library
 			"@material-ui/core",
 		] : []),
 		...(useTypeChecking && useReact ? [
 			// React's type definitions
-			"@types/react",
-			"@types/react-dom",
+			"@types/react@17",
+			"@types/react-dom@17",
 		] : []),
 		...(useESLint ? [
 			"eslint"

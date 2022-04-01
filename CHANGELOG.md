@@ -7,6 +7,7 @@
 -->
 ## __WORK IN PROGRESS__
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
+* (AlCalzone) Pinned `react`, `react-dom`, `@types/react` and `@types/react-dom` dependencies to v17, updated `@iobroker/adapter-react` to latest version (#896)
 
 ## 2.1.0 (2022-02-16)
 * (UncleSamSwiss) Switched from `gulp` to `@iobroker/adapter-dev` (#839) · [Migration guide](docs/updates/20211018_adapter-dev.md)
