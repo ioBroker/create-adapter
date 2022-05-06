@@ -6,6 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
+* (AlCalzone) Test Node 18, drop Node 12 from testing (#909)
 * (AlCalzone) Remove deprecated unit tests (#908) · [Migration guide](docs/updates/220506_remove_unit_tests.md)
 
 ## 2.1.1 (2022-04-01)
