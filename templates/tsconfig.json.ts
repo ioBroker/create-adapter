@@ -6,10 +6,16 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
+	// Minimum supported Node.js version for this adapter.
+	// Change this in sync with package.json
+	const minNodeVersion = 12;
+
 	const template = `
 // Root tsconfig to set the settings and power editor support for all TS files
 {
-	"compileOnSave": true,
+	// To update the compilation target, install a different version of @tsconfig/node... and reference it here
+	// https://github.com/tsconfig/bases#node-${minNodeVersion}-tsconfigjson
+	"extends": "@tsconfig/node${minNodeVersion}/tsconfig.json",
 	"compilerOptions": {
 		// do not compile anything, this file is just to configure type checking${useTypeScript ? (`
 		// the compilation is configured in tsconfig.build.json`) : ""}
@@ -19,19 +25,16 @@ export = (answers => {
 		"allowJs": true,
 		"checkJs": true,
 		${useTypeScript ? (`
-		"skipLibCheck": true, // Don't report errors in 3rd party definitions
 		"noEmitOnError": true,
 		"outDir": "./build/",
 		"removeComments": false,`) : ""}
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		// this is necessary for the automatic typing of the adapter config
+
+		// This is necessary for the automatic typing of the adapter config
 		"resolveJsonModule": true,
 
-		// Set this to false if you want to disable the very strict rules (not recommended)
-		"strict": true,
-		// Or enable some of those features for more fine-grained control
+		// If you want to disable the stricter type checks (not recommended), uncomment the following line
+		// "strict": false,
+		// And enable some of those features for more fine-grained control
 		// "strictNullChecks": true,
 		// "strictPropertyInitialization": true,
 		// "strictBindCallApply": true,
@@ -43,12 +46,9 @@ export = (answers => {
 		// "useUnknownInCatchVariables": false,`) : (
 		`"useUnknownInCatchVariables": false,`)}
 
-		// Consider targetting es2019 or higher if you only support Node.js 12+
-		"target": "es2018",
 		${useTypeScript ? (`
 		"sourceMap": true,
-		"inlineSourceMap": false,
-		"watch": false`) : ""}
+		"inlineSourceMap": false`) : ""}
 	},
 	"include": [${useTypeScript ? (`
 		"src/**/*.ts",

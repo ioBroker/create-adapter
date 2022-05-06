@@ -23,6 +23,10 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 
+	// Minimum supported Node.js version for this adapter.
+	// Change this in sync with package.json
+	const minNodeVersion = 12;
+
 	const dependencyPromises = [
 		...(isAdapter ? ["@iobroker/adapter-core"] : [])
 	]
@@ -54,8 +58,10 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/sinon",
 			"@types/sinon-chai",
 			"@types/proxyquire",
+			// Recommended tsconfig for the minimum supported Node.js version
+			`@tsconfig/node${minNodeVersion}`,
 			// and NodeJS typings
-			"@types/node@14",
+			`@types/node@${minNodeVersion}`,
 		] : []),
 		...(useTypeChecking ? [
 			"typescript@~4.5",
