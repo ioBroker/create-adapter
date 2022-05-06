@@ -76,7 +76,6 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "test/mocharc.custom.ts", templateFunction: require("./test/mocharc.custom") },
 	{ name: "test/package.js.ts", templateFunction: require("./test/package.js") },
 	{ name: "test/tsconfig.json.ts", templateFunction: require("./test/tsconfig.json") },
-	{ name: "test/unit.js.ts", templateFunction: require("./test/unit.js") },
 	{ name: "tsconfig.build.json.ts", templateFunction: require("./tsconfig.build.json") },
 	{ name: "tsconfig.check.json.ts", templateFunction: require("./tsconfig.check.json") },
 	{ name: "tsconfig.json.ts", templateFunction: require("./tsconfig.json") },
