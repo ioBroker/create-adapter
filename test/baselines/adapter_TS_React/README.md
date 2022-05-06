@@ -57,7 +57,6 @@ Several npm scripts are predefined for your convenience. You can run them using 
 | `watch:react` | Compile the React sources and watch for changes. |
 | `test:ts` | Executes the tests you defined in `*.test.ts` files. |
 | `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
-| `test:unit` | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
 | `test:integration` | Tests the adapter startup with an actual instance of ioBroker. |
 | `test` | Performs a minimal test run on package files and your tests. |
 | `check` | Performs a type-check on your code (without compiling anything). |

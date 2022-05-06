@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Remove deprecated unit tests (#908) · [Migration guide](docs/updates/220506_remove_unit_tests.md)
+
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
 * (AlCalzone) Pinned `react`, `react-dom`, `@types/react` and `@types/react-dom` dependencies to v17, updated `@iobroker/adapter-react` to latest version (#896)

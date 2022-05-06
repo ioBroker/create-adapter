@@ -172,7 +172,6 @@ const templateFunction: TemplateFunction = async answers => {
 			npmScripts["test:js"] = `mocha --config test/mocharc.custom.json "{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}"`
 		}
 		npmScripts["test:package"] = "mocha test/package --exit";
-		npmScripts["test:unit"] = "mocha test/unit --exit";
 		npmScripts["test:integration"] = "mocha test/integration --exit";
 		npmScripts["test"] = `${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package`;
 
