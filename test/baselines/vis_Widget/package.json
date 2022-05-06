@@ -21,7 +21,7 @@
   "dependencies": {},
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.0.0",
-    "@iobroker/testing": "^2.5.6"
+    "@iobroker/testing": "^2.6.0"
   },
   "main": "widgets/test-widget.html",
   "files": [

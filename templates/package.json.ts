@@ -42,7 +42,7 @@ const templateFunction: TemplateFunction = async answers => {
 			// support adapter testing by default
 			"chai",
 			"chai-as-promised",
-			"mocha",
+			"mocha@9",
 			"sinon",
 			"sinon-chai",
 			"proxyquire",
