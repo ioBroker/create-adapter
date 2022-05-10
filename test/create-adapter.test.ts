@@ -624,6 +624,20 @@ describe("adapter creation =>", () => {
 						file.name.endsWith("test-and-release.yml"),
 				);
 			});
+
+			it("No Config", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adminUi: "none",
+				};
+				await expectSuccess(
+					"no_config",
+					answers,
+					(file) =>
+						file.name.startsWith("admin/") ||
+						file.name === "io-package.json",
+				);
+			});
 		});
 	});
 });
