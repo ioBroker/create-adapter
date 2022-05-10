@@ -1,0 +1,14 @@
+{
+    "i18n": true,
+    "type": "panel",
+    "items": {
+        "option1": {
+            "type": "checkbox",
+            "label": "option1"
+        },
+        "option2": {
+            "type": "text",
+            "label": "option2"
+        }
+    }
+}

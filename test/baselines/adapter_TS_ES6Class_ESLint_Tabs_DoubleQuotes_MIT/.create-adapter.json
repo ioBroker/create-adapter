@@ -13,7 +13,7 @@
 	"adminFeatures": [],
 	"type": "general",
 	"language": "TypeScript",
-	"adminReact": "no",
+	"adminUi": "html",
 	"tabReact": "no",
 	"releaseScript": "no",
 	"tools": [

@@ -63,8 +63,10 @@
 		"compact": true,
 		"connectionType": "local",
 		"dataSource": "push",
-		"materialize": true,
-		"materializeTab": true,
+		"adminUI": {
+			"config": "materialize",
+			"tab": "materialize"
+		},
 		"adminTab": {
 			"singleton": true,
 			"name": {
@@ -85,7 +87,12 @@
 		"supportCustoms": true,
 		"dependencies": [
 			{
-				"js-controller": ">=2.0.0"
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.0.0"
 			}
 		]
 	},
