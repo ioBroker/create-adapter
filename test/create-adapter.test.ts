@@ -115,7 +115,7 @@ const baseAnswers: Answers = {
 	adminFeatures: [],
 	type: "general",
 	language: "TypeScript",
-	adminReact: "no",
+	adminUi: "html",
 	tabReact: "no",
 	releaseScript: "no",
 	tools: ["ESLint"],
@@ -239,7 +239,7 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					es6class: "yes",
-					adminReact: "yes",
+					adminUi: "react",
 				};
 				await expectSuccess("adapter_TS_React", answers);
 			});
@@ -249,15 +249,16 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					language: "JavaScript",
 					es6class: "yes",
-					adminReact: "yes",
+					adminUi: "react",
 				};
 				await expectSuccess("adapter_JS_React", answers);
 			});
 
-			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, Apache License", async () => {
+			it("Adapter, JavaScript, JSON UI, ESLint, Spaces, Single quotes, Apache License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
+					adminUi: "json",
 					tools: ["ESLint", "type checking"],
 					indentation: "Space (4)",
 					quotes: "single",
@@ -403,7 +404,7 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					quotes: "single",
-					adminReact: "yes",
+					adminUi: "react",
 				};
 				await expectSuccess("TS_SingleQuotes", answers, (file) => {
 					return (
@@ -477,7 +478,8 @@ describe("adapter creation =>", () => {
 			it(`Different keywords`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					keywords: "this, adapter,uses,   different , keywords" as any,
+					keywords:
+						"this, adapter,uses,   different , keywords" as any,
 				};
 				await expectSuccess("keywords", answers, (file) =>
 					file.name.endsWith("package.json"),
@@ -536,7 +538,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					adminFeatures: ["tab"],
 					es6class: "yes",
-					adminReact: "yes",
+					adminUi: "react",
 					tabReact: "yes",
 				};
 				await expectSuccess("tabReact_adminReact_TS", answers, (file) =>

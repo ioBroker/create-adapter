@@ -87,6 +87,7 @@ export interface QuestionMeta {
 	label: string;
 	/** One or more conditions that need(s) to be fulfilled for this question to be asked */
 	condition?: Condition | Condition[];
+	replay?: (answers: Record<string, any>) => void;
 	migrate?: MigrateFunc;
 	resultTransform?: TransformResult;
 	action?: QuestionAction<undefined | AnswerValue | AnswerValue[]>;
@@ -109,7 +110,7 @@ export interface QuestionGroup {
 function styledMultiselect<
 	T extends Pick<Question, Exclude<keyof Question, "type">> & {
 		choices: any[];
-	}
+	},
 >(ms: T): T & { type: "multiselect" } {
 	return Object.assign({} as Question, ms, {
 		type: "multiselect" as const,
@@ -552,24 +553,55 @@ export const questionGroups: QuestionGroup[] = [
 			{
 				condition: [{ name: "features", contains: "adapter" }],
 				type: "select",
-				name: "adminReact",
-				label: "Admin with React",
-				message: "Use React for the Admin UI?",
-				initial: "no",
-				choices: ["yes", "no"],
+				name: "adminUi",
+				label: "Admin UI",
+				message:
+					"Which framework would you like to use for the Admin UI?",
+				initial: "json",
+				choices: [
+					{
+						message: "JSON UI",
+						hint: "(good for simple Admin UIs with a few fields)",
+						value: "json",
+					},
+					{
+						message: "HTML / Materialize",
+						hint: "(good for Admin UIs that have a few special requirements)",
+						value: "html",
+					},
+					{
+						message: "React",
+						hint: "(good for complex Admin UIs)",
+						value: "react",
+					},
+					{
+						message: "No UI",
+						hint: "(should only be used if you have another way to configure)",
+						value: "none",
+					},
+				],
+				replay: (answers: Record<string, any>): void => {
+					if (answers.adminReact === "yes") {
+						answers.adminUi = "react";
+					} else if (answers.adminReact === "no") {
+						answers.adminUi = "html";
+					}
+				},
 				migrate: async (ctx) =>
-					(await ctx.hasFilesWithExtension(
-						"admin/src",
-						".jsx",
-						(f) => !f.endsWith("tab.jsx"),
-					)) ||
-					(await ctx.hasFilesWithExtension(
-						"admin/src",
-						".tsx",
-						(f) => !f.endsWith("tab.tsx"),
-					))
-						? "yes"
-						: "no",
+					(await ctx.fileExists("admin/jsonConfig.json"))
+						? "json"
+						: (await ctx.hasFilesWithExtension(
+								"admin/src",
+								".jsx",
+								(f) => !f.endsWith("tab.jsx"),
+						  )) ||
+						  (await ctx.hasFilesWithExtension(
+								"admin/src",
+								".tsx",
+								(f) => !f.endsWith("tab.tsx"),
+						  ))
+						? "react"
+						: "html",
 			},
 			{
 				condition: [{ name: "adminFeatures", contains: "tab" }],
@@ -596,8 +628,7 @@ export const questionGroups: QuestionGroup[] = [
 					{ message: "type checking", hint: "(recommended)" },
 					{
 						message: "devcontainer",
-						hint:
-							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
+						hint: "(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
 				],
 				migrate: async (ctx) =>
@@ -621,14 +652,12 @@ export const questionGroups: QuestionGroup[] = [
 					{ message: "ESLint", hint: "(recommended)" },
 					{
 						message: "Prettier",
-						hint:
-							"(requires ESLint, enables automatic code formatting in VSCode)",
+						hint: "(requires ESLint, enables automatic code formatting in VSCode)",
 					},
 					{ message: "code coverage" },
 					{
 						message: "devcontainer",
-						hint:
-							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
+						hint: "(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
 				],
 				action: checkTypeScriptTools,
@@ -645,7 +674,7 @@ export const questionGroups: QuestionGroup[] = [
 			{
 				condition: [
 					{ name: "features", contains: "adapter" },
-					{ name: "adminReact", value: "no" },
+					{ name: "adminUi", value: "html" },
 				],
 				type: "select",
 				name: "i18n",
@@ -657,8 +686,7 @@ export const questionGroups: QuestionGroup[] = [
 				choices: [
 					{
 						message: "JSON files",
-						hint:
-							"(required for Weblate; words.js will be generated using @iobroker/adapter-dev)",
+						hint: "(required for Weblate; words.js will be generated using @iobroker/adapter-dev)",
 						value: "JSON",
 					},
 					{
@@ -960,7 +988,7 @@ export interface Answers {
 	title?: string;
 	license?: string;
 	type: string;
-	adminReact?: "yes" | "no";
+	adminUi?: "json" | "html" | "react" | "none";
 	tabReact?: "yes" | "no";
 	i18n?: "words.js" | "JSON";
 	releaseScript?: "yes" | "no";

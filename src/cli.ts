@@ -40,15 +40,13 @@ const argv = yargs
 		target: {
 			alias: "t",
 			type: "string",
-			desc:
-				"Output directory for adapter files\n(default: current directory)",
+			desc: "Output directory for adapter files\n(default: current directory)",
 		},
 		skipAdapterExistenceCheck: {
 			alias: "x",
 			type: "boolean",
 			default: false,
-			desc:
-				"Skip check if an adapter with the same name already exists on npm",
+			desc: "Skip check if an adapter with the same name already exists on npm",
 		},
 		replay: {
 			alias: "r",
@@ -58,8 +56,7 @@ const argv = yargs
 		migrate: {
 			alias: "m",
 			type: "string",
-			desc:
-				"Use answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
+			desc: "Use answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
 		},
 		noInstall: {
 			alias: "n",
@@ -131,6 +128,9 @@ async function ask(): Promise<Answers> {
 
 	async function askQuestion(q: Question): Promise<void> {
 		if (testCondition(q.condition, answers)) {
+			if (q.replay) {
+				q.replay(answers);
+			}
 			// Make properties dependent on previous answers
 			if (typeof q.initial === "function") {
 				q.initial = q.initial(answers);
@@ -365,7 +365,7 @@ if (process.env.TEST_STARTUP) {
 		maxSteps++;
 		needsBuildStep =
 			answers.language === "TypeScript" ||
-			answers.adminReact === "yes" ||
+			answers.adminUi === "react" ||
 			answers.tabReact === "yes";
 		if (needsBuildStep) maxSteps++;
 	}

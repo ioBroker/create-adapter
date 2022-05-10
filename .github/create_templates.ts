@@ -49,7 +49,7 @@ const adapterAnswers: Answers = {
 	es6class: "yes",
 	type: "general",
 	adminFeatures: ["custom", "tab"],
-	adminReact: "no",
+	adminUi: "json",
 	tabReact: "no",
 };
 
@@ -69,7 +69,7 @@ const templates: Record<string, Answers> = {
 		tools: ["ESLint", "type checking"],
 		indentation: "Space (4)",
 		quotes: "single",
-		adminReact: "yes",
+		adminUi: "react",
 		tabReact: "yes",
 	},
 	TypeScript: {
@@ -87,7 +87,7 @@ const templates: Record<string, Answers> = {
 		tools: ["ESLint", "code coverage"],
 		indentation: "Tab",
 		quotes: "double",
-		adminReact: "yes",
+		adminUi: "react",
 		tabReact: "yes",
 	},
 	JavaScriptVIS: {

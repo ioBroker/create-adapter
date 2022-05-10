@@ -15,7 +15,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = useTypeScript
 		|| (answers.tools && answers.tools.indexOf("type checking") > -1);
-	const useAdminReact = answers.adminReact === "yes";
+	const useAdminReact = answers.adminUi === "react";
 	const useTabReact = answers.tabReact === "yes";
 	const useReact = useAdminReact || useTabReact;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;

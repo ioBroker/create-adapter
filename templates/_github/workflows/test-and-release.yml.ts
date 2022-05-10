@@ -5,7 +5,7 @@ const templateFunction: TemplateFunction = answers => {
 	const isAdapter = answers.features?.includes("adapter");
 	const useTypeScript = answers.language === "TypeScript";
 	const useESLint = answers.tools?.includes("ESLint");
-	const useReact = answers.adminReact === "yes" || answers.tabReact === "yes";
+	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
 	const needsBuild = useTypeScript || useReact;
 	const sourcemapPaths = [
 		...(useTypeScript ? ["build/"] : []),

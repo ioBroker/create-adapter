@@ -6,7 +6,7 @@ const templateFunction: TemplateFunction = answers => {
 	// This version is intended for use in JS projects
 	if (answers.language !== "JavaScript") return;
 	const useReact =
-		answers.adminReact === "yes" || answers.tabReact === "yes";
+		answers.adminUi === "react" || answers.tabReact === "yes";
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
