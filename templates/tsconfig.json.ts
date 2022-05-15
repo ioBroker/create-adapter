@@ -6,9 +6,7 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
-	// Minimum supported Node.js version for this adapter.
-	// Change this in sync with package.json
-	const minNodeVersion = 12;
+	const minNodeVersion = answers.nodeVersion ?? "12";
 
 	const template = `
 // Root tsconfig to set the settings and power editor support for all TS files

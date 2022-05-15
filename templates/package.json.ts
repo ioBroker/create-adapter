@@ -23,9 +23,9 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 
-	// Minimum supported Node.js version for this adapter.
-	// Change this in sync with package.json
-	const minNodeVersion = 12;
+	const minNodeVersion = answers.nodeVersion ?? "12";
+	const mochaVersion = minNodeVersion === "12" ? "@9" : "";
+	const sinonVersion = minNodeVersion === "12" ? "@13" : "";
 
 	const dependencyPromises = [
 		...(isAdapter ? ["@iobroker/adapter-core"] : [])
@@ -46,8 +46,8 @@ const templateFunction: TemplateFunction = async answers => {
 			// support adapter testing by default
 			"chai",
 			"chai-as-promised",
-			"mocha@9",
-			"sinon",
+			`mocha${mochaVersion}`,
+			`sinon${sinonVersion}`,
 			"sinon-chai",
 			"proxyquire",
 		] : []),

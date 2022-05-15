@@ -109,7 +109,7 @@ export interface QuestionGroup {
 function styledMultiselect<
 	T extends Pick<Question, Exclude<keyof Question, "type">> & {
 		choices: any[];
-	}
+	},
 >(ms: T): T & { type: "multiselect" } {
 	return Object.assign({} as Question, ms, {
 		type: "multiselect" as const,
@@ -552,6 +552,31 @@ export const questionGroups: QuestionGroup[] = [
 			{
 				condition: [{ name: "features", contains: "adapter" }],
 				type: "select",
+				name: "nodeVersion",
+				label: "Node.js version",
+				expert: true,
+				optional: true,
+				message:
+					"What's the minimum Node.js version you want to support?",
+				initial: "12",
+				choices: ["12", "14", "16"],
+				migrate: (ctx) => {
+					if (ctx.hasDevDependency("@tsconfig/node12")) {
+						return "12";
+					} else if (ctx.hasDevDependency("@tsconfig/node14")) {
+						return "14";
+					} else if (ctx.hasDevDependency("@tsconfig/node16")) {
+						return "16";
+					} else if (ctx.hasDevDependency("@tsconfig/node18")) {
+						return "18";
+					} else {
+						return "12";
+					}
+				},
+			},
+			{
+				condition: [{ name: "features", contains: "adapter" }],
+				type: "select",
 				name: "adminReact",
 				label: "Admin with React",
 				message: "Use React for the Admin UI?",
@@ -596,8 +621,7 @@ export const questionGroups: QuestionGroup[] = [
 					{ message: "type checking", hint: "(recommended)" },
 					{
 						message: "devcontainer",
-						hint:
-							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
+						hint: "(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
 				],
 				migrate: async (ctx) =>
@@ -621,14 +645,12 @@ export const questionGroups: QuestionGroup[] = [
 					{ message: "ESLint", hint: "(recommended)" },
 					{
 						message: "Prettier",
-						hint:
-							"(requires ESLint, enables automatic code formatting in VSCode)",
+						hint: "(requires ESLint, enables automatic code formatting in VSCode)",
 					},
 					{ message: "code coverage" },
 					{
 						message: "devcontainer",
-						hint:
-							"(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
+						hint: "(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
 				],
 				action: checkTypeScriptTools,
@@ -657,8 +679,7 @@ export const questionGroups: QuestionGroup[] = [
 				choices: [
 					{
 						message: "JSON files",
-						hint:
-							"(required for Weblate; words.js will be generated using @iobroker/adapter-dev)",
+						hint: "(required for Weblate; words.js will be generated using @iobroker/adapter-dev)",
 						value: "JSON",
 					},
 					{
@@ -957,6 +978,7 @@ export interface Answers {
 		| "devcontainer"
 	)[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
+	nodeVersion?: "12" | "14" | "16";
 	title?: string;
 	license?: string;
 	type: string;

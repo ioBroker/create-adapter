@@ -399,6 +399,20 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it(`Node.js 16 as minimum`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					nodeVersion: "16",
+				};
+				await expectSuccess(
+					"minNodeVersion_16",
+					answers,
+					(file) =>
+						file.name === "package.json" ||
+						file.name === "tsconfig.json",
+				);
+			});
+
 			it(`TS(X) with single quotes`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
@@ -477,7 +491,8 @@ describe("adapter creation =>", () => {
 			it(`Different keywords`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					keywords: "this, adapter,uses,   different , keywords" as any,
+					keywords:
+						"this, adapter,uses,   different , keywords" as any,
 				};
 				await expectSuccess("keywords", answers, (file) =>
 					file.name.endsWith("package.json"),
