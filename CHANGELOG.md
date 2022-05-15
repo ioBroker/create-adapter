@@ -9,6 +9,7 @@
 * (AlCalzone) Test Node 18, drop Node 12 from testing (#909)
 * (AlCalzone) Remove deprecated unit tests (#908) · [Migration guide](docs/updates/20220506_remove_unit_tests.md)
 * (AlCalzone) Base `tsconfig.json` on `@tsconfig/node` packages (#910) · [Migration guide](docs/updates/20220506_tsconfig_node.md)
+* (AlCalzone) Upgrade TypeScript dependency in adapters to `4.6` (#914)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
