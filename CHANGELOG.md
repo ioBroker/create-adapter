@@ -9,6 +9,7 @@
 * (AlCalzone) Test Node 18, drop Node 12 from testing (#909)
 * (AlCalzone) Remove deprecated unit tests (#908) · [Migration guide](docs/updates/220506_remove_unit_tests.md)
 * (AlCalzone) Upgrade TypeScript dependency in adapters to `4.6` (#914)
+* (AlCalzone) Cancel previous PR/branch runs when a new commit is pushed (#915) · [Migration guide](docs/updates/20220515_cancel_check_runs.md)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
