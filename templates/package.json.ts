@@ -23,9 +23,9 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 
-	const minNodeVersion = answers.nodeVersion ?? "12";
-	const mochaVersion = minNodeVersion === "12" ? "@9" : "";
-	const sinonVersion = minNodeVersion === "12" ? "@13" : "";
+	const minNodeVersion = answers.nodeVersion ?? "14";
+	const mochaVersion = minNodeVersion === "14" ? "@9" : "";
+	const sinonVersion = minNodeVersion === "14" ? "@13" : "";
 
 	const dependencyPromises = [
 		...(isAdapter ? ["@iobroker/adapter-core"] : [])

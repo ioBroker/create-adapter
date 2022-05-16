@@ -558,19 +558,19 @@ export const questionGroups: QuestionGroup[] = [
 				optional: true,
 				message:
 					"What's the minimum Node.js version you want to support?",
-				initial: "12",
-				choices: ["12", "14", "16"],
+				initial: "14",
+				// We cannot target Node.js 18 yet, since there are no type definitions
+				// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60047
+				choices: ["14", "16"],
 				migrate: (ctx) => {
-					if (ctx.hasDevDependency("@tsconfig/node12")) {
-						return "12";
-					} else if (ctx.hasDevDependency("@tsconfig/node14")) {
+					if (ctx.hasDevDependency("@tsconfig/node14")) {
 						return "14";
 					} else if (ctx.hasDevDependency("@tsconfig/node16")) {
 						return "16";
-					} else if (ctx.hasDevDependency("@tsconfig/node18")) {
+					} /* else if (ctx.hasDevDependency("@tsconfig/node18")) {
 						return "18";
-					} else {
-						return "12";
+					} */ else {
+						return "14";
 					}
 				},
 			},
@@ -978,7 +978,7 @@ export interface Answers {
 		| "devcontainer"
 	)[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
-	nodeVersion?: "12" | "14" | "16";
+	nodeVersion?: "14" | "16";
 	title?: string;
 	license?: string;
 	type: string;
