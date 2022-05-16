@@ -129,7 +129,7 @@ export = (async answers => {
 		],
 		"globalDependencies": [
 			${isAdapter ? `{ "admin": "${useJsonConfig ? ">=5.1.13" : ">=5.0.0" }" },` : ""}
-        ],
+		],
 	},
 	"native": ${JSON.stringify(adapterSettings)},
 	"objects": [
