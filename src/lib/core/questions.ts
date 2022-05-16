@@ -587,21 +587,7 @@ export const questionGroups: QuestionGroup[] = [
 						answers.adminUi = "html";
 					}
 				},
-				migrate: async (ctx) =>
-					(await ctx.fileExists("admin/jsonConfig.json"))
-						? "json"
-						: (await ctx.hasFilesWithExtension(
-								"admin/src",
-								".jsx",
-								(f) => !f.endsWith("tab.jsx"),
-						  )) ||
-						  (await ctx.hasFilesWithExtension(
-								"admin/src",
-								".tsx",
-								(f) => !f.endsWith("tab.tsx"),
-						  ))
-						? "react"
-						: "html",
+				migrate: migrateAdminUi,
 			},
 			{
 				condition: [{ name: "adminFeatures", contains: "tab" }],
@@ -1102,4 +1088,24 @@ export function getDefaultAnswer<T extends keyof Answers>(
 
 export function getIconName(answers: Answers): string {
 	return `${answers.adapterName}.${answers.icon?.extension || "png"}`;
+}
+
+async function migrateAdminUi(context: MigrationContextBase): Promise<string> {
+	if (await context.fileExists("admin/jsonConfig.json")) {
+		return "json";
+	}
+	const hasJsx = await context.hasFilesWithExtension(
+		"admin/src",
+		".jsx",
+		(f) => !f.endsWith("tab.jsx"),
+	);
+	const hasTsx = await context.hasFilesWithExtension(
+		"admin/src",
+		".tsx",
+		(f) => !f.endsWith("tab.tsx"),
+	);
+	if (hasJsx || hasTsx) {
+		return "react";
+	}
+	return "html";
 }
