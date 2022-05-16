@@ -265,7 +265,7 @@ describe("adapter creation =>", () => {
 					license: "Apache License 2.0",
 				};
 				await expectSuccess(
-					"adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
+					"adapter_JS_JsonUI_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
 			});
