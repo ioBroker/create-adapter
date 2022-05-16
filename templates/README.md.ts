@@ -43,7 +43,6 @@ export = (answers => {
 	}
 	npmScripts["test:package"] = "Ensures your \`package.json\` and \`io-package.json\` are valid.";
 	if (isAdapter) {
-		npmScripts["test:unit"] = "Tests the adapter startup with unit tests (fast, but might require module mocks to work).";
 		npmScripts["test:integration"] = "Tests the adapter startup with an actual instance of ioBroker.";
 	}
 	npmScripts["test"] = `Performs a minimal test run on package files${isAdapter ? " and your tests" : ""}.`;

@@ -66,6 +66,7 @@
 		"adminUI": {
 			"config": "materialize"
 		},
+		"eraseOnUpload": true,
 		"dependencies": [
 			{
 				"js-controller": ">=3.3.22"

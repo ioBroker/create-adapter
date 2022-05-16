@@ -14,8 +14,8 @@ const templateFunction: TemplateFunction = answers => {
 	const useReleaseScript = answers.releaseScript === "yes";
 	const isGitHub = answers.target === "github";
 
-	const latestNodeVersion = "14.x";
-	const adapterTestVersions = ["12.x", "14.x", "16.x"];
+	const latestNodeVersion = "16.x";
+	const adapterTestVersions = ["14.x", "16.x", "18.x"];
 	const adapterTestOS = ["ubuntu-latest", "windows-latest", "macos-latest"];
 
 	const adapterName = answers.adapterName;
@@ -41,6 +41,11 @@ on:
       # pre-releases
       - "v[0-9]+.[0-9]+.[0-9]+-**"
   pull_request: {}
+
+# Cancel previous PR/branch runs when a new commit is pushed
+concurrency:
+  group: \${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   # Performs quick checks before the expensive test runs

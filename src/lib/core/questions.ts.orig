@@ -553,31 +553,7 @@ export const questionGroups: QuestionGroup[] = [
 			{
 				condition: [{ name: "features", contains: "adapter" }],
 				type: "select",
-				name: "nodeVersion",
-				label: "Node.js version",
-				expert: true,
-				optional: true,
-				message:
-					"What's the minimum Node.js version you want to support?",
-				initial: "14",
-				// We cannot target Node.js 18 yet, since there are no type definitions
-				// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60047
-				choices: ["14", "16"],
-				migrate: (ctx) => {
-					if (ctx.hasDevDependency("@tsconfig/node14")) {
-						return "14";
-					} else if (ctx.hasDevDependency("@tsconfig/node16")) {
-						return "16";
-					} /* else if (ctx.hasDevDependency("@tsconfig/node18")) {
-						return "18";
-					} */ else {
-						return "14";
-					}
-				},
-			},
-			{
-				condition: [{ name: "features", contains: "adapter" }],
-				type: "select",
+<<<<<<< HEAD
 				name: "adminUi",
 				label: "Admin UI",
 				message:
@@ -613,6 +589,51 @@ export const questionGroups: QuestionGroup[] = [
 					}
 				},
 				migrate: migrateAdminUi,
+=======
+				name: "nodeVersion",
+				label: "Node.js version",
+				expert: true,
+				optional: true,
+				message:
+					"What's the minimum Node.js version you want to support?",
+				initial: "14",
+				// We cannot target Node.js 18 yet, since there are no type definitions
+				// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60047
+				choices: ["14", "16"],
+				migrate: (ctx) => {
+					if (ctx.hasDevDependency("@tsconfig/node14")) {
+						return "14";
+					} else if (ctx.hasDevDependency("@tsconfig/node16")) {
+						return "16";
+					} /* else if (ctx.hasDevDependency("@tsconfig/node18")) {
+						return "18";
+					} */ else {
+						return "14";
+					}
+				},
+			},
+			{
+				condition: [{ name: "features", contains: "adapter" }],
+				type: "select",
+				name: "adminReact",
+				label: "Admin with React",
+				message: "Use React for the Admin UI?",
+				initial: "no",
+				choices: ["yes", "no"],
+				migrate: async (ctx) =>
+					(await ctx.hasFilesWithExtension(
+						"admin/src",
+						".jsx",
+						(f) => !f.endsWith("tab.jsx"),
+					)) ||
+					(await ctx.hasFilesWithExtension(
+						"admin/src",
+						".tsx",
+						(f) => !f.endsWith("tab.tsx"),
+					))
+						? "yes"
+						: "no",
+>>>>>>> master
 			},
 			{
 				condition: [{ name: "adminFeatures", contains: "tab" }],

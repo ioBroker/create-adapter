@@ -5,6 +5,18 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Test Node 18, drop Node 12 from testing (#909)
+* (AlCalzone) Remove deprecated unit tests (#908) · [Migration guide](docs/updates/20220506_remove_unit_tests.md)
+* (AlCalzone) Base `tsconfig.json` on `@tsconfig/node` packages (#910) · [Migration guide](docs/updates/20220506_tsconfig_node.md)
+* (AlCalzone) Upgrade TypeScript dependency in adapters to `4.6` (#914)
+* (AlCalzone) Cancel previous PR/branch runs when a new commit is pushed (#915) · [Migration guide](docs/updates/20220515_cancel_check_runs.md)
+
+## 2.1.1 (2022-04-01)
+* (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
+* (AlCalzone) Pinned `react`, `react-dom`, `@types/react` and `@types/react-dom` dependencies to v17, updated `@iobroker/adapter-react` to latest version (#896)
+* Updated the creator's dependencies
+
 ## 2.1.0 (2022-02-16)
 * (UncleSamSwiss) Switched from `gulp` to `@iobroker/adapter-dev` (#839) · [Migration guide](docs/updates/20211018_adapter-dev.md)
 * (AlCalzone) Switch build process (React, TypeScript) from `parcel` to `@iobroker/adapter-dev` using `esbuild` (#838) · [Migration guide](docs/updates/20220215_esbuild.md)

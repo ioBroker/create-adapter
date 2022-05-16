@@ -23,6 +23,10 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 
+	const minNodeVersion = answers.nodeVersion ?? "14";
+	const mochaVersion = minNodeVersion === "14" ? "@9" : "";
+	const sinonVersion = minNodeVersion === "14" ? "@13" : "";
+
 	const dependencyPromises = [
 		...(isAdapter ? ["@iobroker/adapter-core"] : [])
 	]
@@ -42,8 +46,8 @@ const templateFunction: TemplateFunction = async answers => {
 			// support adapter testing by default
 			"chai",
 			"chai-as-promised",
-			"mocha",
-			"sinon",
+			`mocha${mochaVersion}`,
+			`sinon${sinonVersion}`,
 			"sinon-chai",
 			"proxyquire",
 		] : []),
@@ -54,11 +58,13 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/sinon",
 			"@types/sinon-chai",
 			"@types/proxyquire",
+			// Recommended tsconfig for the minimum supported Node.js version
+			`@tsconfig/node${minNodeVersion}`,
 			// and NodeJS typings
-			"@types/node@14",
+			`@types/node@${minNodeVersion}`,
 		] : []),
 		...(useTypeChecking ? [
-			"typescript@~4.5",
+			"typescript@~4.6",
 		] : []),
 		...(useTypeScript ? [
 			// enhance testing through TS tools
@@ -69,17 +75,17 @@ const templateFunction: TemplateFunction = async answers => {
 		] : []),
 		...(useReact ? [
 			// React
-			"react",
-			"react-dom",
+			"react@17",
+			"react-dom@17",
 			// ioBroker react framework
-			"@iobroker/adapter-react@2.0.19",
+			"@iobroker/adapter-react@2.0.22",
 			// UI library
 			"@material-ui/core",
 		] : []),
 		...(useTypeChecking && useReact ? [
 			// React's type definitions
-			"@types/react",
-			"@types/react-dom",
+			"@types/react@17",
+			"@types/react-dom@17",
 		] : []),
 		...(useESLint ? [
 			"eslint"
@@ -172,7 +178,6 @@ const templateFunction: TemplateFunction = async answers => {
 			npmScripts["test:js"] = `mocha --config test/mocharc.custom.json "{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}"`
 		}
 		npmScripts["test:package"] = "mocha test/package --exit";
-		npmScripts["test:unit"] = "mocha test/unit --exit";
 		npmScripts["test:integration"] = "mocha test/integration --exit";
 		npmScripts["test"] = `${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package`;
 
