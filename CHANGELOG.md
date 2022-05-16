@@ -11,6 +11,7 @@
 * (AlCalzone) Base `tsconfig.json` on `@tsconfig/node` packages (#910) · [Migration guide](docs/updates/20220506_tsconfig_node.md)
 * (AlCalzone) Upgrade TypeScript dependency in adapters to `4.6` (#914)
 * (AlCalzone) Cancel previous PR/branch runs when a new commit is pushed (#915) · [Migration guide](docs/updates/20220515_cancel_check_runs.md)
+* (UncleSamSwiss) Add support for JSON Config UI (#724)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
