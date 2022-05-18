@@ -7,13 +7,13 @@ function generateSetting(settings: AdapterSettings): any {
 			type: "select",
 			label: settings.label || settings.key,
 			options: settings.options.map(o => ({ label: o.text, value: o.value })),
-            newLine: true
+			newLine: true
 		};
 	} else {
 		return {
 			type: settings.inputType,
 			label: settings.label || settings.key,
-            newLine: true
+			newLine: true
 		};
 	}
 }
