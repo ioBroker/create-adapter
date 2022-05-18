@@ -40,6 +40,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "admin/i18n/zh-cn/translations.json.ts", templateFunction: require("./admin/i18n/zh-cn/translations.json") },
 	{ name: "admin/icon.png.ts", templateFunction: require("./admin/icon.png") },
 	{ name: "admin/index_m.html.ts", templateFunction: require("./admin/index_m.html") },
+	{ name: "admin/jsonConfig.json.ts", templateFunction: require("./admin/jsonConfig.json") },
 	{ name: "admin/src/app.tsx_jsx.ts", templateFunction: require("./admin/src/app.tsx_jsx") },
 	{ name: "admin/src/components/settings.tsx_jsx.ts", templateFunction: require("./admin/src/components/settings.tsx_jsx") },
 	{ name: "admin/src/i18n/de.json.ts", templateFunction: require("./admin/src/i18n/de.json") },

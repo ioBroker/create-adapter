@@ -10,7 +10,8 @@ export = (async answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useAdminReact = answers.adminReact === "yes";
+	const useJsonConfig = answers.adminUi === "json";
+	const useAdminReact = answers.adminUi === "react";
 	const useTabReact = answers.tabReact === "yes";
 	const useReact = useAdminReact || useTabReact;
 	const supportCustom = answers.adminFeatures && answers.adminFeatures.indexOf("custom") > -1;
@@ -37,6 +38,20 @@ export = (async answers => {
 	const adapterSettings: Record<string, any> = {};
 	for (const setting of allSettings) {
 		adapterSettings[setting.key] = setting.defaultValue;
+	}
+
+	let adminUiConfig: string;
+	switch (answers.adminUi) {
+		case "react":
+		case "html":
+			adminUiConfig = "materialize";
+			break;
+		case "json":
+			adminUiConfig = "json";
+			break;
+		default:
+			adminUiConfig = "none";
+			break;
 	}
 
 	const template = `
@@ -97,9 +112,12 @@ export = (async answers => {
 			"type": "${answers.type || "visualization-widgets"}",
 			"mode": "once",
 		`) : ""}
-		${isAdapter ? `"materialize": true,` : ""}
+		${isAdapter ? `
+		"adminUI": {
+			"config": "${adminUiConfig}",
+			${supportTab ? `"tab": "materialize",` : ""}
+		},` : ""}
 		${supportTab ? (`
-		"materializeTab": true,
 		"adminTab": {
 			"singleton": true,
 			"name": ${titleLang},
@@ -110,8 +128,11 @@ export = (async answers => {
 		${supportCustom ? `"supportCustoms": true,` : ""}
 		${useReact ? `"eraseOnUpload": true,` : ""}
 		"dependencies": [
-			${isAdapter ? `{ "js-controller": ">=2.0.0" },` : ""}
+			${isAdapter ? `{ "js-controller": ">=3.3.22" },` : ""}
 			${isWidget ? `"vis",` : ""}
+		],
+		"globalDependencies": [
+			${isAdapter ? `{ "admin": "${useJsonConfig ? ">=5.1.13" : ">=5.0.0" }" },` : ""}
 		],
 	},
 	"native": ${JSON.stringify(adapterSettings)},

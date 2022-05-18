@@ -7,7 +7,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (!useTypeScript && !useTypeChecking) return;
 
 	const useReact =
-		answers.adminReact === "yes" || answers.tabReact === "yes";
+		answers.adminUi === "react" || answers.tabReact === "yes";
 	if (!useReact) return;
 
 	const template = `

@@ -99,10 +99,11 @@ export function getI18nJsonTemplate(
 		if (!isAdapter) return;
 		if (forReact) {
 			const useReact =
-				answers.adminReact === "yes" || answers.tabReact === "yes";
+				answers.adminUi === "react" || answers.tabReact === "yes";
 			if (!useReact) return;
 		} else {
-			const i18nJson = answers.i18n === "JSON";
+			const i18nJson =
+				answers.i18n === "JSON" || answers.adminUi === "json";
 			if (!i18nJson) return;
 		}
 

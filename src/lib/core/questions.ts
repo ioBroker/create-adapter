@@ -87,6 +87,7 @@ export interface QuestionMeta {
 	label: string;
 	/** One or more conditions that need(s) to be fulfilled for this question to be asked */
 	condition?: Condition | Condition[];
+	replay?: (answers: Record<string, any>) => void;
 	migrate?: MigrateFunc;
 	resultTransform?: TransformResult;
 	action?: QuestionAction<undefined | AnswerValue | AnswerValue[]>;
@@ -577,24 +578,41 @@ export const questionGroups: QuestionGroup[] = [
 			{
 				condition: [{ name: "features", contains: "adapter" }],
 				type: "select",
-				name: "adminReact",
-				label: "Admin with React",
-				message: "Use React for the Admin UI?",
-				initial: "no",
-				choices: ["yes", "no"],
-				migrate: async (ctx) =>
-					(await ctx.hasFilesWithExtension(
-						"admin/src",
-						".jsx",
-						(f) => !f.endsWith("tab.jsx"),
-					)) ||
-					(await ctx.hasFilesWithExtension(
-						"admin/src",
-						".tsx",
-						(f) => !f.endsWith("tab.tsx"),
-					))
-						? "yes"
-						: "no",
+				name: "adminUi",
+				label: "Admin UI",
+				message:
+					"Which framework would you like to use for the Admin UI?",
+				initial: "json",
+				choices: [
+					{
+						message: "JSON UI",
+						hint: "(good for simple Admin UIs with a few fields)",
+						value: "json",
+					},
+					{
+						message: "HTML / Materialize",
+						hint: "(good for Admin UIs that have a few special requirements)",
+						value: "html",
+					},
+					{
+						message: "React",
+						hint: "(good for complex Admin UIs)",
+						value: "react",
+					},
+					{
+						message: "No UI",
+						hint: "(should only be used if you have another way to configure)",
+						value: "none",
+					},
+				],
+				replay: (answers: Record<string, any>): void => {
+					if (answers.adminReact === "yes") {
+						answers.adminUi = "react";
+					} else if (answers.adminReact === "no") {
+						answers.adminUi = "html";
+					}
+				},
+				migrate: migrateAdminUi,
 			},
 			{
 				condition: [{ name: "adminFeatures", contains: "tab" }],
@@ -667,7 +685,7 @@ export const questionGroups: QuestionGroup[] = [
 			{
 				condition: [
 					{ name: "features", contains: "adapter" },
-					{ name: "adminReact", value: "no" },
+					{ name: "adminUi", value: "html" },
 				],
 				type: "select",
 				name: "i18n",
@@ -982,7 +1000,7 @@ export interface Answers {
 	title?: string;
 	license?: string;
 	type: string;
-	adminReact?: "yes" | "no";
+	adminUi?: "json" | "html" | "react" | "none";
 	tabReact?: "yes" | "no";
 	i18n?: "words.js" | "JSON";
 	releaseScript?: "yes" | "no";
@@ -1096,4 +1114,24 @@ export function getDefaultAnswer<T extends keyof Answers>(
 
 export function getIconName(answers: Answers): string {
 	return `${answers.adapterName}.${answers.icon?.extension || "png"}`;
+}
+
+async function migrateAdminUi(context: MigrationContextBase): Promise<string> {
+	if (await context.fileExists("admin/jsonConfig.json")) {
+		return "json";
+	}
+	const hasJsx = await context.hasFilesWithExtension(
+		"admin/src",
+		".jsx",
+		(f) => !f.endsWith("tab.jsx"),
+	);
+	const hasTsx = await context.hasFilesWithExtension(
+		"admin/src",
+		".tsx",
+		(f) => !f.endsWith("tab.tsx"),
+	);
+	if (hasJsx || hasTsx) {
+		return "react";
+	}
+	return "html";
 }

@@ -71,7 +71,8 @@
 		"mode": "once",
 		"dependencies": [
 			"vis"
-		]
+		],
+		"globalDependencies": []
 	},
 	"native": {
 		"option1": true,

@@ -9,7 +9,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (!useESLint) return;
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useReact =
-		answers.adminReact === "yes" || answers.tabReact === "yes";
+		answers.adminUi === "react" || answers.tabReact === "yes";
 
 	const template = `
 module.exports = {

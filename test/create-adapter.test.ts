@@ -115,7 +115,7 @@ const baseAnswers: Answers = {
 	adminFeatures: [],
 	type: "general",
 	language: "TypeScript",
-	adminReact: "no",
+	adminUi: "html",
 	tabReact: "no",
 	releaseScript: "no",
 	tools: ["ESLint"],
@@ -239,7 +239,7 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					es6class: "yes",
-					adminReact: "yes",
+					adminUi: "react",
 				};
 				await expectSuccess("adapter_TS_React", answers);
 			});
@@ -249,22 +249,23 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					language: "JavaScript",
 					es6class: "yes",
-					adminReact: "yes",
+					adminUi: "react",
 				};
 				await expectSuccess("adapter_JS_React", answers);
 			});
 
-			it("Adapter, JavaScript, ESLint, Spaces, Single quotes, Apache License", async () => {
+			it("Adapter, JavaScript, JSON UI, ESLint, Spaces, Single quotes, Apache License", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
+					adminUi: "json",
 					tools: ["ESLint", "type checking"],
 					indentation: "Space (4)",
 					quotes: "single",
 					license: "Apache License 2.0",
 				};
 				await expectSuccess(
-					"adapter_JS_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
+					"adapter_JS_JsonUI_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
 			});
@@ -417,7 +418,7 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					quotes: "single",
-					adminReact: "yes",
+					adminUi: "react",
 				};
 				await expectSuccess("TS_SingleQuotes", answers, (file) => {
 					return (
@@ -551,7 +552,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					adminFeatures: ["tab"],
 					es6class: "yes",
-					adminReact: "yes",
+					adminUi: "react",
 					tabReact: "yes",
 				};
 				await expectSuccess("tabReact_adminReact_TS", answers, (file) =>
@@ -635,6 +636,20 @@ describe("adapter creation =>", () => {
 					(file) =>
 						file.name === "README.md" ||
 						file.name.endsWith("test-and-release.yml"),
+				);
+			});
+
+			it("No Config", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adminUi: "none",
+				};
+				await expectSuccess(
+					"no_config",
+					answers,
+					(file) =>
+						file.name.startsWith("admin/") ||
+						file.name === "io-package.json",
 				);
 			});
 		});

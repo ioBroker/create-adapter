@@ -6,7 +6,7 @@ const templateFunction: TemplateFunction = answers => {
 	if (!useESLint) return;
 
 	const useTypeScript = answers.language === "TypeScript";
-	const useReact = answers.adminReact === "yes" || answers.tabReact === "yes";
+	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
 	const usePrettier = answers.tools?.includes("Prettier");
 
 	const template = `

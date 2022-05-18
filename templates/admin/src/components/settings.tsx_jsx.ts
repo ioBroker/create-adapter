@@ -18,7 +18,7 @@ function generateSettingsMethod(settings: AdapterSettings): string {
 const templateFunction: TemplateFunction = answers => {
 
 	const useTypeScript = answers.language === "TypeScript";
-	const useReact = answers.adminReact === "yes";
+	const useReact = answers.adminUi === "react";
 	if (!useReact) return;
 
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;

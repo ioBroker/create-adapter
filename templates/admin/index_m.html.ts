@@ -23,9 +23,11 @@ function generateSettingsDiv(settings: AdapterSettings): string {
 export = (answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
-	if (!isAdapter) return;
+	const useJsonConfig = answers.adminUi === 'json';
+	const noConfig = answers.adminUi === 'none';
+	if (!isAdapter || useJsonConfig || noConfig) return;
 
-	const useReact = answers.adminReact === "yes";
+	const useReact = answers.adminUi === "react";
 
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;
 

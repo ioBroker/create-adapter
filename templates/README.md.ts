@@ -10,7 +10,7 @@ export = (answers => {
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
 	const useReact =
-		answers.adminReact === "yes" || answers.tabReact === "yes";
+		answers.adminUi === "react" || answers.tabReact === "yes";
 	const autoInitGit = answers.gitCommit === "yes";
 	const defaultBranch = answers.defaultBranch || "main";
 	const useReleaseScript = answers.releaseScript === "yes";
