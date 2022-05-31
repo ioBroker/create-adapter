@@ -8,8 +8,8 @@ Simply follow these steps to switch from `gulp` to `@iobroker/adapter-dev`:
 
 1. Remove the `gulpfile.js` in the root directory
 1. Remove/modify the file `lib/tools.js` or `src/lib/tools.ts`
-    - remove it if you don't include/require it anywhere in your adapter,
-    - otherwise remove the functions `translateText()`, `translateYandex()` and `translateGoogle()`
+    - remove it if you don't import/require it anywhere in your adapter,
+    - otherwise remove the functions `translateText()`, `translateYandex()` and `translateGoogle()` as well as the `axios` import/require
 1. Remove the following dev-dependencies from your `package.json`:
     - `gulp`
     - `@types/gulp` (if available)
