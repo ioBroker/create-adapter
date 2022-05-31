@@ -7,6 +7,9 @@ What was previously done using `gulp` tasks can now be easily done using the scr
 Simply follow these steps to switch from `gulp` to `@iobroker/adapter-dev`:
 
 1. Remove the `gulpfile.js` in the root directory
+1. Remove/modify the file `lib/tools.js` or `src/lib/tools.ts`
+    - remove it if you don't include/require it anywhere in your adapter,
+    - otherwise remove the functions `translateText()`, `translateYandex()` and `translateGoogle()`
 1. Remove the following dev-dependencies from your `package.json`:
     - `gulp`
     - `@types/gulp` (if available)
