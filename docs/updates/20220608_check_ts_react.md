@@ -25,3 +25,10 @@ Also update your main `tsconfig.json` file like:
                 "node_modules/**"
         ]
 ```
+
+Also update your `.eslintrc.js` file (if present) to include both tsconfig files:
+
+```diff
+-               project: "./tsconfig.json",
++               project: ["./tsconfig.json", "./admin/tsconfig.json"],
+```
