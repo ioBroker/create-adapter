@@ -35,11 +35,10 @@
 		"inlineSourceMap": false
 	},
 	"include": [
-		"src/**/*.ts",
-		"admin/**/*.ts",
-		"admin/**/*.tsx"
+		"src/**/*.ts"
 	],
 	"exclude": [
+		"admin/**",
 		"build/**",
 		"node_modules/**"
 	]

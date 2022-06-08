@@ -8,6 +8,22 @@ export = (answers => {
 
 	const minNodeVersion = answers.nodeVersion ?? "14";
 
+	let include: string;
+	let exclude: string;
+
+	if (useTypeScript) {
+		include = `
+		"src/**/*.ts"`;
+		exclude = `
+		"admin/**",
+		"build/**",`;
+	} else {
+		include = `
+		"**/*.js",
+		"**/*.d.ts"`;
+		exclude = ``;
+	}
+
 	const template = `
 // Root tsconfig to set the settings and power editor support for all TS files
 {
@@ -48,17 +64,10 @@ export = (answers => {
 		"sourceMap": true,
 		"inlineSourceMap": false`) : ""}
 	},
-	"include": [${useTypeScript ? (`
-		"src/**/*.ts",
-		"admin/**/*.ts",
-		"admin/**/*.tsx"
-`) : (`
-		"**/*.js",
-		"**/*.d.ts"
-`)}	],
-	"exclude": [
-		${useTypeScript ? (`"build/**",
-		`) : ""}"node_modules/**"
+	"include": [${include}
+	],
+	"exclude": [${exclude}
+		"node_modules/**"
 	]
 }`;
 	return template.trim();
