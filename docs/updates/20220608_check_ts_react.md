@@ -19,11 +19,6 @@ Also update your main `tsconfig.json` file like:
 -               "admin/**/*.tsx"
 +               "src/**/*.ts"
         ],
-        "exclude": [
-+               "admin/**",
-                "build/**",
-                "node_modules/**"
-        ]
 ```
 
 Also update your `.eslintrc.js` file (if present) to include both tsconfig files:

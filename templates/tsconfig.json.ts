@@ -15,7 +15,6 @@ export = (answers => {
 		include = `
 		"src/**/*.ts"`;
 		exclude = `
-		"admin/**",
 		"build/**",`;
 	} else {
 		include = `
