@@ -18,7 +18,7 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
 		sourceType: "module", // Allows for the use of imports
-		project: "./tsconfig.json",${useReact ? (`
+		project: ${useReact ? `["./tsconfig.json", "./admin/tsconfig.json"]` : `"./tsconfig.json"`},${useReact ? (`
 		ecmaFeatures: {
 			jsx: true,
 		},`) : ""}

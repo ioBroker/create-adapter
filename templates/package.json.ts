@@ -182,7 +182,11 @@ const templateFunction: TemplateFunction = async answers => {
 		npmScripts["test"] = `${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package`;
 
 		if (useTypeChecking) {
-			npmScripts["check"] = `tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}`;
+			if (useReact) {
+				npmScripts["check"] = `tsc --noEmit${useTypeScript ? " && tsc --noEmit -p admin/tsconfig.json" : " -p tsconfig.check.json"}`;
+			} else {
+				npmScripts["check"] = `tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}`;
+			}
 		}
 		if (useNyc) {
 			npmScripts["coverage"] = "nyc npm run test:ts";
