@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.5.9",
-    "@tsconfig/node12": "^1.0.9",
+    "@tsconfig/node12": "^1.0.11",
     "@types/ansi-colors": "^3.2.2",
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
@@ -64,7 +64,7 @@
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
     "source-map-support": "^0.5.21",
-    "ts-node": "^10.8.0"
+    "ts-node": "^10.8.1"
   },
   "dependencies": {
     "@iobroker/adapter-dev": "^1.0.0",
