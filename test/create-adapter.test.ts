@@ -1,8 +1,8 @@
 // Disable API requests while testing
 process.env.TESTING = "true";
 
+import { execaSync } from "@esm2cjs/execa";
 import axios from "axios";
-import * as execa from "execa";
 import * as fs from "fs-extra";
 import { validate as validateJSON } from "jsonschema";
 import * as path from "path";
@@ -56,7 +56,7 @@ async function generateBaselines(
 	// Include the npm package content in the baselines (only for full adapter tests)
 	if (!filterFilesPredicate && files.some((f) => f.name === "package.json")) {
 		const packageContent = JSON.parse(
-			execa.sync("npm", ["pack", "--dry-run", "--json"], {
+			execaSync("npm", ["pack", "--dry-run", "--json"], {
 				cwd: testDir,
 				encoding: "utf8",
 			}).stdout,
