@@ -69,7 +69,6 @@ export = (answers => {
 [![Downloads](https://img.shields.io/npm/dm/iobroker.${adapterNameLowerCase}.svg)](https://www.npmjs.com/package/iobroker.${adapterNameLowerCase})
 ![Number of Installations](https://iobroker.live/badges/${adapterNameLowerCase}-installed.svg)
 ![Current version in stable repository](https://iobroker.live/badges/${adapterNameLowerCase}-stable.svg)
-[![Dependency Status](https://img.shields.io/david/${answers.authorGithub}/iobroker.${adapterNameLowerCase}.svg)](https://david-dm.org/${answers.authorGithub}/iobroker.${adapterNameLowerCase})
 
 [![NPM](https://nodei.co/npm/iobroker.${adapterNameLowerCase}.png?downloads=true)](https://nodei.co/npm/iobroker.${adapterNameLowerCase}/)
 
