@@ -14,6 +14,7 @@
 * (UncleSamSwiss) Add support for JSON Config UI (#724)
 * (crycode-de) Fix `npm run check` for TS-React adapters · [Migration guide](docs/updates/20220608_check_ts_react.md)
 * (AlCalzone) Replace ESM-only dependencies (#943)
+* (Steiger04 & AlCalzone) Fix reactivity in VIS widget (#848)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
