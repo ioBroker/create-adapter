@@ -25,6 +25,7 @@
 * (AlCalzone) Prevent widgets from overwriting VIS link by removing `localLinks` from `io-package.json` (#962)
 * (AlCalzone) Append `.git` to HTTPS repository URLs (#963)
 * (AlCalzone) Upgrade creator to TypeScript 4.8 (#964)
+* (AlCalzone & klein0r) Fix `lint` command for JS adapters · [Migration guide](docs/updates/20220824_fix_lint_command.md)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
