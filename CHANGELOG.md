@@ -15,6 +15,7 @@
 * (crycode-de) Fix `npm run check` for TS-React adapters · [Migration guide](docs/updates/20220608_check_ts_react.md)
 * (AlCalzone) Replace ESM-only dependencies (#943)
 * (AlCalzone) Fix: Offer `Prettier` for JS adapters too (#945)
+* (AlCalzone) Remove non-functioning david-dm badge from README (#946)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
