@@ -122,7 +122,7 @@ const templateFunction: TemplateFunction = answers => {
 		data-vis-name="Show instance">
 	<div class="vis-widget <%== this.data.attr('class') %>" style="width:230px; height:210px;" id="<%= this.data.attr('wid') %>" >
 		<div class="${widgetName}-class vis-widget-body <%== this.data.attr('class') %>" style="padding:2px" >
-			OID: <%= this.data.attr('oid') %><br>			
+			OID: <%= this.data.attr('oid') %><br>
 			OID value: <%== vis.states.attr(this.data['oid'] + '.val') %><br>
 			Color: <span style="color: <%= this.data.attr('myColor') %>"><%= this.data.attr('myColor') %></span><br>
 			extraAttr: <%== this.data.attr('extraAttr') %><br>
