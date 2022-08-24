@@ -20,7 +20,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@iobroker/adapter-dev": "^1.0.0",
+    "@iobroker/adapter-dev": "^1.0.1",
     "@iobroker/testing": "^3.0.2"
   },
   "main": "widgets/test-widget.html",
