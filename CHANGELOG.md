@@ -17,6 +17,7 @@
 * (Steiger04 & AlCalzone) Fix reactivity in VIS widget (#848)
 * (AlCalzone) Fix: Offer `Prettier` for JS adapters too (#945)
 * (AlCalzone) Remove non-functioning david-dm badge from README (#946)
+* (Apollon77 & AlCalzone) Add disclaimer about use of names and logos to README (#957)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
