@@ -5,7 +5,6 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.test-adapter.svg)](https://www.npmjs.com/package/iobroker.test-adapter)
 ![Number of Installations](https://iobroker.live/badges/test-adapter-installed.svg)
 ![Current version in stable repository](https://iobroker.live/badges/test-adapter-stable.svg)
-[![Dependency Status](https://img.shields.io/david/AlCalzone/iobroker.test-adapter.svg)](https://david-dm.org/AlCalzone/iobroker.test-adapter)
 
 [![NPM](https://nodei.co/npm/iobroker.test-adapter.png?downloads=true)](https://nodei.co/npm/iobroker.test-adapter/)
 
