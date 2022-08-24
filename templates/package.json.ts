@@ -195,7 +195,7 @@ const templateFunction: TemplateFunction = async answers => {
 			if (useTypeScript) {
 				npmScripts["lint"] = `eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}`;
 			} else {
-				npmScripts["lint"] = `eslint${useReact ? " --ext .js,.jsx" : ""}`;
+				npmScripts["lint"] = `eslint${useReact ? " --ext .js,.jsx" : ""} .`;
 			}
 		}
 	} else if (isWidget) {
