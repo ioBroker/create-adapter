@@ -8,16 +8,26 @@ const templateFunction: TemplateFunction = answers => {
 	const template = `
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: monthly
-    time: "04:00"
-    timezone: Europe/Berlin
-  open-pull-requests-limit: 20
-  assignees:
-  - ${answers.authorGithub}
-  versioning-strategy: increase
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "04:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    assignees:
+      - ${answers.authorGithub}
+    versioning-strategy: increase
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "04:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    assignees:
+      - ${answers.authorGithub}
 `;
 	return template.trimLeft();
 };
