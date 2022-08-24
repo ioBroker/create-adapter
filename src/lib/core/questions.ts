@@ -638,6 +638,10 @@ export const questionGroups: QuestionGroup[] = [
 					{ message: "ESLint", hint: "(recommended)" },
 					{ message: "type checking", hint: "(recommended)" },
 					{
+						message: "Prettier",
+						hint: "(requires ESLint, enables automatic code formatting in VSCode)",
+					},
+					{
 						message: "devcontainer",
 						hint: "(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
@@ -648,6 +652,7 @@ export const questionGroups: QuestionGroup[] = [
 						ctx.hasDevDependency("typescript")
 							? "type checking"
 							: null,
+						ctx.hasDevDependency("prettier") ? "Prettier" : null,
 						(await ctx.directoryExists(".devcontainer"))
 							? "devcontainer"
 							: null,
