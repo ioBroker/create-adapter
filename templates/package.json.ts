@@ -1,5 +1,5 @@
+import pLimit from "@esm2cjs/p-limit";
 import * as JSON5 from "json5";
-import pLimit from "p-limit";
 import { licenses } from "../src/lib/core/licenses";
 import { getDefaultAnswer } from "../src/lib/core/questions";
 import type { TemplateFunction } from "../src/lib/createAdapter";
