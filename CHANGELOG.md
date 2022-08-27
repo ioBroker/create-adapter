@@ -18,7 +18,8 @@
 * (AlCalzone) Fix: Offer `Prettier` for JS adapters too (#945)
 * (AlCalzone) Remove non-functioning david-dm badge from README (#946)
 * (AlCalzone & klein0r) Add github actions to dependabot config, reduce pull request limit (#948) · [Migration guide](docs/updates/20220824_dependabot_gh_actions.md)
-* (klein0r & AlCalzone) Enable syntax help for JSON Config in VSCode (#959) · [Migration guide](docs/updates/20220827_jsonconfig_vscode.md)
+* (AlCalzone & klein0r) Enable syntax help for JSON Config in VSCode (#959) · [Migration guide](docs/updates/20220827_jsonconfig_vscode.md)
+* (AlCalzone & klein0r) Fix `tsconfig.json` generation in `admin` directory (#960)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
