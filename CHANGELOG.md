@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.2.0 (2022-08-27)
 * (AlCalzone) Test Node 18, drop Node 12 from testing (#909)
 * (AlCalzone) Remove deprecated unit tests (#908) · [Migration guide](docs/updates/20220506_remove_unit_tests.md)
 * (AlCalzone) Base `tsconfig.json` on `@tsconfig/node` packages (#910) · [Migration guide](docs/updates/20220506_tsconfig_node.md)
