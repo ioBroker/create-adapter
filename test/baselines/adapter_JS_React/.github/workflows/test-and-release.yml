@@ -68,6 +68,10 @@ jobs:
 #
 #    runs-on: ubuntu-latest
 #
+#    # Write permissions are required to create Github releases
+#    permissions:
+#      contents: write
+#
 #    steps:
 #      - uses: ioBroker/testing-action-deploy@v1
 #        with:
