@@ -21,6 +21,7 @@
 * (AlCalzone & klein0r) Enable syntax help for JSON Config in VSCode (#959) · [Migration guide](docs/updates/20220827_jsonconfig_vscode.md)
 * (AlCalzone & klein0r) Fix `tsconfig.json` generation in `admin` directory (#960)
 * (AlCalzone & klein0r) Fix automatic releases by requesting write permissions in `deploy` workflow (#961) · [Migration guide](docs/updates/20220827_deploy_write_permissions.md)
+* (AlCalzone) Prevent widgets from overwriting VIS link by removing `localLinks` from `io-package.json` (#962)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)

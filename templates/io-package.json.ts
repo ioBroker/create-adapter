@@ -90,7 +90,6 @@ export = (async answers => {
 		"loglevel": "info",
 		${isWidget ? (`
 			"restartAdapters": ["vis"],
-			"localLinks": {"_default": "%web_protocol%://%ip%:%web_port%/vis/edit.html"},
 		`) : ""}
 		${isAdapter ? (`
 			"mode": "${answers.startMode || "daemon"}",
