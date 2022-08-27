@@ -20,6 +20,7 @@
 * (AlCalzone & klein0r) Add github actions to dependabot config, reduce pull request limit (#948) · [Migration guide](docs/updates/20220824_dependabot_gh_actions.md)
 * (AlCalzone & klein0r) Enable syntax help for JSON Config in VSCode (#959) · [Migration guide](docs/updates/20220827_jsonconfig_vscode.md)
 * (AlCalzone & klein0r) Fix `tsconfig.json` generation in `admin` directory (#960)
+* (AlCalzone & klein0r) Fix automatic releases by requesting write permissions in `deploy` workflow (#961) · [Migration guide](docs/updates/20220827_deploy_write_permissions.md)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
