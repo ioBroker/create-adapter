@@ -61,9 +61,6 @@
 		"restartAdapters": [
 			"vis"
 		],
-		"localLinks": {
-			"_default": "%web_protocol%://%ip%:%web_port%/vis/edit.html"
-		},
 		"onlyWWW": true,
 		"noConfig": true,
 		"singleton": true,

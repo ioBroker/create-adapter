@@ -112,7 +112,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const devDependencies = await Promise.all(devDependencyPromises);
 
 	const gitUrl = answers.gitRemoteProtocol === "HTTPS"
-		? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}`
+		? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}.git`
 		: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
 
 	// Generate whitelist for package files
