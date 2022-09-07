@@ -43,6 +43,13 @@ const templateFunction: TemplateFunction = answers => {
 			}
 		],
 		"no-console": "off",
+		"no-unused-vars": [
+			"error",
+			{
+				"ignoreRestSiblings": true,
+				"argsIgnorePattern": "^_",
+			}
+		],
 		"no-var": "error",
 		"no-trailing-spaces": "error",
 		"prefer-const": "error",

@@ -20,7 +20,7 @@ ${useTypeScript ?
 `const styles = (_theme: Theme): StyleRules => ({
 	root: {},
 });` : `/**
- * @type {(_theme: Theme) => import("@material-ui/styles").StyleRules}
+ * @type {(_theme: import("@material-ui/core/styles").Theme) => import("@material-ui/styles").StyleRules}
  */
 const styles = (_theme) => ({
 	root: {},
