@@ -17,3 +17,5 @@ or this change
 ```
 
 If the script is defined differently, there should be no need to change it.
+
+**Note:** You will have to fix a couple of linting errors after doing this. Some can be automatically fixed, some require configuration changes that are too complex to describe here. If you are unable to fix some, try re-creating your adapter with the newest creator version and then copy your code over.

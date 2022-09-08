@@ -5,6 +5,10 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Fix `lint` command for JS adapters · [Migration guide](docs/updates/20220908_fix_lint_command.md)
+* (Apollon77 & AlCalzone) Add disclaimer about use of names and logos to README (#957)
+
 ## 2.2.0 (2022-08-27)
 * (AlCalzone) Test Node 18, drop Node 12 from testing (#909)
 * (AlCalzone) Remove deprecated unit tests (#908) · [Migration guide](docs/updates/20220506_remove_unit_tests.md)
@@ -17,7 +21,6 @@
 * (Steiger04 & AlCalzone) Fix reactivity in VIS widget (#848)
 * (AlCalzone) Fix: Offer `Prettier` for JS adapters too (#945)
 * (AlCalzone) Remove non-functioning david-dm badge from README (#946)
-* (Apollon77 & AlCalzone) Add disclaimer about use of names and logos to README (#957)
 * (klein0r & AlCalzone) Add GitHub Actions to Dependabot config, reduce pull request limit (#948) · [Migration guide](docs/updates/20220824_dependabot_gh_actions.md)
 * (AlCalzone & klein0r) Enable syntax help for JSON Config in VSCode (#959) · [Migration guide](docs/updates/20220827_jsonconfig_vscode.md)
 * (AlCalzone & klein0r) Fix `tsconfig.json` generation in `admin` directory (#960)
@@ -25,7 +28,6 @@
 * (AlCalzone) Prevent widgets from overwriting VIS link by removing `localLinks` from `io-package.json` (#962)
 * (AlCalzone) Append `.git` to HTTPS repository URLs (#963)
 * (AlCalzone) Upgrade creator to TypeScript 4.8 (#964)
-* (AlCalzone & klein0r) Fix `lint` command for JS adapters · [Migration guide](docs/updates/20220824_fix_lint_command.md)
 
 ## 2.1.1 (2022-04-01)
 * (UncleSamSwiss) Setting `eraseOnUpload` to `true` for React adapters (#886) · [Migration guide](docs/updates/20220301_erase_on_upload.md)
