@@ -117,7 +117,7 @@ class Settings extends React.Component {
 	}
 
 	/**
-	 * @param {string} AdminWord
+	 * @param {AdminWord} title
 	 * @param {string} attr
 	 * @param {React.CSSProperties} [style]
 	 */
