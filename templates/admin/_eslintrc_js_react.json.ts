@@ -16,6 +16,9 @@ const templateFunction: TemplateFunction = answers => {
 	"parserOptions": {
 		"sourceType": "module",
 		"project": "./tsconfig.json"
+	},
+	"rules": {
+		"react/prop-types": "off"
 	}
 }
 `;

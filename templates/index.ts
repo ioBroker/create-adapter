@@ -81,6 +81,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "tsconfig.build.json.ts", templateFunction: require("./tsconfig.build.json") },
 	{ name: "tsconfig.check.json.ts", templateFunction: require("./tsconfig.check.json") },
 	{ name: "tsconfig.json.ts", templateFunction: require("./tsconfig.json") },
+	{ name: "widgets/_eslintrc.json.ts", templateFunction: require("./widgets/_eslintrc.json") },
 	{ name: "widgets/style.css.ts", templateFunction: require("./widgets/style.css") },
 	{ name: "widgets/template.html.ts", templateFunction: require("./widgets/template.html") },
 	{ name: "widgets/template.js.ts", templateFunction: require("./widgets/template.js") },

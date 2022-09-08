@@ -66,7 +66,8 @@ export = (answers => {
 	"include": [${include}
 	],
 	"exclude": [${exclude}
-		"node_modules/**"
+		"node_modules/**",
+		"widgets/**"
 	]
 }`;
 	return template.trim();

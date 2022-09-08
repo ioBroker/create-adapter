@@ -129,11 +129,16 @@ const templateFunction: TemplateFunction = async answers => {
 		...(isAdapter ? [
 			// Web files in the admin root and all subdirectories except src/
 			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
-			// JSON files, but not tsconfig.*.json
-			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json"
+			// JSON files, but not tsconfig.*.json or .eslintrc.json
+			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).json"
 		] : []),
 		...(isAdapter && useReact ? ["admin/build/"] : []),
-		...(isWidget ? ["widgets/"] : [])
+		...(isWidget ? [
+			// Web files in the widgets folder
+			"widgets/**/*.{html,css,png,svg,jpg,js}",
+			// JSON files, but not tsconfig.*.json or .eslintrc.json
+			"widgets/**/!(tsconfig|tsconfig.*|.eslintrc).json"
+		] : [])
 	].sort((a, b) => {
 		// Put directories on top
 		const isDirA = a.includes("/");
