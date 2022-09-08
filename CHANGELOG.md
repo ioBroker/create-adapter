@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.2.1 (2022-09-08)
 * (AlCalzone) Fix `lint` command for JS adapters · [Migration guide](docs/updates/20220908_fix_lint_command.md)
 * (Apollon77 & AlCalzone) Add disclaimer about use of names and logos to README (#957)
 
