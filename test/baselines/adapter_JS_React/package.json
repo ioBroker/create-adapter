@@ -39,7 +39,7 @@
   },
   "main": "main.js",
   "files": [
-    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json",
+    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).json",
     "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
     "admin/build/",
     "lib/",
@@ -59,7 +59,7 @@
     "test:package": "mocha test/package --exit",
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
-    "lint": "eslint --ext .js,.jsx",
+    "lint": "eslint --ext .js,.jsx .",
     "translate": "translate-adapter"
   },
   "bugs": {

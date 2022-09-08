@@ -160,7 +160,7 @@ ${useTypeScript ? "" : `/**
 	}
 
 	${useTypeScript ? `renderCheckbox(title: AdminWord, attr: string, style?: React.CSSProperties)` : `/**
-	 * @param {string} AdminWord
+	 * @param {AdminWord} title
 	 * @param {string} attr
 	 * @param {React.CSSProperties} [style]
 	 */

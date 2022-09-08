@@ -25,7 +25,8 @@
   },
   "main": "widgets/test-widget.html",
   "files": [
-    "widgets/",
+    "widgets/**/!(tsconfig|tsconfig.*|.eslintrc).json",
+    "widgets/**/*.{html,css,png,svg,jpg,js}",
     "www/",
     "io-package.json",
     "LICENSE"

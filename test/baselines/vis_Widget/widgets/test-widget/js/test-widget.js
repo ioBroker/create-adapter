@@ -7,6 +7,8 @@
 */
 "use strict";
 
+/* global $, vis, systemDictionary */
+
 // add translations for edit mode
 $.extend(
 	true,

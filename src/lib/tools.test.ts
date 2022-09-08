@@ -91,6 +91,30 @@ fn2("'");
 
 		expect(jsFixQuotes(original, "double")).to.equal(expected);
 	});
+
+	it("should support modules (React)", () => {
+		const original = `import { foo } from "bar";
+foo("bar");
+`;
+
+		const expected = `import { foo } from 'bar';
+foo('bar');
+`;
+
+		expect(jsFixQuotes(original, "single")).to.equal(expected);
+	});
+
+	it("should support CommonJS", () => {
+		const original = `const { foo } = require("bar");
+foo("bar");
+`;
+
+		const expected = `const { foo } = require('bar');
+foo('bar');
+`;
+
+		expect(jsFixQuotes(original, "single")).to.equal(expected);
+	});
 });
 
 describe("tools/tsFixQuotes()", () => {

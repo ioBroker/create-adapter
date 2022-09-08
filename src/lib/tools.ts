@@ -271,6 +271,7 @@ function createESLintOptions(
 			ecmaFeatures: {
 				jsx: true,
 			},
+			sourceType: "module",
 		},
 		rules: {
 			quotes: [
@@ -285,10 +286,6 @@ function createESLintOptions(
 	};
 	if (language === "TypeScript") {
 		baseOptions.parser = "@typescript-eslint/parser";
-		baseOptions.parserOptions = {
-			...baseOptions.parserOptions,
-			sourceType: "module",
-		};
 	}
 	return baseOptions;
 }
