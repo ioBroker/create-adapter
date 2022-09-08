@@ -73,6 +73,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "src/main.es6.ts", templateFunction: require("./src/main.es6") },
 	{ name: "src/main.test.ts.ts", templateFunction: require("./src/main.test.ts") },
 	{ name: "src/main.ts.ts", templateFunction: require("./src/main.ts") },
+	{ name: "test/_eslintrc.json.ts", templateFunction: require("./test/_eslintrc.json") },
 	{ name: "test/integration.js.ts", templateFunction: require("./test/integration.js") },
 	{ name: "test/mocha.setup.js.ts", templateFunction: require("./test/mocha.setup.js") },
 	{ name: "test/mocharc.custom.ts", templateFunction: require("./test/mocharc.custom") },
