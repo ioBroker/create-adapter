@@ -583,17 +583,35 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it("Release Script", async () => {
+			it("Release Script (JS)", async () => {
 				const answers: Answers = {
 					...baseAnswers,
 					releaseScript: "yes",
+					language: "JavaScript",
 				};
 				await expectSuccess(
-					"releaseScript",
+					"ReleaseScript_JS",
 					answers,
 					(file) =>
 						file.name === "package.json" ||
-						file.name === "README.md",
+						file.name === "README.md" ||
+						file.name === ".releaseconfig.json",
+				);
+			});
+
+			it("Release Script (TS)", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					releaseScript: "yes",
+					language: "TypeScript",
+				};
+				await expectSuccess(
+					"ReleaseScript_TS",
+					answers,
+					(file) =>
+						file.name === "package.json" ||
+						file.name === "README.md" ||
+						file.name === ".releaseconfig.json",
 				);
 			});
 
