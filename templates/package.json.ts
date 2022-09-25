@@ -103,7 +103,12 @@ const templateFunction: TemplateFunction = async answers => {
 			"prettier",
 		] : []),
 		...(useNyc ? ["nyc"] : []),
-		...(useReleaseScript ? ["@alcalzone/release-script@2"] : [])
+		...(useReleaseScript ? [
+			"@alcalzone/release-script",
+			"@alcalzone/release-script-plugin-iobroker",
+			"@alcalzone/release-script-plugin-license",
+			"@alcalzone/release-script-plugin-manual-review"
+		] : [])
 	]
 		.sort()
 		.map((dep) => (async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`))
