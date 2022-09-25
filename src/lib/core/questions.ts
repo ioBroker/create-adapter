@@ -921,7 +921,7 @@ export const questionGroups: QuestionGroup[] = [
 				message:
 					"Do you want to receive regular dependency updates through Pull Requests?",
 				hint: "(recommended)",
-				initial: "no",
+				initial: "yes",
 				choices: ["yes", "no"],
 				migrate: async (ctx) =>
 					(await ctx.fileExists(".github/dependabot.yml"))
