@@ -24,6 +24,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "_gitignore.ts", templateFunction: require("./_gitignore") },
 	{ name: "_prettierignore.ts", templateFunction: require("./_prettierignore") },
 	{ name: "_prettierrc.js.ts", templateFunction: require("./_prettierrc.js") },
+	{ name: "_releaseconfig.json.ts", templateFunction: require("./_releaseconfig.json") },
 	{ name: "_vscode/extensions.json.ts", templateFunction: require("./_vscode/extensions.json") },
 	{ name: "_vscode/settings.json.ts", templateFunction: require("./_vscode/settings.json") },
 	{ name: "admin/_eslintrc_js_react.json.ts", templateFunction: require("./admin/_eslintrc_js_react.json") },
