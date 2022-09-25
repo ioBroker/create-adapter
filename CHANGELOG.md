@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.3.0 (2022-09-25)
 * (mcm1957) Fix: use `adapter.` instead of `this.` in `main.js` in legacy mode (#972)
 * (AlCalzone) Enable Dependabot by default, update Node.js version references (#977) · [Migration guide](docs/updates/20220925_update_node_version.md)
 * (AlCalzone) Update the release script to version 3 (#978) · [Migration guide](docs/updates/20220925_releasescript_v3.md)
