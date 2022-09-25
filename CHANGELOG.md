@@ -6,8 +6,9 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
-* (AlCalzone) Enable Dependabot by default, update Node.js version references (#977) · [Migration guide](docs/updates/20220925_update_node_version.md)
 * (mcm1957) Fix: use `adapter.` instead of `this.` in `main.js` in legacy mode (#972)
+* (AlCalzone) Enable Dependabot by default, update Node.js version references (#977) · [Migration guide](docs/updates/20220925_update_node_version.md)
+* (AlCalzone) Update the release script to version 3 (#978) · [Migration guide](docs/updates/20220925_releasescript_v3.md)
 
 ## 2.2.1 (2022-09-08)
 * (AlCalzone) Fix `lint` command for JS adapters · [Migration guide](docs/updates/20220908_fix_lint_command.md)
