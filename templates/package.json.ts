@@ -233,6 +233,9 @@ const templateFunction: TemplateFunction = async answers => {
 		"type": "git",
 		"url": "${gitUrl}",
 	},
+	"engines": {
+		"node": ">= ${minNodeVersion}"
+	},
 	"dependencies": {${dependencies.join(",")}},
 	"devDependencies": {${devDependencies.join(",")}},
 	${isAdapter ? (`
