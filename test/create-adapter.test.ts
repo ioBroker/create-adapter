@@ -652,6 +652,20 @@ describe("adapter creation =>", () => {
 						file.name === "io-package.json",
 				);
 			});
+
+			it(`JS with legacy main.js`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					language: "JavaScript",
+					es6class: "no",
+					connectionIndicator: "yes",
+				};
+				await expectSuccess(
+					"JS_LegacyMain",
+					answers,
+					(file) => file.name === "main.js",
+				);
+			});
 		});
 	});
 });

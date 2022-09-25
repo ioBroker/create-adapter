@@ -1,21 +1,7 @@
-import { AdapterSettings, getDefaultAnswer } from "../src/lib/core/questions";
-import type { TemplateFunction } from "../src/lib/createAdapter";
-
-export = (async answers => {
-
-	const useJavaScript = answers.language === "JavaScript";
-	const useES6Class = answers.es6class === "yes";
-	if (!useJavaScript || useES6Class) return;
-
-	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
-	const quote = answers.quotes === "double" ? '"' : "'";
-	const t = answers.indentation === "Space (4)" ? "    " : "\t";
-
-	const template = `
 "use strict";
 
 /*
- * Created with @iobroker/create-adapter v${answers.creatorVersion}
+ * Created with @iobroker/create-adapter v2.2.1
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
@@ -38,7 +24,7 @@ let adapter;
 function startAdapter(options) {
 	// Create the adapter and define its methods
 	return adapter = utils.adapter(Object.assign({}, options, {
-		name: "${answers.adapterName}",
+		name: "test-adapter",
 
 		// The ready callback is called when databases are connected and adapter received configuration.
 		// start here!
@@ -60,25 +46,25 @@ function startAdapter(options) {
 		},
 
 		// If you need to react to object changes, uncomment the following method.
-		// You also need to subscribe to the objects with \`adapter.subscribeObjects\`, similar to \`adapter.subscribeStates\`.
+		// You also need to subscribe to the objects with `adapter.subscribeObjects`, similar to `adapter.subscribeStates`.
 		// objectChange: (id, obj) => {
-		// ${t}if (obj) {
-		// ${t}${t}// The object was changed
-		// ${t}${t}adapter.log.info(\`object \$\{id} changed: \$\{JSON.stringify(obj)}\`);
-		// ${t}} else {
-		// ${t}${t}// The object was deleted
-		// ${t}${t}adapter.log.info(\`object \$\{id} deleted\`);
-		// ${t}}
+		// 	if (obj) {
+		// 		// The object was changed
+		// 		adapter.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
+		// 	} else {
+		// 		// The object was deleted
+		// 		adapter.log.info(`object ${id} deleted`);
+		// 	}
 		// },
 
 		// is called if a subscribed state changes
 		stateChange: (id, state) => {
 			if (state) {
 				// The state was changed
-				adapter.log.info(\`state \$\{id} changed: \$\{state.val} (ack = \$\{state.ack})\`);
+				adapter.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 			} else {
 				// The state was deleted
-				adapter.log.info(\`state \$\{id} deleted\`);
+				adapter.log.info(`state ${id} deleted`);
 			}
 		},
 
@@ -88,29 +74,28 @@ function startAdapter(options) {
 		//  * Using this method requires "common.messagebox" property to be set to true in io-package.json
 		//  */
 		// message: (obj) => {
-		// ${t}if (typeof obj === ${quote}object${quote} && obj.message) {
-		// ${t}${t}if (obj.command === ${quote}send${quote}) {
-		// ${t}${t}${t}// e.g. send email or pushover or whatever
-		// ${t}${t}${t}adapter.log.info(${quote}send command${quote});
+		// 	if (typeof obj === "object" && obj.message) {
+		// 		if (obj.command === "send") {
+		// 			// e.g. send email or pushover or whatever
+		// 			adapter.log.info("send command");
 
-		// ${t}${t}${t}// Send response in callback if required
-		// ${t}${t}${t}if (obj.callback) adapter.sendTo(obj.from, obj.command, ${quote}Message received${quote}, obj.callback);
-		// ${t}${t}}
-		// ${t}}
+		// 			// Send response in callback if required
+		// 			if (obj.callback) adapter.sendTo(obj.from, obj.command, "Message received", obj.callback);
+		// 		}
+		// 	}
 		// },
 	}));
 }
 
 async function main() {
 
-${answers.connectionIndicator === "yes" ? `
 	// Reset the connection indicator during startup
 	await adapter.setStateAsync("info.connection", false, true);
-` : ""}
 
 	// The adapters config (in the instance object everything under the attribute "native") is accessible via
 	// adapter.config:
-${adapterSettings.map(s => `\tadapter.log.info("config ${s.key}: " + adapter.config.${s.key});`).join("\n")}
+	adapter.log.info("config option1: " + adapter.config.option1);
+	adapter.log.info("config option2: " + adapter.config.option2);
 
 	/*
 		For every state in the system there has to be also an object of type state
@@ -132,9 +117,9 @@ ${adapterSettings.map(s => `\tadapter.log.info("config ${s.key}: " + adapter.con
 	// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
 	adapter.subscribeStates("testVariable");
 	// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-	// adapter.subscribeStates(${quote}lights.*${quote});
+	// adapter.subscribeStates("lights.*");
 	// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-	// adapter.subscribeStates(${quote}*${quote});
+	// adapter.subscribeStates("*");
 
 	/*
 		setState examples
@@ -167,6 +152,3 @@ if (require.main !== module) {
 	// otherwise start the instance directly
 	startAdapter();
 }
-`;
-	return template.trim();
-}) as TemplateFunction;
