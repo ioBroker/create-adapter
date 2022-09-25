@@ -921,7 +921,7 @@ export const questionGroups: QuestionGroup[] = [
 				message:
 					"Do you want to receive regular dependency updates through Pull Requests?",
 				hint: "(recommended)",
-				initial: "no",
+				initial: "yes",
 				choices: ["yes", "no"],
 				migrate: async (ctx) =>
 					(await ctx.fileExists(".github/dependabot.yml"))
@@ -1000,7 +1000,7 @@ export interface Answers {
 		| "code coverage"
 		| "devcontainer"
 	)[];
-	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
+	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022;
 	nodeVersion?: "14" | "16";
 	title?: string;
 	license?: string;
@@ -1099,21 +1099,32 @@ export function getDefaultAnswer<T extends keyof Answers>(
 	// Apparently, it is not possible to make the return type depend on the
 	// given object key: https://github.com/microsoft/TypeScript/issues/31672
 	// So we cast to `any` until a solution emerges
-	if (key === "adapterSettings") {
-		return [
-			{
-				key: "option1",
-				defaultValue: true,
-				inputType: "checkbox",
-			},
-			{
-				key: "option2",
-				defaultValue: "42",
-				inputType: "text",
-			},
-		] as any;
-	} else if (key === "keywords") {
-		return ["ioBroker", "template", "Smart Home", "home automation"] as any;
+	switch (key) {
+		case "adapterSettings": {
+			return [
+				{
+					key: "option1",
+					defaultValue: true,
+					inputType: "checkbox",
+				},
+				{
+					key: "option2",
+					defaultValue: "42",
+					inputType: "text",
+				},
+			] as any;
+		}
+		case "keywords": {
+			return [
+				"ioBroker",
+				"template",
+				"Smart Home",
+				"home automation",
+			] as any;
+		}
+		case "ecmaVersion": {
+			return 2020 as any;
+		}
 	}
 }
 

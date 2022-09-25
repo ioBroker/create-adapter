@@ -19,6 +19,9 @@
     "type": "git",
     "url": "https://github.com/AlCalzone/ioBroker.test-adapter.git"
   },
+  "engines": {
+    "node": ">= 14"
+  },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.6"
   },

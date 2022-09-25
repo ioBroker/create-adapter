@@ -18,6 +18,9 @@
     "type": "git",
     "url": "https://github.com/AlCalzone/ioBroker.test-widget.git"
   },
+  "engines": {
+    "node": ">= 14"
+  },
   "dependencies": {},
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.1.0",
