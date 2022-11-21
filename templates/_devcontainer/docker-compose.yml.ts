@@ -6,7 +6,6 @@ const templateFunction: TemplateFunction = answers => {
 	if (!devcontainer) return;
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
-	const needsParcel = answers.adminUi === "react" || answers.tabReact === "yes";
 
 	const template = `
 version: '3'
@@ -28,29 +27,14 @@ services:
             - LC_ALL=en_US.UTF-8
             - TZ=Europe/Berlin
             - SETGID=1000
-${needsParcel ? (`
-    parcel:
-        container_name: parcel-${adapterNameLowerCase}
-        build: ./parcel
-        expose:
-            - 1234
-        ports:
-            - '1235:1235'
-        volumes:
-            - ..:/workspace:cached
-        environment:
-            - CHOKIDAR_USEPOLLING=1
-`) : ""}
     # Reverse proxy to load up-to-date admin sources from the repo
     nginx:
         image: nginx:latest
         depends_on:
             - iobroker
-${needsParcel ? (`            - parcel
-`) : ""}        links:
+        links:
             - iobroker
-${needsParcel ? (`            - parcel
-`) : ""}        container_name: nginx-${adapterNameLowerCase}
+        container_name: nginx-${adapterNameLowerCase}
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ..:/workspace:cached
