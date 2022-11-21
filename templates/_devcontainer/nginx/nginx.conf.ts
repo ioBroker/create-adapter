@@ -6,7 +6,6 @@ const templateFunction: TemplateFunction = answers => {
 	if (!devcontainer) return;
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
-	const needsParcel = answers.adminUi === "react" || answers.tabReact === "yes";
 
 	const template = `
 worker_processes 1;
@@ -39,11 +38,6 @@ http {
     location /adapter/${adapterNameLowerCase}/ {
       alias /workspace/admin/;
     }
-${needsParcel ? (`
-    location /adapter/${adapterNameLowerCase}/build/ {
-      proxy_redirect off;
-      proxy_pass     http://parcel:1234/;
-    }`) : ""}
   }
 }`;
 	return template.trim();
