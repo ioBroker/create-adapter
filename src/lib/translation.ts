@@ -13,6 +13,7 @@ export type Languages =
 	| "it"
 	| "es"
 	| "pl"
+	| "uk"
 	| "zh-cn";
 
 export type TranslatedTerm = { [lang in Languages]?: string };
@@ -27,6 +28,7 @@ const titles: Record<Languages, string> = {
 	it: "Impostazioni dell'adattatore per <adapterName>",
 	es: "Ajustes del adaptador para <adapterName>",
 	pl: "Ustawienia adaptera dla <adapterName>",
+	uk: "Налаштування адаптера для <adapterName>",
 	"zh-cn": "<adapterName>的适配器设置",
 };
 
@@ -67,6 +69,7 @@ export async function getTranslatedSettings(
 		"it",
 		"es",
 		"pl",
+		"uk",
 		"zh-cn",
 	];
 	const allTranslations = await Promise.all(

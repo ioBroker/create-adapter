@@ -55,6 +55,7 @@ systemDictionary = ${formatJsonString(`{
 		"it": "mioColore",
 		"es": "miColor",
 		"pl": "mójKolor",
+		"uk": "мійКолір",
 		"zh-cn": "我的颜色"
 	},
 	"myColor_tooltip": {
@@ -67,6 +68,7 @@ systemDictionary = ${formatJsonString(`{
 		"it": "Descrizione di\\x0AmyColor",
 		"es": "Descripción de\\x0AmyColor",
 		"pl": "Opis\\x0AmyColor",
+		"uk": "Опис\\x0AmyColor",
 		"zh-cn": "\\x0AmyColor的描述"
 	},
 	"htmlText": {
@@ -79,6 +81,7 @@ systemDictionary = ${formatJsonString(`{
 		"it": "htmlText",
 		"es": "htmlText",
 		"pl": "htmlText",
+		"uk": "htmlText",
 		"zh-cn": "htmlText"
 	},
 	"group_extraMyset": {
@@ -91,6 +94,7 @@ systemDictionary = ${formatJsonString(`{
 		"it": "extraMyset",
 		"es": "extraMyset",
 		"pl": "extraMyset",
+		"uk": "extraMyset",
 		"zh-cn": "extraMyset"
 	},
 	"extraAttr": {
@@ -103,6 +107,7 @@ systemDictionary = ${formatJsonString(`{
 		"it": "extraAttr",
 		"es": "extraAttr",
 		"pl": "extraAttr",
+		"uk": "extraAttr",
 		"zh-cn": "extraAttr"
 	},
 	"Instance": {
@@ -115,6 +120,7 @@ systemDictionary = ${formatJsonString(`{
 		"it": "Esempio",
 		"es": "Instancia",
 		"pl": "Instancja",
+		"uk": "Інстанція",
 		"zh-cn": "例"
 	}
 	`) : ""}
