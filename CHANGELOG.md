@@ -7,6 +7,7 @@
 -->
 ## __WORK IN PROGRESS__
 * (xXBJXx) add uk translation [Migration guide](docs/updates/20221202_add_uk_translation.md)
+* (jpawlowski) Fix: Update JSON schema reference for `io-package.json` · [Migration guide](docs/updates/20221208_update_io-packages_json_schema_ref.md)
 
 ## 2.3.0 (2022-09-25)
 * (mcm1957) Fix: use `adapter.` instead of `this.` in `main.js` in legacy mode (#972)
