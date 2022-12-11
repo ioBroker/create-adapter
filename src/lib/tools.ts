@@ -66,7 +66,7 @@ export function executeCommand(
 	return new Promise((resolve) => {
 		let args: string[] | undefined;
 		if (isArray(argsOrOptions)) {
-			args = argsOrOptions;
+			args = argsOrOptions as string[];
 		} else if (isObject(argsOrOptions)) {
 			// no args were given
 			options = argsOrOptions;
