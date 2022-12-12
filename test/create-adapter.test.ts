@@ -26,7 +26,7 @@ async function generateBaselines(
 		if (!ioPackageSchema) {
 			ioPackageSchema = (
 				await axios.request<any>({
-					url: "https://json.schemastore.org/io-package",
+					url: "https://raw.githubusercontent.com/ioBroker/ioBroker.js-controller/master/schemas/io-package.json",
 				})
 			).data;
 		}
