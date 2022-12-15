@@ -13,6 +13,7 @@
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
 				"pl": "Pierwsze wydanie",
+				"uk": "Початкова версія",
 				"zh-cn": "首次出版"
 			}
 		},
@@ -27,6 +28,7 @@
 			"it": "Mock translation of 'Is used to test the creator' to 'it'",
 			"es": "Mock translation of 'Is used to test the creator' to 'es'",
 			"pl": "Mock translation of 'Is used to test the creator' to 'pl'",
+			"uk": "Mock translation of 'Is used to test the creator' to 'uk'",
 			"zh-cn": "Mock translation of 'Is used to test the creator' to 'zh-cn'"
 		},
 		"desc": {
@@ -39,6 +41,7 @@
 			"it": "Mock translation of 'test-adapter' to 'it'",
 			"es": "Mock translation of 'test-adapter' to 'es'",
 			"pl": "Mock translation of 'test-adapter' to 'pl'",
+			"uk": "Mock translation of 'test-adapter' to 'uk'",
 			"zh-cn": "Mock translation of 'test-adapter' to 'zh-cn'"
 		},
 		"authors": [

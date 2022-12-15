@@ -25,6 +25,7 @@ class TabApp extends GenericApp {
 				"it": require("./i18n/it.json"),
 				"es": require("./i18n/es.json"),
 				"pl": require("./i18n/pl.json"),
+				"uk": require("./i18n/uk.json"),
 				"zh-cn": require("./i18n/zh-cn.json"),
 			},
 		};

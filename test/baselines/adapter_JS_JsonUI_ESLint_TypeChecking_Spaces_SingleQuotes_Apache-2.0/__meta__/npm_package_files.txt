@@ -7,6 +7,7 @@ admin/i18n/nl/translations.json
 admin/i18n/pl/translations.json
 admin/i18n/pt/translations.json
 admin/i18n/ru/translations.json
+admin/i18n/uk/translations.json
 admin/i18n/zh-cn/translations.json
 admin/jsonConfig.json
 admin/test-adapter.png

@@ -1,4 +1,4 @@
-import { isArray, isObject } from "alcalzone-shared/typeguards";
+import { isObject } from "alcalzone-shared/typeguards";
 import { bold } from "ansi-colors";
 import type { AxiosRequestConfig } from "axios";
 import { spawn, SpawnOptions } from "child_process";
@@ -65,7 +65,7 @@ export function executeCommand(
 ): Promise<ExecuteCommandResult> {
 	return new Promise((resolve) => {
 		let args: string[] | undefined;
-		if (isArray(argsOrOptions)) {
+		if (Array.isArray(argsOrOptions)) {
 			args = argsOrOptions;
 		} else if (isObject(argsOrOptions)) {
 			// no args were given

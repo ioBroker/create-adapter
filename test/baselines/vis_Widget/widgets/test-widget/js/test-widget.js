@@ -25,6 +25,7 @@ $.extend(
 		// 	"it": "Dimensione",
 		// 	"es": "Talla",
 		// 	"pl": "Rozmiar",
+		//  "uk": "Розмір"
 		// 	"zh-cn": "尺寸"
 		// }
 	}

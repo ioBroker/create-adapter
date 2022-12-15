@@ -18,7 +18,7 @@ export = (async answers => {
 	const supportTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
 	const defaultBranch = answers.defaultBranch || "main";
 
-	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "zh-cn"];
+	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "uk", "zh-cn"];
 
 	const title: string = answers.title || answers.adapterName;
 	const titleLang = JSON.stringify(
@@ -70,6 +70,7 @@ export = (async answers => {
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
 				"pl": "Pierwsze wydanie",
+				"uk": "Початкова версія",
 				"zh-cn": "首次出版"
 			}
 		},

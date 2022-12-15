@@ -6,6 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
+* (xXBJXx) Add Ukranian translation [Migration guide](docs/updates/20221202_add_uk_translation.md)
 * (jpawlowski) Fix: Update JSON schema reference for `io-package.json` · [Migration guide](docs/updates/20221208_update_io-packages_json_schema_ref.md)
 
 ## 2.3.0 (2022-09-25)
