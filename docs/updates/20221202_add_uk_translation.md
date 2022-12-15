@@ -1,11 +1,12 @@
 # Add Ukrainian translation
 
 ## `io-package.json`
+
 Add the missing `uk` translation to `news` / `titleLang` and `desc`.
-if you use the [release-script](https://github.com/AlCalzone/release-script), the `uk` translation will be automatically added to `news` for all new versions.
+If you use the [release-script](https://github.com/AlCalzone/release-script), the `uk` translation will be automatically added to `news` for all new versions.
 
+## `Non-React Adapters`
 
-## `None React Adapter`
 If you still have an old adapter that still uses `admin/words.js`, then add the `uk` translation to `words.js`.
 
 ```diff
@@ -17,7 +18,8 @@ If you still have an old adapter that still uses `admin/words.js`, then add the 
     },
 ```
 
-## `React Adapter`
+## `React Adapters`
+
 add a new file `uk.json` in `admin/src/i18n` which contains the translation for the ukrainian language.
 Run the `npm run translate` script to update the translation automatically or enter the missing translations manually.
 
@@ -53,5 +55,3 @@ Run the script `npm run translate` to update the translation automatically or en
 +    ... other translations
 + }
 ```
-
-
