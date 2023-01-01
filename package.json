@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@esm2cjs/p-limit": "^4.0.0",
-    "@iobroker/adapter-dev": "^1.0.1",
+    "@iobroker/adapter-dev": "^1.2.0",
     "@typescript-eslint/parser": "^5.45.0",
     "alcalzone-shared": "^4.0.3",
     "ansi-colors": "^4.1.3",
