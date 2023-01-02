@@ -20,7 +20,6 @@ export = (async answers => {
 
 	const languages = ["en", "de", "ru", "pt", "nl", "fr", "it", "es", "pl", "uk", "zh-cn"];
 
-	const title: string = answers.title || answers.adapterName;
 	const titleLang = JSON.stringify(
 		composeObject(await Promise.all(
 			languages.map(async lang => [lang, await translateText(title, lang)] as [string, string]),
