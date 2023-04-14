@@ -3,7 +3,7 @@
 
 	version: "0.0.1"
 
-	Copyright 2022 Al Calzone al@calzo.ne
+	Copyright 2023 Al Calzone al@calzo.ne
 */
 "use strict";
 
