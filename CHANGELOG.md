@@ -8,7 +8,7 @@
 ## __WORK IN PROGRESS__
 * (xXBJXx) Ukranian translation has been added [Migration guide](docs/updates/20221202_add_uk_translation.md)
 * (jpawlowski) Fix: JSON schema reference for `io-package.json` has been updated· [Migration guide](docs/updates/20221208_update_io-packages_json_schema_ref.md)
-* (McM57) Packaging of json5 files at admin directory has been added
+* (McM57) Fix: include json5 files from admin directory in npm package (#1029)
 
 ## 2.3.0 (2022-09-25)
 * (mcm1957) Fix: use `adapter.` instead of `this.` in `main.js` in legacy mode (#972)
