@@ -135,7 +135,7 @@ const templateFunction: TemplateFunction = async answers => {
 			// Web files in the admin root and all subdirectories except src/
 			"admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
 			// JSON files, but not tsconfig.*.json or .eslintrc.json
-			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).json"
+			"admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).{json,json5}"
 		] : []),
 		...(isAdapter && useReact ? ["admin/build/"] : []),
 		...(isWidget ? [
