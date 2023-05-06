@@ -14,6 +14,7 @@ ${useReact ? "admin/build/" : ""}
 ${useTypeScript ? "build/" : ""}
 ${usePrettier ? ".prettierrc.js" : ""}
 **/.eslintrc.js
+admin/words.js
 `;
 	return template.trim().replace(/\n+/g, "\n");
 };
