@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
-* (mcm1957) Change: add admin/words.js to .eslintignore
+* (mcm1957) Change: add admin/words.js to .eslintignore [Migration guide](docs/updates/20230507_add_words_js.md)
 
 ## 2.4.0 (2023-04-14)
 * (xXBJXx) Ukranian translation has been added [Migration guide](docs/updates/20221202_add_uk_translation.md)
