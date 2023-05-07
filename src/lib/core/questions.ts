@@ -562,16 +562,17 @@ export const questionGroups: QuestionGroup[] = [
 				initial: "14",
 				// We cannot target Node.js 18 yet, since there are no type definitions
 				// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60047
-				choices: ["14", "16"],
+				// As that PR is now merged node 18 (and possible 20) should be available
+				choices: ["16", "18", "20"],
 				migrate: (ctx) => {
-					if (ctx.hasDevDependency("@tsconfig/node14")) {
-						return "14";
-					} else if (ctx.hasDevDependency("@tsconfig/node16")) {
+					if (ctx.hasDevDependency("@tsconfig/node16")) {
 						return "16";
-					} /* else if (ctx.hasDevDependency("@tsconfig/node18")) {
+					} else if (ctx.hasDevDependency("@tsconfig/node18")) {
 						return "18";
-					} */ else {
-						return "14";
+					} else if (ctx.hasDevDependency("@tsconfig/node20")) {
+						return "20";
+					} else {
+						return "16";
 					}
 				},
 			},
