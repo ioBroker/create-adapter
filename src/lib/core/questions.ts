@@ -2,11 +2,11 @@ import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green } from "ansi-colors";
 import type { SpecificPromptOptions } from "enquirer";
 import {
+	CheckResult,
 	checkAdapterName,
 	checkAuthorName,
 	checkEmail,
 	checkMinSelections,
-	CheckResult,
 	checkTitle,
 	checkTypeScriptTools,
 	transformAdapterName,
@@ -559,7 +559,7 @@ export const questionGroups: QuestionGroup[] = [
 				optional: true,
 				message:
 					"What's the minimum Node.js version you want to support?",
-				initial: "14",
+				initial: "16",
 				// We cannot target Node.js 18 yet, since there are no type definitions
 				// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60047
 				// As that PR is now merged node 18 (and possible 20) should be available
@@ -1002,7 +1002,7 @@ export interface Answers {
 		| "devcontainer"
 	)[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022;
-	nodeVersion?: "14" | "16";
+	nodeVersion?: "16" | "18" | "20";
 	title?: string;
 	license?: string;
 	type: string;
