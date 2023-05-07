@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (mcm1957) Change: add admin/words.js to .eslintignore
+
 ## 2.4.0 (2023-04-14)
 * (xXBJXx) Ukranian translation has been added [Migration guide](docs/updates/20221202_add_uk_translation.md)
 * (jpawlowski) Fix: JSON schema reference for `io-package.json` has been updated· [Migration guide](docs/updates/20221208_update_io-packages_json_schema_ref.md)
