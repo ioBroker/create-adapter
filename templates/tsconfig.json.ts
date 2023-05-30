@@ -6,7 +6,7 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
-	const minNodeVersion = answers.nodeVersion ?? "14";
+	const minNodeVersion = answers.nodeVersion ?? "16";
 
 	let include: string;
 	let exclude: string;

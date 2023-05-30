@@ -560,9 +560,6 @@ export const questionGroups: QuestionGroup[] = [
 				message:
 					"What's the minimum Node.js version you want to support?",
 				initial: "16",
-				// We cannot target Node.js 18 yet, since there are no type definitions
-				// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60047
-				// As that PR is now merged node 18 (and possible 20) should be available
 				choices: ["16", "18", "20"],
 				migrate: (ctx) => {
 					if (ctx.hasDevDependency("@tsconfig/node16")) {
