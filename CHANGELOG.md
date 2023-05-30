@@ -6,11 +6,11 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
-* (mcm1957) Change: let user select node 16 / 18 / 20 as minimum node version for new adapters (#1032) [Migration guide](docs/updates/20230507_update_minimum_node.md)
+* (mcm1957) Change supported Node.js versions to 16 / 18 / 20 (#1032) · [Migration guide](docs/updates/20230507_update_minimum_node.md)
 
 ## 2.4.0 (2023-04-14)
 * (xXBJXx) Ukranian translation has been added [Migration guide](docs/updates/20221202_add_uk_translation.md)
-* (jpawlowski) Fix: JSON schema reference for `io-package.json` has been updated· [Migration guide](docs/updates/20221208_update_io-packages_json_schema_ref.md)
+* (jpawlowski) Fix: JSON schema reference for `io-package.json` has been updated · [Migration guide](docs/updates/20221208_update_io-packages_json_schema_ref.md)
 * (McM57) Fix: include json5 files from admin directory in npm package (#1029)
 
 ## 2.3.0 (2022-09-25)
