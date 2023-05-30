@@ -6,7 +6,7 @@
 	(at the beginning of a new line )
 -->
 ## __WORK IN PROGRESS__
-* (mcm1957) Change: add admin/words.js to .eslintignore · [Migration guide](docs/updates/20230507_eslintignore_words_js.md)
+* (mcm1957) Add `admin/words.js` to `.eslintignore` · [Migration guide](docs/updates/20230507_eslintignore_words_js.md)
 * (mcm1957) Change supported Node.js versions to 16 / 18 / 20 (#1032) · [Migration guide](docs/updates/20230507_update_node_versions.md)
 
 ## 2.4.0 (2023-04-14)
