@@ -25,6 +25,39 @@ The `engines` field must specify the minimum version:
   },
 ```
 
+In addition, the testing workflow also needs to be updated. To do this, edit `.github/workflows/test-and-release.yml` as follows:
+
+```diff
+     steps:
+       - uses: ioBroker/testing-action-check@v1
+         with:
+-          node-version: '16.x'
++          node-version: '18.x'
+           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
+           # install-command: 'npm install'
+           lint: true
+...
+     runs-on: ${{ matrix.os }}
+     strategy:
+       matrix:
+-        node-version: [14.x, 16.x, 18.x]
++        node-version: [16.x, 18.x, 20.x]
+         os: [ubuntu-latest, windows-latest, macos-latest]
+
+     steps:
+...
+ #    steps:
+ #      - uses: ioBroker/testing-action-deploy@v1
+ #        with:
+-#          node-version: '16.x'
++#          node-version: '18.x'
+ #          # Uncomment the following line if your adapter cannot be installed using 'npm ci'
+ #          # install-command: 'npm install'
+ #          npm-token: ${{ secrets.NPM_TOKEN }}
+```
+
+---
+
 When using TypeScript or when type-checking is enabled, the type definitions and `tsconfig.json` need to be updated aswell.
 First, update TypeScript itself:
 
