@@ -1,3 +1,4 @@
 admin/build/
 build/
 **/.eslintrc.js
+admin/words.js
