@@ -25,7 +25,14 @@ The `engines` field must specify the minimum version:
   },
 ```
 
-When using TypeScript or when type-checking is enabled, the type definitions need to be updated aswell. Run **one** of the following commands depending on the desired Node.js version:
+When using TypeScript or when type-checking is enabled, the type definitions and `tsconfig.json` need to be updated aswell.
+First, update TypeScript itself:
+
+```bash
+npm i -D "typescript@~5.0.4"
+```
+
+To update the Node.js type definitions, run **one** of the following commands depending on the desired Node.js version:
 
 ```bash
 npm i -D @types/node@16
@@ -33,11 +40,9 @@ npm i -D @types/node@18
 npm i -D @types/node@20
 ```
 
-TypeScript developers also have to update the `tsconfig.json` base to the correct version. This is done in multiple steps:
+Next, uninstall the old tsconfig base:
 
-First, uninstall the old tsconfig base:
-
-```
+```bash
 npm uninstall -D @tsconfig/node14
 ```
 
