@@ -414,6 +414,34 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it(`Node.js 18 as minimum`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					nodeVersion: "18",
+				};
+				await expectSuccess(
+					"minNodeVersion_18",
+					answers,
+					(file) =>
+						file.name === "package.json" ||
+						file.name === "tsconfig.json",
+				);
+			});
+
+			it(`Node.js 20 as minimum`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					nodeVersion: "20",
+				};
+				await expectSuccess(
+					"minNodeVersion_20",
+					answers,
+					(file) =>
+						file.name === "package.json" ||
+						file.name === "tsconfig.json",
+				);
+			});
+
 			it(`TS(X) with single quotes`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
