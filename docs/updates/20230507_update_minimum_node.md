@@ -1,9 +1,8 @@
-# Update `packages.json` to refelct minimum node version required
+# Update package configuration to reflect minimum Node.js version required
 
-As node 14 is EOL and node 20 is already available, new adapters should support either node 16, 18 or 20 as minimum version.
-If you decide to increase the minimum node version your adapter requires, edit package.json and change the following line depending on the rrequired minimum node version:
+As Node.js 14 is EOL and Node.js 20 is already available, new adapters should support either Node.js 16, 18 or 20 as minimum version. There are a few changes necessary in `package.json` to reflect this when upgrading an existing adapter.
 
-## `package.json`
+The `engines` field must specify the minimum version:
 
 ```diff
   "engines": {
@@ -24,4 +23,40 @@ If you decide to increase the minimum node version your adapter requires, edit p
 -   "node": ">= 14"
 +   "node": ">= 20"
   },
+```
+
+When using TypeScript or when type-checking is enabled, the type definitions need to be updated aswell. Run **one** of the following commands depending on the desired Node.js version:
+
+```bash
+npm i -D @types/node@16
+npm i -D @types/node@18
+npm i -D @types/node@20
+```
+
+TypeScript developers also have to update the `tsconfig.json` base to the correct version. This is done in multiple steps:
+
+First, uninstall the old tsconfig base:
+
+```
+npm uninstall -D @tsconfig/node14
+```
+
+(or an even older version if you still use that).
+
+Then, run **one** of the following commands depending on the desired Node.js version:
+
+```bash
+npm i -D @tsconfig/node16
+npm i -D @tsconfig/node18
+npm i -D @tsconfig/node20
+```
+
+Last, reference this new base in your `tsconfig.json` by replacing `node14` with the version you just installed the tsconfig for, e.g. `node18` for Node.js 18:
+
+```diff
+{
+-  "extends": "@tsconfig/node14/tsconfig.json",
++  "extends": "@tsconfig/node18/tsconfig.json",
+  // ...
+}
 ```
