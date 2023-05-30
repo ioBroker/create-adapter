@@ -2,11 +2,11 @@ import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green } from "ansi-colors";
 import type { SpecificPromptOptions } from "enquirer";
 import {
+	CheckResult,
 	checkAdapterName,
 	checkAuthorName,
 	checkEmail,
 	checkMinSelections,
-	CheckResult,
 	checkTitle,
 	checkTypeScriptTools,
 	transformAdapterName,
@@ -559,19 +559,17 @@ export const questionGroups: QuestionGroup[] = [
 				optional: true,
 				message:
 					"What's the minimum Node.js version you want to support?",
-				initial: "14",
-				// We cannot target Node.js 18 yet, since there are no type definitions
-				// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60047
-				choices: ["14", "16"],
+				initial: "16",
+				choices: ["16", "18", "20"],
 				migrate: (ctx) => {
-					if (ctx.hasDevDependency("@tsconfig/node14")) {
-						return "14";
-					} else if (ctx.hasDevDependency("@tsconfig/node16")) {
+					if (ctx.hasDevDependency("@tsconfig/node16")) {
 						return "16";
-					} /* else if (ctx.hasDevDependency("@tsconfig/node18")) {
+					} else if (ctx.hasDevDependency("@tsconfig/node18")) {
 						return "18";
-					} */ else {
-						return "14";
+					} else if (ctx.hasDevDependency("@tsconfig/node20")) {
+						return "20";
+					} else {
+						return "16";
 					}
 				},
 			},
@@ -1001,7 +999,7 @@ export interface Answers {
 		| "devcontainer"
 	)[];
 	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022;
-	nodeVersion?: "14" | "16";
+	nodeVersion?: "16" | "18" | "20";
 	title?: string;
 	license?: string;
 	type: string;

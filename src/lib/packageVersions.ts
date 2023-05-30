@@ -126,8 +126,9 @@ export async function fetchPackageReferenceVersion(
 	if (hasVersionSpecifier(packageName)) {
 		const versionSpecifier = getVersionSpecifier(packageName)!;
 		const pureVersionSpec = versionSpecifier.replace(/^[\^~]/, "").trim();
-		const versionDepth = pureVersionSpec.replace(/^(0\.)+/, "").split(".")
-			.length;
+		const versionDepth = pureVersionSpec
+			.replace(/^(0\.)+/, "")
+			.split(".").length;
 		const version = await fetchSpecificPackageVersion(
 			packageName,
 			pureVersionSpec,

@@ -1,7 +1,8 @@
 import { yellow } from "ansi-colors";
 import type { Answers } from "./questions";
 
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex =
+	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export type CheckResult = true | string;
 export async function checkMinSelections(
@@ -31,7 +32,9 @@ function isAdapterNameValid(name: string): CheckResult {
 }
 
 export async function checkAdapterName<
-	T extends { checkAdapterExistence?: (name: string) => Promise<CheckResult> }
+	T extends {
+		checkAdapterExistence?: (name: string) => Promise<CheckResult>;
+	},
 >(name: string, options?: T): Promise<CheckResult> {
 	const validCheck = isAdapterNameValid(name);
 	if (typeof validCheck === "string") return validCheck;
