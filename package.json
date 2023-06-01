@@ -39,7 +39,7 @@
     "@types/ansi-colors": "^3.2.2",
     "@types/chai": "^4.3.3",
     "@types/chai-as-promised": "^7.1.5",
-    "@types/debug": "4.1.7",
+    "@types/debug": "4.1.8",
     "@types/eslint": "^8.4.10",
     "@types/fs-extra": "^11.0.1",
     "@types/json5": "2.2.0",
