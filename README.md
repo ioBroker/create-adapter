@@ -23,7 +23,7 @@ Any computer with NodeJS in version 12 or higher and npm 6 or higher. Note that 
 This tool is not supposed to be installed. Instead, run the most recent version using
 
 ```
-npx @iobroker/create-adapter [options]
+npx @iobroker/create-adapter@latest [options]
 ```
 
 in the directory where the directory of your project should be created. You don't need to create the adapter/widget directory, because it will be created for you.
