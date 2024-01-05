@@ -18,9 +18,9 @@ interface AnswersMeta {
 
 type TemplateFunctionReturnType = string | Buffer | undefined;
 export interface TemplateFunction {
-	(answers: Answers & AnswersMeta):
-		| TemplateFunctionReturnType
-		| Promise<TemplateFunctionReturnType>;
+	(
+		answers: Answers & AnswersMeta,
+	): TemplateFunctionReturnType | Promise<TemplateFunctionReturnType>;
 	customPath?: string | ((answers: Answers & AnswersMeta) => string);
 	noReformat?: boolean;
 }
@@ -42,8 +42,8 @@ export async function createFiles(answers: Answers): Promise<File[]> {
 				typeof templateFunction.customPath === "function"
 					? templateFunction.customPath(answersWithMeta)
 					: typeof templateFunction.customPath === "string"
-					? templateFunction.customPath
-					: name.replace(/\.ts$/i, "");
+						? templateFunction.customPath
+						: name.replace(/\.ts$/i, "");
 			const templateResult = templateFunction(answersWithMeta);
 			return {
 				name: customPath,
@@ -62,7 +62,7 @@ export async function createFiles(answers: Answers): Promise<File[]> {
 }
 
 /** Formats files that are not explicitly forbidden to be formatted */
-function formatFiles(answers: Answers, files: File[]): File[] {
+function formatFiles(answers: Answers, files: File[]): Promise<File[]> {
 	// Normalize indentation considering user preference
 	const indentation =
 		answers.indentation === "Tab" ? indentWithTabs : indentWithSpaces;
@@ -82,12 +82,12 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 		trimWhitespaceLines(removeEmptyLines(indentation(text)));
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 
-	return files.map((f) => {
+	const formatted = files.map(async (f) => {
 		if (f.noReformat || typeof f.content !== "string") return f;
 		if (usePrettier && /\.(jsx?|json|tsx?)$/.test(f.name)) {
 			// Use prettier to format JS/TS/JSON code
-			const extension = f.name.substr(f.name.lastIndexOf(".") + 1);
-			f.content = formatWithPrettier(
+			const extension = f.name.slice(f.name.lastIndexOf(".") + 1);
+			f.content = await formatWithPrettier(
 				f.content,
 				answers,
 				extension as any,
@@ -106,6 +106,7 @@ function formatFiles(answers: Answers, files: File[]): File[] {
 		}
 		return f;
 	});
+	return Promise.all(formatted);
 }
 
 export async function writeFiles(

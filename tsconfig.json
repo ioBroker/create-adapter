@@ -1,7 +1,7 @@
 {
 	// To update the compilation target, install a different version of @tsconfig/node... and reference it here
 	// https://github.com/tsconfig/bases#node-12-tsconfigjson
-	"extends": "@tsconfig/node12/tsconfig.json",
+	"extends": "@tsconfig/node18/tsconfig.json",
 	"compilerOptions": {
 		// do not compile anything, this file is just to configure type checking
 		// the compilation is configured in tsconfig.build.json
@@ -12,6 +12,7 @@
 		"removeComments": false,
 		// Avoid runtime imports that are unnecessary
 		"importsNotUsedAsValues": "error",
+		"ignoreDeprecations": "5.0",
 		// The way we use `enquirer` is incompatible with strictFunctionTypes
 		"strictFunctionTypes": false,
 		// We import some .json files and TS should pick them up correctly

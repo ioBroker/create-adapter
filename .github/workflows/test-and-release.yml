@@ -26,7 +26,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x, 20.x]
         os: [ubuntu-latest]
 
     steps:
@@ -59,7 +59,7 @@ jobs:
 
       - name: Start the CLI on a production environment
         run: |
-          npm ci --only=production
+          npm ci --omit=dev
           TEST_STARTUP=true node ./bin/create-adapter.js
     # TODO: Test the console output
 
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - name: Checkout code

@@ -13,4 +13,5 @@ const templateFunction: TemplateFunction = answers => {
 	return readFile("admin.raw.d.ts", __dirname);
 };
 
+templateFunction.customPath = "admin/admin.d.ts";
 export = templateFunction;

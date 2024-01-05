@@ -1,14 +1,14 @@
-import pLimit from "@esm2cjs/p-limit";
 import * as JSON5 from "json5";
 import { licenses } from "../src/lib/core/licenses";
 import { getDefaultAnswer } from "../src/lib/core/questions";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 import { fetchPackageReferenceVersion, getPackageName } from "../src/lib/packageVersions";
 
-// Limit package version downloads to 10 simultaneous connections
-const downloadLimiter = pLimit(10);
-
 const templateFunction: TemplateFunction = async answers => {
+
+	// Limit package version downloads to 10 simultaneous connections
+	const pLimit = await import("p-limit");
+	const downloadLimiter = pLimit.default(10);
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
@@ -23,7 +23,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 
-	const minNodeVersion = answers.nodeVersion ?? "16";
+	const minNodeVersion = answers.nodeVersion ?? "18";
 
 	const dependencyPromises = [
 		...(isAdapter ? ["@iobroker/adapter-core"] : [])
@@ -42,7 +42,7 @@ const templateFunction: TemplateFunction = async answers => {
 		]),
 		...(isAdapter ? [
 			// support adapter testing by default
-			"chai",
+			"chai@4", // v5 is ESM and incompatible with chai-as-promised
 			"chai-as-promised",
 			`mocha`,
 			`sinon`,

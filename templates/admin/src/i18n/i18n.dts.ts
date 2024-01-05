@@ -41,4 +41,5 @@ declare module "@iobroker/adapter-react/i18n" {
 	return template.trim();
 };
 
+templateFunction.customPath = "admin/src/i18n/i18n.d.ts";
 export = templateFunction;

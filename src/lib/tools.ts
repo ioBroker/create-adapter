@@ -267,7 +267,7 @@ function createESLintOptions(
 			mocha: true,
 		},
 		parserOptions: {
-			ecmaVersion: 2020,
+			ecmaVersion: "latest",
 			ecmaFeatures: {
 				jsx: true,
 			},
@@ -325,7 +325,7 @@ export function formatWithPrettier(
 	sourceText: string,
 	answers: Pick<Answers, "quotes" | "indentation">,
 	extension: "js" | "ts" | "json",
-): string {
+): Promise<string> {
 	// Keep this in sync with templates/_prettierrc.js.ts
 	const prettierOptions: prettier.Options = {
 		semi: true,

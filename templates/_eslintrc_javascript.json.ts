@@ -1,5 +1,4 @@
 import * as JSON5 from "json5";
-import { getDefaultAnswer } from "../core";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
@@ -11,11 +10,6 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
-
-	const defaultEcmaVersion = getDefaultAnswer("ecmaVersion")!;
-	let ecmaVersion = answers.ecmaVersion || defaultEcmaVersion;
-	const useES6Class = answers.es6class === "yes";
-	if (useES6Class) ecmaVersion = Math.max(ecmaVersion, defaultEcmaVersion) as any;
 
 	const template = `
 {
@@ -69,7 +63,7 @@ const templateFunction: TemplateFunction = answers => {
 		]
 	},
 	"parserOptions": {
-		${ecmaVersion > 2015 ? (`"ecmaVersion": ${ecmaVersion},`) : ""}
+		ecmaVersion: "latest", // Allows for the parsing of modern ECMAScript features
 		${useReact ? (`ecmaFeatures: {
 			jsx: true,
 		},`) : ""}
