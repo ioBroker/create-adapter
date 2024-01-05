@@ -42,7 +42,7 @@ const templateFunction: TemplateFunction = async answers => {
 		]),
 		...(isAdapter ? [
 			// support adapter testing by default
-			"chai",
+			"chai@4", // v5 is ESM and incompatible with chai-as-promised
 			"chai-as-promised",
 			`mocha`,
 			`sinon`,
