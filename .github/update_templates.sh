@@ -12,7 +12,7 @@ rm -rf ioBroker.template
 git clone https://github.com/ioBroker/ioBroker.template
 
 # Create all templates
-node --require ts-node/register create_templates.ts
+node --require tsx/cjs create_templates.ts
 
 # Commit the changes
 cd ioBroker.template
@@ -33,4 +33,4 @@ git push -u origin $BRANCH_NAME
 
 # Create PR in the ioBroker repo
 cd ..
-node --require ts-node/register create_pullrequest.ts
+node --require tsx/cjs create_pullrequest.ts

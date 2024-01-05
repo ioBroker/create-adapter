@@ -89,6 +89,7 @@ export = (async answers => {
 		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/${defaultBranch}/admin/${getIconName(answers)}",
 		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/${defaultBranch}/README.md",
 		"loglevel": "info",
+		"tier": 3,
 		${isWidget ? (`
 			"restartAdapters": ["vis"],
 		`) : ""}

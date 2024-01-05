@@ -1,4 +1,3 @@
-import { getDefaultAnswer } from "../core";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
@@ -11,18 +10,13 @@ const templateFunction: TemplateFunction = answers => {
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useReact =
 		answers.adminUi === "react" || answers.tabReact === "yes";
-
-		const defaultEcmaVersion = getDefaultAnswer("ecmaVersion")!;
-		let ecmaVersion = answers.ecmaVersion || defaultEcmaVersion;
-		const useES6Class = answers.es6class === "yes";
-		if (useES6Class) ecmaVersion = Math.max(ecmaVersion, defaultEcmaVersion) as any;
 	
 	const template = `
 module.exports = {
 	root: true, // Don't look outside this project for inherited configs
 	parser: "@typescript-eslint/parser", // Specifies the ESLint parser
 	parserOptions: {
-		${ecmaVersion > 2015 ? (`ecmaVersion: ${ecmaVersion}, // Allows for the parsing of modern ECMAScript features`) : ""}
+		ecmaVersion: "latest", // Allows for the parsing of modern ECMAScript features
 		sourceType: "module", // Allows for the use of imports
 		project: ${useReact ? `["./tsconfig.json", "./admin/tsconfig.json"]` : `"./tsconfig.json"`},${useReact ? (`
 		ecmaFeatures: {

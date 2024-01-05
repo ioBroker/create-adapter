@@ -559,17 +559,15 @@ export const questionGroups: QuestionGroup[] = [
 				optional: true,
 				message:
 					"What's the minimum Node.js version you want to support?",
-				initial: "16",
-				choices: ["16", "18", "20"],
+				initial: "18",
+				choices: ["18", "20"],
 				migrate: (ctx) => {
-					if (ctx.hasDevDependency("@tsconfig/node16")) {
-						return "16";
-					} else if (ctx.hasDevDependency("@tsconfig/node18")) {
+					if (ctx.hasDevDependency("@tsconfig/node18")) {
 						return "18";
 					} else if (ctx.hasDevDependency("@tsconfig/node20")) {
 						return "20";
 					} else {
-						return "16";
+						return "18";
 					}
 				},
 			},
@@ -998,8 +996,7 @@ export interface Answers {
 		| "code coverage"
 		| "devcontainer"
 	)[];
-	ecmaVersion?: 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022;
-	nodeVersion?: "16" | "18" | "20";
+	nodeVersion?: "18" | "20";
 	title?: string;
 	license?: string;
 	type: string;
@@ -1119,9 +1116,6 @@ export function getDefaultAnswer<T extends keyof Answers>(
 				"Smart Home",
 				"home automation",
 			] as any;
-		}
-		case "ecmaVersion": {
-			return 2020 as any;
 		}
 	}
 }

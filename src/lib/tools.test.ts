@@ -302,7 +302,7 @@ describe("tools/formatJsonString()", () => {
 });
 
 describe("tools/formatWithPrettier()", () => {
-	it("should format JS code according to the Prettier rules", () => {
+	it("should format JS code according to the Prettier rules", async () => {
 		const input = `
 foo(
 		"baz"
@@ -313,7 +313,7 @@ function foo() { return;}
 `;
 		const expected = `foo('baz');\n\nfunction foo() {\n\treturn;\n}\n`;
 		expect(
-			formatWithPrettier(
+			await formatWithPrettier(
 				input,
 				{ indentation: "Tab", quotes: "single" },
 				"js",
@@ -321,7 +321,7 @@ function foo() { return;}
 		).to.equal(expected);
 	});
 
-	it("should format TS code according to the Prettier rules", () => {
+	it("should format TS code according to the Prettier rules", async () => {
 		const input = `
 foo(
 		'baz'
@@ -332,7 +332,7 @@ function foo() { return;}
 `;
 		const expected = `foo("baz");\n\nfunction foo() {\n    return;\n}\n`;
 		expect(
-			formatWithPrettier(
+			await formatWithPrettier(
 				input,
 				{ indentation: "Space (4)", quotes: "double" },
 				"ts",

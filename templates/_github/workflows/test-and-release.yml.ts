@@ -14,8 +14,8 @@ const templateFunction: TemplateFunction = answers => {
 	const useReleaseScript = answers.releaseScript === "yes";
 	const isGitHub = answers.target === "github";
 
-	const latestNodeVersion = "18.x";
-	const adapterTestVersions = ["16.x", "18.x", "20.x"];
+	const ltsNodeVersion = "18.x";
+	const adapterTestVersions = ["18.x", "20.x"];
 	const adapterTestOS = ["ubuntu-latest", "windows-latest", "macos-latest"];
 
 	const adapterName = answers.adapterName;
@@ -57,7 +57,7 @@ jobs:
     steps:
       - uses: ioBroker/testing-action-check@v1
         with:
-          node-version: '${latestNodeVersion}'
+          node-version: '${ltsNodeVersion}'
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           # install-command: 'npm install'${useTypeScript ? (`
           type-checking: true`) : ""}${useESLint ? (`
@@ -107,7 +107,7 @@ ${escapeDeploy(
     steps:
       - uses: ioBroker/testing-action-deploy@v1
         with:
-          node-version: '${latestNodeVersion}'
+          node-version: '${ltsNodeVersion}'
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           # install-command: 'npm install'${needsBuild ? (`
           build: true`) : ""}
