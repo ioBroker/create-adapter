@@ -16,7 +16,7 @@ Command line utility to quickly create a new adapter or VIS widget for [ioBroker
 
 ## Prerequisites
 
-Any computer with NodeJS in version 12 or higher and npm 6 or higher. Note that the created adapters or ioBroker itself may have different requirements.
+Any computer with Node.js in version 18 or higher and npm 9 or higher. Note that the created adapters or ioBroker itself may have different requirements.
 
 ## Usage
 
