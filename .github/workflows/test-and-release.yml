@@ -59,7 +59,7 @@ jobs:
 
       - name: Start the CLI on a production environment
         run: |
-          npm ci --only=production
+          npm ci --omit=dev
           TEST_STARTUP=true node ./bin/create-adapter.js
     # TODO: Test the console output
 
