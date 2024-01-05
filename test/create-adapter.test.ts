@@ -1,7 +1,6 @@
 // Disable API requests while testing
 process.env.TESTING = "true";
 
-import { execaSync } from "@esm2cjs/execa";
 import axios from "axios";
 import * as fs from "fs-extra";
 import { validate as validateJSON } from "jsonschema";
@@ -55,6 +54,7 @@ async function generateBaselines(
 
 	// Include the npm package content in the baselines (only for full adapter tests)
 	if (!filterFilesPredicate && files.some((f) => f.name === "package.json")) {
+		const { execaSync } = await import("execa");
 		const packageContent = JSON.parse(
 			execaSync("npm", ["pack", "--dry-run", "--json"], {
 				cwd: testDir,
@@ -386,34 +386,6 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it(`JS with ES2015`, async () => {
-				const answers: Answers = {
-					...baseAnswers,
-					language: "JavaScript",
-					ecmaVersion: 2015,
-					tools: ["ESLint", "type checking"],
-				};
-				await expectSuccess(
-					"JS_ES2015",
-					answers,
-					(file) => file.name === ".eslintrc.json",
-				);
-			});
-
-			it(`Node.js 16 as minimum`, async () => {
-				const answers: Answers = {
-					...baseAnswers,
-					nodeVersion: "16",
-				};
-				await expectSuccess(
-					"minNodeVersion_16",
-					answers,
-					(file) =>
-						file.name === "package.json" ||
-						file.name === "tsconfig.json",
-				);
-			});
-
 			it(`Node.js 18 as minimum`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
@@ -594,7 +566,6 @@ describe("adapter creation =>", () => {
 					adminFeatures: ["tab"],
 					tabReact: "yes",
 					language: "JavaScript",
-					ecmaVersion: 2015,
 				};
 				await expectSuccess("tabReact_adminHtml_JS", answers, (file) =>
 					file.name.startsWith("admin/"),

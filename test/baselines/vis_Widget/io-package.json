@@ -61,6 +61,7 @@
 		"extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-widget/main/admin/test-widget.png",
 		"readme": "https://github.com/AlCalzone/ioBroker.test-widget/blob/main/README.md",
 		"loglevel": "info",
+		"tier": 3,
 		"restartAdapters": [
 			"vis"
 		],

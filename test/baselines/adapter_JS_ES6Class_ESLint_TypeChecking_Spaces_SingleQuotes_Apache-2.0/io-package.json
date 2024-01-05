@@ -61,6 +61,7 @@
         "extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-adapter/main/admin/test-adapter.png",
         "readme": "https://github.com/AlCalzone/ioBroker.test-adapter/blob/main/README.md",
         "loglevel": "info",
+        "tier": 3,
         "mode": "daemon",
         "type": "general",
         "compact": true,
