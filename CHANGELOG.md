@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-## __WORK IN PROGRESS__
+## 2.6.1 (2024-01-15)
 * (AlCalzone) Fixed an issue with TypeScript tests caused by #1082 (fixes #1084)
 
 ## 2.6.0 (2024-01-05)
