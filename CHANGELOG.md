@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Fixed an issue with TypeScript tests caused by #1082 (fixes #1084)
+
 ## 2.6.0 (2024-01-05)
 * (AlCalzone) Change supported Node.js versions to 18 / 20 (#1082) · [Migration guide](docs/updates/20240105_min_node18.md)
 * (AlCalzone) Simplify maintenance of ESLint config by using the `"latest"` parser version (#1082) · [Migration guide](docs/updates/20240105_ecmaversion_latest.md)
