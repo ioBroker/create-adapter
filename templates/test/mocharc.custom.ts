@@ -10,7 +10,7 @@ const templateFunction: TemplateFunction = answers => {
 	"require": [
 		"test/mocha.setup.js",
 ${useTypeScript ? (`
-		"tsx/cjs",
+		"ts-node/register",
 		"source-map-support/register",
 `) : ""}
 	],
