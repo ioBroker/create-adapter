@@ -1,7 +1,7 @@
 {
 	"require": [
 		"test/mocha.setup.js",
-		"tsx/cjs",
+		"ts-node/register",
 		"source-map-support/register"
 	],
 	"watch-files": [
