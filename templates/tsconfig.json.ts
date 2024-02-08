@@ -13,7 +13,8 @@ export = (answers => {
 
 	if (useTypeScript) {
 		include = `
-		"src/**/*.ts"`;
+		"src/**/*.ts",
+		"test/**/*.ts"`;
 		exclude = `
 		"build/**",`;
 	} else {
