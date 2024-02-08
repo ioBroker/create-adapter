@@ -14,7 +14,7 @@ import {
 	transformDescription,
 	transformKeywords,
 } from "./actionsAndTransformers";
-import { licenses } from "./licenses";
+import { LicenseType, licenses } from "./licenses";
 import type { MigrationContextBase } from "./migrationContextBase";
 
 // This is being used to simulate wrong options for conditions on the type level
@@ -973,6 +973,18 @@ export interface UploadedIcon {
 	extension: string;
 }
 
+/**
+ * License information
+ */
+export interface LicenseInformation {
+	/** Use 'paid' for adapters which do not work without a paid license. Use 'commercial' for adapters which require a license for commercial use only. Use 'limited' if some functionalities are not available without a paid license. */
+	type: "free" | "paid" | "commercial" | "limited";
+	/** Hyperlink, where information about the license can be found. This is required if the license type is different from 'free'. */
+	link?: string;
+	/** The license this software is published under. */
+	license?: LicenseType;
+}
+
 export interface Answers {
 	/** false is used in the portal */
 	cli: boolean;
@@ -999,6 +1011,7 @@ export interface Answers {
 	nodeVersion?: "18" | "20";
 	title?: string;
 	license?: string;
+	licenseInformation?: LicenseInformation;
 	type: string;
 	adminUi?: "json" | "html" | "react" | "none";
 	tabReact?: "yes" | "no";

@@ -40,6 +40,8 @@ export = (async answers => {
 		adapterSettings[setting.key] = setting.defaultValue;
 	}
 
+	const licenseInformation = answers.licenseInformation || { type: "free" };
+
 	let adminUiConfig: string;
 	switch (answers.adminUi) {
 		case "react":
@@ -82,6 +84,7 @@ export = (async answers => {
 		],
 		"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
 		"license": "${licenses[answers.license!].id}",
+		"licenseInformation": ${JSON.stringify(licenseInformation)},
 		"platform": "Javascript/Node.js",
 		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${getIconName(answers)}",

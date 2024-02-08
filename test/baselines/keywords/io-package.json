@@ -55,6 +55,9 @@
 			"keywords"
 		],
 		"license": "MIT",
+		"licenseInformation": {
+			"type": "free"
+		},
 		"platform": "Javascript/Node.js",
 		"main": "build/main.js",
 		"icon": "test-adapter.png",
