@@ -31,5 +31,9 @@
     "gitCommit": "no",
     "defaultBranch": "main",
     "license": "Apache License 2.0",
-    "creatorVersion": "2.6.0"
+    "licenseInformation": {
+        "type": "free",
+        "license": "Apache-2.0"
+    },
+    "creatorVersion": "2.6.1"
 }

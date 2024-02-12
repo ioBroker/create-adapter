@@ -56,7 +56,8 @@
 		],
 		"license": "MIT",
 		"licenseInformation": {
-			"type": "free"
+			"type": "free",
+			"license": "MIT"
 		},
 		"platform": "Javascript/Node.js",
 		"main": "build/main.js",
