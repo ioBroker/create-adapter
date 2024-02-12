@@ -1,7 +1,7 @@
 import { translateText } from "@iobroker/adapter-dev/build/translate";
 import { composeObject } from "alcalzone-shared/objects";
 import * as JSON5 from "json5";
-import { licenses } from "../src/lib/core/licenses";
+import { licenses, type LicenseType } from "../src/lib/core/licenses";
 import { AdapterSettings, getDefaultAnswer, getIconName } from "../src/lib/core/questions";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
@@ -39,6 +39,12 @@ export = (async answers => {
 	for (const setting of allSettings) {
 		adapterSettings[setting.key] = setting.defaultValue;
 	}
+
+	// The "license" field is going to be replaced with "licenseInformation".
+	// For now keep both to be compatible
+	const licenseId = licenses[answers.license!].id as LicenseType;
+	const licenseInformation = answers.licenseInformation || { type: "free" };
+	licenseInformation.license = licenseId;
 
 	let adminUiConfig: string;
 	switch (answers.adminUi) {
@@ -81,7 +87,8 @@ export = (async answers => {
 			"${answers.authorName} <${answers.authorEmail}>"
 		],
 		"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
-		"license": "${licenses[answers.license!].id}",
+		"license": "${licenseId}",
+		"licenseInformation": ${JSON.stringify(licenseInformation)},
 		"platform": "Javascript/Node.js",
 		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${getIconName(answers)}",
