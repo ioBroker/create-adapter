@@ -424,13 +424,9 @@ export const questionGroups: QuestionGroup[] = [
 						hint: dim.gray("(recommended for most adapters)"),
 						value: "daemon",
 					},
-					{
-						message: `when the ".alive" state is true`,
-						value: "subscribe",
-					},
 					{ message: "depending on a schedule", value: "schedule" },
 					{
-						message: "when the instance object changes",
+						message: "only once after changing the instance object",
 						value: "once",
 					},
 					{ message: "never", value: "none" },
@@ -1026,7 +1022,7 @@ export interface Answers {
 	gitCommit?: "yes" | "no";
 	defaultBranch?: "main" | "master";
 	dependabot?: "yes" | "no";
-	startMode?: "daemon" | "schedule" | "subscribe" | "once" | "none";
+	startMode?: "daemon" | "schedule" | "once" | "none";
 	scheduleStartOnChange?: "yes" | "no";
 	connectionIndicator?: "yes" | "no";
 	connectionType?: "cloud" | "local";
