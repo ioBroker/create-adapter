@@ -5,8 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
-
-## __WORK IN PROGRESS__
+## 2.6.2 (2024-02-12)
 * (theknut) Make ioBroker types available in the test directory (#1091)
 * (theknut) Add `licenseInformation` field to `io-package.json` (#1092)
 * (AlCalzone) Remove the `subscribe` start mode (#1093)
