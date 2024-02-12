@@ -7,6 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
+* (theknut) Make ioBroker types available in the test directory (#1091)
 * (theknut) Add `licenseInformation` field to `io-package.json` (#1092)
 
 ## 2.6.1 (2024-01-15)
