@@ -1,8 +1,0 @@
-admin/index_m.html
-admin/style.css
-admin/test-adapter.png
-admin/words.js
-io-package.json
-LICENSE
-package.json
-README.md
