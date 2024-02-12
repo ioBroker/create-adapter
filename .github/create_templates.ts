@@ -1,5 +1,5 @@
 import { blue, green, red } from "ansi-colors";
-import { execSync, ExecSyncOptions } from "child_process";
+import { ExecSyncOptions, execSync } from "child_process";
 import * as fs from "fs-extra";
 import * as path from "path";
 import { createAdapter } from "../src";
@@ -46,7 +46,6 @@ const adapterAnswers: Answers = {
 	startMode: "daemon",
 	features: ["adapter"],
 	connectionIndicator: "no",
-	es6class: "yes",
 	type: "general",
 	adminFeatures: ["custom", "tab"],
 	adminUi: "json",
