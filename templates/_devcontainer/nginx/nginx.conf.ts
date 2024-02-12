@@ -6,7 +6,6 @@ const templateFunction: TemplateFunction = answers => {
 	if (!devcontainer) return;
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
-	const needsParcel = answers.adminUi === "react" || answers.tabReact === "yes";
 
 	const template = `
 worker_processes 1;
@@ -20,25 +19,25 @@ http {
     listen 80;
 
     location / {
+      error_page 418 = @websocket;      
       proxy_redirect off;
       proxy_pass     http://iobroker:8081;
+      if ( $args ~ "sid=" ) { return 418; }      
     }
 
-    location /socket.io/ {
+    location @websocket {
       proxy_pass         http://iobroker:8081;
       proxy_http_version 1.1;
       proxy_set_header   Upgrade $http_upgrade;
       proxy_set_header   Connection "Upgrade";
+      proxy_read_timeout 86400;
+      proxy_send_timeout 86400;
     }
+
 
     location /adapter/${adapterNameLowerCase}/ {
       alias /workspace/admin/;
     }
-${needsParcel ? (`
-    location /adapter/${adapterNameLowerCase}/build/ {
-      proxy_redirect off;
-      proxy_pass     http://parcel:1234/;
-    }`) : ""}
   }
 }`;
 	return template.trim();
