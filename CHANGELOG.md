@@ -7,7 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
-* (theknut) Implement required property `licenseInformation`
+* (theknut) Add `licenseInformation` field to `io-package.json` (#1092)
 
 ## 2.6.1 (2024-01-15)
 * (AlCalzone) Fixed an issue with TypeScript tests caused by #1082 (fixes #1084)
