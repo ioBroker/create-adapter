@@ -121,7 +121,6 @@ const baseAnswers: Answers = {
 	tools: ["ESLint"],
 	indentation: "Tab",
 	quotes: "double",
-	es6class: "no",
 	authorName: "Al Calzone",
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
@@ -225,21 +224,9 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it("Adapter, TypeScript (ES6 class), ESLint, Tabs, Double quotes, MIT License", async () => {
-				const answers: Answers = {
-					...baseAnswers,
-					es6class: "yes",
-				};
-				await expectSuccess(
-					"adapter_TS_ES6Class_ESLint_Tabs_DoubleQuotes_MIT",
-					answers,
-				);
-			});
-
 			it("Adapter, TypeScript React", async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					es6class: "yes",
 					adminUi: "react",
 				};
 				await expectSuccess("adapter_TS_React", answers);
@@ -249,7 +236,6 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					language: "JavaScript",
-					es6class: "yes",
 					adminUi: "react",
 				};
 				await expectSuccess("adapter_JS_React", answers);
@@ -267,22 +253,6 @@ describe("adapter creation =>", () => {
 				};
 				await expectSuccess(
 					"adapter_JS_JsonUI_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
-					answers,
-				);
-			});
-
-			it("Adapter, JavaScript (ES6 class), ESLint, Spaces, Single quotes, Apache License", async () => {
-				const answers: Answers = {
-					...baseAnswers,
-					language: "JavaScript",
-					tools: ["ESLint", "type checking"],
-					indentation: "Space (4)",
-					quotes: "single",
-					es6class: "yes",
-					license: "Apache License 2.0",
-				};
-				await expectSuccess(
-					"adapter_JS_ES6Class_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
 			});
@@ -552,7 +522,6 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					adminFeatures: ["tab"],
-					es6class: "yes",
 					adminUi: "react",
 					tabReact: "yes",
 				};
@@ -668,20 +637,6 @@ describe("adapter creation =>", () => {
 					(file) =>
 						file.name.startsWith("admin/") ||
 						file.name === "io-package.json",
-				);
-			});
-
-			it(`JS with legacy main.js`, async () => {
-				const answers: Answers = {
-					...baseAnswers,
-					language: "JavaScript",
-					es6class: "no",
-					connectionIndicator: "yes",
-				};
-				await expectSuccess(
-					"JS_LegacyMain",
-					answers,
-					(file) => file.name === "main.js",
 				);
 			});
 		});

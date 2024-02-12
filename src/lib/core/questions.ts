@@ -770,31 +770,6 @@ export const questionGroups: QuestionGroup[] = [
 				migrate: async (ctx) =>
 					(await ctx.analyzeCode('"', "'")) ? "double" : "single",
 			},
-			{
-				condition: { name: "features", contains: "adapter" },
-				type: "select",
-				name: "es6class",
-				label: "ES6 Class",
-				expert: true,
-				message: "How should the main adapter file be structured?",
-				initial: "yes",
-				choices: [
-					{
-						message: "As an ES6 class",
-						hint: "(recommended)",
-						value: "yes",
-					},
-					{
-						message: "With some methods",
-						hint: "(like legacy code)",
-						value: "no",
-					},
-				],
-				migrate: async (ctx) =>
-					(await ctx.getMainFileContent()).match(/^[ \t]*class/gm)
-						? "yes"
-						: "no",
-			},
 		],
 	},
 	{
@@ -1017,7 +992,6 @@ export interface Answers {
 	devServerPort?: number;
 	indentation?: "Tab" | "Space (4)";
 	quotes?: "single" | "double";
-	es6class?: "yes" | "no";
 	gitRemoteProtocol: "HTTPS" | "SSH";
 	gitCommit?: "yes" | "no";
 	defaultBranch?: "main" | "master";

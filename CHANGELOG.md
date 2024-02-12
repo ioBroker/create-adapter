@@ -10,6 +10,7 @@
 * (theknut) Make ioBroker types available in the test directory (#1091)
 * (theknut) Add `licenseInformation` field to `io-package.json` (#1092)
 * (AlCalzone) Remove the `subscribe` start mode (#1093)
+* (AlCalzone)  Remove the legacy way of creating adapters without classes (#1094)
 
 ## 2.6.1 (2024-01-15)
 * (AlCalzone) Fixed an issue with TypeScript tests caused by #1082 (fixes #1084)
