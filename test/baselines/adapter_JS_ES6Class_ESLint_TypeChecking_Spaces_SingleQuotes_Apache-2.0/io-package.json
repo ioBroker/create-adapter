@@ -54,6 +54,10 @@
             "home automation"
         ],
         "license": "Apache-2.0",
+        "licenseInformation": {
+            "type": "free",
+            "license": "Apache-2.0"
+        },
         "platform": "Javascript/Node.js",
         "main": "main.js",
         "icon": "test-adapter.png",

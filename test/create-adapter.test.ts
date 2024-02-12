@@ -130,6 +130,7 @@ const baseAnswers: Answers = {
 	gitCommit: "no",
 	defaultBranch: "main",
 	license: "MIT License",
+	licenseInformation: { type: "free" },
 };
 
 describe("adapter creation =>", () => {

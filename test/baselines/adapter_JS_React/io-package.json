@@ -54,6 +54,10 @@
 			"home automation"
 		],
 		"license": "MIT",
+		"licenseInformation": {
+			"type": "free",
+			"license": "MIT"
+		},
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
 		"icon": "test-adapter.png",
