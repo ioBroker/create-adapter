@@ -1,9 +1,10 @@
 import React from "react";
-import { Theme, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@mui/styles";
+import { Theme } from "@mui/material/styles";
 
-import GenericApp from "@iobroker/adapter-react/GenericApp";
-import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
-import { StyleRules } from "@material-ui/core/styles";
+import GenericApp from "@iobroker/adapter-react-v5/GenericApp";
+import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react-v5/types";
+import { StyleRules } from "@mui/styles/withStyles";
 
 const styles = (_theme: Theme): StyleRules => ({
 	root: {},
