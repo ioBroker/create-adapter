@@ -25,20 +25,20 @@ const templateFunction: TemplateFunction = answers => {
 
 	const template = `
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-${useTypeScript ? `import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
-` : ""}import TextField from "@material-ui/core/TextField";
-import Input from "@material-ui/core/Input";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import I18n from "@iobroker/adapter-react/i18n";
+import { withStyles } from "@mui/styles";
+${useTypeScript ? `import { CreateCSSProperties } from "@mui/styles/withStyles";
+` : ""}import TextField from "@mui/material/TextField";
+import Input from "@mui/material/Input";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import I18n from "@iobroker/adapter-react-v5/i18n";
 
 ${useTypeScript ? "" : `/**
- * @type {() => Record<string, import("@material-ui/core/styles/withStyles").CreateCSSProperties>}
+ * @type {() => Record<string, import("@mui/styles/withStyles").CreateCSSProperties>}
  */`}
 const styles = ()${useTypeScript ? ": Record<string, CreateCSSProperties>" : ""} => ({
 	input: {
@@ -119,6 +119,7 @@ ${useTypeScript ? "" : `/**
 				type={type || "text"}
 				onChange={(e) => this.props.onChange(attr, e.target.value)}
 				margin="normal"
+				variant="standard"
 			/>
 		);
 	}
@@ -142,11 +143,13 @@ ${useTypeScript ? "" : `/**
 					paddingTop: 5,
 					...style
 				}}
+				variant="standard"
 			>
 				<Select
 					value={this.props.native[attr] || "_"}
 					onChange={(e) => this.props.onChange(attr, e.target.value === "_" ? "" : e.target.value)}
 					input={<Input name={attr} id={attr + "-helper"} />}
+					variant="standard"
 				>
 					{options.map((item) => (
 						<MenuItem key={"key-" + item.value} value={item.value || "_"}>

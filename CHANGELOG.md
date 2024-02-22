@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line )
 -->
+## __WORK IN PROGRESS__
+* (stevenengland) Migrate from adapter-react to adapter-react-v5 (#1095)
+  
 ## 2.6.2 (2024-02-12)
 * (theknut) Make ioBroker types available in the test directory (#1091)
 * (theknut) Add `licenseInformation` field to `io-package.json` (#1092)

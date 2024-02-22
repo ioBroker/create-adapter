@@ -8,19 +8,21 @@ const templateFunction: TemplateFunction = answers => {
 
 	const template = `
 import React from "react";
-import { ${useTypeScript ? "Theme, " : ""}withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@mui/styles";
+${useTypeScript ?
+"import { Theme } from '@mui/material/styles';" : ""}
 
-import GenericApp from "@iobroker/adapter-react/GenericApp";
+import GenericApp from "@iobroker/adapter-react-v5/GenericApp";
 import Settings from "./components/settings";
 ${useTypeScript ?
-`import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
-import { StyleRules } from "@material-ui/core/styles";
+`import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react-v5/types";
+import { StyleRules } from "@mui/styles/withStyles";
 ` : ""}
 ${useTypeScript ?
 `const styles = (_theme: Theme): StyleRules => ({
 	root: {},
 });` : `/**
- * @type {(_theme: import("@material-ui/core/styles").Theme) => import("@material-ui/styles").StyleRules}
+ * @type {(_theme: import("@mui/material/styles").Theme) => import("@mui/styles/withStyles").StyleRules}
  */
 const styles = (_theme) => ({
 	root: {},
