@@ -3,13 +3,16 @@
 <!--
 	Placeholder for the next version:
 	## __WORK IN PROGRESS__
-	(at the beginning of a new line )
+	(at the beginning of a new line)
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Pin `eslint` to version 8 (#1100)
+
 ## 2.6.2 (2024-02-12)
 * (theknut) Make ioBroker types available in the test directory (#1091)
 * (theknut) Add `licenseInformation` field to `io-package.json` (#1092)
 * (AlCalzone) Remove the `subscribe` start mode (#1093)
-* (AlCalzone)  Remove the legacy way of creating adapters without classes (#1094)
+* (AlCalzone) Remove the legacy way of creating adapters without classes (#1094)
 
 ## 2.6.1 (2024-01-15)
 * (AlCalzone) Fixed an issue with TypeScript tests caused by #1082 (fixes #1084)
