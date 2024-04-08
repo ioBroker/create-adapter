@@ -86,7 +86,9 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/react-dom@17",
 		] : []),
 		...(useESLint ? [
-			"eslint"
+			// https://github.com/ioBroker/create-adapter/pull/1099#issuecomment-2042287875
+			// Need to stay on ESLint v8 until typescript-eslint is compatible with ESLint v9
+			"eslint@8"
 		] : []),
 		...((useESLint && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin",
