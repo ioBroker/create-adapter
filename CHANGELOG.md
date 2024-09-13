@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Pin several dependencies to older versions (#1110)
+
 ## 2.6.3 (2024-04-08)
 * (AlCalzone) Pin `eslint` to version 8 (#1100)
 
