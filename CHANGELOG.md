@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
-## __WORK IN PROGRESS__
+## 2.6.4 (2024-09-13)
 * (AlCalzone) Pin several dependencies to older versions (#1110)
 
 ## 2.6.3 (2024-04-08)
