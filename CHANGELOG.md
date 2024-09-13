@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
+## __WORK IN PROGRESS__
+* (AlCalzone) Update CI workflows for the adapter creator (#1111)
+
 ## 2.6.4 (2024-09-13)
 * (AlCalzone) Pin several dependencies to older versions (#1110)
 
