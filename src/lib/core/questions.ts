@@ -555,15 +555,17 @@ export const questionGroups: QuestionGroup[] = [
 				optional: true,
 				message:
 					"What's the minimum Node.js version you want to support?",
-				initial: "18",
-				choices: ["18", "20"],
+				initial: "20",
+				choices: ["18", "20", "22"],
 				migrate: (ctx) => {
 					if (ctx.hasDevDependency("@tsconfig/node18")) {
 						return "18";
 					} else if (ctx.hasDevDependency("@tsconfig/node20")) {
 						return "20";
+					} else if (ctx.hasDevDependency("@tsconfig/node22")) {
+						return "22";
 					} else {
-						return "18";
+						return "20";
 					}
 				},
 			},
@@ -979,7 +981,7 @@ export interface Answers {
 		| "code coverage"
 		| "devcontainer"
 	)[];
-	nodeVersion?: "18" | "20";
+	nodeVersion?: "18" | "20" | "22";
 	title?: string;
 	license?: string;
 	licenseInformation?: LicenseInformation;

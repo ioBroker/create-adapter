@@ -14,8 +14,8 @@ const templateFunction: TemplateFunction = answers => {
 	const useReleaseScript = answers.releaseScript === "yes";
 	const isGitHub = answers.target === "github";
 
-	const ltsNodeVersion = "18.x";
-	const adapterTestVersions = ["18.x", "20.x"];
+	const ltsNodeVersion = "20.x";
+	const adapterTestVersions = ["18.x", "20.x", "22.x"];
 	const adapterTestOS = ["ubuntu-latest", "windows-latest", "macos-latest"];
 
 	const adapterName = answers.adapterName;
