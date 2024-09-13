@@ -135,11 +135,11 @@ export = (async answers => {
 		${supportCustom ? `"supportCustoms": true,` : ""}
 		${useReact ? `"eraseOnUpload": true,` : ""}
 		"dependencies": [
-			${isAdapter ? `{ "js-controller": ">=3.3.22" },` : ""}
+			${isAdapter ? `{ "js-controller": ">=6.0.11" },` : ""}
 			${isWidget ? `"vis",` : ""}
 		],
 		"globalDependencies": [
-			${isAdapter ? `{ "admin": "${useJsonConfig ? ">=5.1.13" : ">=5.0.0" }" },` : ""}
+			${isAdapter ? `{ "admin": "7.0.23" },` : ""}
 		],
 	},
 	"native": ${JSON.stringify(adapterSettings)},
