@@ -43,18 +43,18 @@ const templateFunction: TemplateFunction = async answers => {
 		...(isAdapter ? [
 			// support adapter testing by default
 			"chai@4", // v5 is ESM and incompatible with chai-as-promised
-			"chai-as-promised",
+			"chai-as-promised@7",
 			`mocha`,
 			`sinon`,
-			"sinon-chai",
+			"sinon-chai@3",
 			"proxyquire",
 		] : []),
 		...(isAdapter && useTypeChecking ? [
-			"@types/chai",
-			"@types/chai-as-promised",
+			"@types/chai@4",
+			"@types/chai-as-promised@7",
 			"@types/mocha",
 			"@types/sinon",
-			"@types/sinon-chai",
+			"@types/sinon-chai@3",
 			"@types/proxyquire",
 			// Recommended tsconfig for the minimum supported Node.js version
 			`@tsconfig/node${minNodeVersion}`,
@@ -91,8 +91,8 @@ const templateFunction: TemplateFunction = async answers => {
 			"eslint@8"
 		] : []),
 		...((useESLint && useTypeScript) ? [
-			"@typescript-eslint/eslint-plugin",
-			"@typescript-eslint/parser",
+			"@typescript-eslint/eslint-plugin@7",
+			"@typescript-eslint/parser@7",
 		] : []),
 		...((useESLint && useReact) ? [
 			"eslint-plugin-react",
