@@ -46,15 +46,15 @@ const templateFunction: TemplateFunction = async answers => {
 			"chai-as-promised",
 			`mocha`,
 			`sinon`,
-			"sinon-chai",
+			"sinon-chai@3",
 			"proxyquire",
 		] : []),
 		...(isAdapter && useTypeChecking ? [
-			"@types/chai",
+			"@types/chai@4",
 			"@types/chai-as-promised",
 			"@types/mocha",
 			"@types/sinon",
-			"@types/sinon-chai",
+			"@types/sinon-chai@3",
 			"@types/proxyquire",
 			// Recommended tsconfig for the minimum supported Node.js version
 			`@tsconfig/node${minNodeVersion}`,
