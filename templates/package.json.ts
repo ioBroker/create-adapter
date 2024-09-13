@@ -43,7 +43,7 @@ const templateFunction: TemplateFunction = async answers => {
 		...(isAdapter ? [
 			// support adapter testing by default
 			"chai@4", // v5 is ESM and incompatible with chai-as-promised
-			"chai-as-promised",
+			"chai-as-promised@7",
 			`mocha`,
 			`sinon`,
 			"sinon-chai@3",
@@ -51,7 +51,7 @@ const templateFunction: TemplateFunction = async answers => {
 		] : []),
 		...(isAdapter && useTypeChecking ? [
 			"@types/chai@4",
-			"@types/chai-as-promised",
+			"@types/chai-as-promised@7",
 			"@types/mocha",
 			"@types/sinon",
 			"@types/sinon-chai@3",
