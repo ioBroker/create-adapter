@@ -9,7 +9,6 @@ export = (async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
-	const useTypeScript = answers.language === "TypeScript";
 	const useJsonConfig = answers.adminUi === "json";
 	const useAdminReact = answers.adminUi === "react";
 	const useTabReact = answers.tabReact === "yes";
@@ -80,7 +79,6 @@ export = (async answers => {
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "${title}",
 		"titleLang": ${titleLang},
 		"desc": ${descriptionLang},
 		"authors": [
@@ -90,7 +88,6 @@ export = (async answers => {
 		"license": "${licenseId}",
 		"licenseInformation": ${JSON.stringify(licenseInformation)},
 		"platform": "Javascript/Node.js",
-		"main": "${useTypeScript ? "build/" : ""}main.js",
 		"icon": "${getIconName(answers)}",
 		"enabled": true,
 		"extIcon": "https://raw.githubusercontent.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/${defaultBranch}/admin/${getIconName(answers)}",
