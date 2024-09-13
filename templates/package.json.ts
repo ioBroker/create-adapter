@@ -91,8 +91,8 @@ const templateFunction: TemplateFunction = async answers => {
 			"eslint@8"
 		] : []),
 		...((useESLint && useTypeScript) ? [
-			"@typescript-eslint/eslint-plugin",
-			"@typescript-eslint/parser",
+			"@typescript-eslint/eslint-plugin@7",
+			"@typescript-eslint/parser@7",
 		] : []),
 		...((useESLint && useReact) ? [
 			"eslint-plugin-react",
