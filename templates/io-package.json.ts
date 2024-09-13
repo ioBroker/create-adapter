@@ -87,7 +87,6 @@ export = (async answers => {
 			"${answers.authorName} <${answers.authorEmail}>"
 		],
 		"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
-		"license": "${licenseId}",
 		"licenseInformation": ${JSON.stringify(licenseInformation)},
 		"platform": "Javascript/Node.js",
 		"main": "${useTypeScript ? "build/" : ""}main.js",

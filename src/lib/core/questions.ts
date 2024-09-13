@@ -984,6 +984,7 @@ export interface Answers {
 	nodeVersion?: "18" | "20" | "22";
 	title?: string;
 	license?: string;
+	// Not used on the CLI, but can be provided by the web UI for example
 	licenseInformation?: LicenseInformation;
 	type: string;
 	adminUi?: "json" | "html" | "react" | "none";
