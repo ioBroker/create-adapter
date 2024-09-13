@@ -19,50 +19,58 @@
     "url": "https://github.com/AlCalzone/ioBroker.test-adapter.git"
   },
   "engines": {
-    "node": ">= 20"
+    "node": ">= 22"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.1.6"
   },
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.3.0",
-    "@iobroker/adapter-react": "2.0.22",
     "@iobroker/testing": "^4.1.3",
-    "@material-ui/core": "^4.12.4",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/chai-as-promised": "^7.1.8",
+    "@types/chai": "^4.3.19",
+    "@types/mocha": "^10.0.8",
+    "@types/node": "^22.5.4",
+    "@types/proxyquire": "^1.3.31",
+    "@types/sinon": "^17.0.3",
+    "@types/sinon-chai": "^3.2.12",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "chai-as-promised": "^7.1.2",
     "chai": "^4.5.0",
-    "eslint-plugin-react": "^7.36.1",
     "eslint": "^8.57.0",
     "mocha": "^10.7.3",
     "proxyquire": "^2.1.3",
-    "react-dom": "^17.0.2",
-    "react": "^17.0.2",
+    "rimraf": "^6.0.1",
     "sinon": "^19.0.2",
-    "sinon-chai": "^3.7.0"
+    "sinon-chai": "^3.7.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.0.4"
   },
-  "main": "main.js",
+  "main": "build/main.js",
   "files": [
     "admin{,/!(src)/**}/!(tsconfig|tsconfig.*|.eslintrc).{json,json5}",
     "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
-    "admin/build/",
-    "lib/",
+    "build/",
     "www/",
     "io-package.json",
-    "LICENSE",
-    "main.js"
+    "LICENSE"
   ],
   "scripts": {
-    "prebuild": "rimraf admin/build",
-    "build": "build-adapter react",
-    "watch": "build-adapter react --watch",
-    "prebuild:react": "rimraf admin/build",
-    "build:react": "build-adapter react",
-    "watch:react": "build-adapter react --watch",
-    "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
+    "prebuild": "rimraf build",
+    "build": "build-adapter ts",
+    "watch": "build-adapter ts --watch",
+    "prebuild:ts": "rimraf build",
+    "build:ts": "build-adapter ts",
+    "watch:ts": "build-adapter ts --watch",
+    "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
     "test:package": "mocha test/package --exit",
     "test:integration": "mocha test/integration --exit",
-    "test": "npm run test:js && npm run test:package",
-    "lint": "eslint --ext .js,.jsx .",
+    "test": "npm run test:ts && npm run test:package",
+    "check": "tsc --noEmit",
+    "lint": "eslint --ext .ts src/",
     "translate": "translate-adapter"
   },
   "bugs": {
