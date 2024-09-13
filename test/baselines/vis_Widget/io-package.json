@@ -17,7 +17,6 @@
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "Is used to test the creator",
 		"titleLang": {
 			"en": "Is used to test the creator",
 			"de": "Mock translation of 'Is used to test the creator' to 'de'",
@@ -59,7 +58,6 @@
 			"license": "MIT"
 		},
 		"platform": "Javascript/Node.js",
-		"main": "main.js",
 		"icon": "test-widget.png",
 		"enabled": true,
 		"extIcon": "https://raw.githubusercontent.com/AlCalzone/ioBroker.test-widget/main/admin/test-widget.png",
