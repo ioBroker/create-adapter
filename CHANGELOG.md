@@ -6,6 +6,7 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
+* (AlCalzone) Add Node.js 22 as a supported version, set 20 as the default choice (#1112)
 * (AlCalzone) Update CI workflows for the adapter creator (#1111)
 
 ## 2.6.4 (2024-09-13)
