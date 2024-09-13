@@ -1,7 +1,8 @@
 // Licenses are cached on build to prevent rate-limiting issues
 
 import { green } from "ansi-colors";
-import axios, { AxiosRequestConfig } from "axios";
+import type { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yargs from "yargs";

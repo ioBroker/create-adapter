@@ -1,10 +1,11 @@
+import type { Answers } from "./lib/core/questions";
 import {
-	Answers,
 	checkAnswers,
 	formatAnswers,
 	validateAnswers,
 } from "./lib/core/questions";
-import { createFiles, File } from "./lib/createAdapter";
+import type { File } from "./lib/createAdapter";
+import { createFiles } from "./lib/createAdapter";
 
 export async function createAdapter(
 	answers: Answers,

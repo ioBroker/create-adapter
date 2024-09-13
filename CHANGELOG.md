@@ -6,6 +6,7 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
+* (AlCalzone) Update TypeScript version in creator to 5.6 (#1113)
 * (AlCalzone) Add Node.js 22 as a supported version, set 20 as the default choice (#1112)
 * (AlCalzone) Update CI workflows for the adapter creator (#1111)
 

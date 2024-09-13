@@ -45,6 +45,13 @@ module.exports = {
 				ignoreProperties: true,
 			},
 		],
+		// Avoid runtime imports that are unnecessary
+		"@typescript-eslint/consistent-type-imports": [
+			"error",
+			{
+				disallowTypeAnnotations: false,
+			},
+		],
 	},
 	overrides: [
 		{
