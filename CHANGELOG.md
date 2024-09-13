@@ -6,6 +6,7 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
+* (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
 * (AlCalzone) Remove deprecated `main` and `title` fields from `io-package.json` (#1115)
 * (AlCalzone) Remove deprecated license field from `io-package.json` (#1114)
 * (AlCalzone) Add Node.js 22 as a supported version, set 20 as the default choice (#1112)
