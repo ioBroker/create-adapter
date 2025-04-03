@@ -12,6 +12,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "_devcontainer/nginx/nginx.conf.ts", templateFunction: require("./_devcontainer/nginx/nginx.conf") },
 	{ name: "_devcontainer/parcel/_Dockerfile.ts", templateFunction: require("./_devcontainer/parcel/_Dockerfile") },
 	{ name: "_devcontainer/parcel/run.sh.ts", templateFunction: require("./_devcontainer/parcel/run.sh") },
+	{ name: "_devcontainer/postcreate.sh.ts", templateFunction: require("./_devcontainer/postcreate.sh") },
 	{ name: "_devcontainer/README.md.ts", templateFunction: require("./_devcontainer/README.md") },
 	{ name: "_eslintignore.ts", templateFunction: require("./_eslintignore") },
 	{ name: "_eslintrc_javascript.json.ts", templateFunction: require("./_eslintrc_javascript.json") },
