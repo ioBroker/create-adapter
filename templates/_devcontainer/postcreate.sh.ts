@@ -35,7 +35,7 @@ iob stop ${adapterNameLowerCase} &&
 rm \"$NPM_PACK\" &&
 
 # execute custom postcreate script if existing
-test -x .devcontainer/postcreate_ext.sh &>/dev/null && sh .devcontainer/postcreate_ext.sh
+test .devcontainer/postcreate_ext.sh &>/dev/null && sh .devcontainer/postcreate_ext.sh
 `;
 	return template.trim();
 };
