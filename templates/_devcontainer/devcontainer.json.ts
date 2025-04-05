@@ -59,7 +59,7 @@ const templateFunction: TemplateFunction = answers => {
 	// "shutdownAction": "none",
 
 	// Prepare the devcontainer according to the actual adpater
-	"postCreateCommand": ".devcontainer/postcreate.sh",
+	"postCreateCommand": "sh .devcontainer/postcreate.sh",
 
 	// Comment to connect as a root user. See https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "iobroker"
