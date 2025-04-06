@@ -10,32 +10,36 @@ const templateFunction: TemplateFunction = answers => {
 	const template = `
 #!/bin/bash
 
+set -e
+
 # delete discovery adapter
-iob del discovery &&
+iob del discovery
 
 # disable error reporting
-iob plugin disable sentry &&
+iob plugin disable sentry
 
 # set the license as confirmed
-iob object set system.config common.licenseConfirmed=true &&
+iob object set system.config common.licenseConfirmed=true
 
 # package the adapter
-NPM_PACK=$(npm pack) &&
+NPM_PACK=$(npm pack)
 
 # install the adapter
-iob url \"$(pwd)/$NPM_PACK\" --debug &&
+iob url \"$(pwd)/$NPM_PACK\" --debug
 
 # create a new adapter instance
-iob add ${adapterNameLowerCase} &&
+iob add ${adapterNameLowerCase}
 
 # stop the newly created instance
-iob stop ${adapterNameLowerCase} &&
+iob stop ${adapterNameLowerCase}
 
 # delete the adapter package
-rm \"$NPM_PACK\" &&
+rm \"$NPM_PACK\"
 
 # execute custom postcreate script if existing
-test .devcontainer/postcreate_ext.sh &>/dev/null && sh .devcontainer/postcreate_ext.sh
+if [ -e .devcontainer/postcreate_ext.sh ]; then
+    sh .devcontainer/postcreate_ext.sh
+fi
 `;
 	return template.trim();
 };
