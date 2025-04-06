@@ -21,6 +21,9 @@ iob plugin disable sentry
 # set the license as confirmed
 iob object set system.config common.licenseConfirmed=true
 
+# install dependencies
+npm install
+
 # package the adapter
 NPM_PACK=$(npm pack)
 
