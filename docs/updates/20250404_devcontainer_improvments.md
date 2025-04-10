@@ -7,7 +7,7 @@ This change is using the adapter name instead (`iobroker.<adapterName>`) to be a
 ```diff
 {
 -	"name": "ioBroker Docker Compose",
-+	"name": "iobroker.<adapterName>",
++	"name": "ioBroker.<adapterName>",
 
 ```
 Example:
@@ -62,7 +62,11 @@ Move `settings` and `extensions` into `customization/vscode` as it was moved wit
 ```
 
 ### Externalize `postCreateCommand`
-Add `postcreate.sh` script and put all `postCreateCommand` commands into for a better readability.
+The ioBroker docker image takes some time to setup ioBroker. As this process runs async, the `postCreateCommand` is executed before the setup is finished. This causes a race condition because within the `postCreateCommand` there are iobroker commands which rely on a fully working ioBroker instance. If the setup is not ready in time, there will often be the errors and the Dev Container can not be setup fails. Therefor the `postCreateCommand` also includes code to wait for the completion of the ioBroker startup.
+
+Additionally it takes care that all dependencies are installed and also the adapter in question is installed and a instance is created.
+
+As those features would end up in a single line in `devcontainer.json` the code was externalized to the `postcreate.sh` script. 
 
 `devcontainer.json`
 ```diff
@@ -81,6 +85,35 @@ Add new file `postcreate.sh` in `.devcontainer` directory:
 
 set -e
 
+# install dependencies
+npm install
+
+# package the adapter
+NPM_PACK=$(npm pack)
+
+# wait for ioBroker to become ready
+echo "⏳ Waiting for ioBroker to become ready..."
+
+ATTEMPTS=20
+SLEEP=2
+i=1
+
+while [ $i -le $ATTEMPTS ]; do
+    if iob status > /dev/null 2>&1; then
+        echo "✅ ioBroker is ready."
+        break
+    else
+        echo "⌛ Attempt $i/$ATTEMPTS: Still waiting for ioBroker..."
+        sleep $SLEEP
+        i=$((i + 1))
+    fi
+done
+
+if ! iob status > /dev/null 2>&1; then
+    echo "❌ Timeout: ioBroker did not become ready within $(echo "$ATTEMPTS * $SLEEP" | bc) seconds."
+    exit 1
+fi
+
 # delete discovery adapter
 iob del discovery
 
@@ -89,12 +122,6 @@ iob plugin disable sentry
 
 # set the license as confirmed
 iob object set system.config common.licenseConfirmed=true
-
-# install dependencies
-npm install
-
-# package the adapter
-NPM_PACK=$(npm pack)
 
 # install the adapter
 iob url \"$(pwd)/$NPM_PACK\" --debug
@@ -142,6 +169,13 @@ Change the remote user:
 +    // Comment to connect as a root user. See https://aka.ms/vscode-remote/containers/non-root.
 +    "remoteUser": "iobroker"
 }
+```
+
+Make the `node_modules` in `/opt/iobroker` available for non-root user `iobroker` in `Dockerfile` otherwise only root will be able to run or debug the adapter. The user `iobroker` will get the error `Cannot find js-controller`. Creating a symlink at `/` will make it work for both:
+```diff
+FROM iobroker/iobroker:latest
+-RUN ln -s /opt/iobroker/node_modules/ /root/.node_modules
++RUN ln -s /opt/iobroker/node_modules/ /node_modules
 ```
 
 ## Removing obsolete `version` attribute
