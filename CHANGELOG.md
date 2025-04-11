@@ -7,7 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
-* (hacki11) Support git-ssh in devcontainer (#1136)
+* (hacki11) Support git-ssh in devcontainer (#1136) [Migration guide](docs/updates/20250401_devcontainer_ssh.md)
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
