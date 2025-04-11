@@ -20,50 +20,50 @@ const templateFunction: TemplateFunction = answers => {
 {
 	"name": "ioBroker.${adapterNameLowerCase}",
 
-    // Update the 'dockerComposeFile' list if you have more compose files or use different names.
-    // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
-    "dockerComposeFile": [ "docker-compose.yml" ],
-    
-    // Forwarding the nginx port to access ioBroker Admin interface
-    "forwardPorts": ["nginx:80"],
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+	"dockerComposeFile": [ "docker-compose.yml" ],
 
-    // Name of the forwarded port
-    "portsAttributes": {
-        "nginx:80": {
-            "label": "ioBroker"
-        }
-    },
+ 	// Forwarding the nginx port to access ioBroker Admin interface
+	"forwardPorts": ["nginx:80"],
 
-    // The 'service' property is the name of the service for the container that VS Code should
-    // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
-    "service": "iobroker",
+	// Name of the forwarded port
+	"portsAttributes": {
+		"nginx:80": {
+			"label": "ioBroker"
+		}
+	},
 
-    // The optional 'workspaceFolder' property is the path VS Code should open by default when
-    // connected. This is typically a file mount in .devcontainer/docker-compose.yml
-    "workspaceFolder": "/workspace",
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "iobroker",
 
-    "customizations": {
-        "vscode": {
-            // Set *default* container specific settings.json values on container create.
-            "settings": {},
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/workspace",
 
-            // Add the IDs of extensions you want installed when the container is created.
+	"customizations": {
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {},
+
+			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": ${JSON.stringify(extensions)}
-        }
-    },
+		}
+	},
 
-    // Uncomment the next line if you want start specific services in your Docker Compose config.
-    // "runServices": [],
+	// Uncomment the next line if you want start specific services in your Docker Compose config.
+	// "runServices": [],
 
-    // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
-    // "shutdownAction": "none",
+	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+	// "shutdownAction": "none",
 
-    // Prepare the devcontainer according to the actual adpater
-    "postCreateCommand": "sh .devcontainer/scripts/postcreate.sh",
-    "postStartCommand": "sh .devcontainer/scripts/poststart.sh",
+	// Prepare the devcontainer according to the actual adapter
+	"postCreateCommand": "sh .devcontainer/scripts/postcreate.sh",
+	"postStartCommand": "sh .devcontainer/scripts/poststart.sh",
 
-    // Comment to connect as a root user. See https://aka.ms/vscode-remote/containers/non-root.
-    "remoteUser": "iobroker"
+	// Connect as non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "iobroker"
 }
 `;
 	return template.trim();

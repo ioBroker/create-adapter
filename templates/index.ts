@@ -32,6 +32,7 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "_releaseconfig.json.ts", templateFunction: require("./_releaseconfig.json") },
 	{ name: "_vscode/extensions.json.ts", templateFunction: require("./_vscode/extensions.json") },
 	{ name: "_vscode/settings.json.ts", templateFunction: require("./_vscode/settings.json") },
+	{ name: "_vscode/launch.json.ts", templateFunction: require("./_vscode/launch.json") },
 	{ name: "admin/_eslintrc_js_react.json.ts", templateFunction: require("./admin/_eslintrc_js_react.json") },
 	{ name: "admin/admin.dts.ts", templateFunction: require("./admin/admin.dts") },
 	{ name: "admin/custom_m.html.ts", templateFunction: require("./admin/custom_m.html") },

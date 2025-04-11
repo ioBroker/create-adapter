@@ -25,19 +25,19 @@ SLEEP=0.5
 i=1
 
 while [ $i -le $ATTEMPTS ]; do
-    if iob status > /dev/null 2>&1; then
-        echo "✅ ioBroker is ready."
-        break
-    else
-        echo "⌛ Attempt $i/$ATTEMPTS: Waiting for ioBroker..."
-        sleep $SLEEP
-        i=$((i + 1))
-    fi
+	if iob status > /dev/null 2>&1; then
+		echo "✅ ioBroker is ready."
+		break
+	else
+		echo "⌛ Attempt $i/$ATTEMPTS: Waiting for ioBroker..."
+		sleep $SLEEP
+		i=$((i + 1))
+	fi
 done
 
 if ! iob status > /dev/null 2>&1; then
-    echo "❌ Timeout: ioBroker did not become ready in time"
-    exit 1
+	echo "❌ Timeout: ioBroker did not become ready in time"
+	exit 1
 fi
 `;
 	return template.trim();

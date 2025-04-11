@@ -16,14 +16,14 @@ const templateFunction: TemplateFunction = answers => {
 # NODE_OPTIONS=--inspect node main.js
 # becomes:
 # node.real --inspect main.js
-# This ensures debugging and other features relying on NODE_OPTIONS work properly
+# This ensures debugging, and other features relying on NODE_OPTIONS work properly
 # for non-root users, such as in VS Code Remote Containers.
 
 NODE_ARGS=()
 
 if [[ -n "$NODE_OPTIONS" ]]; then
-  eval "read -r -a NODE_ARGS <<< \\"$NODE_OPTIONS\\""
-  unset NODE_OPTIONS
+	eval "read -r -a NODE_ARGS <<< \\"$NODE_OPTIONS\\""
+	unset NODE_OPTIONS
 fi
 
 REAL_NODE="$(command -v node).real"
