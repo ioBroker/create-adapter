@@ -1,7 +1,8 @@
-# Change global dependency `admin` to greater equal instead of equal
+# Update Global Dependency `admin` to Use Greater Than Equal (`>=`)
 
-To support newer `admin` dependency versions, greater equal (`>=`) is added instead of a specific fix version in `io-package.json`.
+To allow support for newer versions of the `admin` dependency, the version constraint in `io-package.json` has been updated from a fixed version to greater or equal (`>=`) version.
 
+`io-package.json`
 ```diff
   "globalDependencies": [
     {

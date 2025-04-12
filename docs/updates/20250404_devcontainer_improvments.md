@@ -5,7 +5,7 @@ This document describes the improvements and relevant changes to the Dev Contain
 - **Robust Setup Process:** Resolve race conditions during container setup to ensure a reliable environment.
 - **Support Non-Root User:** Use a non-root user to avoid file permission issues, especially when working with Git.
 - **Debugging-Ready Environment:** Automatically prepare everything so debugging works immediately after setup.
-- **Minor Improvements:** Schema Updates & Integration Test Support
+- **Minor Improvements:** Schema Updates, Websocket Fix and Integration Test Support
 
 ## Simultaneous Adapter Development
 This update enables simultaneous adapter development by dynamically naming containers and using VS Code's dynamic port forwarding to avoid name confusion and port collisions.
@@ -411,7 +411,7 @@ Docker removed the `version` attribute from the docker-compose schema, so do we.
 services:
 ```
 
-## Update `settings` and `extensions` in `devcontainer.json`
+### Update `settings` and `extensions` in `devcontainer.json`
 The `settings` and `extensions` fields have been relocated to `customization/vscode` to align with the updated Dev Container JSON schema.
 
 `.devcontainer/devcontainer.json`
@@ -435,7 +435,33 @@ The `settings` and `extensions` fields have been relocated to `customization/vsc
 
 ```
 
-## Support Integration Tests in Dev Container
+### Fix Admin UI Connectivity
+Previously, the NGINX configuration did not support WebSocket connections, which prevented access to the Admin UI. This update includes the necessary changes to enable WebSocket support, ensuring the Admin UI is fully accessible through the Dev Container.
+
+`.devcontainer/nginx/nginx.conf`
+```diff
+ server {
+    listen 80;
+
+    location / {
++     error_page 418 = @websocket;      
+      proxy_redirect off;
+      proxy_pass     http://iobroker:8081;
++     if ( $args ~ "sid=" ) { return 418; }      
+    }
+
+-   location /socket.io/ {
++   location @websocket {
+      proxy_pass         http://iobroker:8081;
+      proxy_http_version 1.1;
+      proxy_set_header   Upgrade $http_upgrade;
+      proxy_set_header   Connection "Upgrade";
++     proxy_read_timeout 86400;
++     proxy_send_timeout 86400;
+    }
+```
+
+### Support Integration Tests in Dev Container
 Integration tests previously failed to start in the Dev Container because ports 9000 and 9001 were already in use by the container causing conflicts when the tests attempted to spawn Redis instances. To resolve this, the Dev Container now uses different Redis ports (29000 and 29001), ensuring no conflicts occour. Additionally, the `host` and `type` environment variables must be explicitly specified, as the internal algorithm requires these settings to correctly use the new ports. Simply defining the port variable alone is insufficient.
 
 `.devcontainer/docker-compose.yml`:
