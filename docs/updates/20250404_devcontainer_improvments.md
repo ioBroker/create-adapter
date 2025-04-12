@@ -16,8 +16,8 @@ Previously, all Dev Containers were named `ioBroker Docker Compose`, leading to 
 `.devcontainer/devcontainer.json`
 ```diff
 {
--	"name": "ioBroker Docker Compose",
-+	"name": "ioBroker.<adapterName>",
+-   "name": "ioBroker Docker Compose",
++   "name": "ioBroker.<adapterName>",
 
 ```
 Example:
@@ -58,20 +58,20 @@ VS Code enables port forwarding for Dev Containers, allowing easy access to cont
 
 `.devcontainer/devcontainer.json`
 ```diff
-	"dockerComposeFile": [ "docker-compose.yml" ],
+    "dockerComposeFile": [ "docker-compose.yml" ],
 
-+	// Forwarding the nginx port to access ioBroker Admin interface
-+	"forwardPorts": ["nginx:80"],
++   // Forwarding the nginx port to access ioBroker Admin interface
++   "forwardPorts": ["nginx:80"],
 +
-+	// Name of the forwarded port
-+	"portsAttributes": {
-+		"nginx:80": {
-+			"label": "ioBroker Admin UI"
-+		}
-+	},
-	// The 'service' property is the name of the service for the container that VS Code should
-	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
-	"service": "iobroker",
++   // Name of the forwarded port
++   "portsAttributes": {
++       "nginx:80": {
++           "label": "ioBroker Admin UI"
++       }
++   },
+    // The 'service' property is the name of the service for the container that VS Code should
+    // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+    "service": "iobroker",
 ```
 
 ## Robust Setup Process
@@ -298,7 +298,7 @@ The `iobroker` user used by the ioBroker base Docker image (with ID 1000, typica
 
 `.devcontainer/devcontainer.json`
 ```diff
--	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+-   // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
 -   //"remoteUser": "iobroker"
 +   // Connect as non-root user. See https://aka.ms/vscode-remote/containers/non-root.
 +   "remoteUser": "iobroker"
@@ -337,8 +337,8 @@ The workaround uses a wrapper script for the Node.js binary. The script reads th
 NODE_ARGS=()
 
 if [[ -n "$NODE_OPTIONS" ]]; then
-	eval "read -r -a NODE_ARGS <<< \"$NODE_OPTIONS\""
-	unset NODE_OPTIONS
+    eval "read -r -a NODE_ARGS <<< \"$NODE_OPTIONS\""
+    unset NODE_OPTIONS
 fi
 
 REAL_NODE="$(command -v node).real"
@@ -352,11 +352,11 @@ RUN ln -s /opt/iobroker/node_modules/ /node_modules
 +
 +COPY node-wrapper.sh /usr/bin/node-wrapper.sh
 +RUN chmod +x /usr/bin/node-wrapper.sh \
-+	&& NODE_BIN="$(command -v node)" \
-+	# Move the original node binary to .real
-+	&& mv "$NODE_BIN" "${NODE_BIN}.real" \
-+   # Move the wrapper in place
-+	&& mv /usr/bin/node-wrapper.sh "$NODE_BIN"
++    && NODE_BIN="$(command -v node)" \
++    # Move the original node binary to .real
++    && mv "$NODE_BIN" "${NODE_BIN}.real" \
++    # Move the wrapper in place
++    && mv /usr/bin/node-wrapper.sh "$NODE_BIN"
 ```
 
 ### Add `sudo` Support for Non-Root User
@@ -369,8 +369,8 @@ Previously, the non-root user lacked `sudo` privileges, which could be limiting 
 +
 +# Support sudo for non-root user
 +ARG USERNAME=iobroker
-+RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/+$USERNAME \
-+	&& chmod 0440 /etc/sudoers.d/$USERNAME
++RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
++    && chmod 0440 /etc/sudoers.d/$USERNAME
 ```
 
 ## Debugging-Ready Environment
@@ -379,21 +379,21 @@ Previously, the non-root user lacked `sudo` privileges, which could be limiting 
 `.vscode/launch.json`
 ```json
 {
-	// Use IntelliSense to learn about possible attributes.
-	// Hover to view descriptions of existing attributes.
-	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"type": "node",
-			"request": "launch",
-			"name": "Launch ioBroker Adapter",
-			"skipFiles": ["<node_internals>/**"],
-			"args": ["--debug", "0", "--logs"],
-			"program": "${workspaceFolder}/main.js",
-			"console": "integratedTerminal",
-		}
-	]
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch ioBroker Adapter",
+            "skipFiles": ["<node_internals>/**"],
+            "args": ["--debug", "0", "--logs"],
+            "program": "${workspaceFolder}/main.js",
+            "console": "integratedTerminal",
+        }
+    ]
 }
 ```
 
@@ -419,17 +419,17 @@ The `settings` and `extensions` fields have been relocated to `customization/vsc
 -    // Set *default* container specific settings.json values on container create.
 -    "settings": {},
 -
--	// Add the IDs of extensions you want installed when the container is created.
--	"extensions": [<YOUR_EXTENSIONS>],
-+	"customizations": {
-+		"vscode": {
-+			// Set *default* container specific settings.json values on container create.
-+			"settings": {},
+-   // Add the IDs of extensions you want installed when the container is created.
+-   "extensions": [<YOUR_EXTENSIONS>],
++   "customizations": {
++       "vscode": {
++           // Set *default* container specific settings.json values on container create.
++           "settings": {},
 +
-+			// Add the IDs of extensions you want installed when the container is created.
-+			"extensions": [<YOUR_EXTENSIONS>]
-+		}
-+	},
++           // Add the IDs of extensions you want installed when the container is created.
++           "extensions": [<YOUR_EXTENSIONS>]
++       }
++   },
 
 ```
 
