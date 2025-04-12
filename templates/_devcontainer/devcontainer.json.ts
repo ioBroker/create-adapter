@@ -30,7 +30,7 @@ const templateFunction: TemplateFunction = answers => {
 	// Name of the forwarded port
 	"portsAttributes": {
 		"nginx:80": {
-			"label": "ioBroker"
+			"label": "ioBroker Admin UI"
 		}
 	},
 

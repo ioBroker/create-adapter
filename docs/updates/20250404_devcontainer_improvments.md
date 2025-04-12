@@ -54,7 +54,7 @@ This update removes the static port mapping and instead exposes the NGINX port (
 ```
 
 ### Using VS Code Dynamic Port Forwarding
-VS Code enables port forwarding for Dev Containers, allowing easy access to container services. The **Ports** panel displays all forwarded ports, including the open NGINX port labeled as **iobroker**. The following configuration fully utilizes this feature, making it simple to identify and access the forwarded ports directly from the panel.
+VS Code enables port forwarding for Dev Containers, allowing easy access to container services. The **Ports** panel displays all forwarded ports, including the open NGINX port labeled as **ioBroker Admin UI**. The following configuration fully utilizes this feature, making it simple to identify and access the forwarded ports directly from the panel.
 
 `.devcontainer/devcontainer.json`
 ```diff
@@ -66,7 +66,7 @@ VS Code enables port forwarding for Dev Containers, allowing easy access to cont
 +	// Name of the forwarded port
 +	"portsAttributes": {
 +       "nginx:80": {
-+           "label": "ioBroker"
++           "label": "ioBroker Admin UI"
 +       }
 +   },
     // The 'service' property is the name of the service for the container that VS Code should
