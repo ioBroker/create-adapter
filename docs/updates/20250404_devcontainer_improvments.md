@@ -215,8 +215,8 @@ exec > >(tee "$LOG_FILE") 2>&1
 ```diff
 # Support sudo for non-root user
 ARG USERNAME=iobroker
-RUN echo $USERNAME ALL=\\(root\\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \\
-	&& chmod 0440 /etc/sudoers.d/$USERNAME
+RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
 +COPY boot.sh /opt/iobroker/boot.sh
 +RUN chmod +x /opt/iobroker/boot.sh \
