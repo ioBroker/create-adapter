@@ -6,8 +6,8 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
-* (hacki11) Dev Container improvements (#) · [Migration guide](docs/updates/20250404_devcontainer_improvments.md)
-* (hacki11) Allow newer versions of `admin` (#) · [Migration guide](docs/updates/20250406_admin_dependency_ge.md)
+* (hacki11) Dev Container improvements (#1137) · [Migration guide](docs/updates/20250404_devcontainer_improvments.md)
+* (hacki11) Allow newer versions of `admin` (#1137) · [Migration guide](docs/updates/20250406_admin_dependency_ge.md)
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
