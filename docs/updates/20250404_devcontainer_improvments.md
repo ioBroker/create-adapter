@@ -65,10 +65,10 @@ VS Code enables port forwarding for Dev Containers, allowing easy access to cont
 +
 +	// Name of the forwarded port
 +	"portsAttributes": {
-+       "nginx:80": {
-+           "label": "ioBroker Admin UI"
-+       }
-+   },
++		"nginx:80": {
++			"label": "ioBroker Admin UI"
++		}
++	},
 	// The 'service' property is the name of the service for the container that VS Code should
 	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
 	"service": "iobroker",
