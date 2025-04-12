@@ -220,7 +220,7 @@ RUN echo $USERNAME ALL=\\(root\\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \\
 
 +COPY boot.sh /opt/iobroker/boot.sh
 +RUN chmod +x /opt/iobroker/boot.sh \
-+	&& mkdir -p /opt/iobroker/log
++    && mkdir -p /opt/iobroker/log
 
 +ENTRYPOINT ["/bin/bash", "-c", "/opt/iobroker/boot.sh"]
 ```
