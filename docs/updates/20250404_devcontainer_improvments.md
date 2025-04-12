@@ -33,6 +33,8 @@ Previously, the NGINX service in the Dev Container was mapped to a fixed host po
 
 This update removes the static port mapping and instead exposes the NGINX port (`80`) within the container. By avoiding fixed port assignments, multiple containers can now run simultaneously without port conflicts, enabling development of multiple adapters.
 
+![VS Code Ports Panel](20250404_devcontainer_improvements/devcontainer_ports_panel.png)
+
 `.devcontainer/docker-compose.yml`
 ```diff
     nginx:
