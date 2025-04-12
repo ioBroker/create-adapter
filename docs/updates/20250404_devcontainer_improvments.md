@@ -94,7 +94,7 @@ Furthermore, the ioBroker startup log is now forwarded to the Dev Container log,
 -   // When creating the container, delete unnecessary adapters, disable error reporting, set the license as confirmed, and install/update this adapter
 -   "postCreateCommand": "iob del discovery && iob plugin disable sentry && iob object set system.config common.licenseConfirmed=true && NPM_PACK=$(npm pack) && iob url \"$(pwd)/$NPM_PACK\" --debug && rm \"$NPM_PACK\""
 +   // Prepare the devcontainer according to the actual adapter
-+   "postCreateCommand": "sh .devcontainer/script/postcreate.sh",
++   "postCreateCommand": "sh .devcontainer/scripts/postcreate.sh",
 +   "postStartCommand": "sh .devcontainer/scripts/poststart.sh",
 ```
 
@@ -211,7 +211,7 @@ exec > >(tee "$LOG_FILE") 2>&1
 /opt/scripts/iobroker_startup.sh
 ```
 
-`.devcontainer/Dockerfile`
+`.devcontainer/iobroker/Dockerfile`
 ```diff
 # Support sudo for non-root user
 ARG USERNAME=iobroker
@@ -244,7 +244,7 @@ iob object set system.adapter.hello-world.0 native.interval=10
 `.devcontainer/devcontainer.json`
 
 ```diff
--   "postStartCommand": "sh ./devcontainer/scripts/poststart.sh &&"
+-   "postStartCommand": "sh ./devcontainer/scripts/poststart.sh"
 +   "postStartCommand": "sh ./devcontainer/scripts/poststart.sh && sh ./devcontainer/scripts/myconfig.sh`
 ```
 
