@@ -36,10 +36,4 @@ iob stop $ADAPTER_NAME
 echo "➡️  Delete the adapter package"
 rm "$NPM_PACK"
 
-# execute custom postcreate script if existing
-if [ -e .devcontainer/scripts/postcreate_ext.sh ]; then
-    echo "➡️  Execute custom postcreate script"
-    sh .devcontainer/scripts/postcreate_ext.sh
-fi
-
 touch /tmp/.postcreate_done
