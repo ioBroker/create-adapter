@@ -5,7 +5,7 @@ This document describes the improvements and relevant changes to the Dev Contain
 - **Robust Setup Process:** Resolve race conditions during container setup to ensure a reliable environment.
 - **Support Non-Root User:** Use a non-root user to avoid file permission issues, especially when working with Git.
 - **Debugging-Ready Environment:** Automatically prepare everything so debugging works immediately after setup.
-- **Minor Improvements:** Schema Updates, Websocket Fix and Integration Test Support
+- **Minor Improvements:** Schema Updates, Websocket Fix, `.gitignore`, and Integration Test Support
 
 ## Simultaneous Adapter Development
 This update enables simultaneous adapter development by dynamically naming containers and using VS Code's dynamic port forwarding to avoid name confusion and port collisions.
@@ -459,6 +459,22 @@ Previously, the NGINX configuration did not support WebSocket connections, which
 +     proxy_read_timeout 86400;
 +     proxy_send_timeout 86400;
     }
+```
+
+### `.gitignore` Support
+Previously, a general `.*/` rule in `.gitignore` caused the `.devcontainer` folder to be ignored, preventing it from being committed to the repository.
+
+This update explicitly excludes the `.devcontainer` folder from the `.*/` rule, ensuring it is included in the verison control.
+
+`.gitignore`
+```diff
+ # No dot-directories except github/vscode
+ .*/
+ !.vscode/
+ !.github/
++!.devcontainer/
+
+ *.code-workspace
 ```
 
 ### Support Integration Tests in Dev Container
