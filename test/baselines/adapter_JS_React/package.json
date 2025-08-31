@@ -27,7 +27,7 @@
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.4.0",
     "@iobroker/adapter-react": "2.0.22",
-    "@iobroker/testing": "^5.1.0",
+    "@iobroker/testing": "^5.1.1",
     "@material-ui/core": "^4.12.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint": "^8.57.1",

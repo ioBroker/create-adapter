@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.4.0",
-    "@iobroker/testing": "^5.1.0",
+    "@iobroker/testing": "^5.1.1",
     "@tsconfig/node20": "^20.1.6",
     "@types/node": "^20.19.11",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
