@@ -8,7 +8,7 @@ import { writeFiles } from "../src/lib/createAdapter";
 
 const outDir = path.join(process.cwd(), "ioBroker.template");
 
-function getTemplateDir(templateName: string) {
+function getTemplateDir(templateName: string): string {
 	return path.join(outDir, templateName);
 }
 
