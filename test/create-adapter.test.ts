@@ -385,6 +385,20 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it(`Node.js 24 as minimum`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					nodeVersion: "24",
+				};
+				await expectSuccess(
+					"minNodeVersion_24",
+					answers,
+					(file) =>
+						file.name === "package.json" ||
+						file.name === "tsconfig.json",
+				);
+			});
+
 			it(`TS(X) with single quotes`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
