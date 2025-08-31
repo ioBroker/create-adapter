@@ -10,8 +10,6 @@
 		"noEmitOnError": true,
 		"outDir": "./build/",
 		"removeComments": false,
-		// Avoid runtime imports that are unnecessary
-		"importsNotUsedAsValues": "error",
 		"ignoreDeprecations": "5.0",
 		// The way we use `enquirer` is incompatible with strictFunctionTypes
 		"strictFunctionTypes": false,
