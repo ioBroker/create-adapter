@@ -3,12 +3,14 @@ import type { TemplateFunction } from "../src/lib/createAdapter";
 const templateFunction: TemplateFunction = answers => {
 
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
+	const useDevContainer = answers.tools && answers.tools.includes("devcontainer");
 
 	const template = `
 # No dot-directories except github/vscode
 .*/
 !.vscode/
 !.github/
+${useDevContainer ? `!.devcontainer/` : ""}
 
 *.code-workspace
 node_modules

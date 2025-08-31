@@ -9,8 +9,6 @@ const templateFunction: TemplateFunction = answers => {
 	const needsParcel = answers.adminUi === "react" || answers.tabReact === "yes";
 
 	const template = `
-version: '3'
-
 services:
     iobroker:
         build: ./iobroker
@@ -21,8 +19,14 @@ services:
             - 8081
         volumes:
             - ..:/workspace:cached
-            - iobrokerdata-${adapterNameLowerCase}:/opt/iobroker
         environment:
+            # using non-default ports to not interfere with integration tests
+            - IOB_OBJECTSDB_TYPE=jsonl
+            - IOB_OBJECTSDB_HOST=127.0.0.1
+            - IOB_OBJECTSDB_PORT=29001
+            - IOB_STATESDB_TYPE=jsonl
+            - IOB_STATESDB_HOST=127.0.0.1
+            - IOB_STATESDB_PORT=29000
             - LANG=en_US.UTF-8
             - LANGUAGE=en_US:en
             - LC_ALL=en_US.UTF-8
@@ -55,11 +59,8 @@ ${needsParcel ? (`            - parcel
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ..:/workspace:cached
         ports:
-            # Make the ioBroker admin available under http://localhost:8082
-            - 8082:80
-
-volumes:
-    iobrokerdata-${adapterNameLowerCase}:
+            # Port will be forwarded in the devcontainer
+            - 80
 `;
 	return template.trim();
 };

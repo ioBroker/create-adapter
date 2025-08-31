@@ -136,7 +136,7 @@ export = (async answers => {
 			${isWidget ? `"vis",` : ""}
 		],
 		"globalDependencies": [
-			${isAdapter ? `{ "admin": "7.0.23" },` : ""}
+			${isAdapter ? `{ "admin": ">=7.0.23" },` : ""}
 		],
 	},
 	"native": ${JSON.stringify(adapterSettings)},

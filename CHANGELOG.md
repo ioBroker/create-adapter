@@ -6,6 +6,8 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
+* (hacki11) Dev Container improvements (#1137) · [Migration guide](docs/updates/20250404_devcontainer_improvments.md)
+* (hacki11) Allow newer versions of `admin` (#1137) · [Migration guide](docs/updates/20250406_admin_dependency_ge.md)
 * (copilot) Add Node.js 24 as a supported version (#1145) · [Migration guide](docs/updates/20250831_node24_support.md)
 * (copilot) Replace deprecated `setStateAsync` with `setState` in adapter templates (#1148, [Migration guide](./docs/updates/20250831_setstate_sync.md))
 * (copilot) Remove Node.js 18 as a supported version (#1154) · [Migration guide](docs/updates/20250831_remove_nodejs18_support.md)
