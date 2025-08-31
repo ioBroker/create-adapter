@@ -546,7 +546,7 @@ describe("adapter creation =>", () => {
 					(file) =>
 						file.name.startsWith(".devcontainer/") ||
 						file.name === ".gitignore" ||
-						file.name == ".vscode/launch.json",
+						file.name === ".vscode/launch.json",
 				);
 			});
 
