@@ -78,11 +78,11 @@ class TestAdapter extends utils.Adapter {
 		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
 
 		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw iobroker: " + result);
+		const pwdResult = await this.checkPasswordAsync("admin", "iobroker");
+		this.log.info("check user admin pw iobroker: " + pwdResult);
 
-		result = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + result);
+		const gropupResult = await this.checkGroupAsync("admin", "admin");
+		this.log.info("check group user admin group admin: " + gropupResult);
 	}
 
 	/**
