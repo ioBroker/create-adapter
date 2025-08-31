@@ -1,4 +1,4 @@
-import { readdir, readFile } from "fs/promises";
+import { readdir, readFile } from "fs-extra";
 import { join, resolve } from "path";
 
 const testAllFiles = async (

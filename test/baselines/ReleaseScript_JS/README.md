@@ -116,7 +116,7 @@ For later updates, the above procedure is not necessary. Just do the following:
 ## License
 MIT License
 
-Copyright (c) 2025 Al Calzone <al@calzo.ne>
+Copyright (c) 2024 Al Calzone <al@calzo.ne>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
