@@ -357,20 +357,6 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it(`Node.js 18 as minimum`, async () => {
-				const answers: Answers = {
-					...baseAnswers,
-					nodeVersion: "18",
-				};
-				await expectSuccess(
-					"minNodeVersion_18",
-					answers,
-					(file) =>
-						file.name === "package.json" ||
-						file.name === "tsconfig.json",
-				);
-			});
-
 			it(`Node.js 20 as minimum`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
