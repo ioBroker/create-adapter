@@ -1,8 +1,8 @@
 import { isArray } from "alcalzone-shared/typeguards";
 import { dim, gray, green } from "ansi-colors";
 import type { SpecificPromptOptions } from "enquirer";
+import type { CheckResult } from "./actionsAndTransformers";
 import {
-	CheckResult,
 	checkAdapterName,
 	checkAuthorName,
 	checkEmail,
@@ -14,7 +14,8 @@ import {
 	transformDescription,
 	transformKeywords,
 } from "./actionsAndTransformers";
-import { LicenseType, licenses } from "./licenses";
+import type { LicenseType } from "./licenses";
+import { licenses } from "./licenses";
 import type { MigrationContextBase } from "./migrationContextBase";
 
 // This is being used to simulate wrong options for conditions on the type level
