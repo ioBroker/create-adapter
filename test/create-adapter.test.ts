@@ -664,7 +664,7 @@ describe("adapter creation =>", () => {
 						expectedLts: "20.x",
 					},
 					{
-						nodeVersion: "22", 
+						nodeVersion: "22",
 						expectedVersions: ["22.x", "24.x"],
 						expectedLts: "22.x",
 					},
@@ -684,35 +684,52 @@ describe("adapter creation =>", () => {
 					};
 
 					const files = await createAdapter(answers);
-					const workflowFile = files.find(f => f.name.endsWith("test-and-release.yml"));
-					
+					const workflowFile = files.find((f) =>
+						f.name.endsWith("test-and-release.yml"),
+					);
+
 					if (!workflowFile) {
-						throw new Error(`Workflow file not found for Node.js ${testCase.nodeVersion}`);
+						throw new Error(
+							`Workflow file not found for Node.js ${testCase.nodeVersion}`,
+						);
 					}
 
 					const content = workflowFile.content;
-					
+
 					// Check that the matrix includes only the expected versions
-					const matrixMatch = content.match(/node-version: \[(.*?)\]/);
+					const matrixMatch = content.match(
+						/node-version: \[(.*?)\]/,
+					);
 					if (!matrixMatch) {
-						throw new Error(`Matrix node versions not found for Node.js ${testCase.nodeVersion}`);
+						throw new Error(
+							`Matrix node versions not found for Node.js ${testCase.nodeVersion}`,
+						);
 					}
-					
-					const actualVersions = matrixMatch[1].split(", ").map(v => v.trim());
-					actualVersions.should.deep.equal(testCase.expectedVersions, 
-						`For Node.js ${testCase.nodeVersion}, expected versions ${testCase.expectedVersions.join(", ")} but got ${actualVersions.join(", ")}`);
+
+					const actualVersions = matrixMatch[1]
+						.split(", ")
+						.map((v) => v.trim());
+					actualVersions.should.deep.equal(
+						testCase.expectedVersions,
+						`For Node.js ${testCase.nodeVersion}, expected versions ${testCase.expectedVersions.join(", ")} but got ${actualVersions.join(", ")}`,
+					);
 
 					// Check that the LTS version is correct
-					const ltsMatches = content.match(/node-version: '(\d+\.x)'/g) || [];
+					const ltsMatches =
+						content.match(/node-version: '(\d+\.x)'/g) || [];
 					if (ltsMatches.length === 0) {
-						throw new Error(`LTS node version not found for Node.js ${testCase.nodeVersion}`);
+						throw new Error(
+							`LTS node version not found for Node.js ${testCase.nodeVersion}`,
+						);
 					}
-					
+
 					// All LTS references should use the expected version
 					for (const ltsMatch of ltsMatches) {
 						const ltsVersion = ltsMatch.match(/'(\d+\.x)'/)?.[1];
-						ltsVersion.should.equal(testCase.expectedLts,
-							`For Node.js ${testCase.nodeVersion}, expected LTS ${testCase.expectedLts} but got ${ltsVersion}`);
+						ltsVersion.should.equal(
+							testCase.expectedLts,
+							`For Node.js ${testCase.nodeVersion}, expected LTS ${testCase.expectedLts} but got ${ltsVersion}`,
+						);
 					}
 				}
 			});

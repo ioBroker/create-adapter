@@ -1,4 +1,5 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
+import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../../../src/lib/constants";
 
 const templateFunction: TemplateFunction = answers => {
 
@@ -15,7 +16,7 @@ const templateFunction: TemplateFunction = answers => {
 	const isGitHub = answers.target === "github";
 
 	// Determine the LTS version and test versions based on the minimum Node.js version selected
-	const minNodeVersion = answers.nodeVersion || "20";
+	const minNodeVersion = answers.nodeVersion || RECOMMENDED_NODE_VERSION_FALLBACK;
 	const ltsNodeVersion = `${minNodeVersion}.x`;
 	
 	// Filter test versions to only include versions >= the minimum version
