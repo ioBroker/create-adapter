@@ -20,7 +20,7 @@ http {
     listen 80;
 
     location / {
-      error_page 418 = @websocket;      
+      error_page 418 = @websocket;
       proxy_redirect off;
       proxy_pass     http://iobroker:8081;
       if ( $args ~ "sid=" ) { return 418; }      
