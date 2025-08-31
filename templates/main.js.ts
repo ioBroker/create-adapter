@@ -97,10 +97,10 @@ ${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.
 		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
 
 		// examples for the checkPassword/checkGroup functions
-		let pwdResult = await this.checkPasswordAsync("admin", "iobroker");
+		const pwdResult = await this.checkPasswordAsync("admin", "iobroker");
 		this.log.info("check user admin pw iobroker: " + pwdResult);
 
-		let gropupResult = await this.checkGroupAsync("admin", "admin");
+		const gropupResult = await this.checkGroupAsync("admin", "admin");
 		this.log.info("check group user admin group admin: " + gropupResult);
 	}
 
