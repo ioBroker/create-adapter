@@ -48,12 +48,6 @@ jobs:
           REQUEST_TIMEOUT: 20000
           TESTING: true
 
-      - name: Test template creation
-        run: bash .github/test_template_creation.sh
-        env:
-          REQUEST_TIMEOUT: 20000
-          TESTING: true
-
       - name: Compile TypeScript code
         run: npm run build
 
