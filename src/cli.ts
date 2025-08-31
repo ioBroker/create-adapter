@@ -13,14 +13,10 @@ import * as path from "path";
 import * as yargs from "yargs";
 import type { CheckResult } from "./lib/core/actionsAndTransformers";
 import type { MigrationContextBase } from "./lib/core/migrationContextBase";
-import {
-	Answers,
-	Question,
-	QuestionGroup,
-	questionGroups,
-	testCondition,
-} from "./lib/core/questions";
-import { createFiles, File, writeFiles } from "./lib/createAdapter";
+import type { Answers, Question, QuestionGroup } from "./lib/core/questions";
+import { questionGroups, testCondition } from "./lib/core/questions";
+import type { File } from "./lib/createAdapter";
+import { createFiles, writeFiles } from "./lib/createAdapter";
 import { LocalMigrationContext } from "./lib/localMigrationContext";
 import { fetchPackageVersion } from "./lib/packageVersions";
 import { error, executeCommand, getOwnVersion, isWindows } from "./lib/tools";
