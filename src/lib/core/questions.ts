@@ -559,7 +559,7 @@ export const questionGroups: QuestionGroup[] = [
 				choices: ["20", "22"],
 				migrate: (ctx) => {
 					if (ctx.hasDevDependency("@tsconfig/node18")) {
-						return "20"; // Default Node.js 18 users to Node.js 20
+						return "20";
 					} else if (ctx.hasDevDependency("@tsconfig/node20")) {
 						return "20";
 					} else if (ctx.hasDevDependency("@tsconfig/node22")) {
