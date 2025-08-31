@@ -7,7 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
-* (Avarios) Updatet devcontainer template NGINX : Replaced socket.io with @websocket
+* (Avarios) Updated devcontainer NGINX template: Replaced socket.io with websockets
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
