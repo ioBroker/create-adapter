@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
+## __WORK IN PROGRESS__
+* (copilot) Replace deprecated `setStateAsync` with `setState` in adapter templates (#1148, [Migration guide](./docs/updates/20250831_setstate_sync.md))
+
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
 * (AlCalzone) Remove deprecated `main` and `title` fields from `io-package.json` (#1115)
