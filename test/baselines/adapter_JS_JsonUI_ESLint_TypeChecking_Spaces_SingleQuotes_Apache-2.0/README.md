@@ -290,7 +290,7 @@ For later updates, the above procedure is not necessary. Just do the following:
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2025 Al Calzone
+   Copyright 2024 Al Calzone
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
