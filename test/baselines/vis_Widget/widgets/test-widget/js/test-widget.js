@@ -3,7 +3,7 @@
 
 	version: "0.0.1"
 
-	Copyright 2024 Al Calzone al@calzo.ne
+	Copyright 2025 Al Calzone al@calzo.ne
 */
 "use strict";
 
@@ -60,7 +60,7 @@ vis.binds["test-widget"] = {
 		$("#" + widgetID).html(text);
 
 		// subscribe on updates of value
-		function onChange(e, newVal, oldVal) {
+		function onChange(e, newVal, _oldVal) {
 			$div.find(".template-value").html(newVal);
 		}
 		if (data.oid) {
