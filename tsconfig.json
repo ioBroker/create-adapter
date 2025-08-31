@@ -10,7 +10,6 @@
 		"noEmitOnError": true,
 		"outDir": "./build/",
 		"removeComments": false,
-		"ignoreDeprecations": "5.0",
 		// The way we use `enquirer` is incompatible with strictFunctionTypes
 		"strictFunctionTypes": false,
 		// We import some .json files and TS should pick them up correctly
