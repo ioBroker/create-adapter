@@ -60,7 +60,7 @@ vis.binds["test-widget"] = {
 		$("#" + widgetID).html(text);
 
 		// subscribe on updates of value
-		function onChange(e, newVal, oldVal) {
+		function onChange(e, newVal, _oldVal) {
 			$div.find(".template-value").html(newVal);
 		}
 		if (data.oid) {
