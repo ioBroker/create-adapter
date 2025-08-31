@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
+## __WORK IN PROGRESS__
+* (copilot) Add Node.js 24 as a supported version (#1145) · [Migration guide](docs/updates/20250831_node24_support.md)
+
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
 * (AlCalzone) Remove deprecated `main` and `title` fields from `io-package.json` (#1115)
