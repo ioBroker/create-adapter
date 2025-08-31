@@ -415,6 +415,22 @@ describe("adapter creation =>", () => {
 				});
 			});
 
+			it(`TS(X) with double quotes`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					quotes: "double",
+					adminUi: "react",
+				};
+				await expectSuccess("TS_DoubleQuotes", answers, (file) => {
+					return (
+						(file.name.endsWith(".ts") &&
+							!file.name.endsWith(".d.ts")) ||
+						file.name.endsWith(".tsx") ||
+						file.name.startsWith(".eslint")
+					);
+				});
+			});
+
 			it(`TS with Prettier`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
