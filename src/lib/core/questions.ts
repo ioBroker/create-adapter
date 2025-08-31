@@ -556,10 +556,10 @@ export const questionGroups: QuestionGroup[] = [
 				message:
 					"What's the minimum Node.js version you want to support?",
 				initial: "20",
-				choices: ["18", "20", "22"],
+				choices: ["20", "22"],
 				migrate: (ctx) => {
 					if (ctx.hasDevDependency("@tsconfig/node18")) {
-						return "18";
+						return "20"; // For migrations upgrade to Node.js 20 as minimum
 					} else if (ctx.hasDevDependency("@tsconfig/node20")) {
 						return "20";
 					} else if (ctx.hasDevDependency("@tsconfig/node22")) {
@@ -981,7 +981,7 @@ export interface Answers {
 		| "code coverage"
 		| "devcontainer"
 	)[];
-	nodeVersion?: "18" | "20" | "22";
+	nodeVersion?: "20" | "22";
 	title?: string;
 	license?: string;
 	// Not used on the CLI, but can be provided by the web UI for example
