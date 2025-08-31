@@ -44,28 +44,6 @@ The following dependencies can now be removed from your `package.json` devDepend
   },
 ```
 
-## Test script updates (optional)
-
-If you want to include template creation testing in your main test suite (for consistency with CI), you can add a `test:templates` script to your `package.json`:
-
-```diff
-  "scripts": {
-    "test": "npm run test:js && npm run test:integration",
-+   "test:templates": "mocha test/testAdapterCreation.js --timeout 60000",
-    // ... other scripts
-  },
-```
-
-Then update your main test script to include it:
-
-```diff
-  "scripts": {
--   "test": "npm run test:js && npm run test:integration",
-+   "test": "npm run test:js && npm run test:integration && npm run test:templates",
-    // ... other scripts
-  },
-```
-
 ## After the changes
 
 After making these changes:
