@@ -20,6 +20,42 @@ export function error(message: string): void {
 
 export const isWindows = /^win/.test(os.platform());
 
+/**
+ * Executes an npm command with update-notifier disabled and common parameters
+ * @param args The npm command arguments
+ * @param options (optional) Some options for the command execution
+ */
+export function executeNpmCommand(
+	args: string[],
+	options?: Partial<ExecuteCommandOptions>,
+): Promise<ExecuteCommandResult> {
+	// Add common npm parameters that reduce noise and improve reliability
+	const enhancedArgs = [...args];
+	
+	// Add common parameters for install commands
+	if (args[0] === "install") {
+		// Add logging and audit/fund parameters if not already present
+		if (!args.includes("--loglevel")) {
+			enhancedArgs.push("--loglevel", "error");
+		}
+		if (!args.includes("--audit=false") && !args.includes("--audit")) {
+			enhancedArgs.push("--audit=false");
+		}
+		if (!args.includes("--fund=false") && !args.includes("--fund")) {
+			enhancedArgs.push("--fund=false");
+		}
+	}
+
+	const npmOptions: Partial<ExecuteCommandOptions> = {
+		...options,
+		env: {
+			...options?.env,
+			npm_config_update_notifier: "false",
+		},
+	};
+	return executeCommand(isWindows ? "npm.cmd" : "npm", enhancedArgs, npmOptions);
+}
+
 export interface ExecuteCommandOptions {
 	/** Whether the executed command should be logged to the stdout. Default: false */
 	logCommandExecution: boolean;
@@ -31,6 +67,8 @@ export interface ExecuteCommandOptions {
 	stdout: NodeJS.WriteStream | "pipe" | "ignore";
 	/** A write stream to redirect the stderr, "ignore" to ignore it or "pipe" to return it as a string. Default: process.stderr */
 	stderr: NodeJS.WriteStream | "pipe" | "ignore";
+	/** Environment variables for the command */
+	env: Record<string, string>;
 }
 
 export interface ExecuteCommandResult {
@@ -82,6 +120,7 @@ export function executeCommand(
 				options.stderr || process.stderr,
 			],
 			windowsHide: true,
+			env: options.env ? { ...process.env, ...options.env } : process.env,
 		};
 		if (options.cwd != null) spawnOptions.cwd = options.cwd;
 
