@@ -1,5 +1,6 @@
 import { green, red } from "ansi-colors";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 import { getRequestTimeout } from "../src/lib/tools";
 
 const options: AxiosRequestConfig = {

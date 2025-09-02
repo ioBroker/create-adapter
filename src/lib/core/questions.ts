@@ -419,8 +419,15 @@ export const questionGroups: QuestionGroup[] = [
 				message: "What is the function of the widget?",
 				initial: "additional",
 				choices: [
-					{ message: "The widget is the main adapter functionality", value: "main" },
-					{ message: "The adapter also works without the visualization of the widget", value: "additional" },
+					{
+						message: "The widget is the main adapter functionality",
+						value: "main",
+					},
+					{
+						message:
+							"The adapter also works without the visualization of the widget",
+						value: "additional",
+					},
 				],
 				migrate: () => "additional", // Default to additional for backward compatibility
 			},
