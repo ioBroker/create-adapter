@@ -1,5 +1,6 @@
 import { blue, green, red } from "ansi-colors";
-import { ExecSyncOptions, execSync } from "child_process";
+import type { ExecSyncOptions } from "child_process";
+import { execSync } from "child_process";
 import * as fs from "fs-extra";
 import * as path from "path";
 import { createAdapter } from "../src";
