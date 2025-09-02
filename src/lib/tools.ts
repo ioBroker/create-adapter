@@ -1,7 +1,8 @@
 import { isObject } from "alcalzone-shared/typeguards";
 import { bold } from "ansi-colors";
 import type { AxiosRequestConfig } from "axios";
-import { spawn, SpawnOptions } from "child_process";
+import type { SpawnOptions } from "child_process";
+import { spawn } from "child_process";
 import { Linter } from "eslint";
 import * as fs from "fs-extra";
 import * as JSON5 from "json5";

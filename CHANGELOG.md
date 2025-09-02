@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * (hacki11) Support git-ssh in devcontainer (#1136) [Migration guide](docs/updates/20250401_devcontainer_ssh.md)
+* (copilot) Update TypeScript to 5.9.2 and typescript-eslint to 7.x for both creator and generated templates (#1158) · [Migration guide](docs/updates/20250831_typescript_59_update.md)
 * (copilot) Add Node.js 24 as a supported version (#1145) · [Migration guide](docs/updates/20250831_node24_support.md)
 * (copilot) Replace deprecated `setStateAsync` with `setState` in adapter templates (#1148, [Migration guide](./docs/updates/20250831_setstate_sync.md))
 * (copilot) Remove Node.js 18 as a supported version (#1154) · [Migration guide](docs/updates/20250831_remove_nodejs18_support.md)
