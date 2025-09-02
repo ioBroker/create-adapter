@@ -1,4 +1,5 @@
 import type { TemplateFunction } from "../src/lib/createAdapter";
+import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../src/lib/constants";
 
 export = (answers => {
 
@@ -6,7 +7,7 @@ export = (answers => {
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	if (!useTypeScript && !useTypeChecking) return;
 
-	const minNodeVersion = answers.nodeVersion ?? "20";
+	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
 
 	let include: string;
 	let exclude: string;

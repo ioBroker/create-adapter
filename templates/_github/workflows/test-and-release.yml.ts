@@ -1,4 +1,5 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
+import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../../../src/lib/constants";
 
 const templateFunction: TemplateFunction = answers => {
 
@@ -14,8 +15,17 @@ const templateFunction: TemplateFunction = answers => {
 	const useReleaseScript = answers.releaseScript === "yes";
 	const isGitHub = answers.target === "github";
 
-	const ltsNodeVersion = "20.x";
-	const adapterTestVersions = ["20.x", "22.x", "24.x"];
+	// Determine the LTS version and test versions based on the minimum Node.js version selected
+	const minNodeVersion = answers.nodeVersion || RECOMMENDED_NODE_VERSION_FALLBACK;
+	const ltsNodeVersion = `${minNodeVersion}.x`;
+	
+	// Filter test versions to only include versions >= the minimum version
+	const allTestVersions = ["20.x", "22.x", "24.x"];
+	const minVersionNumber = parseInt(minNodeVersion, 10);
+	const adapterTestVersions = allTestVersions.filter(version => {
+		const versionNumber = parseInt(version.split('.')[0], 10);
+		return versionNumber >= minVersionNumber;
+	});
 
 	const adapterTestOS = ["ubuntu-latest", "windows-latest", "macos-latest"];
 
