@@ -1100,10 +1100,10 @@ export function getDefaultAnswer<T extends keyof Answers>(
 		}
 		case "keywords": {
 			return [
-				"ioBroker",
 				"template",
-				"Smart Home",
-				"home automation",
+				"automation",
+				"IoT",
+				"integration",
 			] as any;
 		}
 	}
