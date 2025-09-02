@@ -21,7 +21,7 @@ export function error(message: string): void {
 export const isWindows = /^win/.test(os.platform());
 
 /**
- * Executes an npm command with update-notifier disabled
+ * Executes an npm command with update-notifier disabled and common parameters
  * @param args The npm command arguments
  * @param options (optional) Some options for the command execution
  */
@@ -29,6 +29,23 @@ export function executeNpmCommand(
 	args: string[],
 	options?: Partial<ExecuteCommandOptions>,
 ): Promise<ExecuteCommandResult> {
+	// Add common npm parameters that reduce noise and improve reliability
+	const enhancedArgs = [...args];
+	
+	// Add common parameters for install commands
+	if (args[0] === "install") {
+		// Add logging and audit/fund parameters if not already present
+		if (!args.includes("--loglevel")) {
+			enhancedArgs.push("--loglevel", "error");
+		}
+		if (!args.includes("--audit=false") && !args.includes("--audit")) {
+			enhancedArgs.push("--audit=false");
+		}
+		if (!args.includes("--fund=false") && !args.includes("--fund")) {
+			enhancedArgs.push("--fund=false");
+		}
+	}
+
 	const npmOptions: Partial<ExecuteCommandOptions> = {
 		...options,
 		env: {
@@ -36,7 +53,7 @@ export function executeNpmCommand(
 			npm_config_update_notifier: "false",
 		},
 	};
-	return executeCommand(isWindows ? "npm.cmd" : "npm", args, npmOptions);
+	return executeCommand(isWindows ? "npm.cmd" : "npm", enhancedArgs, npmOptions);
 }
 
 export interface ExecuteCommandOptions {

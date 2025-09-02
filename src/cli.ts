@@ -279,7 +279,7 @@ async function setupProject_CLI(
 	if (installDependencies) {
 		logProgress("Installing dependencies");
 		await executeNpmCommand(
-			["install", "--loglevel", "error", "--audit=false", "--fund=false"],
+			["install"],
 			{ cwd: targetDir },
 		);
 
@@ -297,11 +297,7 @@ async function setupProject_CLI(
 		await executeNpmCommand(
 			[
 				"install",
-				"--loglevel",
-				"error",
 				"--global",
-				"--audit=false",
-				"--fund=false",
 				"@iobroker/dev-server",
 			],
 			{ cwd: targetDir },
