@@ -217,6 +217,22 @@ const templateFunction: TemplateFunction = async answers => {
 		npmScripts["release"] = "release-script";
 	}
 
+	// Always include contributors section with at least the original author
+	const allContributors = [];
+	
+	// Add the original author first
+	allContributors.push({ name: answers.authorName });
+	
+	// Add any additional contributors, avoiding duplicates
+	if (answers.contributors && answers.contributors.length) {
+		for (const contributorName of answers.contributors) {
+			// Only add if not already in the list (case-insensitive comparison)
+			if (!allContributors.some(c => c.name.toLowerCase() === contributorName.toLowerCase())) {
+				allContributors.push({ name: contributorName });
+			}
+		}
+	}
+
 	const template = `
 {
 	"name": "iobroker.${answers.adapterName.toLowerCase()}",
@@ -226,11 +242,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"name": "${answers.authorName}",
 		"email": "${answers.authorEmail}",
 	},
-	${answers.contributors && answers.contributors.length ? (`
-		"contributors": ${JSON.stringify(
-		answers.contributors.map(name => ({ name }))
-	)},
-	`) : ""}
+	"contributors": ${JSON.stringify(allContributors)},
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
 	"license": "${licenses[answers.license!].id}",
 	"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},

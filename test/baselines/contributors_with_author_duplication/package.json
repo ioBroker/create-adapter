@@ -9,16 +9,18 @@
   "contributors": [
     {
       "name": "Al Calzone"
+    },
+    {
+      "name": "Bill Gates"
     }
   ],
   "homepage": "https://github.com/AlCalzone/ioBroker.test-adapter",
   "license": "MIT",
   "keywords": [
-    "this",
-    "adapter",
-    "uses",
-    "different",
-    "keywords"
+    "ioBroker",
+    "template",
+    "Smart Home",
+    "home automation"
   ],
   "repository": {
     "type": "git",
