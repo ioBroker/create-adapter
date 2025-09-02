@@ -412,6 +412,19 @@ export const questionGroups: QuestionGroup[] = [
 				migrate: (ctx) => ctx.ioPackageJson.common?.type,
 			},
 			{
+				condition: { name: "features", contains: "vis" },
+				type: "select",
+				name: "widgetIsMainFunction",
+				label: "Widget Function",
+				message: "What is the function of the widget?",
+				initial: "additional",
+				choices: [
+					{ message: "The widget is the main adapter functionality", value: "main" },
+					{ message: "The adapter also works without the visualization of the widget", value: "additional" },
+				],
+				migrate: () => "additional", // Default to additional for backward compatibility
+			},
+			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "startMode",
@@ -990,6 +1003,7 @@ export interface Answers {
 	// Not used on the CLI, but can be provided by the web UI for example
 	licenseInformation?: LicenseInformation;
 	type: string;
+	widgetIsMainFunction?: "main" | "additional";
 	adminUi?: "json" | "html" | "react" | "none";
 	tabReact?: "yes" | "no";
 	i18n?: "words.js" | "JSON";

@@ -266,6 +266,7 @@ describe("adapter creation =>", () => {
 					title: "Is used to test the creator",
 					features: ["vis"],
 					type: "visualization-widgets",
+					widgetIsMainFunction: "main", // Widget is main functionality, so include VIS dependency
 					releaseScript: "no",
 					indentation: "Tab",
 					quotes: "double",
@@ -350,9 +351,38 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					features: ["vis"],
 					type: "visualization-icons",
+					widgetIsMainFunction: "additional", // Icons are additional, so no VIS dependency
 				};
 				await expectSuccess(
 					"type_visualization-icons",
+					answers,
+					(file) => file.name === "io-package.json",
+				);
+			});
+
+			it(`VIS widget with main functionality`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["vis"],
+					type: "visualization-widgets",
+					widgetIsMainFunction: "main", // Widget is main functionality, includes VIS dependency
+				};
+				await expectSuccess(
+					"vis_widget_main_function",
+					answers,
+					(file) => file.name === "io-package.json",
+				);
+			});
+
+			it(`VIS widget with additional functionality`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["vis"],
+					type: "visualization-widgets",
+					widgetIsMainFunction: "additional", // Widget is additional, no VIS dependency
+				};
+				await expectSuccess(
+					"vis_widget_additional_function",
 					answers,
 					(file) => file.name === "io-package.json",
 				);
