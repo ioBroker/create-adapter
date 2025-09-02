@@ -1,0 +1,9 @@
+admin/index_m.html
+admin/style.css
+admin/test-adapter.png
+lib/adapter-config.d.ts
+io-package.json
+LICENSE
+main.js
+package.json
+README.md
