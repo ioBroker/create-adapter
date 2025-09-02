@@ -41,7 +41,7 @@ class TestAdapter extends utils.Adapter {
 
         /*
         For every state in the system there has to be also an object of type state
-        Here a simple template for a boolean variable named 'testVariable'
+        Here a simple template for a boolean variable named "testVariable"
         Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
         */
         await this.setObjectNotExistsAsync('testVariable', {
@@ -58,7 +58,7 @@ class TestAdapter extends utils.Adapter {
 
         // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
         this.subscribeStates('testVariable');
-        // You can also add a subscription for multiple states. The following line watches all states starting with 'lights.'
+        // You can also add a subscription for multiple states. The following line watches all states starting with "lights."
         // this.subscribeStates('lights.*');
         // Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
         // this.subscribeStates('*');
@@ -70,7 +70,7 @@ class TestAdapter extends utils.Adapter {
         // the variable testVariable is set to true as command (ack=false)
         await this.setState('testVariable', true);
 
-        // same thing, but the value is flagged 'ack'
+        // same thing, but the value is flagged "ack"
         // ack should be always set to true if the value is received from or acknowledged from the target system
         await this.setState('testVariable', { val: true, ack: true });
 
