@@ -126,7 +126,6 @@ export = (async answers => {
 			"singleton": true,
 			"name": ${titleLang},
 			"link": "",
-			"fa-icon": "info",
 		},
 		`) : ""}
 		${supportCustom ? `"supportCustoms": true,` : ""}
