@@ -1,6 +1,6 @@
 # Add git-ssh support in DevContainer
 
-To be able to push to git using ssh url in a DevContainer, ssh is needed in the docker image. 
+To be able to push to git using an ssh url in a DevContainer, ssh is needed in the docker image. 
 
 Make sure to add this change to `.devcontainer/iobroker/Dockerfile`:
 
