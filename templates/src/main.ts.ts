@@ -52,7 +52,7 @@ ${answers.connectionIndicator === "yes" ? `
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-${adapterSettings.map(s => `\t\tthis.log.info("config ${s.key}: " + this.config.${s.key});`).join("\n")}
+${adapterSettings.map(s => `\t\tthis.log.debug("config ${s.key}: " + this.config.${s.key});`).join("\n")}
 
 		/*
 		For every state in the system there has to be also an object of type state
