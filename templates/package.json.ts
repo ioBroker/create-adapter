@@ -217,19 +217,13 @@ const templateFunction: TemplateFunction = async answers => {
 		npmScripts["release"] = "release-script";
 	}
 
-	// Always include contributors section with at least the original author
+	// Always include contributors section as an array
 	const allContributors = [];
 	
-	// Add the original author first
-	allContributors.push({ name: answers.authorName });
-	
-	// Add any additional contributors, avoiding duplicates
+	// Add contributors if specified
 	if (answers.contributors && answers.contributors.length) {
 		for (const contributorName of answers.contributors) {
-			// Only add if not already in the list (case-insensitive comparison)
-			if (!allContributors.some(c => c.name.toLowerCase() === contributorName.toLowerCase())) {
-				allContributors.push({ name: contributorName });
-			}
+			allContributors.push({ name: contributorName });
 		}
 	}
 

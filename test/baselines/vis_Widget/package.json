@@ -6,11 +6,7 @@
     "name": "Al Calzone",
     "email": "al@calzo.ne"
   },
-  "contributors": [
-    {
-      "name": "Al Calzone"
-    }
-  ],
+  "contributors": [],
   "homepage": "https://github.com/AlCalzone/ioBroker.test-widget",
   "license": "MIT",
   "keywords": [
