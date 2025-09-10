@@ -417,7 +417,7 @@ export const questionGroups: QuestionGroup[] = [
 				name: "widgetIsMainFunction",
 				label: "Widget Function",
 				message: "What is the function of the widget?",
-				initial: "additional",
+				initial: "main",
 				choices: [
 					{
 						message: "The widget is the main adapter functionality",
@@ -429,7 +429,7 @@ export const questionGroups: QuestionGroup[] = [
 						value: "additional",
 					},
 				],
-				migrate: () => "additional", // Default to additional for backward compatibility
+				migrate: () => "main", // Default to main as it was historically
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
