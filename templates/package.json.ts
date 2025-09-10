@@ -63,7 +63,7 @@ const templateFunction: TemplateFunction = async answers => {
 			`@types/node@${minNodeVersion}`,
 		] : []),
 		...(useTypeChecking ? [
-			"typescript@~5.0",
+			"typescript@~5.9",
 		] : []),
 		...(useTypeScript ? [
 			// enhance testing through TS tools
