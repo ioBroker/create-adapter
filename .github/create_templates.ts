@@ -98,6 +98,7 @@ const templates: Record<string, Answers> = {
 		tools: ["ESLint", "type checking"],
 		indentation: "Space (4)",
 		quotes: "single",
+		widgetIsMainFunction: "main",
 	},
 	TypeScriptVIS: {
 		...adapterAnswers,
@@ -107,12 +108,14 @@ const templates: Record<string, Answers> = {
 		tools: ["ESLint", "code coverage"],
 		indentation: "Tab",
 		quotes: "double",
+		widgetIsMainFunction: "main",
 	},
 	VIS: {
 		...baseAnswers,
 		features: ["vis"],
 		title: "Template (VIS only)",
 		type: "visualization-widgets",
+		widgetIsMainFunction: "main",
 	},
 };
 
