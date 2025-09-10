@@ -32,8 +32,11 @@ ${usePrettier ? (`
 		{
 			"fileMatch": [
 				"admin/jsonConfig.json",
+				"admin/jsonConfig.json5",
 				"admin/jsonCustom.json",
-				"admin/jsonTab.json"
+				"admin/jsonCustom.json5",
+				"admin/jsonTab.json",
+				"admin/jsonTab.json5"
 			],
 			"url": "https://raw.githubusercontent.com/ioBroker/ioBroker.admin/master/packages/jsonConfig/schemas/jsonConfig.json"
 		}
