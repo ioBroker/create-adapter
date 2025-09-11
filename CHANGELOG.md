@@ -6,6 +6,7 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
+* (copilot) Use new i18n directory structure - change from admin/i18n/en/translations.json to admin/i18n/en.json (#1130) · [Migration guide](docs/updates/20250910_i18n_directory_structure.md)
 * (copilot) Update TypeScript to 5.9.2 and typescript-eslint to 7.x for both creator and generated templates (#1158) · [Migration guide](docs/updates/20250831_typescript_59_update.md)
 * (copilot) Add Node.js 24 as a supported version (#1145) · [Migration guide](docs/updates/20250831_node24_support.md)
 * (copilot) Replace deprecated `setStateAsync` with `setState` in adapter templates (#1148, [Migration guide](./docs/updates/20250831_setstate_sync.md))
