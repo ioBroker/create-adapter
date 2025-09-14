@@ -11,6 +11,7 @@
 * (copilot) Replace deprecated `setStateAsync` with `setState` in adapter templates (#1148, [Migration guide](./docs/updates/20250831_setstate_sync.md))
 * (copilot) Remove Node.js 18 as a supported version (#1154) · [Migration guide](docs/updates/20250831_remove_nodejs18_support.md)
 * (copilot) Adjust the io-package schema location (#1153) · [Migration guide](docs/updates/20250831_jsonconfig_schema_url_fix.md)
+* (copilot) Add .commitinfo to .gitignore template to exclude release script files (#1183)
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
