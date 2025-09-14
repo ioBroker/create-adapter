@@ -18,6 +18,7 @@ nbproject
 iobroker.*.tgz
 
 Thumbs.db
+.commitinfo
 ${useNyc ? `
 # NYC coverage files
 coverage
