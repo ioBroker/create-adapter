@@ -6,13 +6,14 @@
     "name": "Al Calzone",
     "email": "al@calzo.ne"
   },
+  "contributors": [],
   "homepage": "https://github.com/AlCalzone/ioBroker.test-adapter",
   "license": "MIT",
   "keywords": [
-    "ioBroker",
     "template",
-    "Smart Home",
-    "home automation"
+    "automation",
+    "IoT",
+    "integration"
   ],
   "repository": {
     "type": "git",
