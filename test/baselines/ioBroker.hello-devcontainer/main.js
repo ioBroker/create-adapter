@@ -98,7 +98,7 @@ class HelloDevcontainer extends utils.Adapter {
             // clearInterval(interval1);
 
             callback();
-        } catch (e) {
+        } catch (_e) {
             callback();
         }
     }
