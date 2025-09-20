@@ -19,6 +19,7 @@
 * (@Apollon77/@copilot) Suppress npm update notifications during adapter creation (#1117)
 * (@Apollon77/@copilot) Fix git commits to use user-provided author info instead of global config (#1085)
 * (@Apollon77/@copilot) Add responsive size attributes to jsonConfig template (#1121) · [Migration guide](docs/updates/20250831_jsonconfig_responsive_attributes.md)
+* (@Apollon77/@copilot) Always add empty 'contributors' section to package.json (#1079)
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)

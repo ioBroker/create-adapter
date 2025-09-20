@@ -207,6 +207,16 @@ const templateFunction: TemplateFunction = async answers => {
 		npmScripts["release"] = "release-script";
 	}
 
+	// Always include contributors section as an array
+	const allContributors = [];
+	
+	// Add contributors if specified
+	if (answers.contributors && answers.contributors.length) {
+		for (const contributorName of answers.contributors) {
+			allContributors.push({ name: contributorName });
+		}
+	}
+
 	const template = `
 {
 	"name": "iobroker.${answers.adapterName.toLowerCase()}",
@@ -216,11 +226,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"name": "${answers.authorName}",
 		"email": "${answers.authorEmail}",
 	},
-	${answers.contributors && answers.contributors.length ? (`
-		"contributors": ${JSON.stringify(
-		answers.contributors.map(name => ({ name }))
-	)},
-	`) : ""}
+	"contributors": ${JSON.stringify(allContributors)},
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
 	"license": "${licenses[answers.license!].id}",
 	"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},

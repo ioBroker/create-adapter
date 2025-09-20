@@ -557,6 +557,18 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it(`Contributors with author duplication`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					contributors: `Al Calzone, Bill Gates` as any,
+				};
+				await expectSuccess(
+					"contributors_with_author_duplication",
+					answers,
+					(file) => file.name === "package.json",
+				);
+			});
+
 			it(`SSH protocol for git`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
