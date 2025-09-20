@@ -258,6 +258,19 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it("Adapter, JavaScript, JSON UI, ESLint, Spaces, Single quotes, Dev Container", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adapterName: "hello-devcontainer",
+					language: "JavaScript",
+					adminUi: "json",
+					tools: ["ESLint", "type checking", "devcontainer"],
+					indentation: "Space (4)",
+					quotes: "single",
+				};
+				await expectSuccess("ioBroker.hello-devcontainer", answers);
+			});
+
 			it("Widget", async () => {
 				const answers: Answers = {
 					cli: true,
@@ -266,6 +279,7 @@ describe("adapter creation =>", () => {
 					title: "Is used to test the creator",
 					features: ["vis"],
 					type: "visualization-widgets",
+					widgetIsMainFunction: "main", // Widget is main functionality, so include VIS dependency
 					releaseScript: "no",
 					indentation: "Tab",
 					quotes: "double",
@@ -350,9 +364,38 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					features: ["vis"],
 					type: "visualization-icons",
+					widgetIsMainFunction: "additional", // Icons are additional, so no VIS dependency
 				};
 				await expectSuccess(
 					"type_visualization-icons",
+					answers,
+					(file) => file.name === "io-package.json",
+				);
+			});
+
+			it(`VIS widget with main functionality`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["vis"],
+					type: "visualization-widgets",
+					widgetIsMainFunction: "main", // Widget is main functionality, includes VIS dependency
+				};
+				await expectSuccess(
+					"vis_widget_main_function",
+					answers,
+					(file) => file.name === "io-package.json",
+				);
+			});
+
+			it(`VIS widget with additional functionality`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["vis"],
+					type: "visualization-widgets",
+					widgetIsMainFunction: "additional", // Widget is additional, no VIS dependency
+				};
+				await expectSuccess(
+					"vis_widget_additional_function",
 					answers,
 					(file) => file.name === "io-package.json",
 				);
@@ -407,6 +450,22 @@ describe("adapter creation =>", () => {
 					adminUi: "react",
 				};
 				await expectSuccess("TS_SingleQuotes", answers, (file) => {
+					return (
+						(file.name.endsWith(".ts") &&
+							!file.name.endsWith(".d.ts")) ||
+						file.name.endsWith(".tsx") ||
+						file.name.startsWith(".eslint")
+					);
+				});
+			});
+
+			it(`TS(X) with double quotes`, async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					quotes: "double",
+					adminUi: "react",
+				};
+				await expectSuccess("TS_DoubleQuotes", answers, (file) => {
 					return (
 						(file.name.endsWith(".ts") &&
 							!file.name.endsWith(".d.ts")) ||
@@ -540,8 +599,13 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					tools: [...(baseAnswers.tools ?? []), "devcontainer"],
 				};
-				await expectSuccess("devcontainer", answers, (file) =>
-					file.name.startsWith(".devcontainer/"),
+				await expectSuccess(
+					"devcontainer",
+					answers,
+					(file) =>
+						file.name.startsWith(".devcontainer/") ||
+						file.name === ".gitignore" ||
+						file.name === ".vscode/launch.json",
 				);
 			});
 
@@ -665,6 +729,86 @@ describe("adapter creation =>", () => {
 						file.name.startsWith("admin/") ||
 						file.name === "io-package.json",
 				);
+			});
+		});
+
+		describe("GitHub Actions workflow Node.js version filtering", () => {
+			it("should only test supported Node.js versions", async () => {
+				const testCases = [
+					{
+						nodeVersion: "20",
+						expectedVersions: ["20.x", "22.x", "24.x"],
+						expectedLts: "20.x",
+					},
+					{
+						nodeVersion: "22",
+						expectedVersions: ["22.x", "24.x"],
+						expectedLts: "22.x",
+					},
+					{
+						nodeVersion: "24",
+						expectedVersions: ["24.x"],
+						expectedLts: "24.x",
+					},
+				];
+
+				for (const testCase of testCases) {
+					const answers: Answers = {
+						...baseAnswers,
+						nodeVersion: testCase.nodeVersion as "20" | "22" | "24",
+						target: "github",
+						releaseScript: "yes",
+					};
+
+					const files = await createAdapter(answers);
+					const workflowFile = files.find((f) =>
+						f.name.endsWith("test-and-release.yml"),
+					);
+
+					if (!workflowFile) {
+						throw new Error(
+							`Workflow file not found for Node.js ${testCase.nodeVersion}`,
+						);
+					}
+
+					const content = workflowFile.content;
+
+					// Check that the matrix includes only the expected versions
+					const matrixMatch = content.match(
+						/node-version: \[(.*?)\]/,
+					);
+					if (!matrixMatch) {
+						throw new Error(
+							`Matrix node versions not found for Node.js ${testCase.nodeVersion}`,
+						);
+					}
+
+					const actualVersions = matrixMatch[1]
+						.split(", ")
+						.map((v) => v.trim());
+					actualVersions.should.deep.equal(
+						testCase.expectedVersions,
+						`For Node.js ${testCase.nodeVersion}, expected versions ${testCase.expectedVersions.join(", ")} but got ${actualVersions.join(", ")}`,
+					);
+
+					// Check that the LTS version is correct
+					const ltsMatches =
+						content.match(/node-version: '(\d+\.x)'/g) || [];
+					if (ltsMatches.length === 0) {
+						throw new Error(
+							`LTS node version not found for Node.js ${testCase.nodeVersion}`,
+						);
+					}
+
+					// All LTS references should use the expected version
+					for (const ltsMatch of ltsMatches) {
+						const ltsVersion = ltsMatch.match(/'(\d+\.x)'/)?.[1];
+						ltsVersion.should.equal(
+							testCase.expectedLts,
+							`For Node.js ${testCase.nodeVersion}, expected LTS ${testCase.expectedLts} but got ${ltsVersion}`,
+						);
+					}
+				}
 			});
 		});
 	});
