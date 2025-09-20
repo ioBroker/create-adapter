@@ -112,7 +112,7 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 			// clearInterval(interval1);
 
 			callback();
-		} catch (e) {
+		} catch (_e) {
 			callback();
 		}
 	}
