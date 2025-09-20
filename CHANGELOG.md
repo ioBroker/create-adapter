@@ -21,6 +21,7 @@
 * (@Apollon77/@copilot) Add responsive size attributes to jsonConfig template (#1121) · [Migration guide](docs/updates/20250831_jsonconfig_responsive_attributes.md)
 * (@Apollon77/@copilot) Always add empty 'contributors' section to package.json (#1079)
 * (@Apollon77/@copilot) Use new i18n directory structure - change from admin/i18n/en/translations.json to admin/i18n/en.json (#1130) · [Migration guide](docs/updates/20250910_i18n_directory_structure.md)
+* (@Apollon77/@copilot) Add .commitinfo to .gitignore template to exclude release script files (#1183)
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
