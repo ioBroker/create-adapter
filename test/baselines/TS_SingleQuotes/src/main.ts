@@ -7,7 +7,7 @@
 import * as utils from '@iobroker/adapter-core';
 
 // Load your modules here, e.g.:
-// import * as fs from "fs";
+// import * as fs from 'fs';
 
 class TestAdapter extends utils.Adapter {
 

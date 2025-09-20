@@ -13,7 +13,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const t = answers.indentation === "Space (4)" ? "    " : "\t";
 
 	const template = `
-"use strict";
+${quote}use strict${quote};
 
 /*
  * Created with @iobroker/create-adapter v${answers.creatorVersion}
@@ -21,10 +21,10 @@ const templateFunction: TemplateFunction = async answers => {
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-const utils = require("@iobroker/adapter-core");
+const utils = require(${quote}@iobroker/adapter-core${quote});
 
 // Load your modules here, e.g.:
-// const fs = require("fs");
+// const fs = require(${quote}fs${quote});
 
 class ${className} extends utils.Adapter {
 
@@ -34,13 +34,13 @@ class ${className} extends utils.Adapter {
 	constructor(options) {
 		super({
 			...options,
-			name: "${answers.adapterName}",
+			name: ${quote}${answers.adapterName}${quote},
 		});
-		this.on("ready", this.onReady.bind(this));
-		this.on("stateChange", this.onStateChange.bind(this));
+		this.on(${quote}ready${quote}, this.onReady.bind(this));
+		this.on(${quote}stateChange${quote}, this.onStateChange.bind(this));
 		// this.on(${quote}objectChange${quote}, this.onObjectChange.bind(this));
 		// this.on(${quote}message${quote}, this.onMessage.bind(this));
-		this.on("unload", this.onUnload.bind(this));
+		this.on(${quote}unload${quote}, this.onUnload.bind(this));
 	}
 
 	/**
@@ -51,24 +51,24 @@ class ${className} extends utils.Adapter {
 
 ${answers.connectionIndicator === "yes" ? `
 		// Reset the connection indicator during startup
-		this.setState("info.connection", false, true);
+		this.setState(${quote}info.connection${quote}, false, true);
 ` : ""}
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-${adapterSettings.map(s => `\t\tthis.log.debug("config ${s.key}: " + this.config.${s.key});`).join("\n")}
+${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote} + this.config.${s.key});`).join("\n")}
 
 		/*
 		For every state in the system there has to be also an object of type state
 		Here a simple template for a boolean variable named "testVariable"
 		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
 		*/
-		await this.setObjectNotExistsAsync("testVariable", {
-			type: "state",
+		await this.setObjectNotExistsAsync(${quote}testVariable${quote}, {
+			type: ${quote}state${quote},
 			common: {
-				name: "testVariable",
-				type: "boolean",
-				role: "indicator",
+				name: ${quote}testVariable${quote},
+				type: ${quote}boolean${quote},
+				role: ${quote}indicator${quote},
 				read: true,
 				write: true,
 			},
@@ -76,7 +76,7 @@ ${adapterSettings.map(s => `\t\tthis.log.debug("config ${s.key}: " + this.config
 		});
 
 		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates("testVariable");
+		this.subscribeStates(${quote}testVariable${quote});
 		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
 		// this.subscribeStates(${quote}lights.*${quote});
 		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
@@ -87,21 +87,21 @@ ${adapterSettings.map(s => `\t\tthis.log.debug("config ${s.key}: " + this.config
 			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
 		*/
 		// the variable testVariable is set to true as command (ack=false)
-		await this.setState("testVariable", true);
+		await this.setState(${quote}testVariable${quote}, true);
 
 		// same thing, but the value is flagged "ack"
 		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setState("testVariable", { val: true, ack: true });
+		await this.setState(${quote}testVariable${quote}, { val: true, ack: true });
 
 		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setState("testVariable", { val: true, ack: true, expire: 30 });
+		await this.setState(${quote}testVariable${quote}, { val: true, ack: true, expire: 30 });
 
 		// examples for the checkPassword/checkGroup functions
-		const pwdResult = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw iobroker: " + pwdResult);
+		const pwdResult = await this.checkPasswordAsync(${quote}admin${quote}, ${quote}iobroker${quote});
+		this.log.info(${quote}check user admin pw iobroker: ${quote} + pwdResult);
 
-		const gropupResult = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + gropupResult);
+		const gropupResult = await this.checkGroupAsync(${quote}admin${quote}, ${quote}admin${quote});
+		this.log.info(${quote}check group user admin group admin: ${quote} + gropupResult);
 	}
 
 	/**
