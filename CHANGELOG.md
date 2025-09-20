@@ -6,7 +6,6 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
-* (@Apollon77/@copilot) Add responsive size attributes to jsonConfig template (#1121) · [Migration guide](docs/updates/20250831_jsonconfig_responsive_attributes.md)
 * (@hacki11) Dev Container improvements (#1137) · [Migration guide](docs/updates/20250404_devcontainer_improvments.md)
 * (@hacki11) Allow newer versions of `admin` (#1137) · [Migration guide](docs/updates/20250406_admin_dependency_ge.md)
 * (@Apollon77/@copilot) Upgrade to @iobroker/testing 5.1.1, remove redundant dependencies (#1165) · [Migration guide](docs/updates/20250831_iobroker_testing_51.md)
@@ -18,6 +17,8 @@
 * (@Apollon77/@copilot) Remove fa-icon from adminTab configuration to comply with Admin 5 requirements (#741) · [Migration guide](docs/updates/20250102_remove_admin_tab_fa_icon.md)
 * (@Apollon77/@copilot) Add conditional VIS dependency based on widget function (#1077) · [Migration guide](docs/updates/20250902_conditional_vis_dependency.md)
 * (@Apollon77/@copilot) Suppress npm update notifications during adapter creation (#1117)
+* (@Apollon77/@copilot) Fix git commits to use user-provided author info instead of global config (#1085)
+* (@Apollon77/@copilot) Add responsive size attributes to jsonConfig template (#1121) · [Migration guide](docs/updates/20250831_jsonconfig_responsive_attributes.md)
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)

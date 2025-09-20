@@ -318,6 +318,8 @@ async function setupProject_CLI(
 				: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
 		const gitCommandArgs = [
 			["init", "-b", answers.defaultBranch || "main"],
+			["config", "--local", "user.name", answers.authorName],
+			["config", "--local", "user.email", answers.authorEmail],
 			["add", "."],
 			["commit", "-m", "Initial commit"],
 			["remote", "add", "origin", gitUrl],
