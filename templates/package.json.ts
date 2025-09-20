@@ -3,6 +3,7 @@ import { licenses } from "../src/lib/core/licenses";
 import { getDefaultAnswer } from "../src/lib/core/questions";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 import { fetchPackageReferenceVersion, getPackageName } from "../src/lib/packageVersions";
+import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../src/lib/constants";
 
 const templateFunction: TemplateFunction = async answers => {
 
@@ -23,7 +24,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 
-	const minNodeVersion = answers.nodeVersion ?? "20";
+	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
 
 	const dependencyPromises = [
 		...(isAdapter ? ["@iobroker/adapter-core"] : [])
@@ -41,21 +42,10 @@ const templateFunction: TemplateFunction = async answers => {
 			"@iobroker/adapter-dev",
 		]),
 		...(isAdapter ? [
-			// support adapter testing by default
-			"chai@4", // v5 is ESM and incompatible with chai-as-promised
-			"chai-as-promised@7",
-			`mocha`,
-			`sinon`,
-			"sinon-chai@3",
-			"proxyquire",
+			// Testing dependencies are now included in @iobroker/testing 5.1.x
 		] : []),
 		...(isAdapter && useTypeChecking ? [
-			"@types/chai@4",
-			"@types/chai-as-promised@7",
-			"@types/mocha",
-			"@types/sinon",
-			"@types/sinon-chai@3",
-			"@types/proxyquire",
+			// Type definitions for testing dependencies are now included in @iobroker/testing 5.1.x
 			// Recommended tsconfig for the minimum supported Node.js version
 			`@tsconfig/node${minNodeVersion}`,
 			// and NodeJS typings
@@ -217,6 +207,16 @@ const templateFunction: TemplateFunction = async answers => {
 		npmScripts["release"] = "release-script";
 	}
 
+	// Always include contributors section as an array
+	const allContributors = [];
+	
+	// Add contributors if specified
+	if (answers.contributors && answers.contributors.length) {
+		for (const contributorName of answers.contributors) {
+			allContributors.push({ name: contributorName });
+		}
+	}
+
 	const template = `
 {
 	"name": "iobroker.${answers.adapterName.toLowerCase()}",
@@ -226,11 +226,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"name": "${answers.authorName}",
 		"email": "${answers.authorEmail}",
 	},
-	${answers.contributors && answers.contributors.length ? (`
-		"contributors": ${JSON.stringify(
-		answers.contributors.map(name => ({ name }))
-	)},
-	`) : ""}
+	"contributors": ${JSON.stringify(allContributors)},
 	"homepage": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}",
 	"license": "${licenses[answers.license!].id}",
 	"keywords": ${JSON.stringify(answers.keywords || getDefaultAnswer("keywords"))},
