@@ -87,8 +87,7 @@
 				"uk": "Mock translation of 'Is used to test the creator' to 'uk'",
 				"zh-cn": "Mock translation of 'Is used to test the creator' to 'zh-cn'"
 			},
-			"link": "",
-			"fa-icon": "info"
+			"link": ""
 		},
 		"supportCustoms": true,
 		"dependencies": [
@@ -98,7 +97,7 @@
 		],
 		"globalDependencies": [
 			{
-				"admin": "7.0.23"
+				"admin": ">=7.0.23"
 			}
 		]
 	},

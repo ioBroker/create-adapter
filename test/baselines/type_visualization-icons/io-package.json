@@ -63,17 +63,12 @@
 		"readme": "https://github.com/AlCalzone/ioBroker.test-adapter/blob/main/README.md",
 		"loglevel": "info",
 		"tier": 3,
-		"restartAdapters": [
-			"vis"
-		],
 		"onlyWWW": true,
 		"noConfig": true,
 		"singleton": true,
 		"type": "visualization-icons",
 		"mode": "once",
-		"dependencies": [
-			"vis"
-		],
+		"dependencies": [],
 		"globalDependencies": []
 	},
 	"native": {

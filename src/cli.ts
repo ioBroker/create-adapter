@@ -19,7 +19,13 @@ import type { File } from "./lib/createAdapter";
 import { createFiles, writeFiles } from "./lib/createAdapter";
 import { LocalMigrationContext } from "./lib/localMigrationContext";
 import { fetchPackageVersion } from "./lib/packageVersions";
-import { error, executeCommand, getOwnVersion, isWindows } from "./lib/tools";
+import {
+	error,
+	executeCommand,
+	executeNpmCommand,
+	getOwnVersion,
+	isWindows,
+} from "./lib/tools";
 
 export type ConditionalTitle = (
 	answers: Record<string, any>,
@@ -272,33 +278,26 @@ async function setupProject_CLI(
 
 	if (installDependencies) {
 		logProgress("Installing dependencies");
-		await executeCommand(
-			isWindows ? "npm.cmd" : "npm",
-			["install", "--loglevel", "error", "--audit=false", "--fund=false"],
+		await executeNpmCommand(
+			["install"],
 			{ cwd: targetDir },
 		);
 
 		if (needsBuildStep) {
 			logProgress("Compiling source files");
-			await executeCommand(
-				isWindows ? "npm.cmd" : "npm",
-				["run", "build"],
-				{ cwd: targetDir, stdout: "ignore" },
-			);
+			await executeNpmCommand(["run", "build"], {
+				cwd: targetDir,
+				stdout: "ignore",
+			});
 		}
 	}
 
 	if (devServer) {
 		logProgress("Installing dev-server");
-		await executeCommand(
-			isWindows ? "npm.cmd" : "npm",
+		await executeNpmCommand(
 			[
 				"install",
-				"--loglevel",
-				"error",
 				"--global",
-				"--audit=false",
-				"--fund=false",
 				"@iobroker/dev-server",
 			],
 			{ cwd: targetDir },
@@ -319,6 +318,8 @@ async function setupProject_CLI(
 				: `git@github.com:${answers.authorGithub}/ioBroker.${answers.adapterName}.git`;
 		const gitCommandArgs = [
 			["init", "-b", answers.defaultBranch || "main"],
+			["config", "--local", "user.name", answers.authorName],
+			["config", "--local", "user.email", answers.authorEmail],
 			["add", "."],
 			["commit", "-m", "Initial commit"],
 			["remote", "add", "origin", gitUrl],

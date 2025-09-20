@@ -9,10 +9,10 @@
   "homepage": "https://github.com/AlCalzone/ioBroker.test-widget",
   "license": "MIT",
   "keywords": [
+    "ioBroker",
     "template",
-    "automation",
-    "IoT",
-    "integration"
+    "Smart Home",
+    "home automation"
   ],
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@iobroker/adapter-dev": "^1.4.0",
+    "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/testing": "^5.1.1"
   },
   "main": "widgets/test-widget.html",
