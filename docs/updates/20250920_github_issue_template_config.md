@@ -41,24 +41,4 @@ However, if you want to add the same forum link configuration to an existing ada
    ```
 
 3. Commit and push the changes to your repository.
-
-## Benefits
-
-This configuration provides several advantages:
-
-- **Better user guidance**: Users see a prominent link to the community forum when creating issues
-- **Reduced GitHub noise**: Encourages questions to be asked in the forum rather than as GitHub issues  
-- **Consistent experience**: All new adapters will have the same forum link configuration
-- **Community engagement**: Directs users to the active community forum where they can get help faster
-
-## Implementation details
-
-The implementation follows the same pattern as the reference implementation in [adapter-react-v5](https://github.com/ioBroker/adapter-react-v5/blob/de08924def4d77e7bc81a0704da1ed615e371550/.github/ISSUE_TEMPLATE/config.yml#L3) and adheres to GitHub's [official documentation for configuring issue templates](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository#configuring-the-template-chooser).
-
-## No functional changes to existing adapters
-
-This change does not affect the functionality of existing adapters in any way:
-- Existing adapters continue to work exactly the same  
-- No changes are required to existing adapters
-- The configuration only applies to newly created adapters
-- Existing issue templates and workflows remain unchanged
+4. 
