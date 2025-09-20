@@ -48,6 +48,9 @@ jobs:
           REQUEST_TIMEOUT: 20000
           TESTING: true
 
+      - name: Lint source code
+        run: npm run lint
+
       - name: Compile TypeScript code
         run: npm run build
 

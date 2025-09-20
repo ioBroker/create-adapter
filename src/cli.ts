@@ -278,10 +278,7 @@ async function setupProject_CLI(
 
 	if (installDependencies) {
 		logProgress("Installing dependencies");
-		await executeNpmCommand(
-			["install"],
-			{ cwd: targetDir },
-		);
+		await executeNpmCommand(["install"], { cwd: targetDir });
 
 		if (needsBuildStep) {
 			logProgress("Compiling source files");
@@ -295,11 +292,7 @@ async function setupProject_CLI(
 	if (devServer) {
 		logProgress("Installing dev-server");
 		await executeNpmCommand(
-			[
-				"install",
-				"--global",
-				"@iobroker/dev-server",
-			],
+			["install", "--global", "@iobroker/dev-server"],
 			{ cwd: targetDir },
 		);
 		await executeCommand(

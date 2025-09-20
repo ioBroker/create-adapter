@@ -1120,12 +1120,7 @@ export function getDefaultAnswer<T extends keyof Answers>(
 			] as any;
 		}
 		case "keywords": {
-			return [
-				"template",
-				"automation",
-				"IoT",
-				"integration",
-			] as any;
+			return ["template", "automation", "IoT", "integration"] as any;
 		}
 	}
 }

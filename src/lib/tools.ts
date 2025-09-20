@@ -31,7 +31,7 @@ export function executeNpmCommand(
 ): Promise<ExecuteCommandResult> {
 	// Add common npm parameters that reduce noise and improve reliability
 	const enhancedArgs = [...args];
-	
+
 	// Add common parameters for install commands
 	if (args[0] === "install") {
 		// Add logging and audit/fund parameters if not already present
@@ -53,7 +53,11 @@ export function executeNpmCommand(
 			npm_config_update_notifier: "false",
 		},
 	};
-	return executeCommand(isWindows ? "npm.cmd" : "npm", enhancedArgs, npmOptions);
+	return executeCommand(
+		isWindows ? "npm.cmd" : "npm",
+		enhancedArgs,
+		npmOptions,
+	);
 }
 
 export interface ExecuteCommandOptions {
