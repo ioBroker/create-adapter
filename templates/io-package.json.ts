@@ -127,7 +127,6 @@ export = (async answers => {
 			"singleton": true,
 			"name": ${titleLang},
 			"link": "",
-			"fa-icon": "info",
 		},
 		`) : ""}
 		${supportCustom ? `"supportCustoms": true,` : ""}
@@ -137,7 +136,7 @@ export = (async answers => {
 			${isWidget && widgetIsMainFunction ? `"vis",` : ""}
 		],
 		"globalDependencies": [
-			${isAdapter ? `{ "admin": "7.0.23" },` : ""}
+			${isAdapter ? `{ "admin": ">=7.0.23" },` : ""}
 		],
 	},
 	"native": ${JSON.stringify(adapterSettings)},
