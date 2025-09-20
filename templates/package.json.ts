@@ -41,28 +41,17 @@ const templateFunction: TemplateFunction = async answers => {
 			"@iobroker/adapter-dev",
 		]),
 		...(isAdapter ? [
-			// support adapter testing by default
-			"chai@4", // v5 is ESM and incompatible with chai-as-promised
-			"chai-as-promised@7",
-			`mocha`,
-			`sinon`,
-			"sinon-chai@3",
-			"proxyquire",
+			// Testing dependencies are now included in @iobroker/testing 5.1.x
 		] : []),
 		...(isAdapter && useTypeChecking ? [
-			"@types/chai@4",
-			"@types/chai-as-promised@7",
-			"@types/mocha",
-			"@types/sinon",
-			"@types/sinon-chai@3",
-			"@types/proxyquire",
+			// Type definitions for testing dependencies are now included in @iobroker/testing 5.1.x
 			// Recommended tsconfig for the minimum supported Node.js version
 			`@tsconfig/node${minNodeVersion}`,
 			// and NodeJS typings
 			`@types/node@${minNodeVersion}`,
 		] : []),
 		...(useTypeChecking ? [
-			"typescript@~5.0",
+			"typescript@~5.9",
 		] : []),
 		...(useTypeScript ? [
 			// enhance testing through TS tools

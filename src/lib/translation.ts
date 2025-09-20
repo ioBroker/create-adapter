@@ -1,5 +1,6 @@
 import { translateText } from "@iobroker/adapter-dev/build/translate";
-import { AdapterSettings, Answers, getDefaultAnswer } from "./core/questions";
+import type { AdapterSettings, Answers } from "./core/questions";
+import { getDefaultAnswer } from "./core/questions";
 import type { TemplateFunction } from "./createAdapter";
 import { formatJsonString } from "./tools";
 
