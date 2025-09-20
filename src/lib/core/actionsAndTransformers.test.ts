@@ -1,11 +1,11 @@
 import { expect } from "chai";
 import { stub } from "sinon";
+import type { CheckResult } from "./actionsAndTransformers";
 import {
 	checkAdapterName,
 	checkAuthorName,
 	checkEmail,
 	checkMinSelections,
-	CheckResult,
 	checkTitle,
 	transformAdapterName,
 	transformDescription,

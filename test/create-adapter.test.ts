@@ -7,7 +7,8 @@ import { validate as validateJSON } from "jsonschema";
 import * as path from "path";
 import { createAdapter } from "../src/index";
 import type { Answers } from "../src/lib/core/questions";
-import { File, writeFiles } from "../src/lib/createAdapter";
+import type { File } from "../src/lib/createAdapter";
+import { writeFiles } from "../src/lib/createAdapter";
 
 const baselineDir = path.join(__dirname, "../test/baselines");
 let ioPackageSchema: unknown;
@@ -255,6 +256,19 @@ describe("adapter creation =>", () => {
 					"adapter_JS_JsonUI_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
 					answers,
 				);
+			});
+
+			it("Adapter, JavaScript, JSON UI, ESLint, Spaces, Single quotes, Dev Container", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adapterName: "hello-devcontainer",
+					language: "JavaScript",
+					adminUi: "json",
+					tools: ["ESLint", "type checking", "devcontainer"],
+					indentation: "Space (4)",
+					quotes: "single",
+				};
+				await expectSuccess("ioBroker.hello-devcontainer", answers);
 			});
 
 			it("Widget", async () => {
@@ -527,8 +541,13 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					tools: [...(baseAnswers.tools ?? []), "devcontainer"],
 				};
-				await expectSuccess("devcontainer", answers, (file) =>
-					file.name.startsWith(".devcontainer/"),
+				await expectSuccess(
+					"devcontainer",
+					answers,
+					(file) =>
+						file.name.startsWith(".devcontainer/") ||
+						file.name === ".gitignore" ||
+						file.name === ".vscode/launch.json",
 				);
 			});
 
@@ -652,6 +671,86 @@ describe("adapter creation =>", () => {
 						file.name.startsWith("admin/") ||
 						file.name === "io-package.json",
 				);
+			});
+		});
+
+		describe("GitHub Actions workflow Node.js version filtering", () => {
+			it("should only test supported Node.js versions", async () => {
+				const testCases = [
+					{
+						nodeVersion: "20",
+						expectedVersions: ["20.x", "22.x", "24.x"],
+						expectedLts: "20.x",
+					},
+					{
+						nodeVersion: "22",
+						expectedVersions: ["22.x", "24.x"],
+						expectedLts: "22.x",
+					},
+					{
+						nodeVersion: "24",
+						expectedVersions: ["24.x"],
+						expectedLts: "24.x",
+					},
+				];
+
+				for (const testCase of testCases) {
+					const answers: Answers = {
+						...baseAnswers,
+						nodeVersion: testCase.nodeVersion as "20" | "22" | "24",
+						target: "github",
+						releaseScript: "yes",
+					};
+
+					const files = await createAdapter(answers);
+					const workflowFile = files.find((f) =>
+						f.name.endsWith("test-and-release.yml"),
+					);
+
+					if (!workflowFile) {
+						throw new Error(
+							`Workflow file not found for Node.js ${testCase.nodeVersion}`,
+						);
+					}
+
+					const content = workflowFile.content;
+
+					// Check that the matrix includes only the expected versions
+					const matrixMatch = content.match(
+						/node-version: \[(.*?)\]/,
+					);
+					if (!matrixMatch) {
+						throw new Error(
+							`Matrix node versions not found for Node.js ${testCase.nodeVersion}`,
+						);
+					}
+
+					const actualVersions = matrixMatch[1]
+						.split(", ")
+						.map((v) => v.trim());
+					actualVersions.should.deep.equal(
+						testCase.expectedVersions,
+						`For Node.js ${testCase.nodeVersion}, expected versions ${testCase.expectedVersions.join(", ")} but got ${actualVersions.join(", ")}`,
+					);
+
+					// Check that the LTS version is correct
+					const ltsMatches =
+						content.match(/node-version: '(\d+\.x)'/g) || [];
+					if (ltsMatches.length === 0) {
+						throw new Error(
+							`LTS node version not found for Node.js ${testCase.nodeVersion}`,
+						);
+					}
+
+					// All LTS references should use the expected version
+					for (const ltsMatch of ltsMatches) {
+						const ltsVersion = ltsMatch.match(/'(\d+\.x)'/)?.[1];
+						ltsVersion.should.equal(
+							testCase.expectedLts,
+							`For Node.js ${testCase.nodeVersion}, expected LTS ${testCase.expectedLts} but got ${ltsVersion}`,
+						);
+					}
+				}
 			});
 		});
 	});
