@@ -9,6 +9,7 @@ export = (async answers => {
 
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
+	const widgetIsMainFunction = answers.widgetIsMainFunction === "main";
 	const useJsonConfig = answers.adminUi === "json";
 	const useAdminReact = answers.adminUi === "react";
 	const useTabReact = answers.tabReact === "yes";
@@ -93,7 +94,7 @@ export = (async answers => {
 		"readme": "https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/blob/${defaultBranch}/README.md",
 		"loglevel": "info",
 		"tier": 3,
-		${isWidget ? (`
+		${isWidget && widgetIsMainFunction ? (`
 			"restartAdapters": ["vis"],
 		`) : ""}
 		${isAdapter ? (`
@@ -132,7 +133,7 @@ export = (async answers => {
 		${useReact ? `"eraseOnUpload": true,` : ""}
 		"dependencies": [
 			${isAdapter ? `{ "js-controller": ">=6.0.11" },` : ""}
-			${isWidget ? `"vis",` : ""}
+			${isWidget && widgetIsMainFunction ? `"vis",` : ""}
 		],
 		"globalDependencies": [
 			${isAdapter ? `{ "admin": ">=7.0.23" },` : ""}

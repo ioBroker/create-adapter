@@ -16,6 +16,7 @@
 * (@Apollon77/@copilot) Remove Node.js 18 as a supported version (#1154) · [Migration guide](docs/updates/20250831_remove_nodejs18_support.md)
 * (@Apollon77/@copilot) Adjust the io-package schema location (#1153) · [Migration guide](docs/updates/20250831_jsonconfig_schema_url_fix.md)
 * (@Apollon77/@copilot) Remove fa-icon from adminTab configuration to comply with Admin 5 requirements (#741) · [Migration guide](docs/updates/20250102_remove_admin_tab_fa_icon.md)
+* (@Apollon77/@copilot) Add conditional VIS dependency based on widget function (#1077) · [Migration guide](docs/updates/20250902_conditional_vis_dependency.md)
 
 ## 2.6.5 (2024-09-13)
 * (AlCalzone) Update required versions of `js-controller` and `admin` to the current stable versions (#1116)
