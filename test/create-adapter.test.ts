@@ -258,6 +258,19 @@ describe("adapter creation =>", () => {
 				);
 			});
 
+			it("Adapter, JavaScript, JSON UI, ESLint, Spaces, Single quotes, Dev Container", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adapterName: "hello-devcontainer",
+					language: "JavaScript",
+					adminUi: "json",
+					tools: ["ESLint", "type checking", "devcontainer"],
+					indentation: "Space (4)",
+					quotes: "single",
+				};
+				await expectSuccess("ioBroker.hello-devcontainer", answers);
+			});
+
 			it("Widget", async () => {
 				const answers: Answers = {
 					cli: true,
@@ -528,8 +541,13 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					tools: [...(baseAnswers.tools ?? []), "devcontainer"],
 				};
-				await expectSuccess("devcontainer", answers, (file) =>
-					file.name.startsWith(".devcontainer/"),
+				await expectSuccess(
+					"devcontainer",
+					answers,
+					(file) =>
+						file.name.startsWith(".devcontainer/") ||
+						file.name === ".gitignore" ||
+						file.name === ".vscode/launch.json",
 				);
 			});
 
