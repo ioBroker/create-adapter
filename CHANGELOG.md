@@ -8,6 +8,8 @@
 
 ## __WORK IN PROGRESS__
 * (@hacki11) Support git-ssh in devcontainer (#1136) [Migration guide](docs/updates/20250401_devcontainer_ssh.md)
+* (@hacki11) Dev Container improvements (#1137) · [Migration guide](docs/updates/20250404_devcontainer_improvments.md)
+* (@hacki11) Allow newer versions of `admin` (#1137) · [Migration guide](docs/updates/20250406_admin_dependency_ge.md)
 * (@Apollon77/@copilot) Upgrade to @iobroker/testing 5.1.1, remove redundant dependencies (#1165) · [Migration guide](docs/updates/20250831_iobroker_testing_51.md)
 * (@Apollon77/@copilot) Update TypeScript to 5.9.2 and typescript-eslint to 7.x for both creator and generated templates (#1158) · [Migration guide](docs/updates/20250831_typescript_59_update.md)
 * (@Apollon77/@copilot) Add Node.js 24 as a supported version (#1145) · [Migration guide](docs/updates/20250831_node24_support.md)
