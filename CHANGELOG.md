@@ -6,6 +6,7 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
+* (@Apollon77/@copilot) Add config.yml to GitHub issue templates with forum link (#1069) · [Migration guide](docs/updates/20250920_github_issue_template_config.md)
 * (@hacki11) Dev Container improvements (#1137) · [Migration guide](docs/updates/20250404_devcontainer_improvments.md)
 * (@hacki11) Allow newer versions of `admin` (#1137) · [Migration guide](docs/updates/20250406_admin_dependency_ge.md)
 * (@Apollon77/@copilot) Upgrade to @iobroker/testing 5.1.1, remove redundant dependencies (#1165) · [Migration guide](docs/updates/20250831_iobroker_testing_51.md)
