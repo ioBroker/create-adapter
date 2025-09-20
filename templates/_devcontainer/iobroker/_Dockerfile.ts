@@ -11,9 +11,9 @@ FROM iobroker/iobroker:latest
 RUN ln -s /opt/iobroker/node_modules/ /node_modules
 
 # Needed to use git-ssh in devcontainer
-RUN apt-get update \
-	&& apt-get -y --no-install-recommends install openssh-client
-  && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \\
+	&& apt-get -y --no-install-recommends install openssh-client \\
+	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY node-wrapper.sh /usr/bin/node-wrapper.sh
 RUN chmod +x /usr/bin/node-wrapper.sh \\
