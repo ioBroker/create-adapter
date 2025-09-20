@@ -1,5 +1,6 @@
 import { blue, green, red } from "ansi-colors";
-import { ExecSyncOptions, execSync } from "child_process";
+import type { ExecSyncOptions } from "child_process";
+import { execSync } from "child_process";
 import * as fs from "fs-extra";
 import * as path from "path";
 import { createAdapter } from "../src";
@@ -97,6 +98,7 @@ const templates: Record<string, Answers> = {
 		tools: ["ESLint", "type checking"],
 		indentation: "Space (4)",
 		quotes: "single",
+		widgetIsMainFunction: "main",
 	},
 	TypeScriptVIS: {
 		...adapterAnswers,
@@ -106,12 +108,14 @@ const templates: Record<string, Answers> = {
 		tools: ["ESLint", "code coverage"],
 		indentation: "Tab",
 		quotes: "double",
+		widgetIsMainFunction: "main",
 	},
 	VIS: {
 		...baseAnswers,
 		features: ["vis"],
 		title: "Template (VIS only)",
 		type: "visualization-widgets",
+		widgetIsMainFunction: "main",
 	},
 };
 
