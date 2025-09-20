@@ -51,7 +51,7 @@ const adapterAnswers: Answers = {
 	adminFeatures: ["custom", "tab"],
 	adminUi: "json",
 	tabReact: "no",
-	eslintConfig: "custom", // Default to custom for templates
+	eslintConfig: "official", // Default to official for templates
 };
 
 const templates: Record<string, Answers> = {

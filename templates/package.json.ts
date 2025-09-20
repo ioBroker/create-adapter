@@ -197,10 +197,16 @@ const templateFunction: TemplateFunction = async answers => {
 			npmScripts["coverage"] = "nyc npm run test:ts";
 		}
 		if (useESLint) {
-			if (useTypeScript) {
-				npmScripts["lint"] = `eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}`;
+			if (useOfficialESLintConfig) {
+				// Use the new ESLint 9 format for official config
+				npmScripts["lint"] = "eslint -c eslint.config.mjs .";
 			} else {
-				npmScripts["lint"] = `eslint${useReact ? " --ext .js,.jsx" : ""} .`;
+				// Use the legacy format for custom config
+				if (useTypeScript) {
+					npmScripts["lint"] = `eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}`;
+				} else {
+					npmScripts["lint"] = `eslint${useReact ? " --ext .js,.jsx" : ""} .`;
+				}
 			}
 		}
 	} else if (isWidget) {

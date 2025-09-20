@@ -8,22 +8,12 @@ const templateFunction: TemplateFunction = answers => {
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
 	const useOfficialESLintConfig = answers.eslintConfig === "official";
+	// Don't generate legacy .eslintrc.js when using official config
+	if (useOfficialESLintConfig) return;
+	
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useReact =
 		answers.adminUi === "react" || answers.tabReact === "yes";
-	
-	// If using official config, create a simple extends config
-	if (useOfficialESLintConfig) {
-		const extends_array = ["@iobroker"];
-		if (useReact) extends_array.push("@iobroker/react");
-		
-		const template = `
-module.exports = {
-	extends: [${extends_array.map(ext => `"${ext}"`).join(", ")}],
-};
-`;
-		return template.trim().replace(/(\r?\n)+/g, "\n");
-	}
 	
 	// Original custom ESLint configuration
 	const template = `
