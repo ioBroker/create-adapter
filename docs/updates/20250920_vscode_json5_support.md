@@ -60,8 +60,4 @@ However, if you want to update an existing adapter to get JSON5 support in VSCod
 
 ## No functional changes
 
-This change does not affect the functionality of adapters in any way:
-- All existing functionality remains unchanged
-- JSON schema validation continues to work exactly the same for existing JSON files
-- Only adds support for JSON5 files without breaking any existing workflows
-- No changes are required to existing adapters
+This change does not affect the functionality of adapters in any way.
