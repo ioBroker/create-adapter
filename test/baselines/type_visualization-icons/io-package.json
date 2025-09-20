@@ -47,10 +47,10 @@
 			"Al Calzone <al@calzo.ne>"
 		],
 		"keywords": [
-			"ioBroker",
 			"template",
-			"Smart Home",
-			"home automation"
+			"automation",
+			"IoT",
+			"integration"
 		],
 		"licenseInformation": {
 			"type": "free",
@@ -63,17 +63,12 @@
 		"readme": "https://github.com/AlCalzone/ioBroker.test-adapter/blob/main/README.md",
 		"loglevel": "info",
 		"tier": 3,
-		"restartAdapters": [
-			"vis"
-		],
 		"onlyWWW": true,
 		"noConfig": true,
 		"singleton": true,
 		"type": "visualization-icons",
 		"mode": "once",
-		"dependencies": [
-			"vis"
-		],
+		"dependencies": [],
 		"globalDependencies": []
 	},
 	"native": {

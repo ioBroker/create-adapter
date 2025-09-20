@@ -412,6 +412,26 @@ export const questionGroups: QuestionGroup[] = [
 				migrate: (ctx) => ctx.ioPackageJson.common?.type,
 			},
 			{
+				condition: { name: "features", contains: "vis" },
+				type: "select",
+				name: "widgetIsMainFunction",
+				label: "Widget Function",
+				message: "What is the function of the widget?",
+				initial: "main",
+				choices: [
+					{
+						message: "The widget is the main adapter functionality",
+						value: "main",
+					},
+					{
+						message:
+							"The adapter also works without the visualization of the widget",
+						value: "additional",
+					},
+				],
+				migrate: () => "main", // Default to main as it was historically
+			},
+			{
 				condition: { name: "features", contains: "adapter" },
 				type: "select",
 				name: "startMode",
@@ -990,6 +1010,7 @@ export interface Answers {
 	// Not used on the CLI, but can be provided by the web UI for example
 	licenseInformation?: LicenseInformation;
 	type: string;
+	widgetIsMainFunction?: "main" | "additional";
 	adminUi?: "json" | "html" | "react" | "none";
 	tabReact?: "yes" | "no";
 	i18n?: "words.js" | "JSON";
@@ -1100,10 +1121,10 @@ export function getDefaultAnswer<T extends keyof Answers>(
 		}
 		case "keywords": {
 			return [
-				"ioBroker",
 				"template",
-				"Smart Home",
-				"home automation",
+				"automation",
+				"IoT",
+				"integration",
 			] as any;
 		}
 	}
