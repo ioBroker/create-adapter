@@ -1,0 +1,38 @@
+{
+	"cli": true,
+	"target": "directory",
+	"adapterName": "test-adapter",
+	"title": "Is used to test the creator",
+	"startMode": "daemon",
+	"features": [
+		"adapter"
+	],
+	"connectionIndicator": "no",
+	"connectionType": "local",
+	"dataSource": "push",
+	"adminFeatures": [],
+	"type": "general",
+	"language": "JavaScript",
+	"adminUi": "html",
+	"tabReact": "no",
+	"releaseScript": "no",
+	"tools": [
+		"ESLint"
+	],
+	"eslintConfig": "official",
+	"indentation": "Tab",
+	"quotes": "double",
+	"authorName": "Al Calzone",
+	"authorGithub": "AlCalzone",
+	"authorEmail": "al@calzo.ne",
+	"gitRemoteProtocol": "HTTPS",
+	"dependabot": "yes",
+	"gitCommit": "no",
+	"defaultBranch": "main",
+	"license": "MIT License",
+	"licenseInformation": {
+		"type": "free",
+		"license": "MIT"
+	},
+	"creatorVersion": "2.6.5"
+}

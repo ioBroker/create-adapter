@@ -705,6 +705,27 @@ export const questionGroups: QuestionGroup[] = [
 					].filter((f) => !!f) as string[],
 			}),
 			{
+				condition: { name: "tools", contains: "ESLint" },
+				type: "select",
+				name: "eslintConfig",
+				label: "ESLint Configuration",
+				message:
+					"Do you want to configure ESLint by yourself or use the official ioBroker ESLint config?",
+				initial: "official",
+				choices: [
+					{
+						message: "Use official ioBroker ESLint config",
+						hint: "(recommended)",
+						value: "official",
+					},
+					{
+						message: "Configure ESLint by yourself",
+						value: "custom",
+					},
+				],
+				migrate: () => "custom", // Default to custom for existing projects
+			},
+			{
 				condition: [
 					{ name: "features", contains: "adapter" },
 					{ name: "adminUi", value: "html" },
@@ -1004,6 +1025,7 @@ export interface Answers {
 		| "code coverage"
 		| "devcontainer"
 	)[];
+	eslintConfig?: "official" | "custom";
 	nodeVersion?: "20" | "22" | "24";
 	title?: string;
 	license?: string;

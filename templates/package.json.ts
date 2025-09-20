@@ -20,6 +20,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useTabReact = answers.tabReact === "yes";
 	const useReact = useAdminReact || useTabReact;
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
+	const useOfficialESLintConfig = useESLint && answers.eslintConfig === "official";
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
@@ -75,19 +76,23 @@ const templateFunction: TemplateFunction = async answers => {
 			"@types/react@17",
 			"@types/react-dom@17",
 		] : []),
-		...(useESLint ? [
+		...(useOfficialESLintConfig ? [
+			// Use the official ioBroker ESLint config
+			"@iobroker/eslint-config",
+		] : []),
+		...((useESLint && !useOfficialESLintConfig) ? [
 			// https://github.com/ioBroker/create-adapter/pull/1099#issuecomment-2042287875
 			// Need to stay on ESLint v8 until typescript-eslint is compatible with ESLint v9
 			"eslint@8"
 		] : []),
-		...((useESLint && useTypeScript) ? [
+		...((useESLint && !useOfficialESLintConfig && useTypeScript) ? [
 			"@typescript-eslint/eslint-plugin@7",
 			"@typescript-eslint/parser@7",
 		] : []),
-		...((useESLint && useReact) ? [
+		...((useESLint && !useOfficialESLintConfig && useReact) ? [
 			"eslint-plugin-react",
 		] : []),
-		...((useESLint && usePrettier) ? [
+		...((useESLint && !useOfficialESLintConfig && usePrettier) ? [
 			"eslint-config-prettier",
 			"eslint-plugin-prettier",
 			"prettier",

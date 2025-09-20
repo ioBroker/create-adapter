@@ -10,7 +10,22 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
+	const useOfficialESLintConfig = answers.eslintConfig === "official";
 
+	// If using official config, create a simple extends config
+	if (useOfficialESLintConfig) {
+		const extends_array = ["@iobroker"];
+		if (useReact) extends_array.push("@iobroker/react");
+		
+		const template = `
+{
+	"extends": [${extends_array.map(ext => `"${ext}"`).join(", ")}]
+}
+`;
+		return JSON.stringify(JSON5.parse(template), null, 4);
+	}
+
+	// Original custom ESLint configuration
 	const template = `
 {
 	"root": true,

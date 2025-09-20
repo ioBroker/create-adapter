@@ -120,6 +120,7 @@ const baseAnswers: Answers = {
 	tabReact: "no",
 	releaseScript: "no",
 	tools: ["ESLint"],
+	eslintConfig: "custom",
 	indentation: "Tab",
 	quotes: "double",
 	authorName: "Al Calzone",
@@ -269,6 +270,32 @@ describe("adapter creation =>", () => {
 					quotes: "single",
 				};
 				await expectSuccess("ioBroker.hello-devcontainer", answers);
+			});
+
+			it("Adapter, TypeScript, Official ESLint Config", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					eslintConfig: "official",
+				};
+				await expectSuccess("adapter_TS_OfficialESLint", answers);
+			});
+
+			it("Adapter, JavaScript, Official ESLint Config", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					language: "JavaScript",
+					eslintConfig: "official",
+				};
+				await expectSuccess("adapter_JS_OfficialESLint", answers);
+			});
+
+			it("Adapter, TypeScript React, Official ESLint Config", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					adminUi: "react",
+					eslintConfig: "official",
+				};
+				await expectSuccess("adapter_TS_React_OfficialESLint", answers);
 			});
 
 			it("Widget", async () => {
