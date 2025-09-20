@@ -3,6 +3,7 @@ import { licenses } from "../src/lib/core/licenses";
 import { getDefaultAnswer } from "../src/lib/core/questions";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 import { fetchPackageReferenceVersion, getPackageName } from "../src/lib/packageVersions";
+import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../src/lib/constants";
 
 const templateFunction: TemplateFunction = async answers => {
 
@@ -23,7 +24,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 
-	const minNodeVersion = answers.nodeVersion ?? "20";
+	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
 
 	const dependencyPromises = [
 		...(isAdapter ? ["@iobroker/adapter-core"] : [])
