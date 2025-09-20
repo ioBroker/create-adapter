@@ -6,8 +6,11 @@ Make sure to add this change to `.devcontainer/iobroker/Dockerfile`:
 
 ```diff
 FROM iobroker/iobroker:latest
-RUN ln -s /opt/iobroker/node_modules/ /.node_modules
+-RUN ln -s /opt/iobroker/node_modules/ /.node_modules
++RUN ln -s /opt/iobroker/node_modules/ /node_modules
++
 +# Needed to use git-ssh in devcontainer
 +RUN apt-get update \
-+    && apt-get -y --no-install-recommends install openssh-client
++	&& apt-get -y --no-install-recommends install openssh-client
++   && apt-get clean && rm -rf /var/lib/apt/lists/*
 ```
