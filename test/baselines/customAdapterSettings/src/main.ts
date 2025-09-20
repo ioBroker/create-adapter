@@ -31,8 +31,8 @@ class TestAdapter extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.info("config prop1: " + this.config.prop1);
-		this.log.info("config prop2: " + this.config.prop2);
+		this.log.debug("config prop1: " + this.config.prop1);
+		this.log.debug("config prop2: " + this.config.prop2);
 
 		/*
 		For every state in the system there has to be also an object of type state
