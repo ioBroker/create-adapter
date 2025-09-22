@@ -20,6 +20,7 @@
         "ESLint",
         "type checking"
     ],
+    "eslintConfig": "custom",
     "indentation": "Space (4)",
     "quotes": "single",
     "authorName": "Al Calzone",

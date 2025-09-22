@@ -7,10 +7,14 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
+	// Don't generate legacy .eslintrc.js anymore - use flat config instead
+	return;
+	
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useReact =
 		answers.adminUi === "react" || answers.tabReact === "yes";
 	
+	// Original custom ESLint configuration
 	const template = `
 module.exports = {
 	root: true, // Don't look outside this project for inherited configs

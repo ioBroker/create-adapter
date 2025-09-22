@@ -5,6 +5,9 @@ const templateFunction: TemplateFunction = answers => {
 	const isWidget = answers.features.indexOf("vis") > -1;
 	if (!isWidget) return;
 
+	// Widget ESLint config is now included in main eslint.config.mjs - no separate config needed
+	return;
+
 	const template = `
 {
 	"env": {
