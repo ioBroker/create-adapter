@@ -81,13 +81,13 @@ const templateFunction: TemplateFunction = async answers => {
 			"@iobroker/eslint-config",
 		] : []),
 		...((useESLint && !useOfficialESLintConfig) ? [
-			// https://github.com/ioBroker/create-adapter/pull/1099#issuecomment-2042287875
-			// Need to stay on ESLint v8 until typescript-eslint is compatible with ESLint v9
-			"eslint@8"
+			// Upgrade to ESLint 9 for custom configuration
+			"eslint@^9",
+			"@eslint/js@^9",
 		] : []),
 		...((useESLint && !useOfficialESLintConfig && useTypeScript) ? [
-			"@typescript-eslint/eslint-plugin@7",
-			"@typescript-eslint/parser@7",
+			"@typescript-eslint/eslint-plugin@^8",
+			"@typescript-eslint/parser@^8",
 		] : []),
 		...((useESLint && !useOfficialESLintConfig && useReact) ? [
 			"eslint-plugin-react",
@@ -197,17 +197,8 @@ const templateFunction: TemplateFunction = async answers => {
 			npmScripts["coverage"] = "nyc npm run test:ts";
 		}
 		if (useESLint) {
-			if (useOfficialESLintConfig) {
-				// Use the new ESLint 9 format for official config
-				npmScripts["lint"] = "eslint -c eslint.config.mjs .";
-			} else {
-				// Use the legacy format for custom config
-				if (useTypeScript) {
-					npmScripts["lint"] = `eslint --ext .ts${useReact ? ",.tsx" : ""} src/${useReact ? " admin/src/" : ""}`;
-				} else {
-					npmScripts["lint"] = `eslint${useReact ? " --ext .js,.jsx" : ""} .`;
-				}
-			}
+			// Both official and custom configs now use ESLint 9 flat config format
+			npmScripts["lint"] = "eslint -c eslint.config.mjs .";
 		}
 	} else if (isWidget) {
 		npmScripts["test:package"] = "mocha test/package --exit";

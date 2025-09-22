@@ -7,9 +7,8 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
-	const useOfficialESLintConfig = answers.eslintConfig === "official";
-	// Don't generate legacy .eslintrc.js when using official config
-	if (useOfficialESLintConfig) return;
+	// Don't generate legacy .eslintrc.js anymore - use flat config instead
+	return;
 	
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useReact =

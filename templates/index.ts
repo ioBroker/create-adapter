@@ -72,6 +72,8 @@ const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "admin/tab_m.html.ts", templateFunction: require("./admin/tab_m.html") },
 	{ name: "admin/tsconfig.json.ts", templateFunction: require("./admin/tsconfig.json") },
 	{ name: "admin/words.js.ts", templateFunction: require("./admin/words.js") },
+	{ name: "eslint.config.custom.js.mjs.ts", templateFunction: require("./eslint.config.custom.js.mjs") },
+	{ name: "eslint.config.custom.mjs.ts", templateFunction: require("./eslint.config.custom.mjs") },
 	{ name: "eslint.config.mjs.ts", templateFunction: require("./eslint.config.mjs") },
 	{ name: "io-package.json.ts", templateFunction: require("./io-package.json") },
 	{ name: "lib/adapter-config.dts.ts", templateFunction: require("./lib/adapter-config.dts") },

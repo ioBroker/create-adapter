@@ -312,6 +312,18 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_VIS_OfficialESLint", answers);
 			});
 
+			it("Adapter, TypeScript VIS, Custom ESLint Config", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["adapter", "vis"],
+					eslintConfig: "custom",
+					indentation: "Tab",
+					quotes: "double",
+					widgetIsMainFunction: "main",
+				};
+				await expectSuccess("adapter_TS_VIS_CustomESLint", answers);
+			});
+
 			it("Widget", async () => {
 				const answers: Answers = {
 					cli: true,

@@ -10,9 +10,8 @@ const templateFunction: TemplateFunction = answers => {
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	if (!useESLint) return;
-	const useOfficialESLintConfig = answers.eslintConfig === "official";
-	// Don't generate legacy .eslintrc.json when using official config
-	if (useOfficialESLintConfig) return;
+	// Don't generate legacy .eslintrc.json anymore - use flat config instead
+	return;
 
 	// Original custom ESLint configuration
 	const template = `
