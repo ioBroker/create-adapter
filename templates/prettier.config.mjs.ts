@@ -16,7 +16,8 @@ import prettierConfig from '@iobroker/eslint-config/prettier.config.mjs';
 export default {
 	...prettierConfig,${useTabs ? `
 	useTabs: true,` : ""}${quotes === "single" ? `
-	singleQuote: true,` : ""}
+	singleQuote: true,` : `
+	singleQuote: false,`}
 };
 `;
 	return template.trim();
