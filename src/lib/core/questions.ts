@@ -714,7 +714,7 @@ export const questionGroups: QuestionGroup[] = [
 				initial: "official",
 				choices: [
 					{
-						message: "Use official ioBroker ESLint config",
+						message: "Use official ioBroker ESLint config (includes prettier)",
 						hint: "(recommended)",
 						value: "official",
 					},
