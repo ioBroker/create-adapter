@@ -8,14 +8,15 @@ const templateFunction: TemplateFunction = answers => {
 
 	const quotes = answers.quotes || "double";
 	const singleQuoteComment = quotes === "single" ? "" : "// ";
+	const useTabs = answers.indentation === "Tab";
 
 	const template = `// iobroker prettier configuration file
 import prettierConfig from '@iobroker/eslint-config/prettier.config.mjs';
 
 export default {
-	...prettierConfig,
-	${singleQuoteComment}// uncomment next line if you prefer single quotes
-	${singleQuoteComment}singleQuote: true,
+	...prettierConfig,${useTabs ? `
+	useTabs: true,` : ""}${quotes === "single" ? `
+	singleQuote: true,` : ""}
 };
 `;
 	return template.trim();

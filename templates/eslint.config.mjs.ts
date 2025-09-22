@@ -22,6 +22,7 @@ const templateFunction: TemplateFunction = answers => {
 		"'admin/admin.d.ts'",
 		"'admin/blockly.js'",
 		"'**/adapter-config.d.ts'",
+		"'widgets/**/*.js'", // Ignore VIS widget files
 	];
 
 	if (useReact) {

@@ -285,6 +285,8 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					language: "JavaScript",
 					eslintConfig: "official",
+					indentation: "Space (4)",
+					quotes: "single",
 				};
 				await expectSuccess("adapter_JS_OfficialESLint", answers);
 			});
@@ -296,6 +298,18 @@ describe("adapter creation =>", () => {
 					eslintConfig: "official",
 				};
 				await expectSuccess("adapter_TS_React_OfficialESLint", answers);
+			});
+
+			it("Adapter, TypeScript VIS, Official ESLint Config", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					features: ["adapter", "vis"],
+					eslintConfig: "official",
+					indentation: "Tab",
+					quotes: "double",
+					widgetIsMainFunction: "main",
+				};
+				await expectSuccess("adapter_TS_VIS_OfficialESLint", answers);
 			});
 
 			it("Widget", async () => {

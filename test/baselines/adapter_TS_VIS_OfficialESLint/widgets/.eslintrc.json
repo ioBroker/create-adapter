@@ -1,0 +1,19 @@
+{
+	"env": {
+		"browser": true,
+		"es6": false
+	},
+	"rules": {
+		// Visualizations may run in very old browsers without `let` and `const`
+		"no-var": "off",
+		// The example code does not use some parameters. If unused variables should be
+		// an error, delete the following rule
+		"no-unused-vars": [
+			"warn",
+			{
+				"ignoreRestSiblings": true,
+				"argsIgnorePattern": "^_"
+			}
+		]
+	}
+}
