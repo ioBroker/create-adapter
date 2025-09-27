@@ -19,8 +19,7 @@ export default [
 		},
 		rules: {
 			...tseslint.configs.recommended.rules,
-			'indent': 'off',
-			'@typescript-eslint/indent': [
+			'indent': [
 				'error',
 				'tab',
 				{
@@ -38,11 +37,6 @@ export default [
 		languageOptions: {
 			ecmaVersion: 5,
 			sourceType: 'script',
-			globals: {
-				'$': 'readonly',
-				'jQuery': 'readonly',
-				'vis': 'readonly',
-			},
 		},
 		rules: {
 			// Visualizations may run in very old browsers
@@ -54,7 +48,8 @@ export default [
 				'warn',
 				{
 					'ignoreRestSiblings': true,
-					'argsIgnorePattern': '^_'
+					'argsIgnorePattern': '^_',
+					'varsIgnorePattern': '^_'
 				}
 			]
 		}

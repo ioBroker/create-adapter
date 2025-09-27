@@ -19,8 +19,7 @@ export default [
 		},
 		rules: {
 			...tseslint.configs.recommended.rules,
-			'indent': 'off',
-			'@typescript-eslint/indent': [
+			'indent': [
 				'error',
 				'tab',
 				{

@@ -26,8 +26,7 @@ export default [
 			...tseslint.configs.recommended.rules,
 			...react.configs.recommended.rules,
 			'react/react-in-jsx-scope': 'off',
-			'indent': 'off',
-			'@typescript-eslint/indent': [
+			'indent': [
 				'error',
 				'tab',
 				{

@@ -46,6 +46,11 @@ export default [
 				'setInterval': 'readonly',
 				'clearTimeout': 'readonly',
 				'clearInterval': 'readonly',
+				'document': 'readonly',
+				'window': 'readonly',
+				'describe': 'readonly',
+				'it': 'readonly',
+				'ioBroker': 'readonly',
 			},${useReact ? `
 			parserOptions: {
 				ecmaFeatures: {
@@ -71,6 +76,14 @@ export default [
 				'error',
 				${answers.quotes === "single" ? `'single'` : `'double'`}
 			],` : ""}
+			'no-unused-vars': [
+				'warn',
+				{
+					'ignoreRestSiblings': true,
+					'argsIgnorePattern': '^_',
+					'varsIgnorePattern': '^_'
+				}
+			],
 		},${useReact ? `
 		settings: {
 			react: {
@@ -88,9 +101,8 @@ export default [
 			ecmaVersion: 5,
 			sourceType: 'script',
 			globals: {
-				'$': 'readonly',
-				'jQuery': 'readonly',
-				'vis': 'readonly',
+				'console': 'readonly',
+				'setTimeout': 'readonly',
 			},
 		},
 		rules: {
@@ -103,7 +115,8 @@ export default [
 				'warn',
 				{
 					'ignoreRestSiblings': true,
-					'argsIgnorePattern': '^_'
+					'argsIgnorePattern': '^_',
+					'varsIgnorePattern': '^_'
 				}
 			]
 		}

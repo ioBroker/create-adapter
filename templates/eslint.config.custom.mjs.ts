@@ -41,6 +41,27 @@ export default [
 					jsx: true,
 				},` : ""}
 			},
+			globals: {
+				'process': 'readonly',
+				'Buffer': 'readonly',
+				'__dirname': 'readonly',
+				'__filename': 'readonly',
+				'module': 'readonly',
+				'require': 'readonly',
+				'exports': 'readonly',
+				'global': 'readonly',
+				'console': 'readonly',
+				'setTimeout': 'readonly',
+				'setInterval': 'readonly',
+				'clearTimeout': 'readonly',
+				'clearInterval': 'readonly',
+				'document': 'readonly',
+				'window': 'readonly',
+				'describe': 'readonly',
+				'it': 'readonly',
+				'ioBroker': 'readonly',
+				'AdminWord': 'readonly',
+			},
 		},
 		plugins: {
 			'@typescript-eslint': tseslint,${useReact ? `
@@ -50,8 +71,7 @@ export default [
 			...tseslint.configs.recommended.rules,${useReact ? `
 			...react.configs.recommended.rules,
 			'react/react-in-jsx-scope': 'off',` : ""}${!usePrettier ? `
-			'indent': 'off',
-			'@typescript-eslint/indent': [
+			'indent': [
 				'error',
 				${answers.indentation === "Tab" ? `'tab'` : "4"},
 				{
@@ -62,6 +82,14 @@ export default [
 				'error',
 				${answers.quotes === "single" ? `'single'` : `'double'`}
 			],` : ""}
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{
+					'ignoreRestSiblings': true,
+					'argsIgnorePattern': '^_',
+					'varsIgnorePattern': '^_'
+				}
+			],
 		},${useReact ? `
 		settings: {
 			react: {
@@ -79,9 +107,8 @@ export default [
 			ecmaVersion: 5,
 			sourceType: 'script',
 			globals: {
-				'$': 'readonly',
-				'jQuery': 'readonly',
-				'vis': 'readonly',
+				'console': 'readonly',
+				'setTimeout': 'readonly',
 			},
 		},
 		rules: {
@@ -94,7 +121,8 @@ export default [
 				'warn',
 				{
 					'ignoreRestSiblings': true,
-					'argsIgnorePattern': '^_'
+					'argsIgnorePattern': '^_',
+					'varsIgnorePattern': '^_'
 				}
 			]
 		}
