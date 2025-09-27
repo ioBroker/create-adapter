@@ -22,6 +22,11 @@ export default [
 				'setInterval': 'readonly',
 				'clearTimeout': 'readonly',
 				'clearInterval': 'readonly',
+				'document': 'readonly',
+				'window': 'readonly',
+				'describe': 'readonly',
+				'it': 'readonly',
+				'ioBroker': 'readonly',
 			},
 			parserOptions: {
 				ecmaFeatures: {
@@ -46,6 +51,14 @@ export default [
 			'quotes': [
 				'error',
 				'double'
+			],
+			'no-unused-vars': [
+				'warn',
+				{
+					'ignoreRestSiblings': true,
+					'argsIgnorePattern': '^_',
+					'varsIgnorePattern': '^_'
+				}
 			],
 		},
 		settings: {

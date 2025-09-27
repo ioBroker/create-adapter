@@ -21,6 +21,11 @@ export default [
                 'setInterval': 'readonly',
                 'clearTimeout': 'readonly',
                 'clearInterval': 'readonly',
+                'document': 'readonly',
+                'window': 'readonly',
+                'describe': 'readonly',
+                'it': 'readonly',
+                'ioBroker': 'readonly',
             },
         },
         plugins: {
@@ -37,6 +42,14 @@ export default [
             'quotes': [
                 'error',
                 'single'
+            ],
+            'no-unused-vars': [
+                'warn',
+                {
+                    'ignoreRestSiblings': true,
+                    'argsIgnorePattern': '^_',
+                    'varsIgnorePattern': '^_'
+                }
             ],
         },
     },
