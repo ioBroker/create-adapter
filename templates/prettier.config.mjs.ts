@@ -7,7 +7,6 @@ const templateFunction: TemplateFunction = answers => {
 	if (!useOfficialESLintConfig) return;
 
 	const quotes = answers.quotes || "double";
-	const singleQuoteComment = quotes === "single" ? "" : "// ";
 	const useTabs = answers.indentation === "Tab";
 
 	const template = `// iobroker prettier configuration file
