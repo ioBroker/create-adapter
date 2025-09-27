@@ -79,8 +79,8 @@ class TestAdapter extends utils.Adapter {
 		const pwdResult = await this.checkPasswordAsync("admin", "iobroker");
 		this.log.info("check user admin pw iobroker: " + pwdResult);
 
-		const gropupResult = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + gropupResult);
+		const groupResult = await this.checkGroupAsync("admin", "admin");
+		this.log.info("check group user admin group admin: " + groupResult);
 	}
 
 	/**

@@ -96,8 +96,8 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 		const pwdResult = await this.checkPasswordAsync(${quote}admin${quote}, ${quote}iobroker${quote});
 		this.log.info(${quote}check user admin pw iobroker: ${quote} + pwdResult);
 
-		const gropupResult = await this.checkGroupAsync(${quote}admin${quote}, ${quote}admin${quote});
-		this.log.info(${quote}check group user admin group admin: ${quote} + gropupResult);
+		const groupResult = await this.checkGroupAsync(${quote}admin${quote}, ${quote}admin${quote});
+		this.log.info(${quote}check group user admin group admin: ${quote} + groupResult);
 	}
 
 	/**
