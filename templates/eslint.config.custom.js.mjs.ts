@@ -76,6 +76,8 @@ export default [
 				'error',
 				${answers.quotes === "single" ? `'single'` : `'double'`}
 			],` : ""}
+			// Strict rules to match official @iobroker/eslint-config
+			'prefer-template': 'error',
 			'no-unused-vars': [
 				'warn',
 				{

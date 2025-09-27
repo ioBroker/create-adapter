@@ -52,6 +52,8 @@ export default [
 				'error',
 				'double'
 			],
+			// Strict rules to match official @iobroker/eslint-config
+			'prefer-template': 'error',
 			'no-unused-vars': [
 				'warn',
 				{

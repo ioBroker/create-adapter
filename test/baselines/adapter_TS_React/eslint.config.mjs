@@ -58,6 +58,8 @@ export default [
 				'error',
 				'double'
 			],
+			// Strict rules to match official @iobroker/eslint-config
+			'prefer-template': 'error',
 			'@typescript-eslint/no-unused-vars': [
 				'warn',
 				{

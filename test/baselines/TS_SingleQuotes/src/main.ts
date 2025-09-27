@@ -31,8 +31,8 @@ class TestAdapter extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.debug('config option1: ' + this.config.option1);
-		this.log.debug('config option2: ' + this.config.option2);
+		this.log.debug('config option1: ${this.config.option1}');
+		this.log.debug('config option2: ${this.config.option2}');
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -74,10 +74,10 @@ class TestAdapter extends utils.Adapter {
 
 		// examples for the checkPassword/checkGroup functions
 		const pwdResult = await this.checkPasswordAsync('admin', 'iobroker');
-		this.log.info('check user admin pw iobroker: ' + pwdResult);
+		this.log.info('check user admin pw iobroker: ${pwdResult}');
 
 		const groupResult = await this.checkGroupAsync('admin', 'admin');
-		this.log.info('check group user admin group admin: ' + groupResult);
+		this.log.info('check group user admin group admin: ${groupResult}');
 	}
 
 	/**
@@ -92,7 +92,8 @@ class TestAdapter extends utils.Adapter {
 			// clearInterval(interval1);
 
 			callback();
-		} catch (_e) {
+		} catch (error) {
+			this.log.error('Error during unloading: ${error.message}');
 			callback();
 		}
 	}
