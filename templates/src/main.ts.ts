@@ -52,7 +52,7 @@ ${answers.connectionIndicator === "yes" ? `
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote} + this.config.${s.key});`).join("\n")}
+${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.config.${s.key}}${quote});`).join("\n")}
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -94,10 +94,10 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 
 		// examples for the checkPassword/checkGroup functions
 		const pwdResult = await this.checkPasswordAsync(${quote}admin${quote}, ${quote}iobroker${quote});
-		this.log.info(${quote}check user admin pw iobroker: ${quote} + pwdResult);
+		this.log.info(${quote}check user admin pw iobroker: \${pwdResult}${quote});
 
 		const groupResult = await this.checkGroupAsync(${quote}admin${quote}, ${quote}admin${quote});
-		this.log.info(${quote}check group user admin group admin: ${quote} + groupResult);
+		this.log.info(${quote}check group user admin group admin: \${groupResult}${quote});
 	}
 
 	/**
@@ -112,7 +112,8 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 			// clearInterval(interval1);
 
 			callback();
-		} catch (_e) {
+		} catch (error) {
+			this.log.error(${quote}Error during unloading: \${error.message}${quote});
 			callback();
 		}
 	}

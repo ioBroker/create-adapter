@@ -19,6 +19,7 @@
 	"tools": [
 		"ESLint"
 	],
+	"eslintConfig": "custom",
 	"indentation": "Tab",
 	"quotes": "double",
 	"authorName": "Al Calzone",

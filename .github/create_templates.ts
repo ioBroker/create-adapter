@@ -51,6 +51,7 @@ const adapterAnswers: Answers = {
 	adminFeatures: ["custom", "tab"],
 	adminUi: "json",
 	tabReact: "no",
+	eslintConfig: "official", // Use official ESLint config as default and main rules
 };
 
 const templates: Record<string, Answers> = {
@@ -168,7 +169,9 @@ const templates: Record<string, Answers> = {
 				try {
 					execSync(`npm run lint`, cmdOpts);
 				} catch (e) {
-					console.error(red(`ESLint failed for template ${tplName}:`));
+					console.error(
+						red(`ESLint failed for template ${tplName}:`),
+					);
 					console.error(e.message || e);
 					hadError = true;
 				}
@@ -178,7 +181,9 @@ const templates: Record<string, Answers> = {
 				try {
 					execSync(`npm run check`, cmdOpts);
 				} catch (e) {
-					console.error(red(`Type check failed for template ${tplName}:`));
+					console.error(
+						red(`Type check failed for template ${tplName}:`),
+					);
 					console.error(e.message || e);
 					hadError = true;
 				}
