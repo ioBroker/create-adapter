@@ -4,7 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
-      time: "04:00"
+      day: 8
+      time: "00:05"
       timezone: Europe/Berlin
     open-pull-requests-limit: 5
     assignees:
@@ -15,7 +16,8 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
-      time: "04:00"
+      day: 8
+      time: "00:05"
       timezone: Europe/Berlin
     open-pull-requests-limit: 5
     assignees:

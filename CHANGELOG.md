@@ -7,6 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
+* (@Apollon77/@copilot) Adapt Dependabot schedule to run on specific day of month between 2-28 (#1200) · [Migration guide](docs/updates/20250102_dependabot_day_schedule.md)
 * (@hacki11) Support git-ssh in devcontainer (#1136) [Migration guide](docs/updates/20250401_devcontainer_ssh.md)
 * (@Apollon77/@copilot) Add config.yml to GitHub issue templates with forum link (#1069) · [Migration guide](docs/updates/20250920_github_issue_template_config.md)
 * (@hacki11) Dev Container improvements (#1137) · [Migration guide](docs/updates/20250404_devcontainer_improvments.md)
