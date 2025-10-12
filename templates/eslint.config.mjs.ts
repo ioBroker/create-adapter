@@ -7,7 +7,6 @@ const templateFunction: TemplateFunction = answers => {
 	if (!useOfficialESLintConfig) return;
 
 	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
-	const useTypeScript = answers.language === "TypeScript";
 	
 	// Build the ignores array based on project structure
 	let ignores = [
