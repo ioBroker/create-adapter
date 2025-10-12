@@ -29,7 +29,7 @@
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/testing": "^5.1.1",
     "@tsconfig/node22": "^22.0.2",
-    "@types/node": "^22.18.8",
+    "@types/node": "^22.18.10",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.1",
