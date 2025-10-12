@@ -54,6 +54,11 @@ jobs:
       - name: Compile TypeScript code
         run: npm run build
 
+      - name: Test migration from ioBroker.example adapters
+        run: bash .github/test_migration.sh
+        env:
+          TESTING: true
+
       - name: Start the CLI on a production environment
         run: |
           npm ci --omit=dev

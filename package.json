@@ -92,6 +92,7 @@
     "test:ts": "mocha src/**/*.test.ts",
     "test:baselines": "mocha test/create-adapter.test.ts",
     "test:templates": "bash .github/test_template_creation.sh",
+    "test:migration": "bash .github/test_migration.sh",
     "pretest": "npm run linkTemplates",
     "test": "npm run test:ts && npm run test:baselines && npm run test:templates",
     "test:watch": "mocha src/**/*.test.ts --watch",
