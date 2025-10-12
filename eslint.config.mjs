@@ -27,6 +27,7 @@ export default [
 			"@typescript-eslint/explicit-function-return-type": "off",
 			"@typescript-eslint/require-await": "off",
 			"jsdoc/no-blank-blocks": "off",
+			"jsdoc/require-param-description": "off",
 
 			// Allow import() type annotations in specific cases
 			"@typescript-eslint/consistent-type-imports": [

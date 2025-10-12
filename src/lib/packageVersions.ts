@@ -6,10 +6,18 @@ import { applyHttpsProxy, getRequestTimeout } from "./tools";
 const allVersionsCache = new Map<string, string[]>();
 const latestVersionCache = new Map<string, string>();
 
+/**
+ *
+ * @param packageName
+ */
 export function hasVersionSpecifier(packageName: string): boolean {
 	return packageName.lastIndexOf("@") > 0;
 }
 
+/**
+ *
+ * @param packageNameAndVersion
+ */
 export function getVersionSpecifier(packageNameAndVersion: string): string | undefined {
 	const atIndex = packageNameAndVersion.lastIndexOf("@");
 	if (atIndex > 0) {

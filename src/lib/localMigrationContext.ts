@@ -8,6 +8,7 @@ import path = require("path");
 export class LocalMigrationContext extends MigrationContextBase {
 	/**
 	 *
+	 * @param baseDir
 	 */
 	constructor(private readonly baseDir: string) {
 		super();
@@ -23,6 +24,7 @@ export class LocalMigrationContext extends MigrationContextBase {
 
 	/**
 	 *
+	 * @param parts
 	 */
 	public joinPath(...parts: string[]): string {
 		return path.join(...parts);
@@ -30,6 +32,7 @@ export class LocalMigrationContext extends MigrationContextBase {
 
 	/**
 	 *
+	 * @param fileName
 	 */
 	public readTextFile(fileName: string): Promise<string> {
 		return readFile(path.join(this.baseDir, fileName), {
@@ -39,6 +42,7 @@ export class LocalMigrationContext extends MigrationContextBase {
 
 	/**
 	 *
+	 * @param fileName
 	 */
 	public async readJsonFile(fileName: string): Promise<Record<string, any>> {
 		return readJson(path.join(this.baseDir, fileName));
@@ -46,6 +50,7 @@ export class LocalMigrationContext extends MigrationContextBase {
 
 	/**
 	 *
+	 * @param dirName
 	 */
 	public async directoryExists(dirName: string): Promise<boolean> {
 		const fullPath = path.join(this.baseDir, dirName);
@@ -54,6 +59,7 @@ export class LocalMigrationContext extends MigrationContextBase {
 
 	/**
 	 *
+	 * @param dirName
 	 */
 	public async fileExists(dirName: string): Promise<boolean> {
 		const fullPath = path.join(this.baseDir, dirName);
@@ -62,6 +68,9 @@ export class LocalMigrationContext extends MigrationContextBase {
 
 	/**
 	 *
+	 * @param dirName
+	 * @param extension
+	 * @param filter
 	 */
 	public async hasFilesWithExtension(
 		dirName: string,

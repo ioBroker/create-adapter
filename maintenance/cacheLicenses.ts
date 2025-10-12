@@ -45,7 +45,6 @@ async function loadLicense(shortName: keyof typeof licenseUrls): Promise<License
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function loadLicenses() {
 	const licenses = {} as Record<keyof typeof licenseUrls, License>;
 	for (const shortName of Object.keys(licenseUrls) as (keyof typeof licenseUrls)[]) {

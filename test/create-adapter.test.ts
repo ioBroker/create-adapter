@@ -110,51 +110,51 @@ const baseAnswers: Answers = {
 
 describe("adapter creation =>", () => {
 	describe("incomplete answer sets should fail =>", () => {
-		it("only name", () => {
+		it("only name", async () => {
 			const answers = { adapterName: "foobar" };
-			expectFail("incompleteAnswersOnlyName", answers, "Missing answer");
+			await expectFail("incompleteAnswersOnlyName", answers, "Missing answer");
 		});
 
-		it("no title", () => {
+		it("no title", async () => {
 			const { title, ...noTitle } = baseAnswers;
-			expectFail("incompleteAnswersNoTitle", noTitle, "Missing answer");
+			await expectFail("incompleteAnswersNoTitle", noTitle, "Missing answer");
 		});
 
-		it("no type", () => {
+		it("no type", async () => {
 			const { type, ...noType } = baseAnswers;
-			expectFail("incompleteAnswersNoType", noType, "Missing answer");
+			await expectFail("incompleteAnswersNoType", noType, "Missing answer");
 		});
 
-		it("empty title 1", () => {
+		it("empty title 1", async () => {
 			const answers: Answers = {
 				...baseAnswers,
 				title: "",
 			};
-			expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
+			await expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
 		});
 
-		it("empty title 2", () => {
+		it("empty title 2", async () => {
 			const answers: Answers = {
 				...baseAnswers,
 				title: "   ",
 			};
-			expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
+			await expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
 		});
 
-		it("invalid title 1", () => {
+		it("invalid title 1", async () => {
 			const answers: Answers = {
 				...baseAnswers,
 				title: "Adapter for ioBroker",
 			};
-			expectFail("incompleteAnswersEmptyTitle", answers, "must not contain the words");
+			await expectFail("incompleteAnswersEmptyTitle", answers, "must not contain the words");
 		});
 
-		it("selecting Prettier without ESLint", () => {
+		it("selecting Prettier without ESLint", async () => {
 			const answers: Answers = {
 				...baseAnswers,
 				tools: ["Prettier"],
 			};
-			expectFail("invalidAnswersPrettierWithoutESLint", answers, "ESLint must be selected");
+			await expectFail("invalidAnswersPrettierWithoutESLint", answers, "ESLint must be selected");
 		});
 	});
 

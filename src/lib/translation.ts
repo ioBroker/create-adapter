@@ -24,6 +24,8 @@ const titles: Record<Languages, string> = {
 
 /**
  *
+ * @param language
+ * @param answers
  */
 export async function getTranslatedSettingsForLanguage(
 	language: Languages,
@@ -67,6 +69,8 @@ export async function getTranslatedSettings(answers: Answers): Promise<Record<st
 
 /**
  *
+ * @param language
+ * @param forReact
  */
 export function getI18nJsonTemplate(language: Languages, forReact: boolean): TemplateFunction {
 	return async answers => {

@@ -13,6 +13,10 @@ import { URL } from "url";
 import { licenses } from "./core/licenses";
 import type { Answers } from "./core/questions";
 
+/**
+ *
+ * @param message
+ */
 export function error(message: string): void {
 	console.error(bold.red(message));
 	console.error();
@@ -57,6 +61,9 @@ export function executeNpmCommand(
 	return executeCommand(isWindows ? "npm.cmd" : "npm", enhancedArgs, npmOptions);
 }
 
+/**
+ *
+ */
 export interface ExecuteCommandOptions {
 	/** Whether the executed command should be logged to the stdout. Default: false */
 	logCommandExecution: boolean;
@@ -72,6 +79,9 @@ export interface ExecuteCommandOptions {
 	env: Record<string, string>;
 }
 
+/**
+ *
+ */
 export interface ExecuteCommandResult {
 	/** The exit code of the spawned process */
 	exitCode?: number;
@@ -246,6 +256,11 @@ export function applyHttpsProxy(options: AxiosRequestConfig): AxiosRequestConfig
 	return options;
 }
 
+/**
+ *
+ * @param licenseText
+ * @param answers
+ */
 export function formatLicense(licenseText: string, answers: Answers): string {
 	return licenseText
 		.replace(/\[(year|yyyy)\]/g, new Date().getFullYear().toString())
@@ -253,6 +268,10 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 		.replace(/\[email\]/g, answers.authorEmail);
 }
 
+/**
+ *
+ * @param answers
+ */
 export function getFormattedLicense(answers: Answers): string {
 	if (answers.license) {
 		const license = licenses[answers.license];
@@ -377,6 +396,12 @@ export function tsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark):
 	return result.output;
 }
 
+/**
+ *
+ * @param sourceText
+ * @param answers
+ * @param extension
+ */
 export function formatWithPrettier(
 	sourceText: string,
 	answers: Pick<Answers, "quotes" | "indentation">,
@@ -397,6 +422,9 @@ export function formatWithPrettier(
 	return prettier.format(sourceText, prettierOptions);
 }
 
+/**
+ *
+ */
 export function getOwnVersion(): string {
 	for (const jsonPath of ["../../package.json", "../../../package.json"]) {
 		try {
@@ -409,10 +437,18 @@ export function getOwnVersion(): string {
 	return "unknown";
 }
 
+/**
+ *
+ * @param name
+ */
 export function capitalize(name: string): string {
 	return name[0].toUpperCase() + name.slice(1);
 }
 
+/**
+ *
+ * @param name
+ */
 export function kebabCaseToUpperCamelCase(name: string): string {
 	return name
 		.split(/[_-]/)
@@ -421,6 +457,9 @@ export function kebabCaseToUpperCamelCase(name: string): string {
 		.join("");
 }
 
+/**
+ *
+ */
 export function getRequestTimeout(): number {
 	let ret: number | undefined;
 	if (process.env.REQUEST_TIMEOUT) {

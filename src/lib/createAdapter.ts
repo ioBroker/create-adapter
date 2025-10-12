@@ -44,6 +44,7 @@ export interface File {
 
 /**
  *
+ * @param answers
  */
 export async function createFiles(answers: Answers): Promise<File[]> {
 	const creatorVersion: string = getOwnVersion();
@@ -122,6 +123,8 @@ function formatFiles(answers: Answers, files: File[]): Promise<File[]> {
 
 /**
  *
+ * @param targetDir
+ * @param files
  */
 export async function writeFiles(targetDir: string, files: File[]): Promise<void> {
 	// write the files and make sure the target dirs exist
@@ -136,6 +139,9 @@ export async function writeFiles(targetDir: string, files: File[]): Promise<void
 
 /**
  *
+ * @param file
+ * @param relativeTo
+ * @param binary
  */
 export async function readFile(file: string, relativeTo: string, binary: boolean = false): Promise<string | Buffer> {
 	const absolutePath = path.join(relativeTo, file);
