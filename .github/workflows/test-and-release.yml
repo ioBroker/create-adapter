@@ -51,6 +51,9 @@ jobs:
       - name: Lint source code
         run: npm run lint
 
+      - name: Verify formatting
+        run: npm run format
+
       - name: Compile TypeScript code
         run: npm run build
 
