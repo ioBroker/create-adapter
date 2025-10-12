@@ -166,7 +166,7 @@ export function executeCommand(
 						: chunk;
 				});
 			}
-		} catch (e) {
+		} catch {
 			// doesn't matter, we return the exit code in the "close" handler
 		}
 	});
@@ -303,19 +303,36 @@ export enum Quotemark {
 function createESLintOptions(
 	language: Exclude<Answers["language"], undefined>,
 	quotes: keyof typeof Quotemark,
-): Record<string, any> {
-	const baseOptions: Record<string, any> = {
-		env: {
-			es6: true,
-			node: true,
-			mocha: true,
-		},
-		parserOptions: {
+): any[] {
+	// ESLint 9 flat config format
+	const baseConfig: any = {
+		languageOptions: {
 			ecmaVersion: "latest",
-			ecmaFeatures: {
-				jsx: true,
-			},
 			sourceType: "module",
+			parserOptions: {
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+			globals: {
+				// Node.js
+				process: "readonly",
+				Buffer: "readonly",
+				__dirname: "readonly",
+				__filename: "readonly",
+				module: "readonly",
+				require: "readonly",
+				exports: "readonly",
+				global: "readonly",
+				console: "readonly",
+				// Mocha
+				describe: "readonly",
+				it: "readonly",
+				before: "readonly",
+				after: "readonly",
+				beforeEach: "readonly",
+				afterEach: "readonly",
+			},
 		},
 		rules: {
 			quotes: [
@@ -328,10 +345,12 @@ function createESLintOptions(
 			],
 		},
 	};
+
 	if (language === "TypeScript") {
-		baseOptions.parser = "@typescript-eslint/parser";
+		baseConfig.languageOptions.parser = require("@typescript-eslint/parser");
 	}
-	return baseOptions;
+
+	return [baseConfig];
 }
 
 /** Formats a JS source file to use single quotes */
@@ -353,11 +372,6 @@ export function tsFixQuotes(
 	quotes: keyof typeof Quotemark,
 ): string {
 	const linter = new Linter();
-	linter.defineParser(
-		"@typescript-eslint/parser",
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		require("@typescript-eslint/parser"),
-	);
 	const result = linter.verifyAndFix(
 		sourceText,
 		createESLintOptions("TypeScript", quotes),
@@ -388,9 +402,8 @@ export function formatWithPrettier(
 export function getOwnVersion(): string {
 	for (const jsonPath of ["../../package.json", "../../../package.json"]) {
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			return require(jsonPath).version;
-		} catch (e) {
+		} catch {
 			/* OK */
 		}
 	}
@@ -404,7 +417,7 @@ export function capitalize(name: string): string {
 
 export function kebabCaseToUpperCamelCase(name: string): string {
 	return name
-		.split(/[_\-]/)
+		.split(/[_-]/)
 		.filter((part) => part.length > 0)
 		.map(capitalize)
 		.join("");

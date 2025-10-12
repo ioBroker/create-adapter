@@ -83,7 +83,7 @@ export async function getTranslatedSettings(
 		const translations = allTranslations[i];
 		const lang = languages[i];
 		for (const key in translations) {
-			if (translations.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(translations, key)) {
 				const translation =
 					translatedSettings[key] || (translatedSettings[key] = {});
 				translation[lang] = translations[key];
