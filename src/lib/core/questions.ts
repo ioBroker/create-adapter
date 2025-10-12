@@ -840,7 +840,7 @@ export const questionGroups: QuestionGroup[] = [
 				action: checkAuthorName,
 				migrate: (ctx) =>
 					ctx.ioPackageJson.common?.extIcon?.replace(
-						/^\w+:\/\/[^\/]+\.com\/([^\/]+)\/.+$/,
+						/^\w+:\/\/[^/]+\.com\/([^/]+)\/.+$/,
 						"$1",
 					),
 			},

@@ -83,7 +83,7 @@ async function checkAdapterExistence(name: string): Promise<CheckResult> {
 	try {
 		await fetchPackageVersion(`iobroker.${name}`);
 		return `The adapter ioBroker.${name} already exists!`;
-	} catch (e) {
+	} catch {
 		return true;
 	}
 }
@@ -100,14 +100,14 @@ async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true, target: "directory" };
 	let migrationContext: MigrationContextBase | undefined;
 
-	if (!!argv.replay) {
+	if (argv.replay) {
 		const replayFile = path.resolve(argv.replay);
 		const json = await fs.readFile(replayFile, "utf8");
 		answers = JSON.parse(json);
 		answers.replay = replayFile;
 	}
 
-	if (!!argv.migrate) {
+	if (argv.migrate) {
 		try {
 			const migrationDir = path.resolve(argv.migrate);
 			const ctx = new LocalMigrationContext(migrationDir);
@@ -146,7 +146,12 @@ async function ask(): Promise<Answers> {
 			}
 			while (true) {
 				let answer: Record<string, any>;
-				if (answers.hasOwnProperty(q.name as string)) {
+				if (
+					Object.prototype.hasOwnProperty.call(
+						answers,
+						q.name as string,
+					)
+				) {
 					// answer was loaded using the "replay" feature
 					answer = { [q.name as string]: answers[q.name as string] };
 				} else {
@@ -210,8 +215,8 @@ async function ask(): Promise<Answers> {
 		green.bold("====================================================="),
 		"",
 		gray(`You can cancel at any point by pressing Ctrl+C.`),
-		(answers) => (!!answers.replay ? green(`Replaying file`) : undefined),
-		(answers) => (!!answers.replay ? green(answers.replay) : undefined),
+		(answers) => (answers.replay ? green(`Replaying file`) : undefined),
+		(answers) => (answers.replay ? green(answers.replay) : undefined),
 		...questionGroups,
 		"",
 		underline(

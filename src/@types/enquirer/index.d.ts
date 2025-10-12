@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+/* eslint-disable no-undef */
 // This file patches the broken enquirer typings
 import "enquirer";
 import { EventEmitter } from "events";
@@ -174,7 +174,6 @@ declare module "enquirer" {
 				| (PromptOptions | ((this: Enquirer) => PromptOptions))[],
 		): Promise<T>;
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		class Prompt extends BasePrompt {}
 	}
 }

@@ -19,7 +19,13 @@ export abstract class MigrationContextBase {
 	): Promise<boolean>;
 
 	public hasDevDependency(packageName: string): boolean {
-		return this.packageJson.devDependencies?.hasOwnProperty(packageName);
+		if (this.packageJson.devDependencies) {
+			return Object.prototype.hasOwnProperty.call(
+				this.packageJson.devDependencies,
+				packageName,
+			);
+		}
+		return false;
 	}
 
 	public async getMainFileContent(): Promise<string> {
