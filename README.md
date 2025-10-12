@@ -95,6 +95,7 @@ For developers of this package, there are a few things to know:
     -   The last extension (`.ts`) is removed when creating the output file. Setting the `customPath` property of the template method allows you to override the output path of the file, either a constant or depending on the user's answers (function).
     -   The outputted files are automatically formatted to have the correct indentation and multiple empty lines are removed. If you don't want this, set `noReformat` to true.
 -   Test your changes with `npm test` and/or write relevant tests. For a couple of representative combination of answers, baseline adapter directories are generated. If those baselines are changed as a result of your changes, please review if those changes are desired.
+-   Migration testing is available via `npm run test:migration`. This test clones the ioBroker.example repository (which contains reference adapters created with the adapter creator) and verifies that they can be successfully recreated, built, and linted using the current version of the creator. This ensures backward compatibility with previously generated adapters.
 
 ## Publishing
 

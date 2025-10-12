@@ -1,3 +1,16 @@
+/**
+ * Migration Testing Script
+ *
+ * This script tests the adapter creation/migration functionality by:
+ * 1. Cloning the ioBroker.example repository (contains reference adapters)
+ * 2. For each adapter variant, reading its .create-adapter.json file
+ * 3. Recreating the adapter using the programmatic API with those answers
+ * 4. Verifying that the recreated adapter can build and lint successfully
+ *
+ * This ensures that the adapter creator remains compatible with previously
+ * generated adapters and that the migration/replay feature works correctly.
+ */
+
 import { blue, green, red } from "ansi-colors";
 import type { ExecSyncOptions } from "child_process";
 import { execSync } from "child_process";
