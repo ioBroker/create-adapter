@@ -98,10 +98,10 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 
 		// examples for the checkPassword/checkGroup functions
 		const pwdResult = await this.checkPasswordAsync(${quote}admin${quote}, ${quote}iobroker${quote});
-		this.log.info(${quote}check user admin pw iobroker: \${pwdResult}${quote});
+		this.log.info(\`check user admin pw iobroker: \${pwdResult}\`);
 
 		const groupResult = await this.checkGroupAsync(${quote}admin${quote}, ${quote}admin${quote});
-		this.log.info(${quote}check group user admin group admin: \${groupResult}${quote});
+		this.log.info(\`check group user admin group admin: \${groupResult}\`);
 	}
 
 	/**
@@ -118,7 +118,7 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 
 			callback();
 		} catch (error) {
-			this.log.error(${quote}Error during unloading: \${error.message}${quote});
+			this.log.error(\`Error during unloading: \${error.message}\`);
 			callback();
 		}
 	}

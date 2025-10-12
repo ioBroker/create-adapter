@@ -79,10 +79,10 @@ class HelloDevcontainer extends utils.Adapter {
 
         // examples for the checkPassword/checkGroup functions
         const pwdResult = await this.checkPasswordAsync('admin', 'iobroker');
-        this.log.info('check user admin pw iobroker: ${pwdResult}');
+        this.log.info(`check user admin pw iobroker: ${pwdResult}`);
 
         const groupResult = await this.checkGroupAsync('admin', 'admin');
-        this.log.info('check group user admin group admin: ${groupResult}');
+        this.log.info(`check group user admin group admin: ${groupResult}`);
     }
 
     /**
@@ -99,7 +99,7 @@ class HelloDevcontainer extends utils.Adapter {
 
             callback();
         } catch (error) {
-            this.log.error('Error during unloading: ${error.message}');
+            this.log.error(`Error during unloading: ${error.message}`);
             callback();
         }
     }
