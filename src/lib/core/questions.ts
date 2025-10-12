@@ -1064,6 +1064,18 @@ export async function formatAnswers(
 		const conditionFulfilled = testCondition(q.condition, answers);
 		if (!conditionFulfilled) continue;
 
+		// Apply default value from initial if answer is missing and not optional
+		if (
+			answers[q.name as string] == undefined &&
+			!q.optional &&
+			q.initial !== undefined
+		) {
+			answers[q.name as string] =
+				typeof q.initial === "function"
+					? q.initial(answers)
+					: q.initial;
+		}
+
 		// Apply an optional transformation
 		if (
 			answers[q.name as string] != undefined &&

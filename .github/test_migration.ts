@@ -79,16 +79,9 @@ async function testVariant(variantName: string): Promise<TestResult> {
 			return result;
 		}
 
-		let answers = (await fs.readJSON(
+		const answers = (await fs.readJSON(
 			createAdapterJsonPath,
 		)) as Answers;
-
-		// Fill in missing answers with sensible defaults
-		// This is needed when testing with older .create-adapter.json files
-		// that may not have all the answers required by the current version
-		if (answers.features?.includes("vis") && !answers.widgetIsMainFunction) {
-			answers.widgetIsMainFunction = "main";
-		}
 
 		// Clean output directory
 		if (await fs.pathExists(outputPath)) {
