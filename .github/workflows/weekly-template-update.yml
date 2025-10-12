@@ -1,0 +1,34 @@
+name: Weekly Template Update
+
+# Run weekly on Tuesdays at night (European time)
+on:
+  schedule:
+    # Runs at 02:00 AM CET/CEST on Tuesdays (01:00 AM UTC in summer, 02:00 AM UTC in winter)
+    # Using 01:00 AM UTC which is 02:00 AM CET (winter) or 03:00 AM CEST (summer)
+    - cron: '0 1 * * 2'
+  # Allow manual trigger for testing
+  workflow_dispatch:
+
+jobs:
+  update-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Use Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Update ioBroker.template repo
+        run: bash .github/update_templates.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALCALZONE_GITHUB_TOKEN }}
