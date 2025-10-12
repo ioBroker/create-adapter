@@ -6,15 +6,14 @@ const templateFunction: TemplateFunction = answers => {
 	const useReact = answers.adminUi === "react";
 	if (!useReact) return;
 
-	const template = `
+	const template = `/* eslint-disable @typescript-eslint/no-require-imports */
 import React from "react";
-import { ${useTypeScript ? "Theme, " : ""}withStyles } from "@material-ui/core/styles";
+import { ${useTypeScript ? "type Theme, type StyleRules, " : ""}withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
 import Settings from "./components/settings";
 ${useTypeScript ?
-`import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
-import { StyleRules } from "@material-ui/core/styles";
+`import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
 ` : ""}
 ${useTypeScript ?
 `const styles = (_theme: Theme): StyleRules => ({
@@ -32,16 +31,16 @@ class App extends GenericApp {
 			...props,
 			encryptedFields: [],
 			translations: {
-				"en": require("./i18n/en.json"),
-				"de": require("./i18n/de.json"),
-				"ru": require("./i18n/ru.json"),
-				"pt": require("./i18n/pt.json"),
-				"nl": require("./i18n/nl.json"),
-				"fr": require("./i18n/fr.json"),
-				"it": require("./i18n/it.json"),
-				"es": require("./i18n/es.json"),
-				"pl": require("./i18n/pl.json"),
-				"uk": require("./i18n/uk.json"),
+				en: require("./i18n/en.json"),
+				de: require("./i18n/de.json"),
+				ru: require("./i18n/ru.json"),
+				pt: require("./i18n/pt.json"),
+				nl: require("./i18n/nl.json"),
+				fr: require("./i18n/fr.json"),
+				it: require("./i18n/it.json"),
+				es: require("./i18n/es.json"),
+				pl: require("./i18n/pl.json"),
+				uk: require("./i18n/uk.json"),
 				"zh-cn": require("./i18n/zh-cn.json"),
 			},
 		};
@@ -52,14 +51,17 @@ class App extends GenericApp {
 		// executed when connection is ready
 	}
 
-	render() {
+	render()${useTypeScript ? ': Element' :''} {
 		if (!this.state.loaded) {
 			return super.render();
 		}
 
 		return (
 			<div className="App">
-				<Settings native={this.state.native} onChange={(attr, value) => this.updateNativeValue(attr, value)} />
+				<Settings
+					native={this.state.native}
+					onChange={(attr, value) => this.updateNativeValue(attr, value)}
+				/>
 				{this.renderError()}
 				{this.renderToast()}
 				{this.renderSaveCloseButtons()}
@@ -70,7 +72,7 @@ class App extends GenericApp {
 
 export default withStyles(styles)(App);
 `;
-	return template.trim();};
+	return template;};
 
 templateFunction.customPath = (answers) => {
 	const useTypeScript = answers.language === "TypeScript";

@@ -26,9 +26,8 @@ const utils = require(${quote}@iobroker/adapter-core${quote});
 // const fs = require(${quote}fs${quote});
 
 class ${className} extends utils.Adapter {
-
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
+	 * @param {Partial<utils.AdapterOptions>} [options] - Adapter options
 	 */
 	constructor(options) {
 		super({
@@ -172,21 +171,20 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 	// ${t}${t}}
 	// ${t}}
 	// }
-
 }
 
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
+	 * @param {Partial<utils.AdapterOptions>} [options] - Adapter options
 	 */
-	module.exports = (options) => new ${className}(options);
+	module.exports = options => new ${className}(options);
 } else {
 	// otherwise start the instance directly
 	new ${className}();
 }
 `;
-	return template.trim();
+	return template;
 };
 templateFunction.customPath = "main.js";
 export = templateFunction;

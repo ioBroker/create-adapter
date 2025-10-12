@@ -12,9 +12,8 @@ const utils = require('@iobroker/adapter-core');
 // const fs = require('fs');
 
 class HelloDevcontainer extends utils.Adapter {
-
     /**
-     * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
+     * @param {Partial<utils.AdapterOptions>} [options] - Adapter options
      */
     constructor(options) {
         super({
@@ -154,15 +153,14 @@ class HelloDevcontainer extends utils.Adapter {
     //         }
     //     }
     // }
-
 }
 
 if (require.main !== module) {
     // Export the constructor in compact mode
     /**
-     * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
+     * @param {Partial<utils.AdapterOptions>} [options] - Adapter options
      */
-    module.exports = (options) => new HelloDevcontainer(options);
+    module.exports = options => new HelloDevcontainer(options);
 } else {
     // otherwise start the instance directly
     new HelloDevcontainer();

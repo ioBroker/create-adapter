@@ -6,14 +6,13 @@ const templateFunction: TemplateFunction = answers => {
 	const useReact = answers.tabReact === "yes";
 	if (!useReact) return;
 
-	const template = `
+	const template = `/* eslint-disable @typescript-eslint/no-require-imports */
 import React from "react";
-import { ${useTypeScript ? "Theme, " : ""}withStyles } from "@material-ui/core/styles";
+import { ${useTypeScript ? "type Theme, type StyleRules, " : ""}withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
 ${useTypeScript ?
-`import { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
-import { StyleRules } from "@material-ui/core/styles";
+`import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
 ` : ""}
 ${useTypeScript ?
 `const styles = (_theme: Theme): StyleRules => ({
@@ -32,16 +31,16 @@ class TabApp extends GenericApp {
             bottomButtons: false,
 			encryptedFields: [],
 			translations: {
-				"en": require("./i18n/en.json"),
-				"de": require("./i18n/de.json"),
-				"ru": require("./i18n/ru.json"),
-				"pt": require("./i18n/pt.json"),
-				"nl": require("./i18n/nl.json"),
-				"fr": require("./i18n/fr.json"),
-				"it": require("./i18n/it.json"),
-				"es": require("./i18n/es.json"),
-				"pl": require("./i18n/pl.json"),
-				"uk": require("./i18n/uk.json"),
+				en: require("./i18n/en.json"),
+				de: require("./i18n/de.json"),
+				ru: require("./i18n/ru.json"),
+				pt: require("./i18n/pt.json"),
+				nl: require("./i18n/nl.json"),
+				fr: require("./i18n/fr.json"),
+				it: require("./i18n/it.json"),
+				es: require("./i18n/es.json"),
+				pl: require("./i18n/pl.json"),
+				uk: require("./i18n/uk.json"),
 				"zh-cn": require("./i18n/zh-cn.json"),
 			},
 		};
@@ -52,7 +51,7 @@ class TabApp extends GenericApp {
 		// executed when connection is ready
 	}
 
-	render() {
+	render()${useTypeScript ? ': React.JSX.Element' :''} {
 		if (!this.state.loaded) {
 			return super.render();
 		}
@@ -69,7 +68,7 @@ class TabApp extends GenericApp {
 
 export default withStyles(styles)(TabApp);
 `;
-	return template.trim();};
+	return template;};
 
 templateFunction.customPath = (answers) => {
 	const useTypeScript = answers.language === "TypeScript";

@@ -10,8 +10,7 @@ const templateFunction: TemplateFunction = answers => {
 		answers.adminUi === "react" || answers.tabReact === "yes";
 	if (!useReact) return;
 
-	const template = `
-/*
+	const template = `/*
  * This file loads the translations keys from \`i18n/en.json\` file and overrides
  * the declarations for the translate function \`I18n.t\` available in "@iobroker/adapter-react/i18n".
  * Using these definitions it is ensured that all used translations in the React
@@ -27,18 +26,20 @@ const templateFunction: TemplateFunction = answers => {
 /**
  * Available words in \`i18n/en.json\`.
  */
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 declare type AdminWord = keyof typeof import("./en.json");
 
 declare module "@iobroker/adapter-react/i18n" {
 	/**
 	 * Translate the given string to the selected language.
+	 *
 	 * @param word The (key) word to look up the string. Has to be defined at least in \`i18n/en.json\`.
 	 * @param args Optional arguments which will replace the first (second, third, ...) occurence of %s
 	 */
 	function t(word: AdminWord, ...args: string[]): string;
 }
 `;
-	return template.trim();
+	return template;
 };
 
 templateFunction.customPath = "admin/src/i18n/i18n.d.ts";
