@@ -1,11 +1,13 @@
-import { AdapterSettings, getDefaultAnswer } from "../src/lib/core/questions";
+import type { AdapterSettings } from "../src/lib/core/questions";
+import { getDefaultAnswer } from "../src/lib/core/questions";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 import { kebabCaseToUpperCamelCase } from "../src/lib/tools";
 
 const templateFunction: TemplateFunction = async answers => {
-
 	const useJavaScript = answers.language === "JavaScript";
-	if (!useJavaScript) return;
+	if (!useJavaScript) {
+		return;
+	}
 
 	const className = kebabCaseToUpperCamelCase(answers.adapterName);
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
@@ -47,10 +49,14 @@ class ${className} extends utils.Adapter {
 	async onReady() {
 		// Initialize your adapter here
 
-${answers.connectionIndicator === "yes" ? `
+${
+	answers.connectionIndicator === "yes"
+		? `
 		// Reset the connection indicator during startup
 		this.setState(${quote}info.connection${quote}, false, true);
-` : ""}
+`
+		: ""
+}
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:

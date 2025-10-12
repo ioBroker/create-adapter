@@ -1,17 +1,22 @@
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
-	if (!devcontainer) return;
+	if (!devcontainer) {
+		return;
+	}
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const useESLint = !!answers.tools?.includes("ESLint");
 	const usePrettier = !!answers.tools?.includes("Prettier");
 
 	const extensions: string[] = [];
-	if (useESLint) extensions.push("dbaeumer.vscode-eslint");
-	if (usePrettier) extensions.push("esbenp.prettier-vscode");
+	if (useESLint) {
+		extensions.push("dbaeumer.vscode-eslint");
+	}
+	if (usePrettier) {
+		extensions.push("esbenp.prettier-vscode");
+	}
 
 	const template = `
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:

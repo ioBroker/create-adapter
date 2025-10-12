@@ -2,11 +2,14 @@ import * as JSON5 from "json5";
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	// This version is intended to make ESLint happy with the JS tests in TS adapters
-	if (answers.language !== "TypeScript") return;
+	if (answers.language !== "TypeScript") {
+		return;
+	}
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
-	if (!useESLint) return;
+	if (!useESLint) {
+		return;
+	}
 
 	const template = `
 {

@@ -697,7 +697,7 @@ describe("adapter creation =>", () => {
 						throw new Error(`Workflow file not found for Node.js ${testCase.nodeVersion}`);
 					}
 
-					const content = workflowFile.content;
+					const content = workflowFile.content.toString();
 
 					// Check that the matrix includes only the expected versions
 					const matrixMatch = content.match(/node-version: \[(.*?)\]/);
@@ -720,7 +720,7 @@ describe("adapter creation =>", () => {
 					// All LTS references should use the expected version
 					for (const ltsMatch of ltsMatches) {
 						const ltsVersion = ltsMatch.match(/'(\d+\.x)'/)?.[1];
-						ltsVersion.should.equal(
+						ltsVersion!.should.equal(
 							testCase.expectedLts,
 							`For Node.js ${testCase.nodeVersion}, expected LTS ${testCase.expectedLts} but got ${ltsVersion}`,
 						);

@@ -1,14 +1,16 @@
 import type { TemplateFunction } from "../../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = answers.tools?.includes("type checking");
-	if (!useTypeScript && !useTypeChecking) return;
+	if (!useTypeScript && !useTypeChecking) {
+		return;
+	}
 
-	const useReact =
-		answers.adminUi === "react" || answers.tabReact === "yes";
-	if (!useReact) return;
+	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
+	if (!useReact) {
+		return;
+	}
 
 	const template = `/*
  * This file loads the translations keys from \`i18n/en.json\` file and overrides

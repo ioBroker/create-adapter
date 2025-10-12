@@ -117,7 +117,7 @@ const templates: Record<string, Answers> = {
 	},
 };
 
-(async () => {
+void (async () => {
 	console.log();
 	console.log(green("Removing old templates"));
 	console.log(green("======================"));

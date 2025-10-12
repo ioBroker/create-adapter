@@ -2,28 +2,24 @@ import type { TemplateFunction } from "../../../src/lib/createAdapter";
 import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../../../src/lib/constants";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const isAdapter = answers.features?.includes("adapter");
 	const useTypeScript = answers.language === "TypeScript";
 	const useESLint = answers.tools?.includes("ESLint");
 	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
 	const needsBuild = useTypeScript || useReact;
-	const sourcemapPaths = [
-		...(useTypeScript ? ["build/"] : []),
-		...(useReact ? ["admin/build/"] : []),
-	];
+	const sourcemapPaths = [...(useTypeScript ? ["build/"] : []), ...(useReact ? ["admin/build/"] : [])];
 	const useReleaseScript = answers.releaseScript === "yes";
 	const isGitHub = answers.target === "github";
 
 	// Determine the LTS version and test versions based on the minimum Node.js version selected
 	const minNodeVersion = answers.nodeVersion || RECOMMENDED_NODE_VERSION_FALLBACK;
 	const ltsNodeVersion = `${minNodeVersion}.x`;
-	
+
 	// Filter test versions to only include versions >= the minimum version
 	const allTestVersions = ["20.x", "22.x", "24.x"];
 	const minVersionNumber = parseInt(minNodeVersion, 10);
 	const adapterTestVersions = allTestVersions.filter(version => {
-		const versionNumber = parseInt(version.split('.')[0], 10);
+		const versionNumber = parseInt(version.split(".")[0], 10);
 		return versionNumber >= minVersionNumber;
 	});
 
@@ -32,10 +28,7 @@ const templateFunction: TemplateFunction = answers => {
 	const adapterName = answers.adapterName;
 
 	const deploy = useReleaseScript && isGitHub;
-	const escapeDeploy = 
-		deploy ?
-			(input: string) => input :
-			(input: string) => input.replace(/^/gm, '#');
+	const escapeDeploy = deploy ? (input: string) => input : (input: string) => input.replace(/^/gm, "#");
 
 	const template = `
 name: Test and Release
@@ -70,12 +63,21 @@ jobs:
         with:
           node-version: '${ltsNodeVersion}'
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-          # install-command: 'npm install'${useTypeScript ? (`
-          type-checking: true`) : ""}${useESLint ? (`
-          lint: true`) : ""}
+          # install-command: 'npm install'${
+				useTypeScript
+					? `
+          type-checking: true`
+					: ""
+			}${
+				useESLint
+					? `
+          lint: true`
+					: ""
+			}
 
-${isAdapter ? (
-`  # Runs adapter tests on all supported node versions and OSes
+${
+	isAdapter
+		? `  # Runs adapter tests on all supported node versions and OSes
   adapter-tests:
     if: contains(github.event.head_commit.message, '[skip ci]') == false
 
@@ -91,15 +93,25 @@ ${isAdapter ? (
           node-version: \${{ matrix.node-version }}
           os: \${{ matrix.os }}
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-          # install-command: 'npm install'${needsBuild ? (`
-          build: true`) : ""}
-`) : ""}${deploy ? "" : (`
+          # install-command: 'npm install'${
+				needsBuild
+					? `
+          build: true`
+					: ""
+			}
+`
+		: ""
+}${
+		deploy
+			? ""
+			: `
 # TODO: To enable automatic npm releases, create a token on npmjs.org 
 # Enter this token as a GitHub secret (with name NPM_TOKEN) in the repository options
 # Then uncomment the following block:
-`)}
+`
+	}
 ${escapeDeploy(
-`  # Deploys the final package to NPM
+	`  # Deploys the final package to NPM
   deploy:
     needs: [check-and-lint${isAdapter ? ", adapter-tests" : ""}]
 
@@ -120,8 +132,12 @@ ${escapeDeploy(
         with:
           node-version: '${ltsNodeVersion}'
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-          # install-command: 'npm install'${needsBuild ? (`
-          build: true`) : ""}
+          # install-command: 'npm install'${
+				needsBuild
+					? `
+          build: true`
+					: ""
+			}
           npm-token: \${{ secrets.NPM_TOKEN }}
           github-token: \${{ secrets.GITHUB_TOKEN }}
 
@@ -132,10 +148,15 @@ ${escapeDeploy(
           sentry: true
           sentry-token: \${{ secrets.SENTRY_AUTH_TOKEN }}
           sentry-project: "iobroker-${adapterName}"
-          sentry-version-prefix: "iobroker.${adapterName}"${needsBuild ? (`
-          sentry-sourcemap-paths: "${sourcemapPaths.join(" ")}"`) : ""}
+          sentry-version-prefix: "iobroker.${adapterName}"${
+				needsBuild
+					? `
+          sentry-sourcemap-paths: "${sourcemapPaths.join(" ")}"`
+					: ""
+			}
           # If your sentry project is linked to a GitHub repository, you can enable the following option
-          # sentry-github-integration: true`)}
+          # sentry-github-integration: true`,
+)}
 `;
 	return template.trimLeft();
 };

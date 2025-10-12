@@ -3,14 +3,12 @@ import type { TemplateFunction } from "../src/lib/createAdapter";
 import { getFormattedLicense } from "../src/lib/tools";
 
 export = (answers => {
-
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTypeChecking = useTypeScript || answers.tools?.includes("type checking");
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
-	const useReact =
-		answers.adminUi === "react" || answers.tabReact === "yes";
+	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
 	const autoInitGit = answers.gitCommit === "yes";
 	const defaultBranch = answers.defaultBranch || "main";
 	const useReleaseScript = answers.releaseScript === "yes";
@@ -20,14 +18,14 @@ export = (answers => {
 
 	const npmScripts: Record<string, string> = {};
 	if (useTypeScript && !useReact) {
-		npmScripts["build"] = "Compile the TypeScript sources.";
-		npmScripts["watch"] = "Compile the TypeScript sources and watch for changes.";
+		npmScripts.build = "Compile the TypeScript sources.";
+		npmScripts.watch = "Compile the TypeScript sources and watch for changes.";
 	} else if (useReact && !useTypeScript) {
-		npmScripts["build"] = "Compile the React sources.";
-		npmScripts["watch"] = "Compile the React sources and watch for changes.";
+		npmScripts.build = "Compile the React sources.";
+		npmScripts.watch = "Compile the React sources and watch for changes.";
 	} else if (useReact && useTypeScript) {
-		npmScripts["build"] = "Compile the TypeScript and React sources.";
-		npmScripts["watch"] = "Compile the TypeScript and React sources and watch for changes.";
+		npmScripts.build = "Compile the TypeScript and React sources.";
+		npmScripts.watch = "Compile the TypeScript and React sources and watch for changes.";
 		npmScripts["build:ts"] = "Compile the TypeScript sources.";
 		npmScripts["watch:ts"] = "Compile the TypeScript sources and watch for changes.";
 		npmScripts["build:react"] = "Compile the React sources.";
@@ -45,19 +43,21 @@ export = (answers => {
 	if (isAdapter) {
 		npmScripts["test:integration"] = "Tests the adapter startup with an actual instance of ioBroker.";
 	}
-	npmScripts["test"] = `Performs a minimal test run on package files${isAdapter ? " and your tests" : ""}.`;
+	npmScripts.test = `Performs a minimal test run on package files${isAdapter ? " and your tests" : ""}.`;
 	if (useTypeChecking) {
-		npmScripts["check"] = "Performs a type-check on your code (without compiling anything).";
+		npmScripts.check = "Performs a type-check on your code (without compiling anything).";
 	}
 	if (useNyc) {
-		npmScripts["coverage"] = "Generates code coverage using your test files.";
+		npmScripts.coverage = "Generates code coverage using your test files.";
 	}
 	if (useESLint) {
-		npmScripts["lint"] = "Runs \`ESLint\` to check your code for formatting errors and potential bugs.";
+		npmScripts.lint = "Runs \`ESLint\` to check your code for formatting errors and potential bugs.";
 	}
-	npmScripts["translate"] = "Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details.";
+	npmScripts.translate =
+		"Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details.";
 	if (useReleaseScript) {
-		npmScripts["release"] = "Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details.";
+		npmScripts.release =
+			"Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details.";
 	}
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
@@ -89,15 +89,18 @@ You can check other adapters for examples or ask in the developer community. Usi
 ### Getting started
 
 You are almost done, only a few steps left:
-${isGitHub ? 
-(`1. Clone the repository from GitHub to a directory on your PC:
+${
+	isGitHub
+		? `1. Clone the repository from GitHub to a directory on your PC:
 	\`\`\`bash
 	git clone https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}
 	\`\`\`
-`) :
-(`1. Create a new repository on GitHub with the name \`ioBroker.${answers.adapterName}\`
-${autoInitGit ? "" : (
-`1. Initialize the current folder as a new git repository:  
+`
+		: `1. Create a new repository on GitHub with the name \`ioBroker.${answers.adapterName}\`
+${
+	autoInitGit
+		? ""
+		: `1. Initialize the current folder as a new git repository:  
 	\`\`\`bash
 	git init -b ${defaultBranch}
 	git add .
@@ -107,21 +110,27 @@ ${autoInitGit ? "" : (
 	\`\`\`bash
 	git remote add origin https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}
 	\`\`\`
-`)}
+`
+}
 1. Push all files to the GitHub repo${autoInitGit ? ". The creator has already set up the local repository for you" : ""}:  
 	\`\`\`bash
 	git push origin ${defaultBranch}
 	\`\`\`
-${useDependabot ? (
-`1. Add a new secret under https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/settings/secrets. It must be named \`AUTO_MERGE_TOKEN\` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
-`) : ""}
-`)}
+${
+	useDependabot
+		? `1. Add a new secret under https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}/settings/secrets. It must be named \`AUTO_MERGE_TOKEN\` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+`
+		: ""
+}
+`
+}
 1. Head over to ${
-	isAdapter ? (
-		useTypeScript ? "[src/main.ts](src/main.ts)"
-		: "[main.js](main.js)"
-	) : `[widgets/${answers.adapterName}.html](widgets/${answers.adapterName}.html)`
-} and start programming!
+		isAdapter
+			? useTypeScript
+				? "[src/main.ts](src/main.ts)"
+				: "[main.js](main.js)"
+			: `[widgets/${answers.adapterName}.html](widgets/${answers.adapterName}.html)`
+	} and start programming!
 
 ### Best Practices
 We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
@@ -131,16 +140,22 @@ check them out. If you're already experienced, you should also take a look at th
 Several npm scripts are predefined for your convenience. You can run them using \`npm run <scriptname>\`
 | Script name | Description |
 |-------------|-------------|
-${Object.entries(npmScripts).map(([name, desc]) => (
-	`| \`${name}\` | ${desc} |`
-)).join("\n")}
+${Object.entries(npmScripts)
+	.map(([name, desc]) => `| \`${name}\` | ${desc} |`)
+	.join("\n")}
 
-${useTypeScript || useReact ? `### Configuring the compilation
+${
+	useTypeScript || useReact
+		? `### Configuring the compilation
 The adapter template uses [esbuild](https://esbuild.github.io/) to compile TypeScript and/or React code. You can configure many compilation settings 
 either in \`tsconfig.json\` or by changing options for the build tasks. These options are described in detail in the
-[\`@iobroker/adapter-dev\` documentation](https://github.com/ioBroker/adapter-dev#compile-adapter-files).` : ""}
+[\`@iobroker/adapter-dev\` documentation](https://github.com/ioBroker/adapter-dev#compile-adapter-files).`
+		: ""
+}
 
-${isAdapter ? `### Writing tests
+${
+	isAdapter
+		? `### Writing tests
 When done right, testing code is invaluable, because it gives you the 
 confidence to change your code while knowing exactly if and when 
 something breaks. A good read on the topic of test-driven development 
@@ -151,11 +166,15 @@ clear upsides.
 The template provides you with basic tests for the adapter startup and package files.
 It is recommended that you add your own tests into the mix.
 
-` : ""}### Publishing the ${isAdapter ? "adapter" : "widget"}
+`
+		: ""
+}### Publishing the ${isAdapter ? "adapter" : "widget"}
 Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form 
 \`v<major>.<minor>.<patch>\`. We **strongly recommend** that you do. The necessary steps are described in \`.github/workflows/test-and-release.yml\`.
 
-${useReleaseScript ? `Since you installed the release script, you can create a new
+${
+	useReleaseScript
+		? `Since you installed the release script, you can create a new
 release simply by calling:
 \`\`\`bash
 npm run release
@@ -163,10 +182,14 @@ npm run release
 Additional command line options for the release script are explained in the
 [release-script documentation](https://github.com/AlCalzone/release-script#command-line).
 
-` : ""}To get your ${isAdapter ? "adapter" : "widget"} released in ioBroker, please refer to the documentation 
+`
+		: ""
+}To get your ${isAdapter ? "adapter" : "widget"} released in ioBroker, please refer to the documentation 
 of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
 
-${useDevServer ? `
+${
+	useDevServer
+		? `
 ### Test the adapter manually with dev-server
 Since you set up \`dev-server\`, you can use it to run, test and debug your adapter.
 
@@ -178,7 +201,9 @@ dev-server watch
 The ioBroker.admin interface will then be available at http://localhost:${answers.devServerPort}/
 
 Please refer to the [\`dev-server\` documentation](https://github.com/ioBroker/dev-server#command-line) for more details.
-` : isGitHub ? `
+`
+		: isGitHub
+			? `
 ### Test the adapter manually with dev-server
 Please use \`dev-server\` to test and debug your adapter.
 
@@ -190,7 +215,8 @@ dev-server watch
 \`\`\`
 
 Please refer to the [\`dev-server\` documentation](https://github.com/ioBroker/dev-server#readme) for more details.
-` : `
+`
+			: `
 ### Test the adapter manually on a local ioBroker installation
 In order to install the adapter locally without publishing, the following steps are recommended:
 1. Create a tarball from your dev directory:  
@@ -207,13 +233,18 @@ In order to install the adapter locally without publishing, the following steps 
 For later updates, the above procedure is not necessary. Just do the following:
 1. Overwrite the changed files in the adapter directory (\`/opt/iobroker/node_modules/iobroker.${adapterNameLowerCase}\`)
 1. Execute \`iobroker upload ${adapterNameLowerCase}\` on the ioBroker host
-`}
+`
+}
 ## Changelog
-${useReleaseScript ? `<!--
+${
+	useReleaseScript
+		? `<!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-` : ""}
+`
+		: ""
+}
 ### ${useReleaseScript ? "**WORK IN PROGRESS**" : "0.0.1"}
 * (${answers.authorName}) initial release
 

@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export abstract class MigrationContextBase {
 	public packageJson!: Record<string, any>;
 	public ioPackageJson!: Record<string, any>;
@@ -5,9 +8,7 @@ export abstract class MigrationContextBase {
 	public abstract joinPath(...parts: string[]): string;
 
 	public abstract readTextFile(fileName: string): Promise<string>;
-	public abstract readJsonFile(
-		fileName: string,
-	): Promise<Record<string, any>>;
+	public abstract readJsonFile(fileName: string): Promise<Record<string, any>>;
 
 	public abstract directoryExists(dirName: string): Promise<boolean>;
 	public abstract fileExists(dirName: string): Promise<boolean>;
@@ -18,16 +19,20 @@ export abstract class MigrationContextBase {
 		filter?: (fileName: string) => boolean,
 	): Promise<boolean>;
 
+	/**
+	 *
+	 * @param packageName
+	 */
 	public hasDevDependency(packageName: string): boolean {
 		if (this.packageJson.devDependencies) {
-			return Object.prototype.hasOwnProperty.call(
-				this.packageJson.devDependencies,
-				packageName,
-			);
+			return Object.prototype.hasOwnProperty.call(this.packageJson.devDependencies, packageName);
 		}
 		return false;
 	}
 
+	/**
+	 *
+	 */
 	public async getMainFileContent(): Promise<string> {
 		if (
 			!this.packageJson.main ||
@@ -40,19 +45,10 @@ export abstract class MigrationContextBase {
 
 		try {
 			const tsMains = [
-				this.joinPath(
-					"src",
-					this.packageJson.main.replace(/\.js$/, ".ts"),
-				),
-				this.packageJson.main
-					.replace(/\.js$/, ".ts")
-					.replace(/^dist([\\/])/, "src$1"),
-				this.packageJson.main
-					.replace(/\.js$/, ".ts")
-					.replace(/^build([\\/])/, "src$1"),
-				this.packageJson.main
-					.replace(/\.js$/, ".ts")
-					.replace(/^(build|dist)[\\/]/, ""),
+				this.joinPath("src", this.packageJson.main.replace(/\.js$/, ".ts")),
+				this.packageJson.main.replace(/\.js$/, ".ts").replace(/^dist([\\/])/, "src$1"),
+				this.packageJson.main.replace(/\.js$/, ".ts").replace(/^build([\\/])/, "src$1"),
+				this.packageJson.main.replace(/\.js$/, ".ts").replace(/^(build|dist)[\\/]/, ""),
 			];
 			for (const tsMain of tsMains) {
 				if (await this.fileExists(tsMain)) {
@@ -67,10 +63,14 @@ export abstract class MigrationContextBase {
 		}
 	}
 
+	/**
+	 *
+	 * @param either
+	 * @param or
+	 */
 	public async analyzeCode(either: string, or: string): Promise<boolean> {
 		const content = await this.getMainFileContent();
-		const eitherCount = (content.match(new RegExp(either, "g")) || [])
-			.length;
+		const eitherCount = (content.match(new RegExp(either, "g")) || []).length;
 		const orCount = (content.match(new RegExp(or, "g")) || []).length;
 		return eitherCount >= orCount;
 	}

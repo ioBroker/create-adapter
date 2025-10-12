@@ -1,15 +1,16 @@
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
 	const useOfficialESLintConfig = useESLint && answers.eslintConfig === "official";
-	if (!useOfficialESLintConfig) return;
+	if (!useOfficialESLintConfig) {
+		return;
+	}
 
 	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
-	
+
 	// Build the ignores array based on project structure
-	let ignores = [
+	const ignores = [
 		"'.dev-server/'",
 		"'.vscode/'",
 		"'*.test.js'",

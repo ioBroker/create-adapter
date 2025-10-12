@@ -1,28 +1,35 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.tabReact === "yes";
-	if (!useReact) return;
+	if (!useReact) {
+		return;
+	}
 
 	const template = `/* eslint-disable @typescript-eslint/no-require-imports */
 import React from "react";
 import { ${useTypeScript ? "type Theme, type StyleRules, " : ""}withStyles } from "@material-ui/core/styles";
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
-${useTypeScript ?
-`import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
-` : ""}
-${useTypeScript ?
-`const styles = (_theme: Theme): StyleRules => ({
+${
+	useTypeScript
+		? `import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
+`
+		: ""
+}
+${
+	useTypeScript
+		? `const styles = (_theme: Theme): StyleRules => ({
 	root: {},
-});` : `/**
+});`
+		: `/**
  * @type {(_theme: Theme) => import("@material-ui/styles").StyleRules}
  */
 const styles = (_theme) => ({
 	root: {},
-});`}
+});`
+}
 
 class TabApp extends GenericApp {
 	constructor(props${useTypeScript ? ": GenericAppProps" : ""}) {
@@ -51,7 +58,7 @@ class TabApp extends GenericApp {
 		// executed when connection is ready
 	}
 
-	render()${useTypeScript ? ': React.JSX.Element' :''} {
+	render()${useTypeScript ? ": React.JSX.Element" : ""} {
 		if (!this.state.loaded) {
 			return super.render();
 		}
@@ -68,10 +75,11 @@ class TabApp extends GenericApp {
 
 export default withStyles(styles)(TabApp);
 `;
-	return template;};
+	return template;
+};
 
-templateFunction.customPath = (answers) => {
+templateFunction.customPath = answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	return `admin/src/tab-app.${useTypeScript ? "tsx" : "jsx"}`;
-}
+};
 export = templateFunction;

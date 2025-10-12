@@ -1,10 +1,11 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminUi === "react";
-	if (!useReact) return;
+	if (!useReact) {
+		return;
+	}
 
 	const template = `import React from "react";
 import ReactDOM from "react-dom";
@@ -35,8 +36,8 @@ build();
 	return template;
 };
 
-templateFunction.customPath = (answers) => {
+templateFunction.customPath = answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	return `admin/src/index.${useTypeScript ? "tsx" : "jsx"}`;
-}
+};
 export = templateFunction;

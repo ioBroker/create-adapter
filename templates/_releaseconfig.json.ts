@@ -2,7 +2,9 @@ import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 	const useReleaseScript = answers.releaseScript === "yes";
-	if (!useReleaseScript) return;
+	if (!useReleaseScript) {
+		return;
+	}
 
 	const useTypeScript = answers.language === "TypeScript";
 	const useAdminReact = answers.adminUi === "react";
@@ -15,11 +17,10 @@ const templateFunction: TemplateFunction = answers => {
 	if (useTypeScript || useReact) {
 		template.exec = {
 			before_commit: "npm run build",
-		}
+		};
 	}
 
-
-	return JSON.stringify(template, undefined, '\t');
+	return JSON.stringify(template, undefined, "\t");
 };
 
 templateFunction.customPath = ".releaseconfig.json";

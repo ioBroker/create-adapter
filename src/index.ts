@@ -1,16 +1,14 @@
 import type { Answers } from "./lib/core/questions";
-import {
-	checkAnswers,
-	formatAnswers,
-	validateAnswers,
-} from "./lib/core/questions";
+import { checkAnswers, formatAnswers, validateAnswers } from "./lib/core/questions";
 import type { File } from "./lib/createAdapter";
 import { createFiles } from "./lib/createAdapter";
 
-export async function createAdapter(
-	answers: Answers,
-	disableValidation: (keyof Answers)[] = [],
-): Promise<File[]> {
+/**
+ *
+ * @param answers
+ * @param disableValidation
+ */
+export async function createAdapter(answers: Answers, disableValidation: (keyof Answers)[] = []): Promise<File[]> {
 	// Check all answers
 	checkAnswers(answers);
 	answers = (await formatAnswers(answers)) as Answers;

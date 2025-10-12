@@ -24,7 +24,6 @@ describe('module to test => function to test', () => {
         result.should.equal(expected);
     });
     // ... more tests => it
-
 });
 
 // ... more test suites => describe

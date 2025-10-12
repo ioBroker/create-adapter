@@ -18,7 +18,7 @@ const testAllFiles = async (assertion: (content: string, filename: string) => vo
  */
 describe("./core directory", () => {
 	it("should not contain any imports from base directory (../)", async () => {
-		testAllFiles((content, file) =>
+		await testAllFiles((content, file) =>
 			content.should.not.match(/import .+ from "\.\./gi, `${file} contains an import from the base directory`),
 		);
 	});

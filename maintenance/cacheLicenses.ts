@@ -53,7 +53,7 @@ async function loadLicenses() {
 	return licenses;
 }
 
-(async function main() {
+void (async function main() {
 	const argv = await yargs.option("force", { type: "boolean" }).parseAsync();
 	let templateContent = await fs.readFile(licenseCacheFile, "utf8");
 	const startMarkerEnd = templateContent.indexOf(startMarker) + startMarker.length;

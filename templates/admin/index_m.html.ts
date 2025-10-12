@@ -1,31 +1,36 @@
-import { AdapterSettings, getDefaultAnswer, getIconName } from "../../src/lib/core/questions";
+import type { AdapterSettings } from "../../src/lib/core/questions";
+import { getDefaultAnswer, getIconName } from "../../src/lib/core/questions";
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 function generateSettingsDiv(settings: AdapterSettings): string {
 	if (settings.inputType === "select" && settings.options) {
-		const options = settings.options.map(opt => `
-					<option value="${opt.value}">${opt.text}</option>`).join("");
+		const options = settings.options
+			.map(
+				opt => `
+					<option value="${opt.value}">${opt.text}</option>`,
+			)
+			.join("");
 		return `
 			<div class="col s6 input-field">
 				<select class="value" id="${settings.key}">${options}
 				</select>
 				<label for="${settings.key}" class="translate">${settings.label || settings.key}</label>
 			</div>`;
-	} else {
-		return `
+	}
+	return `
 			<div class="col s6 input-field">
 				<input type="${settings.inputType}" class="value" id="${settings.key}" />
 				<label for="${settings.key}" class="translate">${settings.label || settings.key}</label>
 			</div>`;
-	}
 }
 
 export = (answers => {
-
 	const isAdapter = answers.features.indexOf("adapter") > -1;
-	const useJsonConfig = answers.adminUi === 'json';
-	const noConfig = answers.adminUi === 'none';
-	if (!isAdapter || useJsonConfig || noConfig) return;
+	const useJsonConfig = answers.adminUi === "json";
+	const noConfig = answers.adminUi === "none";
+	if (!isAdapter || useJsonConfig || noConfig) {
+		return;
+	}
 
 	const useReact = answers.adminUi === "react";
 
@@ -38,21 +43,25 @@ export = (answers => {
 
 	<!-- Load ioBroker scripts and styles-->
 	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
-${useReact ? 
-`	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>` :
-`	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+${
+	useReact
+		? `	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>`
+		: `	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
 	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 
 	<script type="text/javascript" src="../../js/translate.js"></script>
 	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
-	<script type="text/javascript" src="../../js/adapter-settings.js"></script>`}
+	<script type="text/javascript" src="../../js/adapter-settings.js"></script>`
+}
 
 	<!-- Load our own files -->
 	<link rel="stylesheet" type="text/css" href="style.css" />
-${useReact ? "" :
-`	<script type="text/javascript" src="words.js"></script>
+${
+	useReact
+		? ""
+		: `	<script type="text/javascript" src="words.js"></script>
 
 	<script type="text/javascript">
 		// This will be called by the admin adapter when the settings page loads
@@ -97,18 +106,22 @@ ${useReact ? "" :
 			callback(obj);
 		}
 	</script>
-`}
+`
+}
 </head>
 
 <body>
 
-${useReact ? (`
+${
+	useReact
+		? `
 	<!-- this is where the React components are loaded into -->
 	<div class="m adapter-container" id="root"></div>
 
 	<!-- load compiled React scripts -->
 	<script type="text/javascript" src="build/index.js"></script>
-`) : (`
+`
+		: `
 	<div class="m adapter-container">
 
 		<div class="row">
@@ -124,7 +137,8 @@ ${useReact ? (`
 		</div>
 
 	</div>
-`)}
+`
+}
 </body>
 
 </html>

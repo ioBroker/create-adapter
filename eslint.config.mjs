@@ -6,12 +6,7 @@ export default [
 
 	// Specify files to exclude from linting
 	{
-		ignores: [
-			"build/",
-			"test/baselines/",
-			".eslintrc.js",
-			".prettierrc.js",
-		],
+		ignores: ["build/", "test/baselines/", ".eslintrc.js", ".prettierrc.js", "node-modules/"],
 	},
 
 	// Custom rules for this project
@@ -39,5 +34,3 @@ export default [
 		},
 	},
 ];
-
-

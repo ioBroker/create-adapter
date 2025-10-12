@@ -1,9 +1,10 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
-	if (!devcontainer) return;
+	if (!devcontainer) {
+		return;
+	}
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const needsParcel = answers.adminUi === "react" || answers.tabReact === "yes";
@@ -38,11 +39,15 @@ http {
     location /adapter/${adapterNameLowerCase}/ {
       alias /workspace/admin/;
     }
-${needsParcel ? (`
+${
+	needsParcel
+		? `
     location /adapter/${adapterNameLowerCase}/build/ {
       proxy_redirect off;
       proxy_pass     http://parcel:1234/;
-    }`) : ""}
+    }`
+		: ""
+}
   }
 }`;
 	return template.trim();

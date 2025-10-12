@@ -1,10 +1,11 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminUi === "react";
-	if (!useReact) return;
+	if (!useReact) {
+		return;
+	}
 
 	const template = `/* eslint-disable @typescript-eslint/no-require-imports */
 import React from "react";
@@ -12,18 +13,24 @@ import { ${useTypeScript ? "type Theme, type StyleRules, " : ""}withStyles } fro
 
 import GenericApp from "@iobroker/adapter-react/GenericApp";
 import Settings from "./components/settings";
-${useTypeScript ?
-`import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
-` : ""}
-${useTypeScript ?
-`const styles = (_theme: Theme): StyleRules => ({
+${
+	useTypeScript
+		? `import type { GenericAppProps, GenericAppSettings } from "@iobroker/adapter-react/types";
+`
+		: ""
+}
+${
+	useTypeScript
+		? `const styles = (_theme: Theme): StyleRules => ({
 	root: {},
-});` : `/**
+});`
+		: `/**
  * @type {(_theme: import("@material-ui/core/styles").Theme) => import("@material-ui/styles").StyleRules}
  */
 const styles = (_theme) => ({
 	root: {},
-});`}
+});`
+}
 
 class App extends GenericApp {
 	constructor(props${useTypeScript ? ": GenericAppProps" : ""}) {
@@ -51,7 +58,7 @@ class App extends GenericApp {
 		// executed when connection is ready
 	}
 
-	render()${useTypeScript ? ': Element' :''} {
+	render()${useTypeScript ? ": Element" : ""} {
 		if (!this.state.loaded) {
 			return super.render();
 		}
@@ -72,10 +79,11 @@ class App extends GenericApp {
 
 export default withStyles(styles)(App);
 `;
-	return template;};
+	return template;
+};
 
-templateFunction.customPath = (answers) => {
+templateFunction.customPath = answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	return `admin/src/app.${useTypeScript ? "tsx" : "jsx"}`;
-}
+};
 export = templateFunction;

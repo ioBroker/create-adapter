@@ -1,12 +1,4 @@
-import {
-	blueBright,
-	bold,
-	gray,
-	green,
-	red,
-	reset,
-	underline,
-} from "ansi-colors";
+import { blueBright, bold, gray, green, red, reset, underline } from "ansi-colors";
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
@@ -19,17 +11,9 @@ import type { File } from "./lib/createAdapter";
 import { createFiles, writeFiles } from "./lib/createAdapter";
 import { LocalMigrationContext } from "./lib/localMigrationContext";
 import { fetchPackageVersion } from "./lib/packageVersions";
-import {
-	error,
-	executeCommand,
-	executeNpmCommand,
-	getOwnVersion,
-	isWindows,
-} from "./lib/tools";
+import { error, executeCommand, executeNpmCommand, getOwnVersion, isWindows } from "./lib/tools";
 
-export type ConditionalTitle = (
-	answers: Record<string, any>,
-) => string | undefined;
+export type ConditionalTitle = (answers: Record<string, any>) => string | undefined;
 
 /** Define command line arguments */
 const argv = yargs
@@ -89,10 +73,7 @@ async function checkAdapterExistence(name: string): Promise<CheckResult> {
 }
 
 const creatorOptions = {
-	checkAdapterExistence:
-		!argv.skipAdapterExistenceCheck && !argv.migrate
-			? checkAdapterExistence
-			: undefined,
+	checkAdapterExistence: !argv.skipAdapterExistenceCheck && !argv.migrate ? checkAdapterExistence : undefined,
 };
 
 /** Asks a series of questions on the CLI */
@@ -116,9 +97,7 @@ async function ask(): Promise<Answers> {
 			migrationContext = ctx;
 		} catch (error) {
 			console.error(error);
-			throw new Error(
-				"Please ensure that --migrate points to a valid adapter directory",
-			);
+			throw new Error("Please ensure that --migrate points to a valid adapter directory");
 		}
 		if (await migrationContext.fileExists(".create-adapter.json")) {
 			// it's just not worth trying to figure out things if the adapter was already created with create-adapter
@@ -146,20 +125,11 @@ async function ask(): Promise<Answers> {
 			}
 			while (true) {
 				let answer: Record<string, any>;
-				if (
-					Object.prototype.hasOwnProperty.call(
-						answers,
-						q.name as string,
-					)
-				) {
+				if (Object.prototype.hasOwnProperty.call(answers, q.name as string)) {
 					// answer was loaded using the "replay" feature
 					answer = { [q.name as string]: answers[q.name as string] };
 				} else {
-					if (
-						answers.expert !== "yes" &&
-						q.expert &&
-						q.initial !== undefined
-					) {
+					if (answers.expert !== "yes" && q.expert && q.initial !== undefined) {
 						// In non-expert mode, prefill the default answer for expert questions
 						answer = { [q.name as string]: q.initial };
 					} else {
@@ -167,32 +137,22 @@ async function ask(): Promise<Answers> {
 						try {
 							answer = await prompt(q);
 							// Cancel the process if necessary
-							if (answer[q.name as string] == undefined)
+							if (answer[q.name as string] == undefined) {
 								throw new Error();
+							}
 						} catch (e) {
-							error(
-								(e as Error).message ||
-									"Adapter creation canceled!",
-							);
+							error((e as Error).message || "Adapter creation canceled!");
 							return process.exit(1);
 						}
 					}
 					// Apply an optional transformation
 					if (typeof q.resultTransform === "function") {
-						const transformed = q.resultTransform(
-							answer[q.name as string],
-						);
-						answer[q.name as string] =
-							transformed instanceof Promise
-								? await transformed
-								: transformed;
+						const transformed = q.resultTransform(answer[q.name as string]);
+						answer[q.name as string] = transformed instanceof Promise ? await transformed : transformed;
 					}
 					// Test the result
 					if (q.action != undefined) {
-						const testResult = await q.action(
-							answer[q.name as string],
-							creatorOptions,
-						);
+						const testResult = await q.action(answer[q.name as string], creatorOptions);
 						if (typeof testResult === "string") {
 							error(testResult);
 							continue;
@@ -209,19 +169,15 @@ async function ask(): Promise<Answers> {
 	const questionsAndText: (QuestionGroup | string | ConditionalTitle)[] = [
 		"",
 		green.bold("====================================================="),
-		green.bold(
-			`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`,
-		),
+		green.bold(`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`),
 		green.bold("====================================================="),
 		"",
 		gray(`You can cancel at any point by pressing Ctrl+C.`),
-		(answers) => (answers.replay ? green(`Replaying file`) : undefined),
-		(answers) => (answers.replay ? green(answers.replay) : undefined),
+		answers => (answers.replay ? green(`Replaying file`) : undefined),
+		answers => (answers.replay ? green(answers.replay) : undefined),
 		...questionGroups,
 		"",
-		underline(
-			"That's it. Please wait a minute while I get this working...",
-		),
+		underline("That's it. Please wait a minute while I get this working..."),
 	];
 
 	for (const entry of questionsAndText) {
@@ -236,11 +192,7 @@ async function ask(): Promise<Answers> {
 			}
 		} else {
 			// only print the headline if any of the questions are necessary
-			if (
-				entry.questions.find((qq) =>
-					testCondition(qq.condition, answers),
-				)
-			) {
+			if (entry.questions.find(qq => testCondition(qq.condition, answers))) {
 				console.log();
 				console.log(underline(entry.headline));
 			}
@@ -267,16 +219,17 @@ let gitCommit: boolean;
 /** Whether dev-server should be installed */
 let devServer: boolean;
 
-/** CLI-specific functionality for creating the adapter directory */
-async function setupProject_CLI(
-	answers: Answers,
-	files: File[],
-): Promise<void> {
+/**
+ * CLI-specific functionality for creating the adapter directory
+ *
+ * @param answers
+ * @param files
+ */
+async function setupProject_CLI(answers: Answers, files: File[]): Promise<void> {
 	const rootDirName = path.basename(rootDir);
 	// make sure we are working in a directory called ioBroker.<adapterName>
 	const targetDir =
-		rootDirName.toLowerCase() ===
-		`iobroker.${answers.adapterName.toLowerCase()}`
+		rootDirName.toLowerCase() === `iobroker.${answers.adapterName.toLowerCase()}`
 			? rootDir
 			: path.join(rootDir, `ioBroker.${answers.adapterName}`);
 	await writeFiles(targetDir, files);
@@ -296,10 +249,7 @@ async function setupProject_CLI(
 
 	if (devServer) {
 		logProgress("Installing dev-server");
-		await executeNpmCommand(
-			["install", "--global", "@iobroker/dev-server"],
-			{ cwd: targetDir },
-		);
+		await executeNpmCommand(["install", "--global", "@iobroker/dev-server"], { cwd: targetDir });
 		await executeCommand(
 			isWindows ? "iobroker-dev-server.cmd" : "iobroker-dev-server",
 			["setup", "--adminPort", `${answers.devServerPort}`],
@@ -334,17 +284,9 @@ async function setupProject_CLI(
 	console.log();
 	console.log();
 	console.log(blueBright("All done! Have fun programming! ") + red("♥"));
-	console.log(
-		blueBright(`Just open `) +
-			bold(reset(targetDir)) +
-			blueBright(` in your favorite editor.`),
-	);
+	console.log(blueBright(`Just open `) + bold(reset(targetDir)) + blueBright(` in your favorite editor.`));
 	console.log();
-	console.log(
-		gray(
-			"Hint: try CTRL-clicking the path if you have the editor open already.",
-		),
-	);
+	console.log(gray("Hint: try CTRL-clicking the path if you have the editor open already."));
 }
 
 // Enable CI testing without stalling
@@ -358,23 +300,28 @@ if (process.env.TEST_STARTUP) {
 
 	if (installDependencies) {
 		maxSteps++;
-		needsBuildStep =
-			answers.language === "TypeScript" ||
-			answers.adminUi === "react" ||
-			answers.tabReact === "yes";
-		if (needsBuildStep) maxSteps++;
+		needsBuildStep = answers.language === "TypeScript" || answers.adminUi === "react" || answers.tabReact === "yes";
+		if (needsBuildStep) {
+			maxSteps++;
+		}
 	}
 	devServer = answers.devServer === "yes";
-	if (devServer) maxSteps++;
+	if (devServer) {
+		maxSteps++;
+	}
 	gitCommit = answers.gitCommit === "yes";
-	if (gitCommit) maxSteps++;
+	if (gitCommit) {
+		maxSteps++;
+	}
 
 	logProgress("Generating files");
 	const files = await createFiles(answers);
 
 	await setupProject_CLI(answers, files);
-})().catch((error) => console.error(error));
+})().catch(error => console.error(error));
 
 process.on("exit", () => {
-	if (fs.pathExistsSync("npm-debug.log")) fs.removeSync("npm-debug.log");
+	if (fs.pathExistsSync("npm-debug.log")) {
+		fs.removeSync("npm-debug.log");
+	}
 });

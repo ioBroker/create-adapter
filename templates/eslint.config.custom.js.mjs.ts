@@ -1,20 +1,25 @@
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	// This version is intended for use in JS projects
-	if (answers.language !== "JavaScript") return;
+	if (answers.language !== "JavaScript") {
+		return;
+	}
 
 	const useESLint = answers.tools && answers.tools.indexOf("ESLint") > -1;
-	if (!useESLint) return;
+	if (!useESLint) {
+		return;
+	}
 	const useOfficialESLintConfig = answers.eslintConfig === "official";
 	// Only generate ESLint 9 config for custom config
-	if (useOfficialESLintConfig) return;
+	if (useOfficialESLintConfig) {
+		return;
+	}
 
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
 	const isWidget = answers.features && answers.features.indexOf("vis") > -1;
-	
+
 	// Build base config
 	let config = `import js from '@eslint/js';`;
 
@@ -51,20 +56,34 @@ export default [
 				'describe': 'readonly',
 				'it': 'readonly',
 				'ioBroker': 'readonly',
-			},${useReact ? `
+			},${
+				useReact
+					? `
 			parserOptions: {
 				ecmaFeatures: {
 					jsx: true,
 				},
-			},` : ""}
+			},`
+					: ""
+			}
 		},
-		plugins: {${useReact ? `
-			react,` : ""}
+		plugins: {${
+			useReact
+				? `
+			react,`
+				: ""
+		}
 		},
 		rules: {
-			...js.configs.recommended.rules,${useReact ? `
+			...js.configs.recommended.rules,${
+				useReact
+					? `
 			...react.configs.recommended.rules,
-			'react/react-in-jsx-scope': 'off',` : ""}${!usePrettier ? `
+			'react/react-in-jsx-scope': 'off',`
+					: ""
+			}${
+				!usePrettier
+					? `
 			'indent': [
 				'error',
 				${answers.indentation === "Space (4)" ? "4" : "'tab'"},
@@ -75,7 +94,9 @@ export default [
 			'quotes': [
 				'error',
 				${answers.quotes === "single" ? `'single'` : `'double'`}
-			],` : ""}
+			],`
+					: ""
+			}
 			// Strict rules to match official @iobroker/eslint-config
 			'prefer-template': 'error',
 			'no-unused-vars': [
@@ -86,12 +107,16 @@ export default [
 					'varsIgnorePattern': '^_'
 				}
 			],
-		},${useReact ? `
+		},${
+			useReact
+				? `
 		settings: {
 			react: {
 				version: 'detect',
 			},
-		},` : ""}
+		},`
+				: ""
+		}
 	},`;
 
 	// Add widgets configuration if VIS is used
