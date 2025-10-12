@@ -254,8 +254,7 @@ describe("tools/formatLicense()", () => {
 				expected: answers.authorName,
 			},
 			{
-				original:
-					"[name of copyright owner] [name of copyright owner] [name of copyright owner]",
+				original: "[name of copyright owner] [name of copyright owner] [name of copyright owner]",
 				expected: `${answers.authorName} ${answers.authorName} ${answers.authorName}`,
 			},
 		];
@@ -311,13 +310,7 @@ foo(
 function foo() { return;}
 `;
 		const expected = `foo('baz');\n\nfunction foo() {\n\treturn;\n}\n`;
-		expect(
-			await formatWithPrettier(
-				input,
-				{ indentation: "Tab", quotes: "single" },
-				"js",
-			),
-		).to.equal(expected);
+		expect(await formatWithPrettier(input, { indentation: "Tab", quotes: "single" }, "js")).to.equal(expected);
 	});
 
 	it("should format TS code according to the Prettier rules", async () => {
@@ -330,12 +323,8 @@ foo(
 function foo() { return;}
 `;
 		const expected = `foo("baz");\n\nfunction foo() {\n    return;\n}\n`;
-		expect(
-			await formatWithPrettier(
-				input,
-				{ indentation: "Space (4)", quotes: "double" },
-				"ts",
-			),
-		).to.equal(expected);
+		expect(await formatWithPrettier(input, { indentation: "Space (4)", quotes: "double" }, "ts")).to.equal(
+			expected,
+		);
 	});
 });

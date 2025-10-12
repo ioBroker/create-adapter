@@ -13,14 +13,10 @@ import { writeFiles } from "../src/lib/createAdapter";
 const baselineDir = path.join(__dirname, "../test/baselines");
 let ioPackageSchema: unknown;
 
-async function generateBaselines(
-	testName: string,
-	answers: Answers,
-	filterFilesPredicate?: (file: File) => boolean,
-) {
+async function generateBaselines(testName: string, answers: Answers, filterFilesPredicate?: (file: File) => boolean) {
 	const files = await createAdapter(answers);
 
-	const ioPackage = files.find((f) => f.name.endsWith("io-package.json"));
+	const ioPackage = files.find(f => f.name.endsWith("io-package.json"));
 	if (ioPackage) {
 		// Download JSON schema for validation
 		if (!ioPackageSchema) {
@@ -31,30 +27,18 @@ async function generateBaselines(
 			).data;
 		}
 		// Validate io-package.json
-		const result = validateJSON(
-			JSON.parse(ioPackage.content as string),
-			ioPackageSchema,
-		);
+		const result = validateJSON(JSON.parse(ioPackage.content as string), ioPackageSchema);
 		if (result.errors.length) {
-			throw new Error(
-				`io-package.json had errors:\n${result.errors
-					.map((e) => e.message)
-					.join("\n")}`,
-			);
+			throw new Error(`io-package.json had errors:\n${result.errors.map(e => e.message).join("\n")}`);
 		}
 	}
 
 	const testDir = path.join(baselineDir, testName);
 	await fs.emptyDir(testDir);
-	await writeFiles(
-		testDir,
-		typeof filterFilesPredicate === "function"
-			? files.filter(filterFilesPredicate)
-			: files,
-	);
+	await writeFiles(testDir, typeof filterFilesPredicate === "function" ? files.filter(filterFilesPredicate) : files);
 
 	// Include the npm package content in the baselines (only for full adapter tests)
-	if (!filterFilesPredicate && files.some((f) => f.name === "package.json")) {
+	if (!filterFilesPredicate && files.some(f => f.name === "package.json")) {
 		const { execaSync } = await import("execa");
 		const packageContent = JSON.parse(
 			execaSync("npm", ["pack", "--dry-run", "--json"], {
@@ -68,37 +52,27 @@ async function generateBaselines(
 				// Put directories on top
 				const isDirA = a.includes("/");
 				const isDirB = b.includes("/");
-				if (isDirA && !isDirB) return -1;
-				if (isDirB && !isDirA) return 1;
+				if (isDirA && !isDirB) {
+					return -1;
+				}
+				if (isDirB && !isDirA) {
+					return 1;
+				}
 				return a.localeCompare(b);
 			});
 		await fs.ensureDir(path.join(testDir, "__meta__"));
-		await fs.writeFile(
-			path.join(testDir, "__meta__/npm_package_files.txt"),
-			packageFiles.join("\n"),
-		);
+		await fs.writeFile(path.join(testDir, "__meta__/npm_package_files.txt"), packageFiles.join("\n"));
 	}
 }
 
 // TODO: Mock network requests
 
-async function expectSuccess(
-	testName: string,
-	answers: Answers,
-	filterFilesPredicate?: (file: File) => boolean,
-) {
+async function expectSuccess(testName: string, answers: Answers, filterFilesPredicate?: (file: File) => boolean) {
 	await generateBaselines(testName, answers, filterFilesPredicate);
 }
 
-async function expectFail(
-	testName: string,
-	answers: Partial<Answers>,
-	message: string,
-) {
-	await generateBaselines(
-		testName,
-		answers as Answers,
-	).should.be.rejectedWith(message);
+async function expectFail(testName: string, answers: Partial<Answers>, message: string) {
+	await generateBaselines(testName, answers as Answers).should.be.rejectedWith(message);
 	const testDir = path.join(baselineDir, testName);
 	await fs.pathExists(testDir).should.become(false);
 }
@@ -156,11 +130,7 @@ describe("adapter creation =>", () => {
 				...baseAnswers,
 				title: "",
 			};
-			expectFail(
-				"incompleteAnswersEmptyTitle",
-				answers,
-				"Please enter a title",
-			);
+			expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
 		});
 
 		it("empty title 2", () => {
@@ -168,11 +138,7 @@ describe("adapter creation =>", () => {
 				...baseAnswers,
 				title: "   ",
 			};
-			expectFail(
-				"incompleteAnswersEmptyTitle",
-				answers,
-				"Please enter a title",
-			);
+			expectFail("incompleteAnswersEmptyTitle", answers, "Please enter a title");
 		});
 
 		it("invalid title 1", () => {
@@ -180,11 +146,7 @@ describe("adapter creation =>", () => {
 				...baseAnswers,
 				title: "Adapter for ioBroker",
 			};
-			expectFail(
-				"incompleteAnswersEmptyTitle",
-				answers,
-				"must not contain the words",
-			);
+			expectFail("incompleteAnswersEmptyTitle", answers, "must not contain the words");
 		});
 
 		it("selecting Prettier without ESLint", () => {
@@ -192,11 +154,7 @@ describe("adapter creation =>", () => {
 				...baseAnswers,
 				tools: ["Prettier"],
 			};
-			expectFail(
-				"invalidAnswersPrettierWithoutESLint",
-				answers,
-				"ESLint must be selected",
-			);
+			expectFail("invalidAnswersPrettierWithoutESLint", answers, "ESLint must be selected");
 		});
 	});
 
@@ -208,9 +166,7 @@ describe("adapter creation =>", () => {
 			await fs.mkdirp(baselineDir);
 			const files = await fs.readdir(baselineDir);
 			await Promise.all(
-				files
-					.filter((file) => file !== "README.md")
-					.map((file) => fs.remove(path.join(baselineDir, file))),
+				files.filter(file => file !== "README.md").map(file => fs.remove(path.join(baselineDir, file))),
 			);
 		});
 
@@ -220,10 +176,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					adminFeatures: ["custom", "tab"],
 				};
-				await expectSuccess(
-					"adapter_TS_ESLint_Tabs_DoubleQuotes_MIT",
-					answers,
-				);
+				await expectSuccess("adapter_TS_ESLint_Tabs_DoubleQuotes_MIT", answers);
 			});
 
 			it("Adapter, TypeScript React", async () => {
@@ -253,10 +206,7 @@ describe("adapter creation =>", () => {
 					quotes: "single",
 					license: "Apache License 2.0",
 				};
-				await expectSuccess(
-					"adapter_JS_JsonUI_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0",
-					answers,
-				);
+				await expectSuccess("adapter_JS_JsonUI_ESLint_TypeChecking_Spaces_SingleQuotes_Apache-2.0", answers);
 			});
 
 			it("Adapter, JavaScript, JSON UI, ESLint, Spaces, Single quotes, Dev Container", async () => {
@@ -355,11 +305,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					description: "This is a short description",
 				};
-				await expectSuccess(
-					"description_valid",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("description_valid", answers, file => file.name === "io-package.json");
 			});
 
 			it("Empty description 1", async () => {
@@ -367,11 +313,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					description: "",
 				};
-				await expectSuccess(
-					"description_empty_1",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("description_empty_1", answers, file => file.name === "io-package.json");
 			});
 
 			it("Empty description 2", async () => {
@@ -379,11 +321,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					description: "   ",
 				};
-				await expectSuccess(
-					"description_empty_2",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("description_empty_2", answers, file => file.name === "io-package.json");
 			});
 
 			it(`Start mode "schedule"`, async () => {
@@ -392,11 +330,7 @@ describe("adapter creation =>", () => {
 					startMode: "schedule",
 					scheduleStartOnChange: "yes",
 				};
-				await expectSuccess(
-					"startMode_schedule",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("startMode_schedule", answers, file => file.name === "io-package.json");
 			});
 
 			it(`Adapter with type "storage"`, async () => {
@@ -405,11 +339,7 @@ describe("adapter creation =>", () => {
 					features: ["adapter"],
 					type: "storage",
 				};
-				await expectSuccess(
-					"type_storage",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("type_storage", answers, file => file.name === "io-package.json");
 			});
 
 			it(`VIS with type "visualization-icons"`, async () => {
@@ -419,11 +349,7 @@ describe("adapter creation =>", () => {
 					type: "visualization-icons",
 					widgetIsMainFunction: "additional", // Icons are additional, so no VIS dependency
 				};
-				await expectSuccess(
-					"type_visualization-icons",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("type_visualization-icons", answers, file => file.name === "io-package.json");
 			});
 
 			it(`VIS widget with main functionality`, async () => {
@@ -433,11 +359,7 @@ describe("adapter creation =>", () => {
 					type: "visualization-widgets",
 					widgetIsMainFunction: "main", // Widget is main functionality, includes VIS dependency
 				};
-				await expectSuccess(
-					"vis_widget_main_function",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("vis_widget_main_function", answers, file => file.name === "io-package.json");
 			});
 
 			it(`VIS widget with additional functionality`, async () => {
@@ -447,11 +369,7 @@ describe("adapter creation =>", () => {
 					type: "visualization-widgets",
 					widgetIsMainFunction: "additional", // Widget is additional, no VIS dependency
 				};
-				await expectSuccess(
-					"vis_widget_additional_function",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("vis_widget_additional_function", answers, file => file.name === "io-package.json");
 			});
 
 			it(`Node.js 20 as minimum`, async () => {
@@ -462,9 +380,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"minNodeVersion_20",
 					answers,
-					(file) =>
-						file.name === "package.json" ||
-						file.name === "tsconfig.json",
+					file => file.name === "package.json" || file.name === "tsconfig.json",
 				);
 			});
 
@@ -476,9 +392,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"minNodeVersion_22",
 					answers,
-					(file) =>
-						file.name === "package.json" ||
-						file.name === "tsconfig.json",
+					file => file.name === "package.json" || file.name === "tsconfig.json",
 				);
 			});
 
@@ -490,9 +404,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"minNodeVersion_24",
 					answers,
-					(file) =>
-						file.name === "package.json" ||
-						file.name === "tsconfig.json",
+					file => file.name === "package.json" || file.name === "tsconfig.json",
 				);
 			});
 
@@ -502,10 +414,9 @@ describe("adapter creation =>", () => {
 					quotes: "single",
 					adminUi: "react",
 				};
-				await expectSuccess("TS_SingleQuotes", answers, (file) => {
+				await expectSuccess("TS_SingleQuotes", answers, file => {
 					return (
-						(file.name.endsWith(".ts") &&
-							!file.name.endsWith(".d.ts")) ||
+						(file.name.endsWith(".ts") && !file.name.endsWith(".d.ts")) ||
 						file.name.endsWith(".tsx") ||
 						file.name.startsWith(".eslint")
 					);
@@ -518,10 +429,9 @@ describe("adapter creation =>", () => {
 					quotes: "double",
 					adminUi: "react",
 				};
-				await expectSuccess("TS_DoubleQuotes", answers, (file) => {
+				await expectSuccess("TS_DoubleQuotes", answers, file => {
 					return (
-						(file.name.endsWith(".ts") &&
-							!file.name.endsWith(".d.ts")) ||
+						(file.name.endsWith(".ts") && !file.name.endsWith(".d.ts")) ||
 						file.name.endsWith(".tsx") ||
 						file.name.startsWith(".eslint")
 					);
@@ -533,7 +443,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					tools: ["ESLint", "Prettier"],
 				};
-				await expectSuccess("TS_Prettier", answers, (file) => {
+				await expectSuccess("TS_Prettier", answers, file => {
 					return (
 						file.name.startsWith(".vscode/") ||
 						file.name.startsWith(".eslint") ||
@@ -551,7 +461,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"connectionIndicator_yes",
 					answers,
-					(file) =>
+					file =>
 						file.name.endsWith("main.ts") ||
 						file.name.endsWith("main.js") ||
 						file.name === "io-package.json",
@@ -579,7 +489,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"customAdapterSettings",
 					answers,
-					(file) =>
+					file =>
 						file.name.endsWith("main.ts") ||
 						file.name.endsWith("main.js") ||
 						file.name === "io-package.json" ||
@@ -590,12 +500,9 @@ describe("adapter creation =>", () => {
 			it(`Different keywords`, async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					keywords:
-						"this, adapter,uses,   different , keywords" as any,
+					keywords: "this, adapter,uses,   different , keywords" as any,
 				};
-				await expectSuccess("keywords", answers, (file) =>
-					file.name.endsWith("package.json"),
-				);
+				await expectSuccess("keywords", answers, file => file.name.endsWith("package.json"));
 			});
 
 			it(`Contributors`, async () => {
@@ -603,11 +510,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					contributors: `Bill Gates, "Malformed JSON, ,,` as any,
 				};
-				await expectSuccess(
-					"contributors",
-					answers,
-					(file) => file.name === "package.json",
-				);
+				await expectSuccess("contributors", answers, file => file.name === "package.json");
 			});
 
 			it(`Contributors with author duplication`, async () => {
@@ -618,7 +521,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"contributors_with_author_duplication",
 					answers,
-					(file) => file.name === "package.json",
+					file => file.name === "package.json",
 				);
 			});
 
@@ -627,11 +530,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					gitRemoteProtocol: "SSH",
 				};
-				await expectSuccess(
-					"git_SSH",
-					answers,
-					(file) => file.name === "package.json",
-				);
+				await expectSuccess("git_SSH", answers, file => file.name === "package.json");
 			});
 
 			it(`Data Source and Connection Type`, async () => {
@@ -640,11 +539,7 @@ describe("adapter creation =>", () => {
 					connectionType: "cloud",
 					dataSource: "assumption",
 				};
-				await expectSuccess(
-					"connectionType",
-					answers,
-					(file) => file.name === "io-package.json",
-				);
+				await expectSuccess("connectionType", answers, file => file.name === "io-package.json");
 			});
 
 			it(`VSCode devcontainer`, async () => {
@@ -655,7 +550,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"devcontainer",
 					answers,
-					(file) =>
+					file =>
 						file.name.startsWith(".devcontainer/") ||
 						file.name === ".gitignore" ||
 						file.name === ".vscode/launch.json",
@@ -669,9 +564,7 @@ describe("adapter creation =>", () => {
 					adminUi: "react",
 					tabReact: "yes",
 				};
-				await expectSuccess("tabReact_adminReact_TS", answers, (file) =>
-					file.name.startsWith("admin/"),
-				);
+				await expectSuccess("tabReact_adminReact_TS", answers, file => file.name.startsWith("admin/"));
 			});
 
 			it("TabReact AdminHtml JS", async () => {
@@ -681,9 +574,7 @@ describe("adapter creation =>", () => {
 					tabReact: "yes",
 					language: "JavaScript",
 				};
-				await expectSuccess("tabReact_adminHtml_JS", answers, (file) =>
-					file.name.startsWith("admin/"),
-				);
+				await expectSuccess("tabReact_adminHtml_JS", answers, file => file.name.startsWith("admin/"));
 			});
 
 			it("I18n with JSON", async () => {
@@ -691,9 +582,7 @@ describe("adapter creation =>", () => {
 					...baseAnswers,
 					i18n: "JSON",
 				};
-				await expectSuccess("i18n_json", answers, (file) =>
-					file.name.startsWith("admin/"),
-				);
+				await expectSuccess("i18n_json", answers, file => file.name.startsWith("admin/"));
 			});
 
 			it("Release Script (JS)", async () => {
@@ -705,7 +594,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"ReleaseScript_JS",
 					answers,
-					(file) =>
+					file =>
 						file.name === "package.json" ||
 						file.name === "README.md" ||
 						file.name === ".releaseconfig.json",
@@ -721,7 +610,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"ReleaseScript_TS",
 					answers,
-					(file) =>
+					file =>
 						file.name === "package.json" ||
 						file.name === "README.md" ||
 						file.name === ".releaseconfig.json",
@@ -734,11 +623,7 @@ describe("adapter creation =>", () => {
 					devServer: "yes",
 					devServerPort: 9003,
 				};
-				await expectSuccess(
-					"dev-server",
-					answers,
-					(file) => file.name === "README.md",
-				);
+				await expectSuccess("dev-server", answers, file => file.name === "README.md");
 			});
 
 			it("Start mode: schedule", async () => {
@@ -747,11 +632,7 @@ describe("adapter creation =>", () => {
 					startMode: "schedule",
 					scheduleStartOnChange: "yes",
 				};
-				await expectSuccess(
-					"schedule",
-					answers,
-					(file) => file.name === "test/integration.js",
-				);
+				await expectSuccess("schedule", answers, file => file.name === "test/integration.js");
 			});
 
 			it("Portal w/ GitHub", async () => {
@@ -764,9 +645,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"portal-github",
 					answers,
-					(file) =>
-						file.name === "README.md" ||
-						file.name.endsWith("test-and-release.yml"),
+					file => file.name === "README.md" || file.name.endsWith("test-and-release.yml"),
 				);
 			});
 
@@ -778,9 +657,7 @@ describe("adapter creation =>", () => {
 				await expectSuccess(
 					"no_config",
 					answers,
-					(file) =>
-						file.name.startsWith("admin/") ||
-						file.name === "io-package.json",
+					file => file.name.startsWith("admin/") || file.name === "io-package.json",
 				);
 			});
 		});
@@ -814,43 +691,30 @@ describe("adapter creation =>", () => {
 					};
 
 					const files = await createAdapter(answers);
-					const workflowFile = files.find((f) =>
-						f.name.endsWith("test-and-release.yml"),
-					);
+					const workflowFile = files.find(f => f.name.endsWith("test-and-release.yml"));
 
 					if (!workflowFile) {
-						throw new Error(
-							`Workflow file not found for Node.js ${testCase.nodeVersion}`,
-						);
+						throw new Error(`Workflow file not found for Node.js ${testCase.nodeVersion}`);
 					}
 
 					const content = workflowFile.content;
 
 					// Check that the matrix includes only the expected versions
-					const matrixMatch = content.match(
-						/node-version: \[(.*?)\]/,
-					);
+					const matrixMatch = content.match(/node-version: \[(.*?)\]/);
 					if (!matrixMatch) {
-						throw new Error(
-							`Matrix node versions not found for Node.js ${testCase.nodeVersion}`,
-						);
+						throw new Error(`Matrix node versions not found for Node.js ${testCase.nodeVersion}`);
 					}
 
-					const actualVersions = matrixMatch[1]
-						.split(", ")
-						.map((v) => v.trim());
+					const actualVersions = matrixMatch[1].split(", ").map(v => v.trim());
 					actualVersions.should.deep.equal(
 						testCase.expectedVersions,
 						`For Node.js ${testCase.nodeVersion}, expected versions ${testCase.expectedVersions.join(", ")} but got ${actualVersions.join(", ")}`,
 					);
 
 					// Check that the LTS version is correct
-					const ltsMatches =
-						content.match(/node-version: '(\d+\.x)'/g) || [];
+					const ltsMatches = content.match(/node-version: '(\d+\.x)'/g) || [];
 					if (ltsMatches.length === 0) {
-						throw new Error(
-							`LTS node version not found for Node.js ${testCase.nodeVersion}`,
-						);
+						throw new Error(`LTS node version not found for Node.js ${testCase.nodeVersion}`);
 					}
 
 					// All LTS references should use the expected version

@@ -46,36 +46,22 @@ describe("LocalMigrationContext.fileExists()", () => {
 describe("LocalMigrationContext.hasFilesWithExtension()", () => {
 	it("should return true if files exist", async () => {
 		const context = new LocalMigrationContext(__dirname);
-		expect(await context.hasFilesWithExtension("../..", ".json")).to.be
-			.true;
+		expect(await context.hasFilesWithExtension("../..", ".json")).to.be.true;
 		expect(await context.hasFilesWithExtension("..", ".ts")).to.be.true;
-		expect(
-			await context.hasFilesWithExtension(
-				"..",
-				".ts",
-				(f) => !f.endsWith("cli.ts"),
-			),
-		).to.be.true;
+		expect(await context.hasFilesWithExtension("..", ".ts", f => !f.endsWith("cli.ts"))).to.be.true;
 	});
 
 	it("should return false if no files exist", async () => {
 		const context = new LocalMigrationContext(__dirname);
 		expect(await context.hasFilesWithExtension("..", ".xls")).to.be.false;
 		expect(await context.hasFilesWithExtension("..", ".dts")).to.be.false;
-		expect(
-			await context.hasFilesWithExtension(
-				"..",
-				".ts",
-				(f) => !f.includes("i"),
-			),
-		).to.be.false;
+		expect(await context.hasFilesWithExtension("..", ".ts", f => !f.includes("i"))).to.be.false;
 	});
 
 	it("should return false if the directory doesn't exist", async () => {
 		const context = new LocalMigrationContext(__dirname);
 		expect(await context.hasFilesWithExtension("foo", ".json")).to.be.false;
-		expect(await context.hasFilesWithExtension("../bar", ".ts")).to.be
-			.false;
+		expect(await context.hasFilesWithExtension("../bar", ".ts")).to.be.false;
 	});
 });
 
@@ -115,9 +101,7 @@ describe("LocalMigrationContext.getMainFileContent()", () => {
 				main: "build/src/cli.js",
 			};
 			expect(await context.getMainFileContent()).not.to.be.empty;
-			expect(await context.getMainFileContent()).to.contain(
-				"import * as yargs",
-			);
+			expect(await context.getMainFileContent()).to.contain("import * as yargs");
 		});
 	}
 
@@ -128,9 +112,7 @@ describe("LocalMigrationContext.getMainFileContent()", () => {
 			main: "bin/create-adapter.js",
 		};
 		expect(await context.getMainFileContent()).not.to.be.empty;
-		expect(await context.getMainFileContent()).to.contain(
-			"#!/usr/bin/env node",
-		);
+		expect(await context.getMainFileContent()).to.contain("#!/usr/bin/env node");
 	});
 
 	it("should return an empty string if no main file is found", async () => {

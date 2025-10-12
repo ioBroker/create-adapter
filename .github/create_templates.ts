@@ -13,10 +13,7 @@ function getTemplateDir(templateName: string): string {
 	return path.join(outDir, templateName);
 }
 
-async function generateTemplates(
-	templateName: string,
-	answers: Answers,
-): Promise<void> {
+async function generateTemplates(templateName: string, answers: Answers): Promise<void> {
 	const files = await createAdapter(answers, ["adapterName", "title"]);
 
 	const templateDir = getTemplateDir(templateName);
@@ -125,10 +122,10 @@ const templates: Record<string, Answers> = {
 	console.log(green("Removing old templates"));
 	console.log(green("======================"));
 	const directories = (await fs.readdir(outDir))
-		.filter((entry) => !/^\./.test(entry)) // Don't delete dotfiles/dotdirs
-		.map((entry) => path.join(outDir, entry))
-		.filter((entry) => fs.statSync(entry).isDirectory());
-	await Promise.all(directories.map((dir) => fs.remove(dir)));
+		.filter(entry => !/^\./.test(entry)) // Don't delete dotfiles/dotdirs
+		.map(entry => path.join(outDir, entry))
+		.filter(entry => fs.statSync(entry).isDirectory());
+	await Promise.all(directories.map(dir => fs.remove(dir)));
 
 	console.log();
 	console.log(green("Creating templates"));
@@ -169,9 +166,7 @@ const templates: Record<string, Answers> = {
 				try {
 					execSync(`npm run lint`, cmdOpts);
 				} catch (e) {
-					console.error(
-						red(`ESLint failed for template ${tplName}:`),
-					);
+					console.error(red(`ESLint failed for template ${tplName}:`));
 					console.error(e.message || e);
 					hadError = true;
 				}
@@ -181,24 +176,20 @@ const templates: Record<string, Answers> = {
 				try {
 					execSync(`npm run check`, cmdOpts);
 				} catch (e) {
-					console.error(
-						red(`Type check failed for template ${tplName}:`),
-					);
+					console.error(red(`Type check failed for template ${tplName}:`));
 					console.error(e.message || e);
 					hadError = true;
 				}
 			}
 		}
 		if (hadError) {
-			console.error(
-				red("At least one template had lint or check errors!"),
-			);
+			console.error(red("At least one template had lint or check errors!"));
 			process.exit(1);
 		}
 	}
 })();
 
 // Make sure errors fail the build
-process.on("unhandledRejection", (e) => {
+process.on("unhandledRejection", e => {
 	throw e;
 });
