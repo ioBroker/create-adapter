@@ -39,23 +39,23 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
+      - name: Verify formatting
+        run: npm run format
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Lint source code
+        run: npm run lint
+
+      - name: Compile TypeScript code
+        run: npm run build
 
       - name: Run component tests
         run: npm t
         env:
           REQUEST_TIMEOUT: 20000
           TESTING: true
-
-      - name: Lint source code
-        run: npm run lint
-
-      - name: Verify formatting
-        run: npm run format
-
-      - name: Compile TypeScript code
-        run: npm run build
 
       - name: Start the CLI on a production environment
         run: |
