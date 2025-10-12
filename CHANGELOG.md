@@ -7,6 +7,7 @@
 -->
 
 ## __WORK IN PROGRESS__
+* IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
 * (@Apollon77/@copilot) Add option to use official @iobroker/eslint-config with ESLint 9 format as primary configuration (#1186) · [Migration guide](docs/updates/20251012_eslint9_official_config.md)
 * (@Apollon77/@copilot) Upgrade custom ESLint configuration to ESLint 9 with flat config format (#1186) · [Migration guide](docs/updates/20251012_eslint9_official_config.md)
 * (@Apollon77/@copilot) Add VIS widget ESLint configuration support in main config files (#1186)
