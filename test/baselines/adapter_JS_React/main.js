@@ -14,7 +14,7 @@ const utils = require("@iobroker/adapter-core");
 class TestAdapter extends utils.Adapter {
 
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
 	 */
 	constructor(options) {
 		super({
@@ -87,7 +87,8 @@ class TestAdapter extends utils.Adapter {
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
-	 * @param {() => void} callback
+	 *
+	 * @param {() => void} callback - Callback function
 	 */
 	onUnload(callback) {
 		try {
@@ -123,8 +124,9 @@ class TestAdapter extends utils.Adapter {
 
 	/**
 	 * Is called if a subscribed state changes
-	 * @param {string} id
-	 * @param {ioBroker.State | null | undefined} state
+	 *
+	 * @param {string} id - State ID
+	 * @param {ioBroker.State | null | undefined} state - State object
 	 */
 	onStateChange(id, state) {
 		if (state) {
@@ -135,7 +137,6 @@ class TestAdapter extends utils.Adapter {
 			this.log.info(`state ${id} deleted`);
 		}
 	}
-
 	// If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
 	// /**
 	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
@@ -159,7 +160,7 @@ class TestAdapter extends utils.Adapter {
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
 	 */
 	module.exports = (options) => new TestAdapter(options);
 } else {

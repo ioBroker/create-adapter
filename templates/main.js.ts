@@ -12,8 +12,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const quote = answers.quotes === "double" ? '"' : "'";
 	const t = answers.indentation === "Space (4)" ? "    " : "\t";
 
-	const template = `
-${quote}use strict${quote};
+	const template = `${quote}use strict${quote};
 
 /*
  * Created with @iobroker/create-adapter v${answers.creatorVersion}
@@ -29,7 +28,7 @@ const utils = require(${quote}@iobroker/adapter-core${quote});
 class ${className} extends utils.Adapter {
 
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
 	 */
 	constructor(options) {
 		super({
@@ -106,7 +105,8 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
-	 * @param {() => void} callback
+	 *
+	 * @param {() => void} callback - Callback function
 	 */
 	onUnload(callback) {
 		try {
@@ -142,8 +142,9 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 
 	/**
 	 * Is called if a subscribed state changes
-	 * @param {string} id
-	 * @param {ioBroker.State | null | undefined} state
+	 *
+	 * @param {string} id - State ID
+	 * @param {ioBroker.State | null | undefined} state - State object
 	 */
 	onStateChange(id, state) {
 		if (state) {
@@ -154,7 +155,6 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 			this.log.info(\`state \${id} deleted\`);
 		}
 	}
-
 	// If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
 	// /**
 	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
@@ -178,7 +178,7 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options
 	 */
 	module.exports = (options) => new ${className}(options);
 } else {
