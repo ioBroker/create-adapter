@@ -50,7 +50,7 @@ export default [
 			],
 			'quotes': [
 				'error',
-				'double'
+				'single'
 			],
 			// Strict rules to match official @iobroker/eslint-config
 			'prefer-template': 'error',

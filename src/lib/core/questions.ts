@@ -780,7 +780,7 @@ export const questionGroups: QuestionGroup[] = [
 				name: "quotes",
 				label: "Quotes",
 				message: "Do you prefer double or single quotes?",
-				initial: "double",
+				initial: "single",
 				choices: ["double", "single"],
 				migrate: async ctx => ((await ctx.analyzeCode('"', "'")) ? "double" : "single"),
 			},
