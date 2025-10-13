@@ -1,19 +1,20 @@
-import { AdapterSettings, getDefaultAnswer } from "../src/lib/core/questions";
+import type { AdapterSettings } from "../src/lib/core/questions";
+import { getDefaultAnswer } from "../src/lib/core/questions";
 import type { TemplateFunction } from "../src/lib/createAdapter";
 import { kebabCaseToUpperCamelCase } from "../src/lib/tools";
 
 const templateFunction: TemplateFunction = async answers => {
-
 	const useJavaScript = answers.language === "JavaScript";
-	if (!useJavaScript) return;
+	if (!useJavaScript) {
+		return;
+	}
 
 	const className = kebabCaseToUpperCamelCase(answers.adapterName);
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 	const quote = answers.quotes === "double" ? '"' : "'";
 	const t = answers.indentation === "Space (4)" ? "    " : "\t";
 
-	const template = `
-${quote}use strict${quote};
+	const template = `${quote}use strict${quote};
 
 /*
  * Created with @iobroker/create-adapter v${answers.creatorVersion}
@@ -27,9 +28,8 @@ const utils = require(${quote}@iobroker/adapter-core${quote});
 // const fs = require(${quote}fs${quote});
 
 class ${className} extends utils.Adapter {
-
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options] - Adapter options
 	 */
 	constructor(options) {
 		super({
@@ -49,14 +49,18 @@ class ${className} extends utils.Adapter {
 	async onReady() {
 		// Initialize your adapter here
 
-${answers.connectionIndicator === "yes" ? `
+${
+	answers.connectionIndicator === "yes"
+		? `
 		// Reset the connection indicator during startup
 		this.setState(${quote}info.connection${quote}, false, true);
-` : ""}
+`
+		: ""
+}
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote} + this.config.${s.key});`).join("\n")}
+${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.config.${s.key}}${quote});`).join("\n")}
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -98,15 +102,16 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 
 		// examples for the checkPassword/checkGroup functions
 		const pwdResult = await this.checkPasswordAsync(${quote}admin${quote}, ${quote}iobroker${quote});
-		this.log.info(${quote}check user admin pw iobroker: ${quote} + pwdResult);
+		this.log.info(\`check user admin pw iobroker: \${pwdResult}\`);
 
 		const groupResult = await this.checkGroupAsync(${quote}admin${quote}, ${quote}admin${quote});
-		this.log.info(${quote}check group user admin group admin: ${quote} + groupResult);
+		this.log.info(\`check group user admin group admin: \${groupResult}\`);
 	}
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
-	 * @param {() => void} callback
+	 *
+	 * @param {() => void} callback - Callback function
 	 */
 	onUnload(callback) {
 		try {
@@ -117,7 +122,8 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 			// clearInterval(interval1);
 
 			callback();
-		} catch (_e) {
+		} catch (error) {
+			this.log.error(\`Error during unloading: \${error.message}\`);
 			callback();
 		}
 	}
@@ -141,8 +147,9 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 
 	/**
 	 * Is called if a subscribed state changes
-	 * @param {string} id
-	 * @param {ioBroker.State | null | undefined} state
+	 *
+	 * @param {string} id - State ID
+	 * @param {ioBroker.State | null | undefined} state - State object
 	 */
 	onStateChange(id, state) {
 		if (state) {
@@ -153,7 +160,6 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 			this.log.info(\`state \${id} deleted\`);
 		}
 	}
-
 	// If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
 	// /**
 	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
@@ -171,21 +177,20 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 	// ${t}${t}}
 	// ${t}}
 	// }
-
 }
 
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options] - Adapter options
 	 */
-	module.exports = (options) => new ${className}(options);
+	module.exports = options => new ${className}(options);
 } else {
 	// otherwise start the instance directly
 	new ${className}();
 }
 `;
-	return template.trim();
+	return template;
 };
 templateFunction.customPath = "main.js";
 export = templateFunction;

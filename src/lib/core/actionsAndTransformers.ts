@@ -2,15 +2,19 @@ import { yellow } from "ansi-colors";
 import type { Answers } from "./questions";
 
 const emailRegex =
-	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export type CheckResult = true | string;
-export async function checkMinSelections(
-	category: string,
-	min: number,
-	answers: any[],
-): Promise<CheckResult> {
-	if (answers.length >= min) return true;
+/**
+ *
+ * @param category
+ * @param min
+ * @param answers
+ */
+export async function checkMinSelections(category: string, min: number, answers: any[]): Promise<CheckResult> {
+	if (answers.length >= min) {
+		return true;
+	}
 	return `Please enter at least ${min} ${category}`;
 }
 
@@ -31,22 +35,38 @@ function isAdapterNameValid(name: string): CheckResult {
 	return true;
 }
 
+/**
+ *
+ * @param name
+ * @param options
+ */
 export async function checkAdapterName<
 	T extends {
+		/**
+		 *
+		 */
 		checkAdapterExistence?: (name: string) => Promise<CheckResult>;
 	},
 >(name: string, options?: T): Promise<CheckResult> {
 	const validCheck = isAdapterNameValid(name);
-	if (typeof validCheck === "string") return validCheck;
+	if (typeof validCheck === "string") {
+		return validCheck;
+	}
 
 	if (options && options.checkAdapterExistence) {
 		const existenceCheck = await options.checkAdapterExistence(name);
-		if (typeof existenceCheck === "string") return existenceCheck;
+		if (typeof existenceCheck === "string") {
+			return existenceCheck;
+		}
 	}
 
 	return true;
 }
 
+/**
+ *
+ * @param title
+ */
 export function checkTitle(title?: string): CheckResult {
 	if (!isNotEmpty(title)) {
 		return "Please enter a title!";
@@ -61,6 +81,10 @@ function isNotEmpty(answer?: string): answer is string {
 	return answer != undefined && answer.length > 0 && answer.trim().length > 0;
 }
 
+/**
+ *
+ * @param name
+ */
 export async function checkAuthorName(name?: string): Promise<CheckResult> {
 	if (!isNotEmpty(name)) {
 		return "Please enter a valid name!";
@@ -68,6 +92,10 @@ export async function checkAuthorName(name?: string): Promise<CheckResult> {
 	return true;
 }
 
+/**
+ *
+ * @param email
+ */
 export async function checkEmail(email: string): Promise<CheckResult> {
 	if (!emailRegex.test(email)) {
 		return "Please enter a valid email address!";
@@ -75,50 +103,70 @@ export async function checkEmail(email: string): Promise<CheckResult> {
 	return true;
 }
 
-export async function checkTypeScriptTools(
-	tools: Exclude<Answers["tools"], undefined>,
-): Promise<CheckResult> {
+/**
+ *
+ * @param tools
+ */
+export async function checkTypeScriptTools(tools: Exclude<Answers["tools"], undefined>): Promise<CheckResult> {
 	if (tools.indexOf("Prettier") > -1 && tools.indexOf("ESLint") === -1) {
 		return "ESLint must be selected to use Prettier!";
 	}
 	return true;
 }
 
+/**
+ *
+ * @param name
+ */
 export function transformAdapterName(name: string): string {
 	const startsWithIoBroker = /^ioBroker\./i;
 	if (startsWithIoBroker.test(name)) {
 		name = name.replace(startsWithIoBroker, "");
-		console.log(
-			yellow(`You don't have to prefix the name with "ioBroker."`),
-		);
+		console.log(yellow(`You don't have to prefix the name with "ioBroker."`));
 	}
 	return name;
 }
 
+/**
+ *
+ * @param description
+ */
 export function transformDescription(description: string): string | undefined {
 	description = description.trim();
-	if (description.length === 0) return undefined;
+	if (description.length === 0) {
+		return undefined;
+	}
 	return description;
 }
 
+/**
+ *
+ * @param keywords
+ */
 export function transformKeywords(keywords: string): string[] | undefined {
 	const keywordsArray = keywords
 		.trim()
 		.split(",")
-		.map((k) => k.trim())
-		.filter((k) => !!k);
-	if (keywordsArray.length === 0) return undefined;
+		.map(k => k.trim())
+		.filter(k => !!k);
+	if (keywordsArray.length === 0) {
+		return undefined;
+	}
 	return keywordsArray;
 }
 
-export function transformContributors(
-	contributors: string,
-): string[] | undefined {
+/**
+ *
+ * @param contributors
+ */
+export function transformContributors(contributors: string): string[] | undefined {
 	const contributorsArray = contributors
 		.trim()
 		.split(",")
-		.map((c) => c.trim())
-		.filter((c) => !!c);
-	if (contributorsArray.length === 0) return undefined;
+		.map(c => c.trim())
+		.filter(c => !!c);
+	if (contributorsArray.length === 0) {
+		return undefined;
+	}
 	return contributorsArray;
 }

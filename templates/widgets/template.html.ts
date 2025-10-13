@@ -1,9 +1,10 @@
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const isWidget = answers.features.indexOf("vis") > -1;
-	if (!isWidget) return;
+	if (!isWidget) {
+		return;
+	}
 
 	const widgetName = answers.adapterName;
 	const widgetNameCapitalized = widgetName[0].toUpperCase() + widgetName.slice(1);

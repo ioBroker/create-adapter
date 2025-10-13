@@ -66,9 +66,7 @@ describe("actionsAndTransformers/checkAdapterName()", () => {
 	});
 
 	it("should return an error if the adapter already exists", async () => {
-		checkAdapterExistence.resolves(
-			"The adapter ioBroker.foo already exists!",
-		);
+		checkAdapterExistence.resolves("The adapter ioBroker.foo already exists!");
 		const result = await checkAdapterName("foo", {
 			checkAdapterExistence,
 		});
@@ -170,11 +168,7 @@ describe("actionsAndTransformers/checkTitle()", () => {
 	});
 
 	it("should return an error if the title contains iobroker or adapter", async () => {
-		const forbidden = [
-			"iobroker adapter",
-			"adapter test foo",
-			"this is for iobroker",
-		];
+		const forbidden = ["iobroker adapter", "adapter test foo", "this is for iobroker"];
 		for (const name of forbidden) {
 			const result = await checkTitle(name);
 			result.should.be.a("string").and.match(/must not/);

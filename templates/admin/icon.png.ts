@@ -1,5 +1,6 @@
 import { getIconName } from "../../src/lib/core/questions";
-import { readFileFromRootDir, TemplateFunction } from "../../src/lib/createAdapter";
+import type { TemplateFunction } from "../../src/lib/createAdapter";
+import { readFileFromRootDir } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 	if (answers.icon) {

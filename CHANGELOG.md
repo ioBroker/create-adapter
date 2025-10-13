@@ -7,6 +7,10 @@
 -->
 
 ## __WORK IN PROGRESS__
+* IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
+* (@Apollon77/@copilot) Added option to use official @iobroker/eslint-config with ESLint 9 format as primary configuration (#1186) · [Migration guide](docs/updates/20251012_eslint9_official_config.md)
+* (@Apollon77/@copilot) Upgraded custom ESLint configuration to ESLint 9 with flat config format (#1186) · [Migration guide](docs/updates/20251012_eslint9_official_config.md)
+* (@Apollon77/@copilot) Add VIS widget ESLint configuration support in main config files (#1186)
 * (@Apollon77/@copilot) Adapt Dependabot schedule to run on specific day of month between 2-28 (#1200) · [Migration guide](docs/updates/20250102_dependabot_day_schedule.md)
 * (@hacki11) Support git-ssh in devcontainer (#1136) [Migration guide](docs/updates/20250401_devcontainer_ssh.md)
 * (@Apollon77/@copilot) Add config.yml to GitHub issue templates with forum link (#1069) · [Migration guide](docs/updates/20250920_github_issue_template_config.md)

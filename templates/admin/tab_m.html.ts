@@ -2,9 +2,10 @@ import { getIconName } from "../../src/lib/core/questions";
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 export = (answers => {
-
 	const supportTab = answers.adminFeatures && answers.adminFeatures.indexOf("tab") > -1;
-	if (!supportTab) return;
+	if (!supportTab) {
+		return;
+	}
 
 	const useReact = answers.tabReact === "yes";
 
@@ -12,9 +13,10 @@ export = (answers => {
 <html>
 
 <head>
-${useReact ? 
-`	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>` :
-`	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+${
+	useReact
+		? `	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>`
+		: `	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
 
 	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
@@ -30,18 +32,22 @@ ${useReact ?
 		.m span{
 			font-size: 0.9em;
 		}
-	</style>`}
+	</style>`
+}
 </head>
 
 <body>
 
-${useReact ? `
+${
+	useReact
+		? `
 	<!-- this is where the React components are loaded into -->
 	<div class="m adapter-container" id="root"></div>
 
 	<!-- load compiled React scripts -->
 	<script type="text/javascript" src="build/tab.js"></script>
-` : `
+`
+		: `
 	<div class="m adapter-container">
 		<div class="row">
 			<!-- Forms are the standard way to receive user inputted data.
@@ -93,7 +99,8 @@ ${useReact ? `
 			</div>
 		</div>
 	</div>
-`}
+`
+}
 </body>
 
 </html>

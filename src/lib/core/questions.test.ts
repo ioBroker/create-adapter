@@ -4,7 +4,7 @@ import { questions, testCondition } from "./questions";
 describe("questions/questions", () => {
 	it("should be an array of question objects", () => {
 		questions.should.be.an("array");
-		questions.forEach((q) => {
+		questions.forEach(q => {
 			q.should.have.property("type");
 			expect(typeof q.type).to.equal("string");
 		});
@@ -18,39 +18,21 @@ describe("questions/testCondition()", () => {
 	});
 
 	it(`for a "value" condition, it should return whether the answer equals the desired value`, () => {
-		testCondition(
-			{ name: "prop", value: "foo" },
-			{ prop: "foo" },
-		).should.equal(true);
+		testCondition({ name: "prop", value: "foo" }, { prop: "foo" }).should.equal(true);
 
-		testCondition(
-			{ name: "prop", value: "bar" },
-			{ prop: "foo" },
-		).should.equal(false);
+		testCondition({ name: "prop", value: "bar" }, { prop: "foo" }).should.equal(false);
 	});
 
 	it(`for a "contains" condition, it should return whether the answer array contains the desired value`, () => {
-		testCondition(
-			{ name: "prop", contains: "foo" },
-			{ prop: ["bar", "foo"] },
-		).should.equal(true);
+		testCondition({ name: "prop", contains: "foo" }, { prop: ["bar", "foo"] }).should.equal(true);
 
-		testCondition(
-			{ name: "prop", contains: "baz" },
-			{ prop: ["bar", "foo"] },
-		).should.equal(false);
+		testCondition({ name: "prop", contains: "baz" }, { prop: ["bar", "foo"] }).should.equal(false);
 	});
 
 	it(`for a "doesNotContain" condition, it should return whether the answer array contains the desired value`, () => {
-		testCondition(
-			{ name: "prop", doesNotContain: "foo" },
-			{ prop: ["bar", "foo"] },
-		).should.equal(false);
+		testCondition({ name: "prop", doesNotContain: "foo" }, { prop: ["bar", "foo"] }).should.equal(false);
 
-		testCondition(
-			{ name: "prop", doesNotContain: "baz" },
-			{ prop: ["bar", "foo"] },
-		).should.equal(true);
+		testCondition({ name: "prop", doesNotContain: "baz" }, { prop: ["bar", "foo"] }).should.equal(true);
 	});
 
 	it("should return false for invalid conditions", () => {

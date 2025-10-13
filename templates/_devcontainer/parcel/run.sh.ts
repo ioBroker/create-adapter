@@ -1,10 +1,11 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
 	const needsParcel = answers.adminUi === "react" || answers.tabReact === "yes";
-	if (!devcontainer || !needsParcel) return;
+	if (!devcontainer || !needsParcel) {
+		return;
+	}
 
 	const template = `
 #!/bin/bash
@@ -15,7 +16,7 @@ npm install
 
 npm run watch:parcel
 `;
-	return template.trim().replace(/\r\n/g, '\n');
+	return template.trim().replace(/\r\n/g, "\n");
 };
 
 templateFunction.customPath = ".devcontainer/parcel/run.sh";

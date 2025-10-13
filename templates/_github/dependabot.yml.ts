@@ -1,14 +1,15 @@
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useDependabot = answers.dependabot === "yes";
-	if (!useDependabot) return;
+	if (!useDependabot) {
+		return;
+	}
 
 	// Generate a consistent random day between 2 and 28 based on adapter name
 	// This ensures all dependabot runs within a repository use the same day
-	const hash = answers.adapterName.split('').reduce((acc, char) => {
-		return ((acc << 5) - acc) + char.charCodeAt(0);
+	const hash = answers.adapterName.split("").reduce((acc, char) => {
+		return (acc << 5) - acc + char.charCodeAt(0);
 	}, 0);
 	const dayOfMonth = Math.abs(hash % 27) + 2; // Range: 2-28
 

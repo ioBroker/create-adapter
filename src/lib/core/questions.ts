@@ -21,76 +21,102 @@ import type { MigrationContextBase } from "./migrationContextBase";
 // This is being used to simulate wrong options for conditions on the type level
 const __misused: unique symbol = Symbol.for("__misused");
 
-type QuestionAction<T> = (
-	value: T,
-	options?: unknown,
-) => CheckResult | Promise<CheckResult>;
+type QuestionAction<T> = (value: T, options?: unknown) => CheckResult | Promise<CheckResult>;
 export type AnswerValue = string | boolean | number;
-export type Condition = { name: string } & (
-	| { value: AnswerValue | AnswerValue[] }
-	| { contains: AnswerValue }
-	| { doesNotContain: AnswerValue }
-	| { [__misused]: undefined }
+export type Condition = {
+	/**
+	 *
+	 */
+	name: string;
+} & (
+	| {
+			/**
+			 *
+			 */
+			value: AnswerValue | AnswerValue[];
+	  }
+	| {
+			/**
+			 *
+			 */
+			contains: AnswerValue;
+	  }
+	| {
+			/**
+			 *
+			 */
+			doesNotContain: AnswerValue;
+	  }
+	| {
+			/**
+			 *
+			 */
+			[__misused]: undefined;
+	  }
 );
 
-export function testCondition(
-	condition: Condition | Condition[] | undefined,
-	answers: Record<string, any>,
-): boolean {
-	if (condition == undefined) return true;
+/**
+ *
+ * @param condition
+ * @param answers
+ */
+export function testCondition(condition: Condition | Condition[] | undefined, answers: Record<string, any>): boolean {
+	if (condition == undefined) {
+		return true;
+	}
 
 	function testSingleCondition(cond: Condition): boolean {
 		if ("value" in cond) {
 			return answers[cond.name] === cond.value;
 		} else if ("contains" in cond) {
-			return (
-				answers[cond.name] &&
-				(answers[cond.name] as AnswerValue[]).indexOf(cond.contains) >
-					-1
-			);
+			return answers[cond.name] && (answers[cond.name] as AnswerValue[]).indexOf(cond.contains) > -1;
 		} else if ("doesNotContain" in cond) {
-			return (
-				!answers[cond.name] ||
-				(answers[cond.name] as AnswerValue[]).indexOf(
-					cond.doesNotContain,
-				) === -1
-			);
+			return !answers[cond.name] || (answers[cond.name] as AnswerValue[]).indexOf(cond.doesNotContain) === -1;
 		}
 		return false;
 	}
 
 	if (isArray(condition)) {
-		return condition.every((cond) => testSingleCondition(cond));
-	} else {
-		return testSingleCondition(condition);
+		return condition.every(cond => testSingleCondition(cond));
 	}
+	return testSingleCondition(condition);
 }
 
 export type MigrateFunc = (
 	context: MigrationContextBase,
 	answers: Record<string, any>,
 	question: Question,
-) =>
-	| Promise<AnswerValue | AnswerValue[] | undefined>
-	| AnswerValue
-	| AnswerValue[]
-	| undefined;
+) => Promise<AnswerValue | AnswerValue[] | undefined> | AnswerValue | AnswerValue[] | undefined;
 
 export type TransformResult = (
 	val: AnswerValue | AnswerValue[],
-) =>
-	| AnswerValue
-	| AnswerValue[]
-	| undefined
-	| Promise<AnswerValue | AnswerValue[] | undefined>;
+) => AnswerValue | AnswerValue[] | undefined | Promise<AnswerValue | AnswerValue[] | undefined>;
 
+/**
+ *
+ */
 export interface QuestionMeta {
+	/**
+	 *
+	 */
 	label: string;
 	/** One or more conditions that need(s) to be fulfilled for this question to be asked */
 	condition?: Condition | Condition[];
+	/**
+	 *
+	 */
 	replay?: (answers: Record<string, any>) => void;
+	/**
+	 *
+	 */
 	migrate?: MigrateFunc;
+	/**
+	 *
+	 */
 	resultTransform?: TransformResult;
+	/**
+	 *
+	 */
 	action?: QuestionAction<undefined | AnswerValue | AnswerValue[]>;
 	/** Whether an answer for this question is optional */
 	optional?: boolean;
@@ -102,9 +128,21 @@ export interface QuestionMeta {
 }
 
 export type Question = SpecificPromptOptions & QuestionMeta;
+/**
+ *
+ */
 export interface QuestionGroup {
+	/**
+	 *
+	 */
 	title: string;
+	/**
+	 *
+	 */
 	headline: string;
+	/**
+	 *
+	 */
 	questions: Question[];
 }
 
@@ -138,7 +176,7 @@ export const questionGroups: QuestionGroup[] = [
 				message: "Please enter the name of your project:",
 				resultTransform: transformAdapterName,
 				action: checkAdapterName,
-				migrate: (ctx) => ctx.ioPackageJson.common?.name,
+				migrate: ctx => ctx.ioPackageJson.common?.name,
 			},
 			{
 				type: "input",
@@ -146,9 +184,7 @@ export const questionGroups: QuestionGroup[] = [
 				label: "Title",
 				message: "Which title should be shown in the admin UI?",
 				action: checkTitle,
-				migrate: (ctx) =>
-					ctx.ioPackageJson.common?.titleLang?.en ||
-					ctx.ioPackageJson.common?.title,
+				migrate: ctx => ctx.ioPackageJson.common?.titleLang?.en || ctx.ioPackageJson.common?.title,
 			},
 			{
 				type: "input",
@@ -158,36 +194,28 @@ export const questionGroups: QuestionGroup[] = [
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformDescription,
-				migrate: (ctx) =>
-					ctx.ioPackageJson.common?.desc?.en ||
-					ctx.ioPackageJson.common?.desc,
+				migrate: ctx => ctx.ioPackageJson.common?.desc?.en || ctx.ioPackageJson.common?.desc,
 			},
 			{
 				type: "input",
 				name: "keywords",
 				label: "Keywords",
-				message:
-					"Enter some keywords (separated by commas) to describe your project:",
+				message: "Enter some keywords (separated by commas) to describe your project:",
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformKeywords,
-				migrate: (ctx) =>
-					(
-						ctx.ioPackageJson.common?.keywords ||
-						ctx.packageJson.common?.keywords ||
-						[]
-					).join(","),
+				migrate: ctx =>
+					(ctx.ioPackageJson.common?.keywords || ctx.packageJson.common?.keywords || []).join(","),
 			},
 			{
 				type: "input",
 				name: "contributors",
 				label: "Contributors",
-				message:
-					"If you have any contributors, please enter their names (seperated by commas):",
+				message: "If you have any contributors, please enter their names (seperated by commas):",
 				hint: "(optional)",
 				optional: true,
 				resultTransform: transformContributors,
-				migrate: (ctx) =>
+				migrate: ctx =>
 					(ctx.packageJson.contributors || [])
 						.map((c: Record<string, string>) => c.name)
 						.filter((name: string) => !!name)
@@ -233,36 +261,33 @@ export const questionGroups: QuestionGroup[] = [
 					{ message: "Visualization", value: "vis" },
 				],
 				action: checkMinSelections.bind(undefined, "feature", 1),
-				migrate: async (ctx) =>
+				migrate: async ctx =>
 					[
 						(await ctx.directoryExists("admin")) ? "adapter" : null,
 						(await ctx.directoryExists("widgets")) ? "vis" : null,
-					].filter((f) => !!f) as string[],
+					].filter(f => !!f) as string[],
 			}),
 			styledMultiselect({
 				condition: { name: "features", contains: "adapter" },
 				name: "adminFeatures",
 				label: "Admin Features",
 				expert: true,
-				message:
-					"Which additional features should be available in the admin?",
+				message: "Which additional features should be available in the admin?",
 				hint: "(optional)",
 				initial: [],
 				choices: [
 					{ message: "An extra tab", value: "tab" },
 					{ message: "Custom options for states", value: "custom" },
 				],
-				migrate: async (ctx) =>
+				migrate: async ctx =>
 					[
-						(await ctx.fileExists("admin/tab.html")) ||
-						(await ctx.fileExists("admin/tab_m.html"))
+						(await ctx.fileExists("admin/tab.html")) || (await ctx.fileExists("admin/tab_m.html"))
 							? "tab"
 							: null,
-						(await ctx.fileExists("admin/custom.html")) ||
-						(await ctx.fileExists("admin/custom_m.html"))
+						(await ctx.fileExists("admin/custom.html")) || (await ctx.fileExists("admin/custom_m.html"))
 							? "custom"
 							: null,
-					].filter((f) => !!f) as string[],
+					].filter(f => !!f) as string[],
 			}),
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -272,23 +297,19 @@ export const questionGroups: QuestionGroup[] = [
 				message: "Which category does your adapter fall into?",
 				choices: [
 					{
-						message:
-							"Alarm / security         (Home, car, boat, ...)",
+						message: "Alarm / security         (Home, car, boat, ...)",
 						value: "alarm",
 					},
 					{
-						message:
-							"Calendars                (also schedules, etc., ...)",
+						message: "Calendars                (also schedules, etc., ...)",
 						value: "date-and-time",
 					},
 					{
-						message:
-							"Cars / Vehicles          (trip information, vehicle status, aux. heating, ...)",
+						message: "Cars / Vehicles          (trip information, vehicle status, aux. heating, ...)",
 						value: "vehicle",
 					},
 					{
-						message:
-							"Climate control          (A/C, Heaters, air filters, ...)",
+						message: "Climate control          (A/C, Heaters, air filters, ...)",
 						value: "climate-control",
 					},
 					{
@@ -296,54 +317,44 @@ export const questionGroups: QuestionGroup[] = [
 						value: "protocols",
 					},
 					{
-						message:
-							"Data storage             (SQL/NoSQL, file storage, logging, ...)",
+						message: "Data storage             (SQL/NoSQL, file storage, logging, ...)",
 						value: "storage",
 					},
 					{
-						message:
-							"Data transmission        (for other services via REST api, websockets, ...)",
+						message: "Data transmission        (for other services via REST api, websockets, ...)",
 						value: "communication",
 					},
 					{
-						message:
-							"Garden                   (Mowers, watering, ...)",
+						message: "Garden                   (Mowers, watering, ...)",
 						value: "garden",
 					},
 					{
-						message:
-							"General purpose          (like admin, web, discovery, ...)",
+						message: "General purpose          (like admin, web, discovery, ...)",
 						value: "general",
 					},
 					{
-						message:
-							"Geo positioning          (transmission and receipt of position data)",
+						message: "Geo positioning          (transmission and receipt of position data)",
 						value: "geoposition",
 					},
 					{
-						message:
-							"Hardware                 (low-level, multi-purpose)",
+						message: "Hardware                 (low-level, multi-purpose)",
 						value: "hardware",
 					},
 					{
-						message:
-							"Health                   (Fitness sensors, weight, pulse, ...)",
+						message: "Health                   (Fitness sensors, weight, pulse, ...)",
 						value: "health",
 					},
 					{
-						message:
-							"Household devices        (Vacuums, kitchen, ...)",
+						message: "Household devices        (Vacuums, kitchen, ...)",
 						value: "household",
 					},
 					{ message: "Lighting control", value: "lighting" },
 					{
-						message:
-							"Logic                    (Scripts, rules, parsers, scenes, ...)",
+						message: "Logic                    (Scripts, rules, parsers, scenes, ...)",
 						value: "logic",
 					},
 					{
-						message:
-							"Messaging                (E-Mail, Telegram, WhatsApp, ...)",
+						message: "Messaging                (E-Mail, Telegram, WhatsApp, ...)",
 						value: "messaging",
 					},
 					{
@@ -355,49 +366,41 @@ export const questionGroups: QuestionGroup[] = [
 						value: "metering",
 					},
 					{
-						message:
-							"Miscellaneous data       (Import/export of contacts, gasoline prices, ...)",
+						message: "Miscellaneous data       (Import/export of contacts, gasoline prices, ...)",
 						value: "misc-data",
 					},
 					{
-						message:
-							"Miscellaneous utilities  (Data import/emport, backup, ...)",
+						message: "Miscellaneous utilities  (Data import/emport, backup, ...)",
 						value: "utility",
 					},
 					{
-						message:
-							"Multimedia               (TV, audio, remote controls, ...)",
+						message: "Multimedia               (TV, audio, remote controls, ...)",
 						value: "multimedia",
 					},
 					{
-						message:
-							"Network infrastructure   (Hardware, printers, phones, ...)",
+						message: "Network infrastructure   (Hardware, printers, phones, ...)",
 						value: "infrastructure",
 					},
 					{
-						message:
-							"Network utilities        (Ping, UPnP, network discovery, ...)",
+						message: "Network utilities        (Ping, UPnP, network discovery, ...)",
 						value: "network",
 					},
 					{
-						message:
-							"Smart home systems       (3rd party, hardware and software)",
+						message: "Smart home systems       (3rd party, hardware and software)",
 						value: "iot-systems",
 					},
 					{
-						message:
-							"Visualizations           (VIS, MaterialUI, mobile views, ...)",
+						message: "Visualizations           (VIS, MaterialUI, mobile views, ...)",
 						value: "visualization",
 					},
 					// visualization-icons and visualization-widgets are a separate question for
 					// VIS projects
 					{
-						message:
-							"Weather                  (Forecast, air quality, statistics, ...)",
+						message: "Weather                  (Forecast, air quality, statistics, ...)",
 						value: "weather",
 					},
 				],
-				migrate: (ctx) => ctx.ioPackageJson.common?.type,
+				migrate: ctx => ctx.ioPackageJson.common?.type,
 			},
 			{
 				condition: { name: "features", contains: "vis" },
@@ -409,7 +412,7 @@ export const questionGroups: QuestionGroup[] = [
 					{ message: "Icons for VIS", value: "visualization-icons" },
 					{ message: "VIS widgets", value: "visualization-widgets" },
 				],
-				migrate: (ctx) => ctx.ioPackageJson.common?.type,
+				migrate: ctx => ctx.ioPackageJson.common?.type,
 			},
 			{
 				condition: { name: "features", contains: "vis" },
@@ -424,8 +427,7 @@ export const questionGroups: QuestionGroup[] = [
 						value: "main",
 					},
 					{
-						message:
-							"The adapter also works without the visualization of the widget",
+						message: "The adapter also works without the visualization of the widget",
 						value: "additional",
 					},
 				],
@@ -452,7 +454,7 @@ export const questionGroups: QuestionGroup[] = [
 					},
 					{ message: "never", value: "none" },
 				],
-				migrate: (ctx) => ctx.ioPackageJson.common?.mode,
+				migrate: ctx => ctx.ioPackageJson.common?.mode,
 			},
 			{
 				condition: { name: "startMode", value: "schedule" },
@@ -460,12 +462,10 @@ export const questionGroups: QuestionGroup[] = [
 				name: "scheduleStartOnChange",
 				label: "Schedule",
 				expert: true,
-				message:
-					"Should the adapter also be started when the configuration is changed?",
+				message: "Should the adapter also be started when the configuration is changed?",
 				initial: "no",
 				choices: ["yes", "no"],
-				migrate: (ctx) =>
-					ctx.ioPackageJson.common?.allowInit ? "yes" : "no",
+				migrate: ctx => (ctx.ioPackageJson.common?.allowInit ? "yes" : "no"),
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -481,7 +481,7 @@ export const questionGroups: QuestionGroup[] = [
 						value: "local",
 					},
 				],
-				migrate: (ctx) => ctx.ioPackageJson.common?.connectionType,
+				migrate: ctx => ctx.ioPackageJson.common?.connectionType,
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -492,13 +492,11 @@ export const questionGroups: QuestionGroup[] = [
 				message: `How will the adapter receive its data?`,
 				choices: [
 					{
-						message:
-							"Request it regularly from the service or device",
+						message: "Request it regularly from the service or device",
 						value: "poll",
 					},
 					{
-						message:
-							"The service or device actively sends new data",
+						message: "The service or device actively sends new data",
 						value: "push",
 					},
 					{
@@ -507,7 +505,7 @@ export const questionGroups: QuestionGroup[] = [
 						value: "assumption",
 					},
 				],
-				migrate: (ctx) => ctx.ioPackageJson.common?.dataSource,
+				migrate: ctx => ctx.ioPackageJson.common?.dataSource,
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -519,12 +517,8 @@ export const questionGroups: QuestionGroup[] = [
 				hint: "(To some device or some service)",
 				initial: "no",
 				choices: ["yes", "no"],
-				migrate: (ctx) =>
-					ctx.ioPackageJson.instanceObjects?.some(
-						(o: any) => o._id === "info.connection",
-					)
-						? "yes"
-						: "no",
+				migrate: ctx =>
+					ctx.ioPackageJson.instanceObjects?.some((o: any) => o._id === "info.connection") ? "yes" : "no",
 			},
 		],
 	},
@@ -555,15 +549,10 @@ export const questionGroups: QuestionGroup[] = [
 				type: "select",
 				name: "language",
 				label: "Programming Language",
-				message:
-					"Which language do you want to use to code the adapter?",
+				message: "Which language do you want to use to code the adapter?",
 				choices: ["JavaScript", "TypeScript"],
-				migrate: async (ctx) =>
-					(await ctx.hasFilesWithExtension(
-						"src",
-						".ts",
-						(f) => !f.endsWith(".d.ts"),
-					))
+				migrate: async ctx =>
+					(await ctx.hasFilesWithExtension("src", ".ts", f => !f.endsWith(".d.ts")))
 						? "TypeScript"
 						: "JavaScript",
 			},
@@ -574,11 +563,10 @@ export const questionGroups: QuestionGroup[] = [
 				label: "Node.js version",
 				expert: true,
 				optional: true,
-				message:
-					"What's the minimum Node.js version you want to support?",
+				message: "What's the minimum Node.js version you want to support?",
 				initial: "20",
 				choices: ["20", "22", "24"],
-				migrate: (ctx) => {
+				migrate: ctx => {
 					if (ctx.hasDevDependency("@tsconfig/node18")) {
 						return "20"; // For migrations upgrade to Node.js 20 as minimum
 					} else if (ctx.hasDevDependency("@tsconfig/node20")) {
@@ -587,9 +575,8 @@ export const questionGroups: QuestionGroup[] = [
 						return "22";
 					} else if (ctx.hasDevDependency("@tsconfig/node24")) {
 						return "24";
-					} else {
-						return "20";
 					}
+					return "20";
 				},
 			},
 			{
@@ -597,8 +584,7 @@ export const questionGroups: QuestionGroup[] = [
 				type: "select",
 				name: "adminUi",
 				label: "Admin UI",
-				message:
-					"Which framework would you like to use for the Admin UI?",
+				message: "Which framework would you like to use for the Admin UI?",
 				initial: "json",
 				choices: [
 					{
@@ -639,9 +625,8 @@ export const questionGroups: QuestionGroup[] = [
 				message: "Use React for the tab UI?",
 				initial: "no",
 				choices: ["yes", "no"],
-				migrate: async (ctx) =>
-					(await ctx.fileExists("admin/src/tab.jsx")) ||
-					(await ctx.fileExists("admin/src/tab.tsx"))
+				migrate: async ctx =>
+					(await ctx.fileExists("admin/src/tab.jsx")) || (await ctx.fileExists("admin/src/tab.tsx"))
 						? "yes"
 						: "no",
 			},
@@ -663,17 +648,13 @@ export const questionGroups: QuestionGroup[] = [
 						hint: "(Requires VSCode and Docker, starts a fresh ioBroker in a Docker container with only your adapter installed)",
 					},
 				],
-				migrate: async (ctx) =>
+				migrate: async ctx =>
 					[
 						ctx.hasDevDependency("eslint") ? "ESLint" : null,
-						ctx.hasDevDependency("typescript")
-							? "type checking"
-							: null,
+						ctx.hasDevDependency("typescript") ? "type checking" : null,
 						ctx.hasDevDependency("prettier") ? "Prettier" : null,
-						(await ctx.directoryExists(".devcontainer"))
-							? "devcontainer"
-							: null,
-					].filter((f) => !!f) as string[],
+						(await ctx.directoryExists(".devcontainer")) ? "devcontainer" : null,
+					].filter(f => !!f) as string[],
 			}),
 			styledMultiselect({
 				condition: { name: "language", value: "TypeScript" },
@@ -694,16 +675,34 @@ export const questionGroups: QuestionGroup[] = [
 					},
 				],
 				action: checkTypeScriptTools,
-				migrate: async (ctx) =>
+				migrate: async ctx =>
 					[
 						ctx.hasDevDependency("eslint") ? "ESLint" : null,
 						ctx.hasDevDependency("prettier") ? "Prettier" : null,
 						ctx.hasDevDependency("nyc") ? "code coverage" : null,
-						(await ctx.directoryExists(".devcontainer"))
-							? "devcontainer"
-							: null,
-					].filter((f) => !!f) as string[],
+						(await ctx.directoryExists(".devcontainer")) ? "devcontainer" : null,
+					].filter(f => !!f) as string[],
 			}),
+			{
+				condition: { name: "tools", contains: "ESLint" },
+				type: "select",
+				name: "eslintConfig",
+				label: "ESLint Configuration",
+				message: "Do you want to configure ESLint by yourself or use the official ioBroker ESLint config?",
+				initial: "official",
+				choices: [
+					{
+						message: "Use official ioBroker ESLint config (includes prettier)",
+						hint: "(recommended)",
+						value: "official",
+					},
+					{
+						message: "Configure ESLint by yourself",
+						value: "custom",
+					},
+				],
+				migrate: () => "custom", // Default to custom for existing projects
+			},
 			{
 				condition: [
 					{ name: "features", contains: "adapter" },
@@ -728,23 +727,16 @@ export const questionGroups: QuestionGroup[] = [
 						value: "words.js",
 					},
 				],
-				migrate: async (ctx) =>
-					(await ctx.fileExists("admin/i18n/en/translations.json"))
-						? "JSON"
-						: "words.js",
+				migrate: async ctx => ((await ctx.fileExists("admin/i18n/en/translations.json")) ? "JSON" : "words.js"),
 			},
 			{
 				type: "select",
 				name: "releaseScript",
 				label: "Release Script",
-				message:
-					"Would you like to automate new releases with one simple command?",
+				message: "Would you like to automate new releases with one simple command?",
 				initial: "yes",
 				choices: ["yes", "no"],
-				migrate: async (ctx) =>
-					ctx.hasDevDependency("@alcalzone/release-script")
-						? "yes"
-						: "no",
+				migrate: async ctx => (ctx.hasDevDependency("@alcalzone/release-script") ? "yes" : "no"),
 			},
 			{
 				condition: [
@@ -766,8 +758,7 @@ export const questionGroups: QuestionGroup[] = [
 				type: "numeral",
 				name: "devServerPort",
 				label: "dev-server Admin Port",
-				message:
-					"Please choose the port number on which dev-server should present the admin web interface:",
+				message: "Please choose the port number on which dev-server should present the admin web interface:",
 				initial: 8081,
 				min: 1024,
 				max: 0xffff,
@@ -781,8 +772,7 @@ export const questionGroups: QuestionGroup[] = [
 				message: "Do you prefer tab or space indentation?",
 				initial: "Tab",
 				choices: ["Tab", "Space (4)"],
-				migrate: async (ctx) =>
-					(await ctx.analyzeCode("\t", "  ")) ? "Tab" : "Space (4)",
+				migrate: async ctx => ((await ctx.analyzeCode("\t", "  ")) ? "Tab" : "Space (4)"),
 			},
 			{
 				condition: { name: "features", contains: "adapter" },
@@ -792,8 +782,7 @@ export const questionGroups: QuestionGroup[] = [
 				message: "Do you prefer double or single quotes?",
 				initial: "double",
 				choices: ["double", "single"],
-				migrate: async (ctx) =>
-					(await ctx.analyzeCode('"', "'")) ? "double" : "single",
+				migrate: async ctx => ((await ctx.analyzeCode('"', "'")) ? "double" : "single"),
 			},
 		],
 	},
@@ -807,7 +796,7 @@ export const questionGroups: QuestionGroup[] = [
 				label: "Author Name",
 				message: "Please enter your name (or nickname):",
 				action: checkAuthorName,
-				migrate: (ctx) => ctx.packageJson.author?.name,
+				migrate: ctx => ctx.packageJson.author?.name,
 			},
 			{
 				type: "input",
@@ -816,11 +805,7 @@ export const questionGroups: QuestionGroup[] = [
 				message: "What's your name/org on GitHub?",
 				initial: ((answers: Answers) => answers.authorName) as any,
 				action: checkAuthorName,
-				migrate: (ctx) =>
-					ctx.ioPackageJson.common?.extIcon?.replace(
-						/^\w+:\/\/[^\/]+\.com\/([^\/]+)\/.+$/,
-						"$1",
-					),
+				migrate: ctx => ctx.ioPackageJson.common?.extIcon?.replace(/^\w+:\/\/[^/]+\.com\/([^/]+)\/.+$/, "$1"),
 			},
 			{
 				type: "input",
@@ -828,7 +813,7 @@ export const questionGroups: QuestionGroup[] = [
 				label: "Adapter E-Mail",
 				message: "What's your email address?",
 				action: checkEmail,
-				migrate: (ctx) => ctx.packageJson.author?.email,
+				migrate: ctx => ctx.packageJson.author?.email,
 			},
 			{
 				type: "select",
@@ -846,10 +831,7 @@ export const questionGroups: QuestionGroup[] = [
 						hint: "(requires you to setup SSH keys)",
 					},
 				],
-				migrate: (ctx) =>
-					ctx.packageJson.repository?.url?.match(/^git@/)
-						? "SSH"
-						: "HTTPS",
+				migrate: ctx => (ctx.packageJson.repository?.url?.match(/^git@/) ? "SSH" : "HTTPS"),
 			},
 			{
 				condition: { name: "cli", value: true },
@@ -879,10 +861,7 @@ export const questionGroups: QuestionGroup[] = [
 						hint: "(deprecated)",
 					},
 				],
-				migrate: (ctx) =>
-					ctx.ioPackageJson.common?.extIcon?.match(/\/main\/admin\//i)
-						? "main"
-						: "master",
+				migrate: ctx => (ctx.ioPackageJson.common?.extIcon?.match(/\/main\/admin\//i) ? "main" : "master"),
 			},
 			{
 				type: "select",
@@ -900,57 +879,96 @@ export const questionGroups: QuestionGroup[] = [
 					"MIT License",
 					"The Unlicense",
 				],
-				migrate: (ctx) =>
-					Object.keys(licenses).find(
-						(k) => licenses[k].id === ctx.packageJson.license,
-					),
+				migrate: ctx => Object.keys(licenses).find(k => licenses[k].id === ctx.packageJson.license),
 			},
 			{
 				type: "select",
 				name: "dependabot",
 				label: "Dependabot",
 				expert: true,
-				message:
-					"Do you want to receive regular dependency updates through Pull Requests?",
+				message: "Do you want to receive regular dependency updates through Pull Requests?",
 				hint: "(recommended)",
 				initial: "yes",
 				choices: ["yes", "no"],
-				migrate: async (ctx) =>
-					(await ctx.fileExists(".github/dependabot.yml"))
-						? "yes"
-						: "no",
+				migrate: async ctx => ((await ctx.fileExists(".github/dependabot.yml")) ? "yes" : "no"),
 			},
 		],
 	},
 ];
 
 /** Only the questions */
-export const questions = questionGroups
-	.map((q) => q.questions)
-	.reduce((arr, next) => arr.concat(...next), []);
+export const questions = questionGroups.map(q => q.questions).reduce((arr, next) => arr.concat(...next), []);
 
+/**
+ *
+ */
 export interface BaseAdapterSettings<T> {
+	/**
+	 *
+	 */
 	key: string;
+	/**
+	 *
+	 */
 	label?: string;
+	/**
+	 *
+	 */
 	defaultValue?: T;
 }
+/**
+ *
+ */
 export interface StringAdapterSettings extends BaseAdapterSettings<string> {
+	/**
+	 *
+	 */
 	inputType: "text";
 }
+/**
+ *
+ */
 export interface NumberAdapterSettings extends BaseAdapterSettings<number> {
+	/**
+	 *
+	 */
 	inputType: "number";
 }
+/**
+ *
+ */
 export interface BooleanAdapterSettings extends BaseAdapterSettings<boolean> {
+	/**
+	 *
+	 */
 	inputType: "checkbox";
 }
 
+/**
+ *
+ */
 export interface AdapterSelectOption {
+	/**
+	 *
+	 */
 	value: string;
+	/**
+	 *
+	 */
 	text: string;
 }
 
+/**
+ *
+ */
 export interface SelectAdapterSettings extends BaseAdapterSettings<string> {
+	/**
+	 *
+	 */
 	inputType: "select";
+	/**
+	 *
+	 */
 	options: AdapterSelectOption[];
 }
 export type AdapterSettings =
@@ -981,58 +999,171 @@ export interface LicenseInformation {
 	license?: LicenseType;
 }
 
+/**
+ *
+ */
 export interface Answers {
 	/** false is used in the portal */
 	cli: boolean;
 	/** "github" and "zip" are used in the portal */
 	target: "directory" | "github" | "zip";
+	/**
+	 *
+	 */
 	adapterName: string;
+	/**
+	 *
+	 */
 	description?: string;
+	/**
+	 *
+	 */
 	keywords?: string[];
+	/**
+	 *
+	 */
 	expert?: "yes" | "no";
+	/**
+	 *
+	 */
 	authorName: string;
+	/**
+	 *
+	 */
 	authorEmail: string;
+	/**
+	 *
+	 */
 	authorGithub: string;
+	/**
+	 *
+	 */
 	contributors?: string[];
+	/**
+	 *
+	 */
 	language?: "JavaScript" | "TypeScript";
+	/**
+	 *
+	 */
 	features: ("adapter" | "vis")[];
+	/**
+	 *
+	 */
 	adminFeatures?: ("tab" | "custom")[];
-	tools?: (
-		| "ESLint"
-		| "Prettier"
-		| "type checking"
-		| "code coverage"
-		| "devcontainer"
-	)[];
+	/**
+	 *
+	 */
+	tools?: ("ESLint" | "Prettier" | "type checking" | "code coverage" | "devcontainer")[];
+	/**
+	 *
+	 */
+	eslintConfig?: "official" | "custom";
+	/**
+	 *
+	 */
 	nodeVersion?: "20" | "22" | "24";
+	/**
+	 *
+	 */
 	title?: string;
+	/**
+	 *
+	 */
 	license?: string;
 	// Not used on the CLI, but can be provided by the web UI for example
+	/**
+	 *
+	 */
 	licenseInformation?: LicenseInformation;
+	/**
+	 *
+	 */
 	type: string;
+	/**
+	 *
+	 */
 	widgetIsMainFunction?: "main" | "additional";
+	/**
+	 *
+	 */
 	adminUi?: "json" | "html" | "react" | "none";
+	/**
+	 *
+	 */
 	tabReact?: "yes" | "no";
+	/**
+	 *
+	 */
 	i18n?: "words.js" | "JSON";
+	/**
+	 *
+	 */
 	releaseScript?: "yes" | "no";
+	/**
+	 *
+	 */
 	devServer?: "yes" | "no";
+	/**
+	 *
+	 */
 	devServerPort?: number;
+	/**
+	 *
+	 */
 	indentation?: "Tab" | "Space (4)";
+	/**
+	 *
+	 */
 	quotes?: "single" | "double";
+	/**
+	 *
+	 */
 	gitRemoteProtocol: "HTTPS" | "SSH";
+	/**
+	 *
+	 */
 	gitCommit?: "yes" | "no";
+	/**
+	 *
+	 */
 	defaultBranch?: "main" | "master";
+	/**
+	 *
+	 */
 	dependabot?: "yes" | "no";
+	/**
+	 *
+	 */
 	startMode?: "daemon" | "schedule" | "once" | "none";
+	/**
+	 *
+	 */
 	scheduleStartOnChange?: "yes" | "no";
+	/**
+	 *
+	 */
 	connectionIndicator?: "yes" | "no";
+	/**
+	 *
+	 */
 	connectionType?: "cloud" | "local";
+	/**
+	 *
+	 */
 	dataSource?: "poll" | "push" | "assumption";
+	/**
+	 *
+	 */
 	icon?: UploadedIcon;
 	/** An array of predefined adapter options */
 	adapterSettings?: AdapterSettings[];
 }
 
+/**
+ *
+ * @param answers
+ */
 export function checkAnswers(answers: Partial<Answers>): void {
 	for (const q of questions) {
 		// We don't use dynamic question names
@@ -1044,10 +1175,7 @@ export function checkAnswers(answers: Partial<Answers>): void {
 			throw new Error(`Missing answer "${questionName}"!`);
 		} else if (!conditionFulfilled && answer != undefined) {
 			// TODO: Find a fool-proof way to check for extraneous answers
-			if (
-				questions.filter((qq) => (qq.name as string) === questionName)
-					.length > 0
-			) {
+			if (questions.filter(qq => (qq.name as string) === questionName).length > 0) {
 				// For now, don't enforce conditions for questions with multiple branches
 				continue;
 			}
@@ -1057,50 +1185,56 @@ export function checkAnswers(answers: Partial<Answers>): void {
 	}
 }
 
-export async function formatAnswers(
-	answers: Record<string, any>,
-): Promise<Record<string, any>> {
+/**
+ *
+ * @param answers
+ */
+export async function formatAnswers(answers: Record<string, any>): Promise<Record<string, any>> {
 	for (const q of questions) {
 		const conditionFulfilled = testCondition(q.condition, answers);
-		if (!conditionFulfilled) continue;
+		if (!conditionFulfilled) {
+			continue;
+		}
 
 		// Apply an optional transformation
-		if (
-			answers[q.name as string] != undefined &&
-			typeof q.resultTransform === "function"
-		) {
+		if (answers[q.name as string] != undefined && typeof q.resultTransform === "function") {
 			const transformed = q.resultTransform(answers[q.name as string]);
-			answers[q.name as string] =
-				transformed instanceof Promise
-					? await transformed
-					: transformed;
+			answers[q.name as string] = transformed instanceof Promise ? await transformed : transformed;
 		}
 	}
 	return answers;
 }
 
-export async function validateAnswers(
-	answers: Answers,
-	disableValidation: (keyof Answers)[] = [],
-): Promise<void> {
+/**
+ *
+ * @param answers
+ * @param disableValidation
+ */
+export async function validateAnswers(answers: Answers, disableValidation: (keyof Answers)[] = []): Promise<void> {
 	for (const q of questions) {
 		const conditionFulfilled = testCondition(q.condition, answers);
-		if (!conditionFulfilled) continue;
-		if (q.action == undefined) continue;
-		if (disableValidation.indexOf(q.name as keyof Answers) > -1) continue;
+		if (!conditionFulfilled) {
+			continue;
+		}
+		if (q.action == undefined) {
+			continue;
+		}
+		if (disableValidation.indexOf(q.name as keyof Answers) > -1) {
+			continue;
+		}
 
-		const testResult = await q.action(
-			answers[q.name as keyof Answers] as any,
-		);
+		const testResult = await q.action(answers[q.name as keyof Answers] as any);
 		if (typeof testResult === "string") {
 			throw new Error(testResult);
 		}
 	}
 }
 
-export function getDefaultAnswer<T extends keyof Answers>(
-	key: T,
-): Answers[T] | undefined {
+/**
+ *
+ * @param key
+ */
+export function getDefaultAnswer<T extends keyof Answers>(key: T): Answers[T] | undefined {
 	// Apparently, it is not possible to make the return type depend on the
 	// given object key: https://github.com/microsoft/TypeScript/issues/31672
 	// So we cast to `any` until a solution emerges
@@ -1125,6 +1259,10 @@ export function getDefaultAnswer<T extends keyof Answers>(
 	}
 }
 
+/**
+ *
+ * @param answers
+ */
 export function getIconName(answers: Answers): string {
 	return `${answers.adapterName}.${answers.icon?.extension || "png"}`;
 }
@@ -1133,16 +1271,8 @@ async function migrateAdminUi(context: MigrationContextBase): Promise<string> {
 	if (await context.fileExists("admin/jsonConfig.json")) {
 		return "json";
 	}
-	const hasJsx = await context.hasFilesWithExtension(
-		"admin/src",
-		".jsx",
-		(f) => !f.endsWith("tab.jsx"),
-	);
-	const hasTsx = await context.hasFilesWithExtension(
-		"admin/src",
-		".tsx",
-		(f) => !f.endsWith("tab.tsx"),
-	);
+	const hasJsx = await context.hasFilesWithExtension("admin/src", ".jsx", f => !f.endsWith("tab.jsx"));
+	const hasTsx = await context.hasFilesWithExtension("admin/src", ".tsx", f => !f.endsWith("tab.tsx"));
 	if (hasJsx || hasTsx) {
 		return "react";
 	}

@@ -1,9 +1,11 @@
-import { readFile, TemplateFunction } from "../../../src/lib/createAdapter";
+import type { TemplateFunction } from "../../../src/lib/createAdapter";
+import { readFile } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-	
 	const useDependabot = answers.dependabot === "yes";
-	if (!useDependabot) return;
+	if (!useDependabot) {
+		return;
+	}
 
 	return readFile("dependabot-auto-merge.raw.yml", __dirname);
 };

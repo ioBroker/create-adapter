@@ -1,4 +1,5 @@
-import { readFile, TemplateFunction } from "../../../src/lib/createAdapter";
+import type { TemplateFunction } from "../../../src/lib/createAdapter";
+import { readFile } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = _answers => {
 	return readFile("bug_report.raw.md", __dirname);

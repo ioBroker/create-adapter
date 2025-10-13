@@ -5,35 +5,33 @@ import { enumFilesRecursiveSync } from "../src/lib/tools";
 
 const templateDir = path.join(__dirname, "../templates");
 
-const allTemplateFiles = enumFilesRecursiveSync(
-	templateDir,
-	(name, parentDir) => {
-		// Don't include the index file
-		if (name === "index.ts" && parentDir === templateDir) return false;
-		// Don't include *.raw.* files
-		if (/\.raw\./.test(name)) return false;
-		// But include all directories and .ts-files in /templates
-		const fullName = path.join(parentDir, name);
-		const isDirectory = fs.statSync(fullName).isDirectory();
-		return isDirectory || /\.ts$/.test(name);
-	},
-);
+const allTemplateFiles = enumFilesRecursiveSync(templateDir, (name, parentDir) => {
+	// Don't include the index file
+	if (name === "index.ts" && parentDir === templateDir) {
+		return false;
+	}
+	// Don't include *.raw.* files
+	if (/\.raw\./.test(name)) {
+		return false;
+	}
+	// But include all directories and .ts-files in /templates
+	const fullName = path.join(parentDir, name);
+	const isDirectory = fs.statSync(fullName).isDirectory();
+	return isDirectory || /\.ts$/.test(name);
+});
 
 function normalizePath(file: string): string {
 	return path.relative(templateDir, file).replace(/[\\/]/g, "/");
 }
 
 function getRequirePath(normalizedPath: string): string {
-	return "./" + normalizedPath.replace(/\.ts$/, "");
+	return `./${normalizedPath.replace(/\.ts$/, "")}`;
 }
 
 const templatePaths = allTemplateFiles
 	.map(normalizePath)
-	.map((file) => [file, getRequirePath(file)] as [string, string])
-	.map(
-		([file, req]) =>
-			`\t{ name: "${file}", templateFunction: require("${req}") },`,
-	)
+	.map(file => [file, getRequirePath(file)] as [string, string])
+	.map(([file, req]) => `\t{ name: "${file}", templateFunction: require("${req}") },`)
 	.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
 const indexContent = `
@@ -49,7 +47,4 @@ ${templatePaths.join(os.EOL)}
 export = templates;
 `.trimLeft();
 
-fs.writeFileSync(
-	path.resolve(__dirname, "../templates", "index.ts"),
-	indexContent,
-);
+fs.writeFileSync(path.resolve(__dirname, "../templates", "index.ts"), indexContent);

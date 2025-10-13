@@ -1,13 +1,13 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminUi === "react";
-	if (!useReact) return;
-	
-	const template = `
-import React from "react";
+	if (!useReact) {
+		return;
+	}
+
+	const template = `import React from "react";
 import ReactDOM from "react-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "@iobroker/adapter-react/Theme";
@@ -21,7 +21,7 @@ function build()${useTypeScript ? ": void" : ""} {
 		<MuiThemeProvider theme={theme(themeName)}>
 			<App
 				adapterName="${answers.adapterName}"
-				onThemeChange={(_theme) => {
+				onThemeChange={_theme => {
 					themeName = _theme;
 					build();
 				}}
@@ -33,11 +33,11 @@ function build()${useTypeScript ? ": void" : ""} {
 
 build();
 `;
-	return template.trim();
+	return template;
 };
 
-templateFunction.customPath = (answers) => {
+templateFunction.customPath = answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	return `admin/src/index.${useTypeScript ? "tsx" : "jsx"}`;
-}
+};
 export = templateFunction;

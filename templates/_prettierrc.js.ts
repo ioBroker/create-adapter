@@ -1,15 +1,21 @@
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
-	if (!usePrettier) return;
+	if (!usePrettier) {
+		return;
+	}
+	const useOfficialESLintConfig = answers.eslintConfig === "official";
+	// Don't generate .prettierrc.js when using official config (prettier config is in prettier.config.mjs)
+	if (useOfficialESLintConfig) {
+		return;
+	}
 
 	// endOfLine could be made dependent on the current OS's line ending
 	// I need to think about it.
 	// However leaving it on "auto" causes linting to fail on CI servers
 	// when the adapter was developed on Windows
-	
+
 	// Keep this in sync with lib/tools.ts -> formatWithPrettier()
 	const template = `
 module.exports = {

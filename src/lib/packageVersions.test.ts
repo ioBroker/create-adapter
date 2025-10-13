@@ -6,11 +6,12 @@ import { getPackageName, getVersionSpecifier } from "./packageVersions";
 const axiosMock = stub();
 const proxyquire = proxyquireModule.noPreserveCache();
 
-const { fetchPackageVersion, fetchPackageReferenceVersion } = proxyquire<
-	typeof import("./packageVersions")
->("./packageVersions", {
-	axios: { request: axiosMock },
-});
+const { fetchPackageVersion, fetchPackageReferenceVersion } = proxyquire<typeof import("./packageVersions")>(
+	"./packageVersions",
+	{
+		axios: { request: axiosMock },
+	},
+);
 
 function returnVersions(versions: string[]) {
 	const ret: any = {
@@ -44,13 +45,11 @@ function getRandomPackageName() {
 function getRandomPackageVersion() {
 	return [0, 0, 0]
 		.map(() => Math.round(Math.random() * 10))
-		.map((v) => v.toString())
+		.map(v => v.toString())
 		.join(".");
 }
 
-function getRandomPackageNameAndVersion(
-	version: string = getRandomPackageVersion(),
-) {
+function getRandomPackageNameAndVersion(version: string = getRandomPackageVersion()) {
 	return `${getRandomPackageName()}@${version}`;
 }
 
@@ -106,18 +105,13 @@ describe("packageVersions/fetchPackageVersion(latest)", () => {
 
 	it("for status codes other than 200, an error is thrown", async () => {
 		returnStatus(403);
-		await fetchPackageVersion(
-			getRandomPackageName(),
-		).should.be.rejectedWith("403");
+		await fetchPackageVersion(getRandomPackageName()).should.be.rejectedWith("403");
 	});
 
 	it("for status codes other than 200, the fallback version is returned if it is passed", async () => {
 		returnStatus(403);
 		const version = "1.2.3-beta";
-		await fetchPackageVersion(
-			getRandomPackageName(),
-			version,
-		).should.become(version);
+		await fetchPackageVersion(getRandomPackageName(), version).should.become(version);
 	});
 
 	it("if the status code is 200, the latest version is extracted from the response data", async () => {
@@ -149,9 +143,7 @@ describe("packageVersions/fetchPackageVersion(latest)", () => {
 		axiosMock.should.have.been.called;
 		expect(axiosMock.getCall(0).args[0]).to.be.an("object");
 		expect(axiosMock.getCall(0).args[0].url).to.include("/-/package/");
-		expect(axiosMock.getCall(0).args[0].url).to.include(
-			encodeURIComponent("bar-baz"),
-		);
+		expect(axiosMock.getCall(0).args[0].url).to.include(encodeURIComponent("bar-baz"));
 	});
 
 	it("the request object should contain a default timeout of 5000ms", async () => {
@@ -217,31 +209,20 @@ describe("packageVersions/fetchPackageVersion(specific)", () => {
 
 	it("for status codes other than 200, an error is thrown", async () => {
 		returnStatus(403);
-		await fetchPackageVersion(
-			getRandomPackageNameAndVersion(),
-		).should.be.rejectedWith("403");
+		await fetchPackageVersion(getRandomPackageNameAndVersion()).should.be.rejectedWith("403");
 	});
 
 	it("for status codes other than 200, the fallback version is returned if it is passed", async () => {
 		returnStatus(403);
 		const version = "1.2.3-beta";
-		await fetchPackageVersion(
-			getRandomPackageNameAndVersion(),
-			version,
-		).should.become(version);
+		await fetchPackageVersion(getRandomPackageNameAndVersion(), version).should.become(version);
 	});
 
 	it("if the status code is 200, the highest matching version is extracted from the response data", async () => {
 		returnVersions(testVersions);
-		await fetchPackageVersion(getRandomPackageName() + "@1").should.become(
-			"1.3.5",
-		);
-		await fetchPackageVersion(
-			getRandomPackageName() + "@~1.2",
-		).should.become("1.2.4");
-		await fetchPackageVersion(getRandomPackageName() + "@2").should.become(
-			"2.3.4",
-		);
+		await fetchPackageVersion(`${getRandomPackageName()}@1`).should.become("1.3.5");
+		await fetchPackageVersion(`${getRandomPackageName()}@~1.2`).should.become("1.2.4");
+		await fetchPackageVersion(`${getRandomPackageName()}@2`).should.become("2.3.4");
 	});
 
 	it("subsequent requests should return a cached version instead of issuing another request", async () => {
@@ -267,9 +248,7 @@ describe("packageVersions/fetchPackageVersion(specific)", () => {
 		axiosMock.should.have.been.called;
 		expect(axiosMock.getCall(0).args[0]).to.be.an("object");
 		expect(axiosMock.getCall(0).args[0].url).to.not.include("/-/package/");
-		expect(axiosMock.getCall(0).args[0].url).to.include(
-			encodeURIComponent("bar-baz"),
-		);
+		expect(axiosMock.getCall(0).args[0].url).to.include(encodeURIComponent("bar-baz"));
 	});
 });
 
@@ -284,42 +263,24 @@ describe("packageVersions/fetchPackageReferenceVersion()", () => {
 	it("for status codes other than 200, the requested version is returned", async () => {
 		returnStatus(403);
 		const version = "3.13.5";
-		await fetchPackageReferenceVersion(
-			getRandomPackageNameAndVersion(version),
-		).should.become(version);
+		await fetchPackageReferenceVersion(getRandomPackageNameAndVersion(version)).should.become(version);
 	});
 
 	it("if the status code is 200, the highest matching version is extracted from the response data", async () => {
 		returnVersions(testVersions);
 
 		// cases for major version ("^")
-		await fetchPackageReferenceVersion(
-			getRandomPackageName() + "@1",
-		).should.become("^1.3.5");
-		await fetchPackageReferenceVersion(
-			getRandomPackageName() + "@^1",
-		).should.become("^1.3.5");
-		await fetchPackageReferenceVersion(
-			getRandomPackageName() + "@^1.1",
-		).should.become("^1.3.5");
-		await fetchPackageReferenceVersion(
-			getRandomPackageName() + "@^1.1.1",
-		).should.become("^1.3.5");
+		await fetchPackageReferenceVersion(`${getRandomPackageName()}@1`).should.become("^1.3.5");
+		await fetchPackageReferenceVersion(`${getRandomPackageName()}@^1`).should.become("^1.3.5");
+		await fetchPackageReferenceVersion(`${getRandomPackageName()}@^1.1`).should.become("^1.3.5");
+		await fetchPackageReferenceVersion(`${getRandomPackageName()}@^1.1.1`).should.become("^1.3.5");
 
 		// cases for minor version ("~")
-		await fetchPackageReferenceVersion(
-			getRandomPackageName() + "@1.2",
-		).should.become("~1.2.4");
-		await fetchPackageReferenceVersion(
-			getRandomPackageName() + "@~1.2",
-		).should.become("~1.2.4");
-		await fetchPackageReferenceVersion(
-			getRandomPackageName() + "@~1.2.1",
-		).should.become("~1.2.4");
+		await fetchPackageReferenceVersion(`${getRandomPackageName()}@1.2`).should.become("~1.2.4");
+		await fetchPackageReferenceVersion(`${getRandomPackageName()}@~1.2`).should.become("~1.2.4");
+		await fetchPackageReferenceVersion(`${getRandomPackageName()}@~1.2.1`).should.become("~1.2.4");
 
 		// cases for exact version (no prefix)
-		await fetchPackageVersion(
-			getRandomPackageName() + "@1.2.4",
-		).should.become("1.2.4");
+		await fetchPackageVersion(`${getRandomPackageName()}@1.2.4`).should.become("1.2.4");
 	});
 });

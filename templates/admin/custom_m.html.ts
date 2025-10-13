@@ -1,9 +1,10 @@
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 export = (answers => {
-
 	const supportCustom = answers.adminFeatures && answers.adminFeatures.indexOf("custom") > -1;
-	if (!supportCustom) return;
+	if (!supportCustom) {
+		return;
+	}
 
 	const template = `
 <script type="text/x-iobroker" data-template-name="${answers.adapterName}">

@@ -21,6 +21,7 @@
         "type checking",
         "devcontainer"
     ],
+    "eslintConfig": "custom",
     "indentation": "Space (4)",
     "quotes": "single",
     "authorName": "Al Calzone",

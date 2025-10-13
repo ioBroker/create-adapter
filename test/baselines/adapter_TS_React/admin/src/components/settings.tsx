@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
+import type { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -62,14 +62,14 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		this.state = {};
 	}
 
-	renderInput(title: AdminWord, attr: string, type: string) {
+	renderInput(title: AdminWord, attr: string, type: string): React.JSX.Element {
 		return (
 			<TextField
 				label={I18n.t(title)}
 				className={`${this.props.classes.input} ${this.props.classes.controlElement}`}
 				value={this.props.native[attr]}
 				type={type || "text"}
-				onChange={(e) => this.props.onChange(attr, e.target.value)}
+				onChange={e => this.props.onChange(attr, e.target.value)}
 				margin="normal"
 			/>
 		);
@@ -80,22 +80,30 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		attr: string,
 		options: { value: string; title: AdminWord }[],
 		style?: React.CSSProperties,
-	) {
+	): React.JSX.Element {
 		return (
 			<FormControl
 				className={`${this.props.classes.input} ${this.props.classes.controlElement}`}
 				style={{
 					paddingTop: 5,
-					...style
+					...style,
 				}}
 			>
 				<Select
 					value={this.props.native[attr] || "_"}
-					onChange={(e) => this.props.onChange(attr, e.target.value === "_" ? "" : e.target.value)}
-					input={<Input name={attr} id={attr + "-helper"} />}
+					onChange={e => this.props.onChange(attr, e.target.value === "_" ? "" : e.target.value)}
+					input={
+						<Input
+							name={attr}
+							id={`${attr}-helper`}
+						/>
+					}
 				>
-					{options.map((item) => (
-						<MenuItem key={"key-" + item.value} value={item.value || "_"}>
+					{options.map(item => (
+						<MenuItem
+							key={`key-${item.value}`}
+							value={item.value || "_"}
+						>
 							{I18n.t(item.title)}
 						</MenuItem>
 					))}
@@ -105,13 +113,13 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		);
 	}
 
-	renderCheckbox(title: AdminWord, attr: string, style?: React.CSSProperties) {
+	renderCheckbox(title: AdminWord, attr: string, style?: React.CSSProperties): React.JSX.Element {
 		return (
 			<FormControlLabel
 				key={attr}
 				style={{
 					paddingTop: 5,
-					...style
+					...style,
 				}}
 				className={this.props.classes.controlElement}
 				control={
@@ -126,10 +134,11 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 		);
 	}
 
-	render() {
+	render(): React.JSX.Element {
 		return (
 			<form className={this.props.classes.tab}>
-				{this.renderCheckbox("option1", "option1")}<br />
+				{this.renderCheckbox("option1", "option1")}
+				<br />
 				{this.renderInput("option2", "option2", "text")}
 			</form>
 		);
