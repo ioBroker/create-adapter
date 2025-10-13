@@ -22,15 +22,9 @@ const licenseUrls = {
 
 const startMarker = "/** BEGIN LICENSES */";
 const endMarker = "/** END LICENSES */";
-const licenseCacheFile = path.resolve(
-	__dirname,
-	"../src/lib/core/",
-	"licenses.ts",
-);
+const licenseCacheFile = path.resolve(__dirname, "../src/lib/core/", "licenses.ts");
 
-async function loadLicense(
-	shortName: keyof typeof licenseUrls,
-): Promise<License> {
+async function loadLicense(shortName: keyof typeof licenseUrls): Promise<License> {
 	try {
 		let options: AxiosRequestConfig = {
 			url: licenseUrls[shortName],
@@ -51,22 +45,18 @@ async function loadLicense(
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function loadLicenses() {
 	const licenses = {} as Record<keyof typeof licenseUrls, License>;
-	for (const shortName of Object.keys(
-		licenseUrls,
-	) as (keyof typeof licenseUrls)[]) {
+	for (const shortName of Object.keys(licenseUrls) as (keyof typeof licenseUrls)[]) {
 		licenses[shortName] = await loadLicense(shortName);
 	}
 	return licenses;
 }
 
-(async function main() {
+void (async function main() {
 	const argv = await yargs.option("force", { type: "boolean" }).parseAsync();
 	let templateContent = await fs.readFile(licenseCacheFile, "utf8");
-	const startMarkerEnd =
-		templateContent.indexOf(startMarker) + startMarker.length;
+	const startMarkerEnd = templateContent.indexOf(startMarker) + startMarker.length;
 	const endMarkerStart = templateContent.indexOf(endMarker);
 	if (endMarkerStart < startMarkerEnd + 100 || !!argv.force) {
 		// < 100 Bytes is not enough for all licenses, so we need to fetch them
@@ -77,10 +67,6 @@ async function loadLicenses() {
 			templateContent.substr(endMarkerStart);
 		await fs.writeFile(licenseCacheFile, templateContent, "utf8");
 	} else {
-		console.log(
-			green(
-				`Licenses are already cached. Run this with the parameter --force to update them`,
-			),
-		);
+		console.log(green(`Licenses are already cached. Run this with the parameter --force to update them`));
 	}
 })();

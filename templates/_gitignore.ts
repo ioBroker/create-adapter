@@ -1,7 +1,6 @@
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useDevContainer = answers.tools && answers.tools.includes("devcontainer");
 
@@ -21,11 +20,15 @@ iobroker.*.tgz
 
 Thumbs.db
 .commitinfo
-${useNyc ? `
+${
+	useNyc
+		? `
 # NYC coverage files
 coverage
 
-` : ""}
+`
+		: ""
+}
 # i18n intermediate files
 admin/i18n/flat.txt
 admin/i18n/*/flat.txt

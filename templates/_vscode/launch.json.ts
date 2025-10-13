@@ -2,9 +2,10 @@ import * as JSON5 from "json5";
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
-	if (!devcontainer) return;
+	if (!devcontainer) {
+		return;
+	}
 
 	const template = `
 {
@@ -19,13 +20,13 @@ const templateFunction: TemplateFunction = answers => {
 			"name": "Launch ioBroker Adapter",
 			"skipFiles": ["<node_internals>/**"],
 			"args": ["--debug", "0", "--logs"],
-			"program": "$\{workspaceFolder\}/main.js",
+			"program": "$\{workspaceFolder}/main.js",
 			"console": "integratedTerminal",
 		}
 	]
 }
 `;
-return JSON.stringify(JSON5.parse(template), null, 4);
+	return JSON.stringify(JSON5.parse(template), null, 4);
 };
 
 templateFunction.customPath = ".vscode/launch.json";

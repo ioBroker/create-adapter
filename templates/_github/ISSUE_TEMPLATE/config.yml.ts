@@ -1,4 +1,5 @@
-import { readFile, TemplateFunction } from "../../../src/lib/createAdapter";
+import type { TemplateFunction } from "../../../src/lib/createAdapter";
+import { readFile } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = _answers => {
 	return readFile("config.raw.yml", __dirname);

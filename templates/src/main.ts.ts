@@ -1,19 +1,20 @@
-import { AdapterSettings, getDefaultAnswer } from "../../src/lib/core/questions";
+import type { AdapterSettings } from "../../src/lib/core/questions";
+import { getDefaultAnswer } from "../../src/lib/core/questions";
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 import { kebabCaseToUpperCamelCase } from "../../src/lib/tools";
 
 const templateFunction: TemplateFunction = async answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
-	if (!useTypeScript) return;
+	if (!useTypeScript) {
+		return;
+	}
 
 	const className = kebabCaseToUpperCamelCase(answers.adapterName);
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 	const quote = answers.quotes === "double" ? '"' : "'";
 	const t = answers.indentation === "Space (4)" ? "    " : "\t";
 
-	const template = `
-/*
+	const template = `/*
  * Created with @iobroker/create-adapter v${answers.creatorVersion}
  */
 
@@ -25,7 +26,6 @@ import * as utils from ${quote}@iobroker/adapter-core${quote};
 // import * as fs from ${quote}fs${quote};
 
 class ${className} extends utils.Adapter {
-
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
@@ -45,14 +45,18 @@ class ${className} extends utils.Adapter {
 		// Initialize your adapter here
 
 
-${answers.connectionIndicator === "yes" ? `
+${
+	answers.connectionIndicator === "yes"
+		? `
 		// Reset the connection indicator during startup
 		this.setState(${quote}info.connection${quote}, false, true);
-` : ""}
+`
+		: ""
+}
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote} + this.config.${s.key});`).join("\n")}
+${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.config.${s.key}}${quote});`).join("\n")}
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -94,14 +98,16 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 
 		// examples for the checkPassword/checkGroup functions
 		const pwdResult = await this.checkPasswordAsync(${quote}admin${quote}, ${quote}iobroker${quote});
-		this.log.info(${quote}check user admin pw iobroker: ${quote} + pwdResult);
+		this.log.info(\`check user admin pw iobroker: \${JSON.stringify(pwdResult)}\`);
 
 		const groupResult = await this.checkGroupAsync(${quote}admin${quote}, ${quote}admin${quote});
-		this.log.info(${quote}check group user admin group admin: ${quote} + groupResult);
+		this.log.info(\`check group user admin group admin: \${JSON.stringify(groupResult)}\`);
 	}
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
+	 *
+	 * @param callback - Callback function
 	 */
 	private onUnload(callback: () => void): void {
 		try {
@@ -112,7 +118,8 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 			// clearInterval(interval1);
 
 			callback();
-		} catch (_e) {
+		} catch (error) {
+			this.log.error(\`Error during unloading: \${(error as Error).message}\`);
 			callback();
 		}
 	}
@@ -134,6 +141,9 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 
 	/**
 	 * Is called if a subscribed state changes
+	 *
+	 * @param id - State ID
+	 * @param state - State object
 	 */
 	private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
 		if (state) {
@@ -144,26 +154,23 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: ${quote}
 			this.log.info(\`state \${id} deleted\`);
 		}
 	}
-
 	// If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
 	// /**
 	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
 	//  * Using this method requires "common.messagebox" property to be set to true in io-package.json
 	//  */
+	//
 	// private onMessage(obj: ioBroker.Message): void {
 	// ${t}if (typeof obj === ${quote}object${quote} && obj.message) {
 	// ${t}${t}if (obj.command === ${quote}send${quote}) {
 	// ${t}${t}${t}// e.g. send email or pushover or whatever
 	// ${t}${t}${t}this.log.info(${quote}send command${quote});
-
 	// ${t}${t}${t}// Send response in callback if required
 	// ${t}${t}${t}if (obj.callback) this.sendTo(obj.from, obj.command, ${quote}Message received${quote}, obj.callback);
 	// ${t}${t}}
 	// ${t}}
 	// }
-
 }
-
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new ${className}(options);
@@ -172,7 +179,7 @@ if (require.main !== module) {
 	(() => new ${className}())();
 }
 `;
-	return template.trim();
+	return template;
 };
 
 export = templateFunction;

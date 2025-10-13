@@ -11,7 +11,7 @@ const options: AxiosRequestConfig = {
 	method: "POST",
 };
 
-(async () => {
+void (async () => {
 	// Create PR
 
 	let createPrResponse: AxiosResponse<any>;

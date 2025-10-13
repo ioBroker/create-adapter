@@ -1,9 +1,10 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
-	if (!devcontainer) return;
+	if (!devcontainer) {
+		return;
+	}
 
 	const template = `
 FROM iobroker/iobroker:latest
@@ -19,7 +20,7 @@ COPY node-wrapper.sh /usr/bin/node-wrapper.sh
 RUN chmod +x /usr/bin/node-wrapper.sh \\
 	&& NODE_BIN="$(command -v node)" \\
 	# Move the original node binary to .real
-	&& mv "$NODE_BIN" "$\{NODE_BIN\}.real" \\
+	&& mv "$NODE_BIN" "$\{NODE_BIN}.real" \\
     # Move the wrapper in place
 	&& mv /usr/bin/node-wrapper.sh "$NODE_BIN"
 

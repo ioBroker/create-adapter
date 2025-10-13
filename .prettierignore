@@ -1,8 +1,0 @@
-package.json
-package-lock.json
-build/
-src/lib/core/licenses.ts
-templates/
-test/baselines/
-CHANGELOG.md
-.github/**/*.yml

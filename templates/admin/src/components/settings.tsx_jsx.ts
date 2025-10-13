@@ -1,33 +1,36 @@
-import { AdapterSettings, getDefaultAnswer } from "../../../../src/lib/core/questions";
+import { type AdapterSettings, getDefaultAnswer } from "../../../../src/lib/core/questions";
 import type { TemplateFunction } from "../../../../src/lib/createAdapter";
 
 function generateSettingsMethod(settings: AdapterSettings): string {
 	if (settings.inputType === "select" && settings.options) {
-		const options = settings.options.map((opt) => ({ value: opt.value, title: opt.text }));
+		const options = settings.options.map(opt => ({ value: opt.value, title: opt.text }));
 		return `
 				{renderSelect("${settings.label || settings.key}", "${settings.key}", ${JSON.stringify(options)})}`;
 	} else if (settings.inputType === "checkbox") {
 		return `
 				{this.renderCheckbox("${settings.label || settings.key}", "${settings.key}")}`;
-	} else {
-		return `
-				{this.renderInput("${settings.label || settings.key}", "${settings.key}", "${settings.inputType}")}`;
 	}
+	return `
+				{this.renderInput("${settings.label || settings.key}", "${settings.key}", "${settings.inputType}")}`;
 }
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
 	const useReact = answers.adminUi === "react";
-	if (!useReact) return;
+	if (!useReact) {
+		return;
+	}
 
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;
 
-	const template = `
-import React from "react";
+	const template = `import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-${useTypeScript ? `import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
-` : ""}import TextField from "@material-ui/core/TextField";
+${
+	useTypeScript
+		? `import type { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
+`
+		: ""
+}import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
@@ -37,9 +40,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import I18n from "@iobroker/adapter-react/i18n";
 
-${useTypeScript ? "" : `/**
+${
+	useTypeScript
+		? ""
+		: `/**
  * @type {() => Record<string, import("@material-ui/core/styles/withStyles").CreateCSSProperties>}
- */`}
+ */`
+}
 const styles = ()${useTypeScript ? ": Record<string, CreateCSSProperties>" : ""} => ({
 	input: {
 		marginTop: 0,
@@ -73,8 +80,9 @@ const styles = ()${useTypeScript ? ": Record<string, CreateCSSProperties>" : ""}
 	},
 });
 
-${useTypeScript ?
-`interface SettingsProps {
+${
+	useTypeScript
+		? `interface SettingsProps {
 	classes: Record<string, string>;
 	native: Record<string, any>;
 
@@ -84,7 +92,8 @@ ${useTypeScript ?
 interface SettingsState {
 	// add your state properties here
 	dummy?: undefined;
-}` : `/**
+}`
+		: `/**
  * @typedef {object} SettingsProps
  * @property {Record<string, string>} classes
  * @property {Record<string, any>} native
@@ -94,62 +103,83 @@ interface SettingsState {
 /**
  * @typedef {object} SettingsState
  * @property {undefined} [dummy] Delete this and add your own state properties here
- */`}
+ */`
+}
 
-${useTypeScript ? "" : `/**
+${
+	useTypeScript
+		? ""
+		: `/**
  * @extends {React.Component<SettingsProps, SettingsState>}
  */
-`}class Settings extends React.Component${useTypeScript ? "<SettingsProps, SettingsState>" : ""} {
+`
+}class Settings extends React.Component${useTypeScript ? "<SettingsProps, SettingsState>" : ""} {
 	constructor(props${useTypeScript ? ": SettingsProps" : ""}) {
 		super(props);
 		this.state = {};
 	}
 
-	${useTypeScript ? `renderInput(title: AdminWord, attr: string, type: string)` : `/**
+	${
+		useTypeScript
+			? `renderInput(title: AdminWord, attr: string, type: string): React.JSX.Element`
+			: `/**
 	 * @param {AdminWord} title
 	 * @param {string} attr
 	 * @param {string} type
 	 */
-	renderInput(title, attr, type)`} {
+	renderInput(title, attr, type)`
+	} {
 		return (
 			<TextField
 				label={I18n.t(title)}
 				className={\`\${this.props.classes.input} \${this.props.classes.controlElement}\`}
 				value={this.props.native[attr]}
 				type={type || "text"}
-				onChange={(e) => this.props.onChange(attr, e.target.value)}
+				onChange={e => this.props.onChange(attr, e.target.value)}
 				margin="normal"
 			/>
 		);
 	}
 
-	${useTypeScript ? `renderSelect(
+	${
+		useTypeScript
+			? `renderSelect(
 		title: AdminWord,
 		attr: string,
 		options: { value: string; title: AdminWord }[],
 		style?: React.CSSProperties,
-	)` : `/**
+	): React.JSX.Element`
+			: `/**
 	 * @param {AdminWord} title
 	 * @param {string} attr
 	 * @param {{ value: string; title: AdminWord }[]} options
 	 * @param {React.CSSProperties} [style]
 	 */
-	renderSelect(title, attr, options, style)`} {
+	renderSelect(title, attr, options, style)`
+	} {
 		return (
 			<FormControl
 				className={\`\${this.props.classes.input} \${this.props.classes.controlElement}\`}
 				style={{
 					paddingTop: 5,
-					...style
+					...style,
 				}}
 			>
 				<Select
 					value={this.props.native[attr] || "_"}
-					onChange={(e) => this.props.onChange(attr, e.target.value === "_" ? "" : e.target.value)}
-					input={<Input name={attr} id={attr + "-helper"} />}
+					onChange={e => this.props.onChange(attr, e.target.value === "_" ? "" : e.target.value)}
+					input={
+						<Input
+							name={attr}
+							id={\`\${attr}-helper\`}
+						/>
+					}
 				>
-					{options.map((item) => (
-						<MenuItem key={"key-" + item.value} value={item.value || "_"}>
+					{options.map(item => (
+						<MenuItem
+							key={\`key-\${item.value}\`}
+							value={item.value || "_"}
+						>
 							{I18n.t(item.title)}
 						</MenuItem>
 					))}
@@ -159,18 +189,22 @@ ${useTypeScript ? "" : `/**
 		);
 	}
 
-	${useTypeScript ? `renderCheckbox(title: AdminWord, attr: string, style?: React.CSSProperties)` : `/**
+	${
+		useTypeScript
+			? `renderCheckbox(title: AdminWord, attr: string, style?: React.CSSProperties): React.JSX.Element`
+			: `/**
 	 * @param {AdminWord} title
 	 * @param {string} attr
 	 * @param {React.CSSProperties} [style]
 	 */
-	renderCheckbox(title, attr, style)`} {
+	renderCheckbox(title, attr, style)`
+	} {
 		return (
 			<FormControlLabel
 				key={attr}
 				style={{
 					paddingTop: 5,
-					...style
+					...style,
 				}}
 				className={this.props.classes.controlElement}
 				control={
@@ -185,9 +219,9 @@ ${useTypeScript ? "" : `/**
 		);
 	}
 
-	render() {
+	render()${useTypeScript ? ": React.JSX.Element" : ""} {
 		return (
-			<form className={this.props.classes.tab}>${adapterSettings.map(generateSettingsMethod).join("<br />")}
+			<form className={this.props.classes.tab}>${adapterSettings.map(generateSettingsMethod).join("\n\t\t\t\t<br />")}
 			</form>
 		);
 	}
@@ -195,11 +229,11 @@ ${useTypeScript ? "" : `/**
 
 export default withStyles(styles)(Settings);
 `;
-	return template.trim();
+	return template;
 };
 
-templateFunction.customPath = (answers) => {
+templateFunction.customPath = answers => {
 	const useTypeScript = answers.language === "TypeScript";
 	return `admin/src/components/settings.${useTypeScript ? "tsx" : "jsx"}`;
-}
+};
 export = templateFunction;

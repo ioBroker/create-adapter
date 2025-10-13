@@ -13,6 +13,10 @@ import { URL } from "url";
 import { licenses } from "./core/licenses";
 import type { Answers } from "./core/questions";
 
+/**
+ *
+ * @param message
+ */
 export function error(message: string): void {
 	console.error(bold.red(message));
 	console.error();
@@ -22,6 +26,7 @@ export const isWindows = /^win/.test(os.platform());
 
 /**
  * Executes an npm command with update-notifier disabled and common parameters
+ *
  * @param args The npm command arguments
  * @param options (optional) Some options for the command execution
  */
@@ -53,13 +58,12 @@ export function executeNpmCommand(
 			npm_config_update_notifier: "false",
 		},
 	};
-	return executeCommand(
-		isWindows ? "npm.cmd" : "npm",
-		enhancedArgs,
-		npmOptions,
-	);
+	return executeCommand(isWindows ? "npm.cmd" : "npm", enhancedArgs, npmOptions);
 }
 
+/**
+ *
+ */
 export interface ExecuteCommandOptions {
 	/** Whether the executed command should be logged to the stdout. Default: false */
 	logCommandExecution: boolean;
@@ -75,6 +79,9 @@ export interface ExecuteCommandOptions {
 	env: Record<string, string>;
 }
 
+/**
+ *
+ */
 export interface ExecuteCommandResult {
 	/** The exit code of the spawned process */
 	exitCode?: number;
@@ -92,6 +99,7 @@ export function executeCommand(
 ): Promise<ExecuteCommandResult>;
 /**
  * Executes a command and returns the exit code and (if requested) the stdout
+ *
  * @param command The command to execute
  * @param args The command line arguments for the command
  * @param options (optional) Some options for the command execution
@@ -106,7 +114,7 @@ export function executeCommand(
 	argsOrOptions?: string[] | Partial<ExecuteCommandOptions>,
 	options?: Partial<ExecuteCommandOptions>,
 ): Promise<ExecuteCommandResult> {
-	return new Promise((resolve) => {
+	return new Promise(resolve => {
 		let args: string[] | undefined;
 		if (Array.isArray(argsOrOptions)) {
 			args = argsOrOptions;
@@ -114,22 +122,25 @@ export function executeCommand(
 			// no args were given
 			options = argsOrOptions;
 		}
-		if (options == null) options = {};
-		if (args == null) args = [];
+		if (options == null) {
+			options = {};
+		}
+		if (args == null) {
+			args = [];
+		}
 
 		const spawnOptions: SpawnOptions = {
-			stdio: [
-				options.stdin || process.stdin,
-				options.stdout || process.stdout,
-				options.stderr || process.stderr,
-			],
+			stdio: [options.stdin || process.stdin, options.stdout || process.stdout, options.stderr || process.stderr],
 			windowsHide: true,
 			env: options.env ? { ...process.env, ...options.env } : process.env,
 		};
-		if (options.cwd != null) spawnOptions.cwd = options.cwd;
+		if (options.cwd != null) {
+			spawnOptions.cwd = options.cwd;
+		}
 
-		if (options.logCommandExecution == null)
+		if (options.logCommandExecution == null) {
 			options.logCommandExecution = false;
+		}
 		if (options.logCommandExecution) {
 			console.log("executing: " + `${command} ${args.join(" ")}`);
 		}
@@ -138,35 +149,28 @@ export function executeCommand(
 		try {
 			let bufferedStdout: string | undefined;
 			let bufferedStderr: string | undefined;
-			const cmd = spawn(command, args, spawnOptions).on(
-				"close",
-				(code, signal) => {
-					resolve({
-						exitCode: code ?? undefined,
-						signal: signal ?? undefined,
-						stdout: bufferedStdout,
-						stderr: bufferedStderr,
-					});
-				},
-			);
+			const cmd = spawn(command, args, spawnOptions).on("close", (code, signal) => {
+				resolve({
+					exitCode: code ?? undefined,
+					signal: signal ?? undefined,
+					stdout: bufferedStdout,
+					stderr: bufferedStderr,
+				});
+			});
 			// Capture stdout/stderr if requested
 			if (options.stdout === "pipe") {
 				bufferedStdout = "";
-				cmd.stdout!.on("data", (chunk) => {
-					bufferedStdout += Buffer.isBuffer(chunk)
-						? chunk.toString("utf8")
-						: chunk;
+				cmd.stdout!.on("data", chunk => {
+					bufferedStdout += Buffer.isBuffer(chunk) ? chunk.toString("utf8") : chunk;
 				});
 			}
 			if (options.stderr === "pipe") {
 				bufferedStderr = "";
-				cmd.stderr!.on("data", (chunk) => {
-					bufferedStderr += Buffer.isBuffer(chunk)
-						? chunk.toString("utf8")
-						: chunk;
+				cmd.stderr!.on("data", chunk => {
+					bufferedStderr += Buffer.isBuffer(chunk) ? chunk.toString("utf8") : chunk;
 				});
 			}
-		} catch (e) {
+		} catch {
 			// doesn't matter, we return the exit code in the "close" handler
 		}
 	});
@@ -174,6 +178,7 @@ export function executeCommand(
 
 /**
  * Recursively enumerates all files in the given directory
+ *
  * @param dir The directory to scan
  * @param predicate An optional predicate to apply to every found file system entry
  * @returns A list of all files found
@@ -183,12 +188,14 @@ export function enumFilesRecursiveSync(
 	predicate?: (name: string, parentDir: string) => boolean,
 ): string[] {
 	const ret = [];
-	if (typeof predicate !== "function") predicate = () => true;
+	if (typeof predicate !== "function") {
+		predicate = () => true;
+	}
 	// enumerate all files in this directory
 	const filesOrDirs = fs
 		.readdirSync(dir)
-		.filter((f) => predicate!(f, dir)) // exclude all files starting with "."
-		.map((f) => path.join(dir, f)); // and prepend the full path
+		.filter(f => predicate(f, dir)) // exclude all files starting with "."
+		.map(f => path.join(dir, f)); // and prepend the full path
 	for (const entry of filesOrDirs) {
 		if (fs.statSync(entry).isDirectory()) {
 			// Continue recursing this directory and remember the files there
@@ -203,6 +210,7 @@ export function enumFilesRecursiveSync(
 
 /**
  * Recursively copies all files from the source to the target directory
+ *
  * @param sourceDir The directory to scan
  * @param targetDir The directory to copy to
  * @param predicate An optional predicate to apply to every found file system entry
@@ -217,10 +225,7 @@ export function copyFilesRecursiveSync(
 	// Copy all of them to the corresponding target dir
 	for (const file of filesToCopy) {
 		// Find out where it's supposed to be
-		const targetFileName = path.join(
-			targetDir,
-			path.relative(sourceDir, file),
-		);
+		const targetFileName = path.join(targetDir, path.relative(sourceDir, file));
 		// Ensure the directory exists
 		fs.ensureDirSync(path.dirname(targetFileName));
 		// And copy the file
@@ -230,13 +235,11 @@ export function copyFilesRecursiveSync(
 
 /**
  * Adds https proxy options to an axios request if they were defined as an env variable
+ *
  * @param options The options object passed to axios
  */
-export function applyHttpsProxy(
-	options: AxiosRequestConfig,
-): AxiosRequestConfig {
-	const proxy: string | undefined =
-		process.env.https_proxy || process.env.HTTPS_PROXY;
+export function applyHttpsProxy(options: AxiosRequestConfig): AxiosRequestConfig {
+	const proxy: string | undefined = process.env.https_proxy || process.env.HTTPS_PROXY;
 	if (proxy) {
 		try {
 			const proxyUrl = new URL(proxy);
@@ -253,6 +256,11 @@ export function applyHttpsProxy(
 	return options;
 }
 
+/**
+ *
+ * @param licenseText
+ * @param answers
+ */
 export function formatLicense(licenseText: string, answers: Answers): string {
 	return licenseText
 		.replace(/\[(year|yyyy)\]/g, new Date().getFullYear().toString())
@@ -260,6 +268,10 @@ export function formatLicense(licenseText: string, answers: Answers): string {
 		.replace(/\[email\]/g, answers.authorEmail);
 }
 
+/**
+ *
+ * @param answers
+ */
 export function getFormattedLicense(answers: Answers): string {
 	if (answers.license) {
 		const license = licenses[answers.license];
@@ -271,28 +283,38 @@ export function getFormattedLicense(answers: Answers): string {
 	return "TODO: enter license text here";
 }
 
-/** Replaces 4-space indentation with tabs */
+/**
+ * Replaces 4-space indentation with tabs
+ *
+ * @param text
+ */
 export function indentWithTabs(text: string): string {
-	if (!text) return text;
-	return text.replace(/^( {4})+/gm, (match) => "\t".repeat(match.length / 4));
+	if (!text) {
+		return text;
+	}
+	return text.replace(/^( {4})+/gm, match => "\t".repeat(match.length / 4));
 }
 
-/** Replaces tab indentation with 4 spaces */
+/**
+ * Replaces tab indentation with 4 spaces
+ *
+ * @param text
+ */
 export function indentWithSpaces(text: string): string {
-	if (!text) return text;
-	return text.replace(/^(\t)+/gm, (match) => " ".repeat(match.length * 4));
+	if (!text) {
+		return text;
+	}
+	return text.replace(/^(\t)+/gm, match => " ".repeat(match.length * 4));
 }
 
-/** Normalizes formatting of a JSON string */
-export function formatJsonString(
-	json: string,
-	indentation: "Tab" | "Space (4)",
-): string {
-	return JSON.stringify(
-		JSON5.parse(json),
-		null,
-		indentation === "Tab" ? "\t" : 4,
-	);
+/**
+ * Normalizes formatting of a JSON string
+ *
+ * @param json
+ * @param indentation
+ */
+export function formatJsonString(json: string, indentation: "Tab" | "Space (4)"): string {
+	return JSON.stringify(JSON5.parse(json), null, indentation === "Tab" ? "\t" : 4);
 }
 
 export enum Quotemark {
@@ -300,22 +322,36 @@ export enum Quotemark {
 	"double" = '"',
 }
 
-function createESLintOptions(
-	language: Exclude<Answers["language"], undefined>,
-	quotes: keyof typeof Quotemark,
-): Record<string, any> {
-	const baseOptions: Record<string, any> = {
-		env: {
-			es6: true,
-			node: true,
-			mocha: true,
-		},
-		parserOptions: {
+function createESLintOptions(language: Exclude<Answers["language"], undefined>, quotes: keyof typeof Quotemark): any[] {
+	// ESLint 9 flat config format
+	const baseConfig: any = {
+		languageOptions: {
 			ecmaVersion: "latest",
-			ecmaFeatures: {
-				jsx: true,
-			},
 			sourceType: "module",
+			parserOptions: {
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+			globals: {
+				// Node.js
+				process: "readonly",
+				Buffer: "readonly",
+				__dirname: "readonly",
+				__filename: "readonly",
+				module: "readonly",
+				require: "readonly",
+				exports: "readonly",
+				global: "readonly",
+				console: "readonly",
+				// Mocha
+				describe: "readonly",
+				it: "readonly",
+				before: "readonly",
+				after: "readonly",
+				beforeEach: "readonly",
+				afterEach: "readonly",
+			},
 		},
 		rules: {
 			quotes: [
@@ -328,43 +364,44 @@ function createESLintOptions(
 			],
 		},
 	};
+
 	if (language === "TypeScript") {
-		baseOptions.parser = "@typescript-eslint/parser";
+		baseConfig.languageOptions.parser = require("@typescript-eslint/parser");
 	}
-	return baseOptions;
+
+	return [baseConfig];
 }
 
-/** Formats a JS source file to use single quotes */
-export function jsFixQuotes(
-	sourceText: string,
-	quotes: keyof typeof Quotemark,
-): string {
+/**
+ * Formats a JS source file to use single quotes
+ *
+ * @param sourceText
+ * @param quotes
+ */
+export function jsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark): string {
 	const linter = new Linter();
-	const result = linter.verifyAndFix(
-		sourceText,
-		createESLintOptions("JavaScript", quotes),
-	);
+	const result = linter.verifyAndFix(sourceText, createESLintOptions("JavaScript", quotes));
 	return result.output;
 }
 
-/** Formats a TS source file to use single quotes */
-export function tsFixQuotes(
-	sourceText: string,
-	quotes: keyof typeof Quotemark,
-): string {
+/**
+ * Formats a TS source file to use single quotes
+ *
+ * @param sourceText
+ * @param quotes
+ */
+export function tsFixQuotes(sourceText: string, quotes: keyof typeof Quotemark): string {
 	const linter = new Linter();
-	linter.defineParser(
-		"@typescript-eslint/parser",
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		require("@typescript-eslint/parser"),
-	);
-	const result = linter.verifyAndFix(
-		sourceText,
-		createESLintOptions("TypeScript", quotes),
-	);
+	const result = linter.verifyAndFix(sourceText, createESLintOptions("TypeScript", quotes));
 	return result.output;
 }
 
+/**
+ *
+ * @param sourceText
+ * @param answers
+ * @param extension
+ */
 export function formatWithPrettier(
 	sourceText: string,
 	answers: Pick<Answers, "quotes" | "indentation">,
@@ -385,12 +422,14 @@ export function formatWithPrettier(
 	return prettier.format(sourceText, prettierOptions);
 }
 
+/**
+ *
+ */
 export function getOwnVersion(): string {
 	for (const jsonPath of ["../../package.json", "../../../package.json"]) {
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			return require(jsonPath).version;
-		} catch (e) {
+		} catch {
 			/* OK */
 		}
 	}
@@ -398,23 +437,36 @@ export function getOwnVersion(): string {
 	return "unknown";
 }
 
+/**
+ *
+ * @param name
+ */
 export function capitalize(name: string): string {
 	return name[0].toUpperCase() + name.slice(1);
 }
 
+/**
+ *
+ * @param name
+ */
 export function kebabCaseToUpperCamelCase(name: string): string {
 	return name
-		.split(/[_\-]/)
-		.filter((part) => part.length > 0)
+		.split(/[_-]/)
+		.filter(part => part.length > 0)
 		.map(capitalize)
 		.join("");
 }
 
+/**
+ *
+ */
 export function getRequestTimeout(): number {
 	let ret: number | undefined;
 	if (process.env.REQUEST_TIMEOUT) {
 		ret = parseInt(process.env.REQUEST_TIMEOUT, 10);
 	}
-	if (ret == undefined || Number.isNaN(ret)) return 5000;
+	if (ret == undefined || Number.isNaN(ret)) {
+		return 5000;
+	}
 	return ret;
 }

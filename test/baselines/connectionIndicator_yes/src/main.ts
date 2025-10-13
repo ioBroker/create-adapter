@@ -10,7 +10,6 @@ import * as utils from "@iobroker/adapter-core";
 // import * as fs from "fs";
 
 class TestAdapter extends utils.Adapter {
-
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
 			...options,
@@ -34,8 +33,8 @@ class TestAdapter extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.debug("config option1: " + this.config.option1);
-		this.log.debug("config option2: " + this.config.option2);
+		this.log.debug("config option1: ${this.config.option1}");
+		this.log.debug("config option2: ${this.config.option2}");
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -77,14 +76,16 @@ class TestAdapter extends utils.Adapter {
 
 		// examples for the checkPassword/checkGroup functions
 		const pwdResult = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw iobroker: " + pwdResult);
+		this.log.info(`check user admin pw iobroker: ${JSON.stringify(pwdResult)}`);
 
 		const groupResult = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + groupResult);
+		this.log.info(`check group user admin group admin: ${JSON.stringify(groupResult)}`);
 	}
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
+	 *
+	 * @param callback - Callback function
 	 */
 	private onUnload(callback: () => void): void {
 		try {
@@ -95,7 +96,8 @@ class TestAdapter extends utils.Adapter {
 			// clearInterval(interval1);
 
 			callback();
-		} catch (_e) {
+		} catch (error) {
+			this.log.error(`Error during unloading: ${(error as Error).message}`);
 			callback();
 		}
 	}
@@ -117,6 +119,9 @@ class TestAdapter extends utils.Adapter {
 
 	/**
 	 * Is called if a subscribed state changes
+	 *
+	 * @param id - State ID
+	 * @param state - State object
 	 */
 	private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
 		if (state) {
@@ -127,26 +132,23 @@ class TestAdapter extends utils.Adapter {
 			this.log.info(`state ${id} deleted`);
 		}
 	}
-
 	// If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
 	// /**
 	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
 	//  * Using this method requires "common.messagebox" property to be set to true in io-package.json
 	//  */
+	//
 	// private onMessage(obj: ioBroker.Message): void {
 	// 	if (typeof obj === "object" && obj.message) {
 	// 		if (obj.command === "send") {
 	// 			// e.g. send email or pushover or whatever
 	// 			this.log.info("send command");
-
 	// 			// Send response in callback if required
 	// 			if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
 	// 		}
 	// 	}
 	// }
-
 }
-
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new TestAdapter(options);

@@ -1,9 +1,10 @@
 import type { TemplateFunction } from "../../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
-	if (!devcontainer) return;
+	if (!devcontainer) {
+		return;
+	}
 
 	const template = `
 #!/bin/bash

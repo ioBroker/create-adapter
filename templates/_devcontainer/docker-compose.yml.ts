@@ -1,9 +1,10 @@
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const devcontainer = answers.tools && answers.tools.includes("devcontainer");
-	if (!devcontainer) return;
+	if (!devcontainer) {
+		return;
+	}
 
 	const adapterNameLowerCase = answers.adapterName.toLowerCase();
 	const needsParcel = answers.adminUi === "react" || answers.tabReact === "yes";
@@ -32,7 +33,9 @@ services:
             - LC_ALL=en_US.UTF-8
             - TZ=Europe/Berlin
             - SETGID=1000
-${needsParcel ? (`
+${
+	needsParcel
+		? `
     parcel:
         container_name: parcel-${adapterNameLowerCase}
         build: ./parcel
@@ -44,17 +47,27 @@ ${needsParcel ? (`
             - ..:/workspace:cached
         environment:
             - CHOKIDAR_USEPOLLING=1
-`) : ""}
+`
+		: ""
+}
     # Reverse proxy to load up-to-date admin sources from the repo
     nginx:
         image: nginx:latest
         depends_on:
             - iobroker
-${needsParcel ? (`            - parcel
-`) : ""}        links:
+${
+	needsParcel
+		? `            - parcel
+`
+		: ""
+}        links:
             - iobroker
-${needsParcel ? (`            - parcel
-`) : ""}        container_name: nginx-${adapterNameLowerCase}
+${
+	needsParcel
+		? `            - parcel
+`
+		: ""
+}        container_name: nginx-${adapterNameLowerCase}
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ..:/workspace:cached

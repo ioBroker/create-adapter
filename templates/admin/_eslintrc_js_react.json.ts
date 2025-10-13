@@ -1,11 +1,11 @@
 import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
-
 	const useTypeScript = answers.language === "TypeScript";
-	const useReact =
-		answers.adminUi === "react" || answers.tabReact === "yes";
-	if (useTypeScript || !useReact) return;
+	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
+	if (useTypeScript || !useReact) {
+		return;
+	}
 
 	const template = `
 {
