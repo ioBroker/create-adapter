@@ -32,7 +32,8 @@
     "@tsconfig/node20": "^20.1.6",
     "@types/node": "^20.19.21",
     "eslint": "^9.37.0",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "@types/iobroker": "npm:@iobroker/types@^7.0.7"
   },
   "main": "main.js",
   "files": [
