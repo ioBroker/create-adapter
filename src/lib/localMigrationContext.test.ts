@@ -101,7 +101,7 @@ describe("LocalMigrationContext.getMainFileContent()", () => {
 				main: "build/src/cli.js",
 			};
 			expect(await context.getMainFileContent()).not.to.be.empty;
-			expect(await context.getMainFileContent()).to.contain('import("yargs")');
+			expect(await context.getMainFileContent()).to.contain("import * as yargs");
 		});
 	}
 
