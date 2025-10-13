@@ -5,7 +5,6 @@ import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
 import * as fs from "fs-extra";
 import * as path from "path";
-import * as yargs from "yargs";
 import type { License } from "../src/lib/core/licenses";
 import { applyHttpsProxy, getRequestTimeout } from "../src/lib/tools";
 
@@ -54,7 +53,8 @@ async function loadLicenses() {
 }
 
 void (async function main() {
-	const argv = await yargs.option("force", { type: "boolean" }).parseAsync();
+	const { default: yargs } = await import("yargs");
+	const argv = await yargs().option("force", { type: "boolean" }).parseAsync();
 	let templateContent = await fs.readFile(licenseCacheFile, "utf8");
 	const startMarkerEnd = templateContent.indexOf(startMarker) + startMarker.length;
 	const endMarkerStart = templateContent.indexOf(endMarker);

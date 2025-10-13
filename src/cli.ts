@@ -2,7 +2,6 @@ import { blueBright, bold, gray, green, red, reset, underline } from "ansi-color
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
-import * as yargs from "yargs";
 import type { CheckResult } from "./lib/core/actionsAndTransformers";
 import type { MigrationContextBase } from "./lib/core/migrationContextBase";
 import type { Answers, Question, QuestionGroup } from "./lib/core/questions";
@@ -16,65 +15,75 @@ import { error, executeCommand, executeNpmCommand, getOwnVersion, isWindows } fr
 export type ConditionalTitle = (answers: Record<string, any>) => string | undefined;
 
 /** Define command line arguments */
-const argv = yargs
-	.env("CREATE_ADAPTER")
-	.strict()
-	.usage("ioBroker adapter creator\n\nUsage: $0 [options]")
-	.alias("h", "help")
-	.alias("v", "version")
-	.options({
-		target: {
-			alias: "t",
-			type: "string",
-			desc: "Output directory for adapter files\n(default: current directory)",
-		},
-		skipAdapterExistenceCheck: {
-			alias: "x",
-			type: "boolean",
-			default: false,
-			desc: "Skip check if an adapter with the same name already exists on npm",
-		},
-		replay: {
-			alias: "r",
-			type: "string",
-			desc: "Replay answers from the given .create-adapter.json file",
-		},
-		migrate: {
-			alias: "m",
-			type: "string",
-			desc: "Use answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
-		},
-		noInstall: {
-			alias: "n",
-			type: "boolean",
-			default: false,
-			desc: "Skip installation of dependencies",
-		},
-		install: {
-			alias: "i",
-			hidden: true,
-			type: "boolean",
-			default: false,
-			desc: "Force installation of dependencies",
-		},
-	})
-	.parseSync();
-
-/** Where the output should be written */
-const rootDir = path.resolve(argv.target || process.cwd());
-
-async function checkAdapterExistence(name: string): Promise<CheckResult> {
-	try {
-		await fetchPackageVersion(`iobroker.${name}`);
-		return `The adapter ioBroker.${name} already exists!`;
-	} catch {
-		return true;
-	}
-}
-
-const creatorOptions = {
-	checkAdapterExistence: !argv.skipAdapterExistenceCheck && !argv.migrate ? checkAdapterExistence : undefined,
+let argv: ReturnType<ReturnType<typeof import("yargs")["default"]>["parseSync"]>;
+let rootDir: string;
+let creatorOptions: {
+	checkAdapterExistence: ((name: string) => Promise<CheckResult>) | undefined;
 };
+
+async function initializeCliArguments(): Promise<void> {
+	const { default: yargs } = await import("yargs");
+	const { hideBin } = await import("yargs/helpers");
+	argv = yargs(hideBin(process.argv))
+		.env("CREATE_ADAPTER")
+		.strict()
+		.usage("ioBroker adapter creator\n\nUsage: $0 [options]")
+		.alias("h", "help")
+		.alias("v", "version")
+		.options({
+			target: {
+				alias: "t",
+				type: "string",
+				desc: "Output directory for adapter files\n(default: current directory)",
+			},
+			skipAdapterExistenceCheck: {
+				alias: "x",
+				type: "boolean",
+				default: false,
+				desc: "Skip check if an adapter with the same name already exists on npm",
+			},
+			replay: {
+				alias: "r",
+				type: "string",
+				desc: "Replay answers from the given .create-adapter.json file",
+			},
+			migrate: {
+				alias: "m",
+				type: "string",
+				desc: "Use answers from an existing adapter directory (must be the base directory of an adapter where you find io-package.json)",
+			},
+			noInstall: {
+				alias: "n",
+				type: "boolean",
+				default: false,
+				desc: "Skip installation of dependencies",
+			},
+			install: {
+				alias: "i",
+				hidden: true,
+				type: "boolean",
+				default: false,
+				desc: "Force installation of dependencies",
+			},
+		})
+		.parseSync();
+
+	/** Where the output should be written */
+	rootDir = path.resolve(argv.target || process.cwd());
+
+	async function checkAdapterExistence(name: string): Promise<CheckResult> {
+		try {
+			await fetchPackageVersion(`iobroker.${name}`);
+			return `The adapter ioBroker.${name} already exists!`;
+		} catch {
+			return true;
+		}
+	}
+
+	creatorOptions = {
+		checkAdapterExistence: !argv.skipAdapterExistenceCheck && !argv.migrate ? checkAdapterExistence : undefined,
+	};
+}
 
 /** Asks a series of questions on the CLI */
 async function ask(): Promise<Answers> {
@@ -211,7 +220,7 @@ function logProgress(message: string): void {
 }
 
 /** Whether dependencies should be installed */
-const installDependencies = !argv.noInstall || !!argv.install;
+let installDependencies: boolean;
 /** Whether an initial build should be performed */
 let needsBuildStep: boolean;
 /** Whether the initial commit should be performed automatically */
@@ -296,6 +305,11 @@ if (process.env.TEST_STARTUP) {
 }
 
 (async function main() {
+	await initializeCliArguments();
+
+	/** Whether dependencies should be installed */
+	installDependencies = !argv.noInstall || !!argv.install;
+
 	const answers = await ask();
 
 	if (installDependencies) {
