@@ -36,7 +36,7 @@ class App extends GenericApp {
 		// executed when connection is ready
 	}
 
-	render(): Element {
+	render(): React.JSX.Element {
 		if (!this.state.loaded) {
 			return super.render();
 		}

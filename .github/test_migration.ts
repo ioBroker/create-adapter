@@ -123,7 +123,16 @@ async function testVariant(variantName: string): Promise<TestResult> {
 		if (packageJson.scripts?.build) {
 			console.log("  Running build...");
 			result.stage = "build";
-			execSync("npm run build", cmdOpts);
+			try {
+				execSync("npm run build", cmdOpts);
+			} catch (error) {
+				// Capture stderr to show the actual error
+				const stderr = error.stderr?.toString() || "";
+				const stdout = error.stdout?.toString() || "";
+				throw new Error(
+					`Build failed:\n${stdout}\n${stderr}`.trim(),
+				);
+			}
 		} else {
 			console.log("  No build script found, skipping...");
 		}
