@@ -9,9 +9,10 @@ import { createFiles } from "./lib/createAdapter";
  * @param disableValidation
  */
 export async function createAdapter(answers: Answers, disableValidation: (keyof Answers)[] = []): Promise<File[]> {
+	// Format answers (apply defaults, transformations, etc.)
+	answers = (await formatAnswers(answers)) as Answers;
 	// Check all answers
 	checkAnswers(answers);
-	answers = (await formatAnswers(answers)) as Answers;
 	await validateAnswers(answers, disableValidation);
 
 	// Create files
