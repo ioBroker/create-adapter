@@ -2,7 +2,8 @@ import { blueBright, bold, gray, green, red, reset, underline } from "ansi-color
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
-import * as yargs from "yargs";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 import type { CheckResult } from "./lib/core/actionsAndTransformers";
 import type { MigrationContextBase } from "./lib/core/migrationContextBase";
 import type { Answers, Question, QuestionGroup } from "./lib/core/questions";
@@ -16,7 +17,7 @@ import { error, executeCommand, executeNpmCommand, getOwnVersion, isWindows } fr
 export type ConditionalTitle = (answers: Record<string, any>) => string | undefined;
 
 /** Define command line arguments */
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
 	.env("CREATE_ADAPTER")
 	.strict()
 	.usage("ioBroker adapter creator\n\nUsage: $0 [options]")
