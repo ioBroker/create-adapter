@@ -58,7 +58,7 @@ class App extends GenericApp {
 		// executed when connection is ready
 	}
 
-	render()${useTypeScript ? ": Element" : ""} {
+	render()${useTypeScript ? ": React.JSX.Element" : ""} {
 		if (!this.state.loaded) {
 			return super.render();
 		}
