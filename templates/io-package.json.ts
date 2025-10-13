@@ -150,7 +150,12 @@ export = (async answers => {
 			"config": "${adminUiConfig}",
 			${supportTab ? `"tab": "materialize",` : ""}
 		},`
-				: ""
+				: isWidget
+					? `
+		"adminUI": {
+			"config": "none"
+		},`
+					: ""
 		}
 		${
 			supportTab
