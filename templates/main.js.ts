@@ -79,6 +79,11 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 			native: {},
 		});
 
+		// **************************************************************************************************
+		// In order to use the correct role for state objects, please refer to the state roles documentation
+		// https://www.iobroker.net/#en/documentation/dev/stateroles.md
+		// **************************************************************************************************
+
 		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
 		this.subscribeStates(${quote}testVariable${quote});
 		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."

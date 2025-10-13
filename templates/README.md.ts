@@ -136,6 +136,9 @@ ${
 We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
 check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
 
+### State Roles
+When creating state objects, it is important to use the correct role for the state. The role defines how the state should be interpreted by visualizations and other adapters. For a list of available roles and their meanings, please refer to the [state roles documentation](https://www.iobroker.net/#en/documentation/dev/stateroles.md).
+
 ### Scripts in \`package.json\`
 Several npm scripts are predefined for your convenience. You can run them using \`npm run <scriptname>\`
 | Script name | Description |

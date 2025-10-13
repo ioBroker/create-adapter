@@ -55,6 +55,11 @@ class TestAdapter extends utils.Adapter {
             native: {},
         });
 
+        // **************************************************************************************************
+        // In order to use the correct role for state objects, please refer to the state roles documentation
+        // https://www.iobroker.net/#en/documentation/dev/stateroles.md
+        // **************************************************************************************************
+
         // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
         this.subscribeStates('testVariable');
         // You can also add a subscription for multiple states. The following line watches all states starting with "lights."
