@@ -105,8 +105,8 @@ ${
 		deploy
 			? ""
 			: `
-# TODO: To enable automatic npm releases, create a token on npmjs.org 
-# Enter this token as a GitHub secret (with name NPM_TOKEN) in the repository options
+# TODO: To enable automatic npm releases, set up trusted publishing in your npm account
+# See https://docs.npmjs.com/trusted-publishers for more details
 # Then uncomment the following block:
 `
 	}
@@ -125,6 +125,7 @@ ${escapeDeploy(
 
     # Write permissions are required to create Github releases
     permissions:
+      id-token: write
       contents: write
 
     steps:
@@ -138,7 +139,6 @@ ${escapeDeploy(
           build: true`
 					: ""
 			}
-          npm-token: \${{ secrets.NPM_TOKEN }}
           github-token: \${{ secrets.GITHUB_TOKEN }}
 
           # When using Sentry for error reporting, Sentry can be informed about new releases

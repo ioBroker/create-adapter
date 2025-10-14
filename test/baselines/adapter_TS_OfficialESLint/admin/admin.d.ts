@@ -35,31 +35,31 @@ interface SendToResult {
 
 // tslint:disable-next-line:class-name
 interface ioBrokerSocket {
-	emit(command: "subscribeObjects", pattern: string, callback?: (err?: string) => void | Promise<void>): void;
-	emit(command: "subscribeStates", pattern: string, callback?: (err?: string) => void | Promise<void>): void;
-	emit(command: "unsubscribeObjects", pattern: string, callback?: (err?: string) => void | Promise<void>): void;
-	emit(command: "unsubscribeStates", pattern: string, callback?: (err?: string) => void | Promise<void>): void;
+	emit(command: 'subscribeObjects', pattern: string, callback?: (err?: string) => void | Promise<void>): void;
+	emit(command: 'subscribeStates', pattern: string, callback?: (err?: string) => void | Promise<void>): void;
+	emit(command: 'unsubscribeObjects', pattern: string, callback?: (err?: string) => void | Promise<void>): void;
+	emit(command: 'unsubscribeStates', pattern: string, callback?: (err?: string) => void | Promise<void>): void;
 
 	emit(
-		event: "getObjectView",
-		view: "system",
-		type: "device",
+		event: 'getObjectView',
+		view: 'system',
+		type: 'device',
 		options: ioBroker.GetObjectViewParams,
 		callback: (err: string | undefined, result?: any) => void | Promise<void>,
 	): void;
-	emit(event: "getStates", callback: (err: string | undefined, result?: Record<string, any>) => void): void;
-	emit(event: "getState", id: string, callback: (err: string | undefined, result?: ioBroker.State) => void): void;
+	emit(event: 'getStates', callback: (err: string | undefined, result?: Record<string, any>) => void): void;
+	emit(event: 'getState', id: string, callback: (err: string | undefined, result?: ioBroker.State) => void): void;
 	emit(
-		event: "setState",
+		event: 'setState',
 		id: string,
 		state: unknown,
 		callback: (err: string | undefined, result?: any) => void,
 	): void;
 
-	on(event: "objectChange", handler: ioBroker.ObjectChangeHandler): void;
-	on(event: "stateChange", handler: ioBroker.StateChangeHandler): void;
-	removeEventHandler(event: "objectChange", handler: ioBroker.ObjectChangeHandler): void;
-	removeEventHandler(event: "stateChange", handler: ioBroker.StateChangeHandler): void;
+	on(event: 'objectChange', handler: ioBroker.ObjectChangeHandler): void;
+	on(event: 'stateChange', handler: ioBroker.StateChangeHandler): void;
+	removeEventHandler(event: 'objectChange', handler: ioBroker.ObjectChangeHandler): void;
+	removeEventHandler(event: 'stateChange', handler: ioBroker.StateChangeHandler): void;
 
 	// TODO: other events
 }

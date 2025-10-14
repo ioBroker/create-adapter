@@ -49,6 +49,11 @@ You are almost done, only a few steps left:
 We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
 check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
 
+### State Roles
+When creating state objects, it is important to use the correct role for the state. The role defines how the state should be interpreted by visualizations and other adapters. For a list of available roles and their meanings, please refer to the [state roles documentation](https://www.iobroker.net/#en/documentation/dev/stateroles.md).
+
+**Important:** Do not invent your own custom role names. If you need a role that is not part of the official list, please contact the ioBroker developer community for guidance and discussion about adding new roles.
+
 ### Scripts in `package.json`
 Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
 | Script name | Description |
@@ -92,20 +97,29 @@ of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#req
 
 ### Test the adapter manually on a local ioBroker installation
 In order to install the adapter locally without publishing, the following steps are recommended:
-1. Create a tarball from your dev directory:  
-	```bash
-	npm pack
-	```
-1. Upload the resulting file to your ioBroker host
-1. Install it locally (The paths are different on Windows):
-	```bash
-	cd /opt/iobroker
-	npm i /path/to/tarball.tgz
-	```
+1. Create a GitHub repository for your adapter if you haven't already
+1. Push your code to the GitHub repository
+1. Use the ioBroker Admin interface or command line to install the adapter from GitHub:
+	* **Via Admin UI**: Go to the "Adapters" tab, click on "Custom Install" (GitHub icon), and enter your repository URL:
+		```
+		https://github.com/AlCalzone/ioBroker.test-adapter
+		```
+		You can also install from a specific branch by adding `#branchname` at the end:
+		```
+		https://github.com/AlCalzone/ioBroker.test-adapter#dev
+		```
+	* **Via Command Line**: Install using the `iob` command:
+		```bash
+		iob url https://github.com/AlCalzone/ioBroker.test-adapter
+		```
+		Or from a specific branch:
+		```bash
+		iob url https://github.com/AlCalzone/ioBroker.test-adapter#dev
+		```
 
-For later updates, the above procedure is not necessary. Just do the following:
-1. Overwrite the changed files in the adapter directory (`/opt/iobroker/node_modules/iobroker.test-adapter`)
-1. Execute `iobroker upload test-adapter` on the ioBroker host
+For later updates:
+1. Push your changes to GitHub
+1. Repeat the installation steps above (via Admin UI or `iob url` command) to update the adapter
 
 ## Changelog
 
