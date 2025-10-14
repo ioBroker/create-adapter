@@ -144,18 +144,13 @@ export = (async answers => {
 					: ""
 		}
 		${
-			isAdapter
+			isAdapter || answers.adminUi === "none" || isWidget
 				? `
 		"adminUI": {
-			"config": "${adminUiConfig}",
+			"config": "${isAdapter ? adminUiConfig : "none"}",
 			${supportTab ? `"tab": "materialize",` : ""}
 		},`
-				: isWidget
-					? `
-		"adminUI": {
-			"config": "none"
-		},`
-					: ""
+				: ""
 		}
 		${
 			supportTab
