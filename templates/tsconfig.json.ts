@@ -3,8 +3,9 @@ import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../src/lib/constants";
 
 export = (answers => {
 	const useTypeScript = answers.language === "TypeScript";
+	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
-	if (!useTypeScript && !useTypeChecking) {
+	if (!useTypeScript && !useTSWithoutBuild && !useTypeChecking) {
 		return;
 	}
 
@@ -13,12 +14,14 @@ export = (answers => {
 	let include: string;
 	let exclude: string;
 
-	if (useTypeScript) {
+	if (useTypeScript || useTSWithoutBuild) {
 		include = `
 		"src/**/*.ts",
 		"test/**/*.ts"`;
-		exclude = `
-		"build/**",`;
+		exclude = useTypeScript
+			? `
+		"build/**",`
+			: ``;
 	} else {
 		include = `
 		"**/*.js",
@@ -37,15 +40,18 @@ export = (answers => {
 			useTypeScript
 				? `
 		// the compilation is configured in tsconfig.build.json`
-				: ""
+				: useTSWithoutBuild
+					? `
+		// TypeScript files are executed directly without transpilation`
+					: ""
 		}
 		"noEmit": true,
 
-		// check JS files${useTypeScript ? ", but do not compile them => tsconfig.build.json" : ""}
+		// check JS files${useTypeScript ? ", but do not compile them => tsconfig.build.json" : useTSWithoutBuild ? "" : ""}
 		"allowJs": true,
 		"checkJs": true,
 		${
-			useTypeScript
+			useTypeScript || useTSWithoutBuild
 				? `
 		"noEmitOnError": true,
 		"outDir": "./build/",
@@ -62,18 +68,18 @@ export = (answers => {
 		// "strictNullChecks": true,
 		// "strictPropertyInitialization": true,
 		// "strictBindCallApply": true,
-		${useTypeScript ? `// "noImplicitAny": true,` : `"noImplicitAny": false,`}
+		${useTypeScript || useTSWithoutBuild ? `// "noImplicitAny": true,` : `"noImplicitAny": false,`}
 		// "noUnusedLocals": true,
 		// "noUnusedParameters": true,
 		${
-			useTypeScript
+			useTypeScript || useTSWithoutBuild
 				? `// Uncomment this if you want the old behavior of catch variables being \`any\`
 		// "useUnknownInCatchVariables": false,`
 				: `"useUnknownInCatchVariables": false,`
 		}
 
 		${
-			useTypeScript
+			useTypeScript || useTSWithoutBuild
 				? `
 		"sourceMap": true,
 		"inlineSourceMap": false`

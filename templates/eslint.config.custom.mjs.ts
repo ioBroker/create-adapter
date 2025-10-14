@@ -2,7 +2,7 @@ import type { TemplateFunction } from "../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 	// This version is intended for use in TS projects
-	if (answers.language !== "TypeScript") {
+	if (answers.language !== "TypeScript" && answers.language !== "TypeScript (without build)") {
 		return;
 	}
 
