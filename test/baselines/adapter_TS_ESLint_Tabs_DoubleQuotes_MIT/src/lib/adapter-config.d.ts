@@ -1,4 +1,4 @@
-// This file extends the AdapterConfig type from "@types/iobroker"
+// This file extends the AdapterConfig type from "@iobroker/types"
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
