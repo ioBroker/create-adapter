@@ -153,6 +153,15 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 		if (state) {
 			// The state was changed
 			this.log.info(\`state \${id} changed: \${state.val} (ack = \${state.ack})\`);
+
+			// The state was changed by the user (ack=false) and not by the adapter
+			if (state.ack === false) {
+				// This is a command from the user (e.g., from the UI or other adapter)
+				// and should be processed by the adapter
+				this.log.info(\`User command received for \${id}: \${state.val}\`);
+
+				// TODO: Add your control logic here
+			}
 		} else {
 			// The state was deleted
 			this.log.info(\`state \${id} deleted\`);
