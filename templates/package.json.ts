@@ -119,6 +119,18 @@ const templateFunction: TemplateFunction = async answers => {
 		const iobrokerTypesVersion = await fetchPackageReferenceVersion("@iobroker/types");
 		devDependencies.push(`"@types/iobroker": "npm:@iobroker/types@${iobrokerTypesVersion}"`);
 	}
+	
+	// Sort dependencies alphabetically, with @-scoped packages first
+	devDependencies.sort((a, b) => {
+		const aName = a.match(/"([^"]+)":/)?.[1] || "";
+		const bName = b.match(/"([^"]+)":/)?.[1] || "";
+		const aIsScoped = aName.startsWith("@");
+		const bIsScoped = bName.startsWith("@");
+		
+		if (aIsScoped && !bIsScoped) return -1;
+		if (!aIsScoped && bIsScoped) return 1;
+		return aName.localeCompare(bName);
+	});
 
 	const gitUrl =
 		answers.gitRemoteProtocol === "HTTPS"
