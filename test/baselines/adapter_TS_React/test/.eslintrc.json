@@ -29,7 +29,7 @@
 		"prefer-const": "error",
 		"quotes": [
 			"error",
-			"double",
+			"single",
 			{
 				"avoidEscape": true,
 				"allowTemplateLiterals": true
