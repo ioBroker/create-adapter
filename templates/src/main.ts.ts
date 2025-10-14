@@ -62,6 +62,10 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 		For every state in the system there has to be also an object of type state
 		Here a simple template for a boolean variable named "testVariable"
 		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
+
+		IMPORTANT: State roles should be chosen carefully based on the state's purpose.
+		           Please refer to the state roles documentation for guidance:
+		           https://www.iobroker.net/#en/documentation/dev/stateroles.md
 		*/
 		await this.setObjectNotExistsAsync(${quote}testVariable${quote}, {
 			type: ${quote}state${quote},
