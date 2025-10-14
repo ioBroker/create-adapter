@@ -139,6 +139,8 @@ check them out. If you're already experienced, you should also take a look at th
 ### State Roles
 When creating state objects, it is important to use the correct role for the state. The role defines how the state should be interpreted by visualizations and other adapters. For a list of available roles and their meanings, please refer to the [state roles documentation](https://www.iobroker.net/#en/documentation/dev/stateroles.md).
 
+**Important:** Do not invent your own custom role names. If you need a role that is not part of the official list, please contact the ioBroker developer community for guidance and discussion about adding new roles.
+
 ### Scripts in \`package.json\`
 Several npm scripts are predefined for your convenience. You can run them using \`npm run <scriptname>\`
 | Script name | Description |
