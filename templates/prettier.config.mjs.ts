@@ -7,7 +7,7 @@ const templateFunction: TemplateFunction = answers => {
 		return;
 	}
 
-	const quotes = answers.quotes || "double";
+	const quotes = answers.quotes || "single";
 	const useTabs = answers.indentation === "Tab";
 
 	const template = `// iobroker prettier configuration file

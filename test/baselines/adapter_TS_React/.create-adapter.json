@@ -21,7 +21,7 @@
 	],
 	"eslintConfig": "custom",
 	"indentation": "Tab",
-	"quotes": "double",
+	"quotes": "single",
 	"authorName": "Al Calzone",
 	"authorGithub": "AlCalzone",
 	"authorEmail": "al@calzo.ne",
