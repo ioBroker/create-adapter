@@ -22,6 +22,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
+	const useDevServerLocal = answers.devServer === "local";
 
 	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
 
@@ -108,6 +109,7 @@ const templateFunction: TemplateFunction = async answers => {
 					"@alcalzone/release-script-plugin-manual-review",
 				]
 			: []),
+		...(useDevServerLocal ? ["@iobroker/dev-server"] : []),
 	]
 		.sort()
 		.map(dep => async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`)
@@ -215,6 +217,9 @@ const templateFunction: TemplateFunction = async answers => {
 	npmScripts.translate = "translate-adapter";
 	if (useReleaseScript) {
 		npmScripts.release = "release-script";
+	}
+	if (useDevServerLocal) {
+		npmScripts["dev-server"] = "dev-server";
 	}
 
 	// Always include contributors section as an array

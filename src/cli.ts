@@ -249,13 +249,19 @@ async function setupProject_CLI(answers: Answers, files: File[]): Promise<void> 
 	}
 
 	if (devServer) {
-		logProgress("Installing dev-server");
-		await executeNpmCommand(["install", "--global", "@iobroker/dev-server"], { cwd: targetDir });
-		await executeCommand(
-			isWindows ? "iobroker-dev-server.cmd" : "iobroker-dev-server",
-			["setup", "--adminPort", `${answers.devServerPort}`],
-			{ cwd: targetDir },
-		);
+		if (answers.devServer === "global") {
+			logProgress("Installing dev-server globally");
+			await executeNpmCommand(["install", "--global", "@iobroker/dev-server"], { cwd: targetDir });
+			await executeCommand(
+				isWindows ? "iobroker-dev-server.cmd" : "iobroker-dev-server",
+				["setup", "--adminPort", `${answers.devServerPort}`],
+				{ cwd: targetDir },
+			);
+		} else if (answers.devServer === "local") {
+			logProgress("Configuring dev-server as local dependency");
+			// For local installation, dev-server is added to devDependencies in package.json
+			// and a npm script is added - no additional installation needed here
+		}
 	}
 
 	if (gitCommit) {
@@ -306,7 +312,7 @@ if (process.env.TEST_STARTUP) {
 			maxSteps++;
 		}
 	}
-	devServer = answers.devServer === "yes";
+	devServer = answers.devServer === "global" || answers.devServer === "local";
 	if (devServer) {
 		maxSteps++;
 	}
