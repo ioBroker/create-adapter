@@ -88,7 +88,7 @@ In order to install the adapter locally without publishing, the following steps 
 
 For later updates:
 1. Push your changes to GitHub
-1. Execute `iobroker upload test-widget` on the ioBroker host to upload the updated adapter files
+1. Repeat the installation steps above (via Admin UI or `iob url` command) to update the adapter
 
 ## Changelog
 

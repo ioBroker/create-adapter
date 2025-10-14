@@ -8,7 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
-* (@copilot) Updated README template installation instructions to use GitHub Custom Install instead of direct npm commands · [Migration guide](docs/updates/20251013_readme_install_from_github.md)
+* (@copilot) Updated README template installation instructions to use GitHub Custom Install instead of direct npm commands
 * (@Apollon77/@copilot) Switch to npm trusted publishing for automatic releases (#1202) · [Migration guide](docs/updates/20251013_trusted_deploy.md)
 * (@Apollon77/@copilot) Added option to use official @iobroker/eslint-config with ESLint 9 format as primary configuration (#1186) · [Migration guide](docs/updates/20251012_eslint9_official_config.md)
 * (@Apollon77/@copilot) Upgraded custom ESLint configuration to ESLint 9 with flat config format (#1186) · [Migration guide](docs/updates/20251012_eslint9_official_config.md)
