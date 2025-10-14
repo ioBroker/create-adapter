@@ -96,7 +96,7 @@ const baseAnswers: Answers = {
 	tools: ["ESLint"],
 	eslintConfig: "custom",
 	indentation: "Tab",
-	quotes: "double",
+	quotes: "single",
 	authorName: "Al Calzone",
 	authorGithub: "AlCalzone",
 	authorEmail: "al@calzo.ne",
@@ -175,6 +175,7 @@ describe("adapter creation =>", () => {
 				const answers: Answers = {
 					...baseAnswers,
 					adminFeatures: ["custom", "tab"],
+					quotes: "double",
 				};
 				await expectSuccess("adapter_TS_ESLint_Tabs_DoubleQuotes_MIT", answers);
 			});
