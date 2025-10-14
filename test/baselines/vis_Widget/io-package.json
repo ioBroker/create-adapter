@@ -71,6 +71,9 @@
 		"singleton": true,
 		"type": "visualization-widgets",
 		"mode": "once",
+		"adminUI": {
+			"config": "none"
+		},
 		"dependencies": [
 			"vis"
 		],
