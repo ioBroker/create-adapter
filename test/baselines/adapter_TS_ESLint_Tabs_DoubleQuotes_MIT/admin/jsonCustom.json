@@ -1,0 +1,26 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"enabled": {
+			"type": "checkbox",
+			"label": "enabled",
+			"newLine": true
+		},
+		"interval": {
+			"type": "text",
+			"label": "period of time",
+			"newLine": true
+		},
+		"state": {
+			"type": "text",
+			"label": "new state",
+			"newLine": true
+		},
+		"setAck": {
+			"type": "checkbox",
+			"label": "ack",
+			"newLine": true
+		}
+	}
+}
