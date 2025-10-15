@@ -1,0 +1,40 @@
+{
+    "cli": true,
+    "target": "directory",
+    "adapterName": "hello-devcontainer",
+    "title": "Is used to test the creator",
+    "startMode": "daemon",
+    "features": [
+        "adapter"
+    ],
+    "connectionIndicator": "no",
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminFeatures": [],
+    "type": "general",
+    "language": "JavaScript",
+    "adminUi": "json",
+    "tabReact": "no",
+    "releaseScript": "no",
+    "tools": [
+        "ESLint",
+        "type checking",
+        "devcontainer"
+    ],
+    "eslintConfig": "custom",
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "authorName": "Al Calzone",
+    "authorGithub": "AlCalzone",
+    "authorEmail": "al@calzo.ne",
+    "gitRemoteProtocol": "HTTPS",
+    "dependabot": "yes",
+    "gitCommit": "no",
+    "defaultBranch": "main",
+    "license": "MIT License",
+    "licenseInformation": {
+        "type": "free",
+        "license": "Apache-2.0"
+    },
+    "creatorVersion": "2.6.5"
+}

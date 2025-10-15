@@ -1,4 +1,3 @@
-admin/custom_m.html
 admin/index_m.html
 admin/jsonCustom.json
 admin/style.css

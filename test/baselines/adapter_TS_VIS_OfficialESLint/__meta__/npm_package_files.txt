@@ -1,0 +1,11 @@
+admin/index_m.html
+admin/style.css
+admin/test-adapter.png
+admin/words.js
+widgets/test-adapter.html
+widgets/test-adapter/css/style.css
+widgets/test-adapter/js/test-adapter.js
+io-package.json
+LICENSE
+package.json
+README.md

@@ -1,0 +1,7 @@
+admin/index_m.html
+admin/style.css
+admin/test-adapter.png
+io-package.json
+LICENSE
+package.json
+README.md
