@@ -2,6 +2,7 @@ import { blueBright, bold, gray, green, red, reset, underline } from "ansi-color
 import { prompt } from "enquirer";
 import * as fs from "fs-extra";
 import * as path from "path";
+import * as semver from "semver";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import type { CheckResult } from "./lib/core/actionsAndTransformers";
@@ -57,6 +58,11 @@ const argv = yargs(hideBin(process.argv))
 			type: "boolean",
 			default: false,
 			desc: "Force installation of dependencies",
+		},
+		ignoreOutdatedVersion: {
+			type: "boolean",
+			default: false,
+			desc: "Skip check if this version is outdated",
 		},
 	})
 	.parseSync();
@@ -290,6 +296,42 @@ async function setupProject_CLI(answers: Answers, files: File[]): Promise<void> 
 	console.log(gray("Hint: try CTRL-clicking the path if you have the editor open already."));
 }
 
+/**
+ * Checks if the current version is outdated and warns the user
+ */
+async function checkVersion(): Promise<void> {
+	if (argv.ignoreOutdatedVersion) {
+		return;
+	}
+
+	try {
+		const packageName = "@iobroker/create-adapter";
+		const localVersion = getOwnVersion();
+		const latestVersion = await fetchPackageVersion(packageName);
+
+		if (localVersion !== "unknown" && latestVersion && localVersion !== latestVersion) {
+			if (semver.gt(latestVersion, localVersion)) {
+				console.log();
+				console.log(red("═".repeat(60)));
+				console.log(red("  WARNING: You are using an outdated version!"));
+				console.log();
+				console.log(`  Current version:  ${bold(localVersion)}`);
+				console.log(`  Latest version:   ${bold(green(latestVersion))}`);
+				console.log();
+				console.log("  Please update by running:");
+				console.log(bold(`    npx ${packageName}@latest`));
+				console.log();
+				console.log(gray("  To skip this check, use --ignore-outdated-version"));
+				console.log(red("═".repeat(60)));
+				console.log();
+				process.exit(1);
+			}
+		}
+	} catch (e) {
+		// Silently ignore version check errors
+	}
+}
+
 // Enable CI testing without stalling
 if (process.env.TEST_STARTUP) {
 	console.log(green("Startup test succeeded - exiting..."));
@@ -297,6 +339,7 @@ if (process.env.TEST_STARTUP) {
 }
 
 (async function main() {
+	await checkVersion();
 	const answers = await ask();
 
 	if (installDependencies) {
