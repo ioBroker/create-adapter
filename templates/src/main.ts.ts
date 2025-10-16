@@ -5,7 +5,8 @@ import { kebabCaseToUpperCamelCase } from "../../src/lib/tools";
 
 const templateFunction: TemplateFunction = async answers => {
 	const useTypeScript = answers.language === "TypeScript";
-	if (!useTypeScript) {
+	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
+	if (!useTypeScript && !useTSWithoutBuild) {
 		return;
 	}
 

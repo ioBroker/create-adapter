@@ -4,6 +4,7 @@ import { RECOMMENDED_NODE_VERSION_FALLBACK } from "../../../src/lib/constants";
 const templateFunction: TemplateFunction = answers => {
 	const isAdapter = answers.features?.includes("adapter");
 	const useTypeScript = answers.language === "TypeScript";
+	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
 	const useESLint = answers.tools?.includes("ESLint");
 	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
 	const needsBuild = useTypeScript || useReact;

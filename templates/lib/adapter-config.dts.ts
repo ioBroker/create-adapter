@@ -24,9 +24,10 @@ const templateFunction: TemplateFunction = answers => {
 	}
 
 	const useTypeScript = answers.language === "TypeScript";
+	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
 	const useTypeChecking = answers.tools && answers.tools.indexOf("type checking") > -1;
 	let template: string;
-	if (useTypeScript && !useTypeChecking) {
+	if ((useTypeScript || useTSWithoutBuild) && !useTypeChecking) {
 		const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;
 
 		template = `
@@ -49,7 +50,7 @@ export {};
 // using the actual properties present in io-package.json
 // in order to provide typings for adapter.config properties
 
-import { native } from "${useTypeScript ? "../" : ""}../io-package.json";
+import { native } from "${useTypeScript || useTSWithoutBuild ? "../" : ""}../io-package.json";
 
 type _AdapterConfig = typeof native;
 
@@ -70,5 +71,6 @@ export {};
 	return template.trim();
 };
 
-templateFunction.customPath = answers => `${answers.language === "TypeScript" ? "src/" : ""}lib/adapter-config.d.ts`;
+templateFunction.customPath = answers =>
+	`${answers.language === "TypeScript" || answers.language === "TypeScript (without build)" ? "src/" : ""}lib/adapter-config.d.ts`;
 export = templateFunction;

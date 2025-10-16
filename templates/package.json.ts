@@ -13,7 +13,8 @@ const templateFunction: TemplateFunction = async answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useTypeChecking = useTypeScript || (answers.tools && answers.tools.indexOf("type checking") > -1);
+	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
+	const useTypeChecking = useTypeScript || useTSWithoutBuild || (answers.tools && answers.tools.indexOf("type checking") > -1);
 	const useAdminReact = answers.adminUi === "react";
 	const useTabReact = answers.tabReact === "yes";
 	const useReact = useAdminReact || useTabReact;
@@ -59,6 +60,13 @@ const templateFunction: TemplateFunction = async answers => {
 					"ts-node",
 					// to clean the build dir
 					"rimraf",
+				]
+			: []),
+		...(useTSWithoutBuild
+			? [
+					// enhance testing through TS tools
+					"source-map-support",
+					"ts-node",
 				]
 			: []),
 		...(useReact
@@ -125,7 +133,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"io-package.json",
 		// We currently don't have web templates, but users might want to add them
 		"www/",
-		...(isAdapter ? (useTypeScript ? ["build/"] : ["main.js", "lib/"]) : []),
+		...(isAdapter ? (useTypeScript ? ["build/"] : useTSWithoutBuild ? ["src/"] : ["main.js", "lib/"]) : []),
 		...(isAdapter
 			? [
 					// Web files in the admin root and all subdirectories except src/
@@ -158,14 +166,17 @@ const templateFunction: TemplateFunction = async answers => {
 
 	const npmScripts: Record<string, string> = {};
 	if (isAdapter) {
-		if (useTypeScript && !useReact) {
+		if (useTSWithoutBuild && !useReact) {
+			// TS-only mode: no build, just type checking
+			npmScripts.check = "tsc --noEmit";
+		} else if (useTypeScript && !useReact) {
 			npmScripts.prebuild = `rimraf build`;
 			npmScripts.build = "build-adapter ts";
 			npmScripts.watch = "build-adapter ts --watch";
 			npmScripts["prebuild:ts"] = `rimraf build`;
 			npmScripts["build:ts"] = "build-adapter ts";
 			npmScripts["watch:ts"] = "build-adapter ts --watch";
-		} else if (useReact && !useTypeScript) {
+		} else if (useReact && !useTypeScript && !useTSWithoutBuild) {
 			npmScripts.prebuild = `rimraf admin/build`;
 			npmScripts.build = "build-adapter react";
 			npmScripts.watch = "build-adapter react --watch";
@@ -184,7 +195,7 @@ const templateFunction: TemplateFunction = async answers => {
 			npmScripts["watch:react"] = "build-adapter react --watch";
 		}
 
-		if (useTypeScript) {
+		if (useTypeScript || useTSWithoutBuild) {
 			npmScripts["test:ts"] = "mocha --config test/mocharc.custom.json src/**/*.test.ts";
 		} else {
 			npmScripts["test:js"] =
@@ -192,16 +203,16 @@ const templateFunction: TemplateFunction = async answers => {
 		}
 		npmScripts["test:package"] = "mocha test/package --exit";
 		npmScripts["test:integration"] = "mocha test/integration --exit";
-		npmScripts.test = `${useTypeScript ? "npm run test:ts" : "npm run test:js"} && npm run test:package`;
+		npmScripts.test = `${useTypeScript || useTSWithoutBuild ? "npm run test:ts" : "npm run test:js"} && npm run test:package`;
 
-		if (useTypeChecking) {
+		if (useTypeChecking && !useTSWithoutBuild) {
 			if (useReact) {
 				npmScripts.check = `tsc --noEmit${useTypeScript ? " && tsc --noEmit -p admin/tsconfig.json" : " -p tsconfig.check.json"}`;
 			} else {
 				npmScripts.check = `tsc --noEmit${useTypeScript ? "" : " -p tsconfig.check.json"}`;
 			}
 		}
-		if (useNyc) {
+		if (useNyc && (useTypeScript || useTSWithoutBuild)) {
 			npmScripts.coverage = "nyc npm run test:ts";
 		}
 		if (useESLint) {
@@ -252,7 +263,7 @@ const templateFunction: TemplateFunction = async answers => {
 	${
 		isAdapter
 			? `
-		"main": "${useTypeScript ? "build/" : ""}main.js",
+		"main": "${useTSWithoutBuild ? "src/main.ts" : useTypeScript ? "build/main.js" : "main.js"}",
 	`
 			: isWidget
 				? `

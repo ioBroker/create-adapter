@@ -5,7 +5,8 @@ import { getFormattedLicense } from "../src/lib/tools";
 export = (answers => {
 	const isAdapter = answers.features.indexOf("adapter") > -1;
 	const useTypeScript = answers.language === "TypeScript";
-	const useTypeChecking = useTypeScript || answers.tools?.includes("type checking");
+	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
+	const useTypeChecking = useTypeScript || useTSWithoutBuild || answers.tools?.includes("type checking");
 	const useNyc = answers.tools?.includes("code coverage");
 	const useESLint = answers.tools?.includes("ESLint");
 	const useReact = answers.adminUi === "react" || answers.tabReact === "yes";
@@ -17,10 +18,12 @@ export = (answers => {
 	const isGitHub = answers.target === "github";
 
 	const npmScripts: Record<string, string> = {};
-	if (useTypeScript && !useReact) {
+	if (useTSWithoutBuild && !useReact) {
+		npmScripts.check = "Performs a type-check on your TypeScript code (without compiling anything).";
+	} else if (useTypeScript && !useReact) {
 		npmScripts.build = "Compile the TypeScript sources.";
 		npmScripts.watch = "Compile the TypeScript sources and watch for changes.";
-	} else if (useReact && !useTypeScript) {
+	} else if (useReact && !useTypeScript && !useTSWithoutBuild) {
 		npmScripts.build = "Compile the React sources.";
 		npmScripts.watch = "Compile the React sources and watch for changes.";
 	} else if (useReact && useTypeScript) {
@@ -33,7 +36,7 @@ export = (answers => {
 	}
 
 	if (isAdapter) {
-		if (useTypeScript) {
+		if (useTypeScript || useTSWithoutBuild) {
 			npmScripts["test:ts"] = "Executes the tests you defined in \`*.test.ts\` files.";
 		} else {
 			npmScripts["test:js"] = "Executes the tests you defined in \`*.test.js\` files.";

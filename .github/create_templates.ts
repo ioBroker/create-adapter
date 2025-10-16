@@ -78,6 +78,14 @@ const templates: Record<string, Answers> = {
 		indentation: "Tab",
 		quotes: "double",
 	},
+	TypeScriptWithoutBuild: {
+		...adapterAnswers,
+		language: "TypeScript (without build)",
+		title: "Template (TypeScript without build)",
+		tools: ["ESLint"],
+		indentation: "Tab",
+		quotes: "double",
+	},
 	TypeScriptReact: {
 		...adapterAnswers,
 		language: "TypeScript",

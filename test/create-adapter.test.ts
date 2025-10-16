@@ -275,6 +275,14 @@ describe("adapter creation =>", () => {
 				await expectSuccess("adapter_TS_VIS_CustomESLint", answers);
 			});
 
+			it("Adapter, TypeScript without build", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					language: "TypeScript (without build)",
+				};
+				await expectSuccess("adapter_TS_WithoutBuild", answers);
+			});
+
 			it("Widget", async () => {
 				const answers: Answers = {
 					cli: true,

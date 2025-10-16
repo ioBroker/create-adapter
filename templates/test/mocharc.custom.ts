@@ -3,13 +3,14 @@ import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 const templateFunction: TemplateFunction = answers => {
 	const useTypeScript = answers.language === "TypeScript";
+	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
 
 	const template = `
 {
 	"require": [
 		"test/mocha.setup.js",
 ${
-	useTypeScript
+	useTypeScript || useTSWithoutBuild
 		? `
 		"ts-node/register",
 		"source-map-support/register",
@@ -20,7 +21,7 @@ ${
 	"watch-files": [${
 		// Setup the filter in a way that we only test user-defined test files,
 		// not the ones for package and adapter tests
-		useTypeScript
+		useTypeScript || useTSWithoutBuild
 			? `"src/**/*.test.ts"`
 			: `
 			"!(node_modules|test)/**/*.test.js",
