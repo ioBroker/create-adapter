@@ -38,7 +38,7 @@ export async function getTranslatedSettingsForLanguage(
 		answers.adapterName,
 	);
 	for (const setting of adapterSettings) {
-		translatedSettings[setting.key] = await translateText(setting.label || setting.key, language);
+		translatedSettings[setting.label || setting.key] = await translateText(setting.label || setting.key, language);
 	}
 
 	return translatedSettings;

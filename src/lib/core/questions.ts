@@ -284,7 +284,9 @@ export const questionGroups: QuestionGroup[] = [
 						(await ctx.fileExists("admin/tab.html")) || (await ctx.fileExists("admin/tab_m.html"))
 							? "tab"
 							: null,
-						(await ctx.fileExists("admin/custom.html")) || (await ctx.fileExists("admin/custom_m.html"))
+						(await ctx.fileExists("admin/custom.html")) ||
+						(await ctx.fileExists("admin/custom_m.html")) ||
+						(await ctx.fileExists("admin/jsonCustom.json"))
 							? "custom"
 							: null,
 					].filter(f => !!f) as string[],

@@ -116,6 +116,24 @@ const templateFunction: TemplateFunction = async answers => {
 		.map(task => downloadLimiter(task));
 	const devDependencies = await Promise.all(devDependencyPromises);
 
+	// Add ioBroker types using npm alias to make IDE treat it like @types package
+	if (isAdapter && useTypeChecking) {
+		const iobrokerTypesVersion = await fetchPackageReferenceVersion("@iobroker/types");
+		devDependencies.push(`"@types/iobroker": "npm:@iobroker/types@${iobrokerTypesVersion}"`);
+	}
+
+	// Sort dependencies alphabetically, with @-scoped packages first
+	devDependencies.sort((a, b) => {
+		const aName = a.match(/"([^"]+)":/)?.[1] || "";
+		const bName = b.match(/"([^"]+)":/)?.[1] || "";
+		const aIsScoped = aName.startsWith("@");
+		const bIsScoped = bName.startsWith("@");
+
+		if (aIsScoped && !bIsScoped) return -1;
+		if (!aIsScoped && bIsScoped) return 1;
+		return aName.localeCompare(bName);
+	});
+
 	const gitUrl =
 		answers.gitRemoteProtocol === "HTTPS"
 			? `https://github.com/${answers.authorGithub}/ioBroker.${answers.adapterName}.git`
