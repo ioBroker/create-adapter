@@ -36,7 +36,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const devDependencyPromises = [
 		...[
 			// testing and translations are always required
-			"@iobroker/testing@~5.2.1",
+			"@iobroker/testing",
 			"@iobroker/adapter-dev",
 		],
 		...(isAdapter
