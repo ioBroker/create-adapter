@@ -1,0 +1,129 @@
+name: Bug report
+description: Something is not working as it should
+title: "[Bug]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: >
+        **Thank you for wanting to report a bug in this adapter!**
+
+
+        If this is the first time you are doing this, please take a few moments to read
+        through the adapter documentation.
+
+
+        You are about to report a bug in this adapter. Do not proceed if your issue
+        occurs with ioBroker core, any third party adapters, unofficial or outdated
+        adapter versions.
+
+
+        Do also not seek support here ("I need help with ...", "I have a
+        question ...", "Can someone walk me through ..."), that belongs into the
+        [ioBroker forum at forum.iobroker.net](https://forum.iobroker.net/).
+
+
+        And finally, make sure any bug you want to report is still present with the **current**
+        adapter version.
+
+
+        Thank you for your collaboration!
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: Tell us what you see and what you expected to see.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+
+  - type: input
+    id: adapter-version
+    attributes:
+      label: Adapter version
+      description: Can be found in the adapters tab of ioBroker admin
+      placeholder: e.g., 1.2.3
+    validations:
+      required: true
+
+  - type: input
+    id: js-controller-version
+    attributes:
+      label: JS-Controller version
+      description: Can be found in the host section of ioBroker admin (or use `iobroker -v` on the console)
+      placeholder: e.g., 5.0.19
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node version
+      description: Determine this with `node -v` on the console
+      placeholder: e.g., v18.19.0
+    validations:
+      required: true
+
+  - type: input
+    id: operating-system
+    attributes:
+      label: Operating system
+      description: Which OS are you running ioBroker on?
+      placeholder: e.g., Linux, Windows 10, Raspberry Pi OS
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Logs and other files needed for analysis
+
+  - type: checkboxes
+    id: log-files
+    attributes:
+      label: Checklist of files to include in report
+      options:
+        - label: Adapter log file (Please share the logs in debug mode if possible)
+        - label: Screenshots (if applicable to help explain the problem)
+
+  - type: textarea
+    id: additional-logs
+    attributes:
+      label: Additional log files and screenshots
+      description: |
+        Please provide relevant logs and screenshots here.
+        For logs, enable debug mode for the adapter if possible.
+        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.

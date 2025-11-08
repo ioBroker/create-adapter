@@ -22,6 +22,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const usePrettier = answers.tools && answers.tools.indexOf("Prettier") > -1;
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
+	const useDevServerLocal = answers.devServer === "local";
 
 	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
 
@@ -108,11 +109,30 @@ const templateFunction: TemplateFunction = async answers => {
 					"@alcalzone/release-script-plugin-manual-review",
 				]
 			: []),
+		...(useDevServerLocal ? ["@iobroker/dev-server"] : []),
 	]
 		.sort()
 		.map(dep => async () => `"${getPackageName(dep)}": "${await fetchPackageReferenceVersion(dep)}"`)
 		.map(task => downloadLimiter(task));
 	const devDependencies = await Promise.all(devDependencyPromises);
+
+	// Add ioBroker types using npm alias to make IDE treat it like @types package
+	if (isAdapter && useTypeChecking) {
+		const iobrokerTypesVersion = await fetchPackageReferenceVersion("@iobroker/types");
+		devDependencies.push(`"@types/iobroker": "npm:@iobroker/types@${iobrokerTypesVersion}"`);
+	}
+
+	// Sort dependencies alphabetically, with @-scoped packages first
+	devDependencies.sort((a, b) => {
+		const aName = a.match(/"([^"]+)":/)?.[1] || "";
+		const bName = b.match(/"([^"]+)":/)?.[1] || "";
+		const aIsScoped = aName.startsWith("@");
+		const bIsScoped = bName.startsWith("@");
+
+		if (aIsScoped && !bIsScoped) return -1;
+		if (!aIsScoped && bIsScoped) return 1;
+		return aName.localeCompare(bName);
+	});
 
 	const gitUrl =
 		answers.gitRemoteProtocol === "HTTPS"
@@ -215,6 +235,9 @@ const templateFunction: TemplateFunction = async answers => {
 	npmScripts.translate = "translate-adapter";
 	if (useReleaseScript) {
 		npmScripts.release = "release-script";
+	}
+	if (useDevServerLocal) {
+		npmScripts["dev-server"] = "dev-server";
 	}
 
 	// Always include contributors section as an array

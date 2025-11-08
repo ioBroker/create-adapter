@@ -284,7 +284,9 @@ export const questionGroups: QuestionGroup[] = [
 						(await ctx.fileExists("admin/tab.html")) || (await ctx.fileExists("admin/tab_m.html"))
 							? "tab"
 							: null,
-						(await ctx.fileExists("admin/custom.html")) || (await ctx.fileExists("admin/custom_m.html"))
+						(await ctx.fileExists("admin/custom.html")) ||
+						(await ctx.fileExists("admin/custom_m.html")) ||
+						(await ctx.fileExists("admin/jsonCustom.json"))
 							? "custom"
 							: null,
 					].filter(f => !!f) as string[],
@@ -749,12 +751,26 @@ export const questionGroups: QuestionGroup[] = [
 				optional: true,
 				message:
 					"Would you like to use dev-server to develop and test your code with a simple command line tool?",
-				initial: "yes",
-				choices: ["yes", "no"],
-				migrate: () => "yes",
+				initial: "local",
+				choices: [
+					{
+						message: "yes, as global installation (might need root permissions to install on Linux/macOS)",
+						value: "global",
+					},
+					{
+						message: "yes, as an adapter-own local installation (no root permissions needed)",
+						hint: "(recommended)",
+						value: "local",
+					},
+					{
+						message: "no",
+						value: "no",
+					},
+				],
+				migrate: () => "global",
 			},
 			{
-				condition: { name: "devServer", contains: "yes" },
+				condition: { name: "devServer", value: ["global", "local"] },
 				type: "numeral",
 				name: "devServerPort",
 				label: "dev-server Admin Port",
@@ -1103,7 +1119,7 @@ export interface Answers {
 	/**
 	 *
 	 */
-	devServer?: "yes" | "no";
+	devServer?: "global" | "local" | "no";
 	/**
 	 *
 	 */
