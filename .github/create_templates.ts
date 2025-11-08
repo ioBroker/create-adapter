@@ -194,6 +194,60 @@ void (async () => {
 			console.error(red("At least one template had lint or check errors!"));
 			process.exit(1);
 		}
+
+		console.log();
+		console.log(green("Test templates"));
+		console.log(green("==============="));
+		for (let i = 0; i < keys.length; i++) {
+			const tplName = keys[i];
+			console.log();
+			console.log(blue(`[${i + 1}/${keys.length}] `) + tplName);
+			const template = templates[tplName];
+			const isAdapter = template.features?.includes("adapter");
+			if (!isAdapter) {
+				console.log("not an adapter template, skipping tests...");
+				continue;
+			}
+			const templateDir = getTemplateDir(tplName);
+			const cmdOpts: ExecSyncOptions = {
+				cwd: templateDir,
+				stdio: "inherit",
+			};
+			// TypeScript adapters need to be built before testing
+			const isTypeScript = template.language === "TypeScript";
+			const needsBuild = isTypeScript || template.adminUi === "react";
+			if (needsBuild) {
+				console.log("building adapter...");
+				try {
+					execSync(`npm run build`, cmdOpts);
+				} catch (e) {
+					console.error(red(`Build failed for template ${tplName}:`));
+					console.error(e.message || e);
+					hadError = true;
+					continue; // Skip tests if build fails
+				}
+			}
+			console.log("running package tests...");
+			try {
+				execSync(`npm run test:package`, cmdOpts);
+			} catch (e) {
+				console.error(red(`Package tests failed for template ${tplName}:`));
+				console.error(e.message || e);
+				hadError = true;
+			}
+			console.log("running integration tests...");
+			try {
+				execSync(`npm run test:integration`, cmdOpts);
+			} catch (e) {
+				console.error(red(`Integration tests failed for template ${tplName}:`));
+				console.error(e.message || e);
+				hadError = true;
+			}
+		}
+		if (hadError) {
+			console.error(red("At least one template had test errors!"));
+			process.exit(1);
+		}
 	}
 })();
 
