@@ -7,11 +7,11 @@ import { execaSync } from "execa";
 import * as fs from "fs-extra";
 import * as path from "path";
 
-const rootDir = path.join(__dirname, "..");
+const rootDir = path.join(__dirname, "../..");
 const binPath = path.join(rootDir, "bin/create-adapter.js");
 
 describe("Non-interactive mode", () => {
-	const testDir = path.join(__dirname, "../.tmp-test-noninteractive");
+	const testDir = path.join(__dirname, "../../.tmp-test-noninteractive");
 
 	beforeEach(async () => {
 		await fs.ensureDir(testDir);
