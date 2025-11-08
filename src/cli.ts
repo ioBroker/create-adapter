@@ -120,6 +120,32 @@ async function ask(): Promise<Answers> {
 		}
 	}
 
+	/**
+	 * Converts multiselect initial values (array of indices) to actual choice values
+	 */
+	function convertMultiselectInitial(q: Question, initialValue: any): any {
+		// Only process multiselect questions with array initial values
+		if (q.type !== "multiselect" || !Array.isArray(initialValue) || !("choices" in q) || !Array.isArray(q.choices)) {
+			return initialValue;
+		}
+
+		// Convert array of indices to array of choice values
+		return initialValue.map((index: any) => {
+			if (typeof index === "number" && index >= 0 && index < q.choices.length) {
+				const choice = q.choices[index];
+				// Extract value from choice object or use the choice itself if it's a string
+				if (typeof choice === "string") {
+					return choice;
+				} else if (choice && typeof choice === "object") {
+					// Prefer 'value' property, fall back to 'message' property
+					return choice.value ?? choice.message;
+				}
+			}
+			// If index is not a number or out of range, return as-is (might already be a value)
+			return index;
+		});
+	}
+
 	async function askQuestion(q: Question): Promise<void> {
 		if (testCondition(q.condition, answers)) {
 			if (q.replay) {
@@ -144,12 +170,12 @@ async function ask(): Promise<Answers> {
 				} else {
 					if (answers.expert !== "yes" && q.expert && q.initial !== undefined) {
 						// In non-expert mode, prefill the default answer for expert questions
-						answer = { [q.name as string]: q.initial };
+						answer = { [q.name as string]: convertMultiselectInitial(q, q.initial) };
 					} else if (argv.nonInteractive) {
 						// In non-interactive mode, error on missing required fields
 						if (q.optional || q.initial !== undefined) {
 							// Use initial/default value for optional fields or fields with defaults
-							answer = { [q.name as string]: q.initial };
+							answer = { [q.name as string]: convertMultiselectInitial(q, q.initial) };
 						} else {
 							// Collect information about missing required field
 							let allowedValues: string | undefined;
