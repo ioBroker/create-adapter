@@ -5,6 +5,9 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
+## __WORK IN PROGRESS__
+* (@Apollon77/@copilot) Fix non-interactive mode
+
 ## 3.1.0 (2025-11-08)
 * (@Apollon77/@copilot) Add `--nonInteractive` CLI option to prevent hanging in automated environments (#1238)
 
