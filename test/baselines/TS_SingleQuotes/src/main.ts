@@ -129,7 +129,6 @@ class TestAdapter extends utils.Adapter {
 			// The state was changed
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
-			// The state was changed by the user (ack=false) and not by the adapter
 			if (state.ack === false) {
 				// This is a command from the user (e.g., from the UI or other adapter)
 				// and should be processed by the adapter
@@ -138,7 +137,7 @@ class TestAdapter extends utils.Adapter {
 				// TODO: Add your control logic here
 			}
 		} else {
-			// The state was deleted
+			// The object was deleted or the state value has expired
 			this.log.info(`state ${id} deleted`);
 		}
 	}
