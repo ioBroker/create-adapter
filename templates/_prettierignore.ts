@@ -6,7 +6,7 @@ const templateFunction: TemplateFunction = answers => {
 		return;
 	}
 	const useTypeScript = answers.language === "TypeScript";
-	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
+
 
 	const template = `
 package.json
