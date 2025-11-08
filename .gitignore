@@ -13,3 +13,6 @@ node_modules/
 # npm packet files
 iobroker-create-adapter-*.tgz
 /.idea
+
+# Test temporary directories
+/.tmp-test-*
