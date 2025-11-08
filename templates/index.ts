@@ -35,19 +35,11 @@ const templates: { name: string; templateFunction: TemplateFunction }[] = [
 	},
 	{ name: "_github/auto-merge.yml.ts", templateFunction: require("./_github/auto-merge.yml") },
 	{ name: "_github/dependabot.yml.ts", templateFunction: require("./_github/dependabot.yml") },
-	{
-		name: "_github/ISSUE_TEMPLATE/bug_report.md.ts",
-		templateFunction: require("./_github/ISSUE_TEMPLATE/bug_report.md"),
-	},
+	{ name: "_github/ISSUE_TEMPLATE/bug_report.yml.ts", templateFunction: require("./_github/ISSUE_TEMPLATE/bug_report.yml") },
 	{ name: "_github/ISSUE_TEMPLATE/config.yml.ts", templateFunction: require("./_github/ISSUE_TEMPLATE/config.yml") },
-	{
-		name: "_github/workflows/dependabot-auto-merge.yml.ts",
-		templateFunction: require("./_github/workflows/dependabot-auto-merge.yml"),
-	},
-	{
-		name: "_github/workflows/test-and-release.yml.ts",
-		templateFunction: require("./_github/workflows/test-and-release.yml"),
-	},
+	{ name: "_github/ISSUE_TEMPLATE/feature_request.yml.ts", templateFunction: require("./_github/ISSUE_TEMPLATE/feature_request.yml") },
+	{ name: "_github/workflows/dependabot-auto-merge.yml.ts", templateFunction: require("./_github/workflows/dependabot-auto-merge.yml") },
+	{ name: "_github/workflows/test-and-release.yml.ts", templateFunction: require("./_github/workflows/test-and-release.yml") },
 	{ name: "_gitignore.ts", templateFunction: require("./_gitignore") },
 	{ name: "_prettierignore.ts", templateFunction: require("./_prettierignore") },
 	{ name: "_prettierrc.js.ts", templateFunction: require("./_prettierrc.js") },
