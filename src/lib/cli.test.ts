@@ -124,4 +124,58 @@ describe("Non-interactive mode", () => {
 			expect(error.exitCode).to.equal(1);
 		}
 	});
+
+	it("should successfully generate adapter with fully valid JSON file", async function () {
+		// Increase timeout for this test as adapter creation takes longer
+		this.timeout(30000);
+
+		// Create a complete .create-adapter.json file with all required fields
+		const completeAnswers = {
+			cli: true,
+			target: "directory",
+			adapterName: "test-valid-adapter",
+			title: "Test Valid Adapter",
+			features: ["adapter"],
+			type: "general",
+			language: "JavaScript",
+			adminUi: "json",
+			tools: ["ESLint", "type checking"],
+			authorName: "Test Author",
+			authorGithub: "testauthor",
+			authorEmail: "test@example.com",
+			gitRemoteProtocol: "HTTPS",
+			license: "MIT License",
+		};
+
+		const replayFile = path.join(testDir, ".create-adapter.json");
+		await fs.writeJson(replayFile, completeAnswers);
+
+		// Run the CLI in non-interactive mode
+		const result = execaSync("node", [binPath, `--replay=${replayFile}`, "--non-interactive", "--no-install"], {
+			cwd: testDir,
+			encoding: "utf8",
+		});
+
+		// Should exit successfully
+		expect(result.exitCode).to.equal(0);
+
+		// Check that the adapter directory was created
+		const adapterDir = path.join(testDir, "ioBroker.test-valid-adapter");
+		expect(await fs.pathExists(adapterDir)).to.be.true;
+
+		// Check that key files were generated
+		expect(await fs.pathExists(path.join(adapterDir, "package.json"))).to.be.true;
+		expect(await fs.pathExists(path.join(adapterDir, "io-package.json"))).to.be.true;
+		expect(await fs.pathExists(path.join(adapterDir, "main.js"))).to.be.true;
+		expect(await fs.pathExists(path.join(adapterDir, ".create-adapter.json"))).to.be.true;
+
+		// Verify multiselect defaults were converted correctly in saved config
+		const savedConfig = await fs.readJson(path.join(adapterDir, ".create-adapter.json"));
+		expect(savedConfig.features).to.deep.equal(["adapter"]);
+		expect(savedConfig.tools).to.deep.equal(["ESLint", "type checking"]);
+
+		// Check that the output message indicates success
+		const output = result.stdout + result.stderr;
+		expect(output).to.include("All done!");
+	});
 });
