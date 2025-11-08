@@ -64,11 +64,6 @@ const argv = yargs(hideBin(process.argv))
 			default: false,
 			desc: "Skip check if this version is outdated",
 		},
-		nonInteractive: {
-			type: "boolean",
-			default: false,
-			desc: "Run in non-interactive mode - error on missing answers instead of prompting",
-		},
 	})
 	.parseSync();
 
@@ -92,7 +87,6 @@ const creatorOptions = {
 async function ask(): Promise<Answers> {
 	let answers: Record<string, any> = { cli: true, target: "directory" };
 	let migrationContext: MigrationContextBase | undefined;
-	const missingFields: Array<{ question: Question; allowedValues?: string }> = [];
 
 	if (argv.replay) {
 		const replayFile = path.resolve(argv.replay);
@@ -145,33 +139,6 @@ async function ask(): Promise<Answers> {
 					if (answers.expert !== "yes" && q.expert && q.initial !== undefined) {
 						// In non-expert mode, prefill the default answer for expert questions
 						answer = { [q.name as string]: q.initial };
-					} else if (argv.nonInteractive) {
-						// In non-interactive mode, error on missing required fields
-						if (q.optional || q.initial !== undefined) {
-							// Use initial/default value for optional fields or fields with defaults
-							answer = { [q.name as string]: q.initial };
-						} else {
-							// Collect information about missing required field
-							let allowedValues: string | undefined;
-							if ("choices" in q && q.choices && Array.isArray(q.choices)) {
-								const choiceValues = q.choices
-									.map((choice: any) => {
-										if (typeof choice === "string") {
-											return choice;
-										} else if (choice && typeof choice === "object" && "value" in choice) {
-											return choice.value;
-										}
-										return null;
-									})
-									.filter((v: any) => v !== null);
-								if (choiceValues.length > 0) {
-									allowedValues = choiceValues.join(", ");
-								}
-							}
-							missingFields.push({ question: q, allowedValues });
-							// Use undefined as placeholder to continue processing
-							answer = { [q.name as string]: undefined };
-						}
 					} else {
 						// Ask the user for an answer
 						try {
@@ -185,29 +152,17 @@ async function ask(): Promise<Answers> {
 							return process.exit(1);
 						}
 					}
-					// Apply an optional transformation (skip if answer is undefined in non-interactive mode)
-					if (
-						typeof q.resultTransform === "function" &&
-						!(argv.nonInteractive && answer[q.name as string] === undefined)
-					) {
+					// Apply an optional transformation
+					if (typeof q.resultTransform === "function") {
 						const transformed = q.resultTransform(answer[q.name as string]);
 						answer[q.name as string] = transformed instanceof Promise ? await transformed : transformed;
 					}
-					// Test the result (skip if answer is undefined in non-interactive mode)
-					if (q.action != undefined && !(argv.nonInteractive && answer[q.name as string] === undefined)) {
+					// Test the result
+					if (q.action != undefined) {
 						const testResult = await q.action(answer[q.name as string], creatorOptions);
 						if (typeof testResult === "string") {
-							if (argv.nonInteractive) {
-								// In non-interactive mode, collect the validation error
-								missingFields.push({
-									question: q,
-									allowedValues: testResult,
-								});
-								answer = { [q.name as string]: undefined };
-							} else {
-								error(testResult);
-								continue;
-							}
+							error(testResult);
+							continue;
 						}
 					}
 				}
@@ -219,76 +174,40 @@ async function ask(): Promise<Answers> {
 	}
 
 	const questionsAndText: (QuestionGroup | string | ConditionalTitle)[] = [
-		...(argv.nonInteractive
-			? []
-			: [
-					"",
-					green.bold("====================================================="),
-					green.bold(`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`),
-					green.bold("====================================================="),
-					"",
-					gray(`You can cancel at any point by pressing Ctrl+C.`),
-					(answers: Record<string, any>) => (answers.replay ? green(`Replaying file`) : undefined),
-					(answers: Record<string, any>) => (answers.replay ? green(answers.replay) : undefined),
-			  ]),
+		"",
+		green.bold("====================================================="),
+		green.bold(`   Welcome to the ioBroker adapter creator v${getOwnVersion()}!`),
+		green.bold("====================================================="),
+		"",
+		gray(`You can cancel at any point by pressing Ctrl+C.`),
+		answers => (answers.replay ? green(`Replaying file`) : undefined),
+		answers => (answers.replay ? green(answers.replay) : undefined),
 		...questionGroups,
-		...(argv.nonInteractive ? [] : ["", underline("That's it. Please wait a minute while I get this working...")]),
+		"",
+		underline("That's it. Please wait a minute while I get this working..."),
 	];
 
 	for (const entry of questionsAndText) {
 		if (typeof entry === "string") {
 			// Headlines
-			if (!argv.nonInteractive) {
-				console.log(entry);
-			}
+			console.log(entry);
 		} else if (typeof entry === "function") {
 			// Conditional headlines
 			const text = entry(answers);
-			if (text !== undefined && !argv.nonInteractive) {
+			if (text !== undefined) {
 				console.log(text);
 			}
 		} else {
 			// only print the headline if any of the questions are necessary
 			if (entry.questions.find(qq => testCondition(qq.condition, answers))) {
-				if (!argv.nonInteractive) {
-					console.log();
-					console.log(underline(entry.headline));
-				}
+				console.log();
+				console.log(underline(entry.headline));
 			}
 			for (const qq of entry.questions) {
 				await askQuestion(qq);
 			}
 		}
 	}
-
-	// In non-interactive mode, report all missing required fields and exit
-	if (argv.nonInteractive && missingFields.length > 0) {
-		console.log();
-		console.log(red.bold("ERROR: Missing required fields in non-interactive mode"));
-		console.log();
-		console.log("The following required fields are missing or invalid:");
-		console.log();
-		for (const { question, allowedValues } of missingFields) {
-			console.log(red(`  ✗ ${question.label} (${question.name as string})`));
-			if (question.message) {
-				console.log(gray(`    ${question.message}`));
-			}
-			if (allowedValues) {
-				console.log(gray(`    Allowed values: ${allowedValues}`));
-			}
-			if ("hint" in question && question.hint) {
-				console.log(gray(`    Hint: ${question.hint}`));
-			}
-		}
-		console.log();
-		console.log(
-			gray(
-				"Please provide all required fields in your .create-adapter.json file or remove the --non-interactive flag.",
-			),
-		);
-		process.exit(1);
-	}
-
 	return answers as Answers;
 }
 
