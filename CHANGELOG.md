@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
+* (@Apollon77/@copilot) Add option to create TypeScript adapters without build step for direct TS execution with JS-Controller 4+ (#889)
 * (@Apollon77/@copilot) Replace custom_m.html with jsonCustom.json for Admin 5 compatibility (#723) · [Migration guide](docs/updates/20251014_jsoncustom_admin5_support.md)
 * (@Apollon77/@copilot) Use @iobroker/types instead of @types/iobroker package · [Migration guide](docs/updates/20251014_iobroker_types_package.md)
 * (@Apollon77/@copilot) Add `adminUI.config: "none"` for adapters without configuration UI to satisfy adapter-checker W164 (#1071) · [Migration guide](docs/updates/20251014_admin_ui_config_none.md)
