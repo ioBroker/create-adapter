@@ -40,6 +40,7 @@ The following CLI options are available:
 -   `--replay=/path/to/file` - Re-run the adapter creator with the answers of a previous run (the given file needs to be the `.create-adapter.json` in the root of the previously generated directory). Shortcut: `-r`
 -   `--migrate=/path/to/dir` - Run the adapter creator with the answers pre-filled from an existing adapter directory (the given path needs to point to the adapter base directory where `io-package.json` is found). Shortcut: `-m`
 -   `--noInstall` - Don't install dependencies after creating the files. Shortcut: `-n`
+-   `--nonInteractive` - Run in non-interactive mode. When using this option with `--replay`, the creator will not prompt for missing required fields. Instead, it will report all missing or invalid fields with their allowed values and exit with an error. This is useful for automated environments where interactive prompts would cause the process to hang.
 -   `--ignoreOutdatedVersion` - Skip the check if this version is outdated (not recommended). The version check is automatically skipped in CI environments.
 
 All CLI options can also be [provided as environment variables](https://yargs.js.org/docs/#api-reference-envprefix) by prepending `CREATE_ADAPTER_`. Example: `CREATE_ADAPTER_TARGET=/tmp/iobroker/create-adapter/`
