@@ -28,7 +28,7 @@
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/eslint-config": "^2.2.0",
-    "@iobroker/testing": "^5.1.1"
+    "@iobroker/testing": "^5.2.2"
   },
   "main": "main.js",
   "files": [
