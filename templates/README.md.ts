@@ -13,7 +13,7 @@ export = (answers => {
 	const autoInitGit = answers.gitCommit === "yes";
 	const defaultBranch = answers.defaultBranch || "main";
 	const useReleaseScript = answers.releaseScript === "yes";
-	const useDevServer = answers.devServer === "yes";
+	const useDevServer = answers.devServer === "global" || answers.devServer === "local";
 	const useDependabot = answers.dependabot === "yes";
 	const isGitHub = answers.target === "github";
 

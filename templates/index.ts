@@ -4,35 +4,20 @@
 
 import type { TemplateFunction } from "../src/lib/createAdapter";
 
-const templates: { name: string; templateFunction: TemplateFunction }[] = [
+const templates: { name: string, templateFunction: TemplateFunction }[] = [
 	{ name: "_create-adapter.json.ts", templateFunction: require("./_create-adapter.json") },
 	{ name: "_devcontainer/devcontainer.json.ts", templateFunction: require("./_devcontainer/devcontainer.json") },
 	{ name: "_devcontainer/docker-compose.yml.ts", templateFunction: require("./_devcontainer/docker-compose.yml") },
-	{
-		name: "_devcontainer/iobroker/_Dockerfile.ts",
-		templateFunction: require("./_devcontainer/iobroker/_Dockerfile"),
-	},
+	{ name: "_devcontainer/iobroker/_Dockerfile.ts", templateFunction: require("./_devcontainer/iobroker/_Dockerfile") },
 	{ name: "_devcontainer/iobroker/boot.sh.ts", templateFunction: require("./_devcontainer/iobroker/boot.sh") },
-	{
-		name: "_devcontainer/iobroker/node-wrapper.sh.ts",
-		templateFunction: require("./_devcontainer/iobroker/node-wrapper.sh"),
-	},
+	{ name: "_devcontainer/iobroker/node-wrapper.sh.ts", templateFunction: require("./_devcontainer/iobroker/node-wrapper.sh") },
 	{ name: "_devcontainer/nginx/nginx.conf.ts", templateFunction: require("./_devcontainer/nginx/nginx.conf") },
 	{ name: "_devcontainer/parcel/_Dockerfile.ts", templateFunction: require("./_devcontainer/parcel/_Dockerfile") },
 	{ name: "_devcontainer/parcel/run.sh.ts", templateFunction: require("./_devcontainer/parcel/run.sh") },
 	{ name: "_devcontainer/README.md.ts", templateFunction: require("./_devcontainer/README.md") },
-	{
-		name: "_devcontainer/scripts/postcreate.sh.ts",
-		templateFunction: require("./_devcontainer/scripts/postcreate.sh"),
-	},
-	{
-		name: "_devcontainer/scripts/poststart.sh.ts",
-		templateFunction: require("./_devcontainer/scripts/poststart.sh"),
-	},
-	{
-		name: "_devcontainer/scripts/wait_for_iobroker.sh.ts",
-		templateFunction: require("./_devcontainer/scripts/wait_for_iobroker.sh"),
-	},
+	{ name: "_devcontainer/scripts/postcreate.sh.ts", templateFunction: require("./_devcontainer/scripts/postcreate.sh") },
+	{ name: "_devcontainer/scripts/poststart.sh.ts", templateFunction: require("./_devcontainer/scripts/poststart.sh") },
+	{ name: "_devcontainer/scripts/wait_for_iobroker.sh.ts", templateFunction: require("./_devcontainer/scripts/wait_for_iobroker.sh") },
 	{ name: "_github/auto-merge.yml.ts", templateFunction: require("./_github/auto-merge.yml") },
 	{ name: "_github/dependabot.yml.ts", templateFunction: require("./_github/dependabot.yml") },
 	{ name: "_github/ISSUE_TEMPLATE/bug_report.yml.ts", templateFunction: require("./_github/ISSUE_TEMPLATE/bug_report.yml") },
@@ -65,10 +50,7 @@ const templates: { name: string; templateFunction: TemplateFunction }[] = [
 	{ name: "admin/jsonConfig.json.ts", templateFunction: require("./admin/jsonConfig.json") },
 	{ name: "admin/jsonCustom.json.ts", templateFunction: require("./admin/jsonCustom.json") },
 	{ name: "admin/src/app.tsx_jsx.ts", templateFunction: require("./admin/src/app.tsx_jsx") },
-	{
-		name: "admin/src/components/settings.tsx_jsx.ts",
-		templateFunction: require("./admin/src/components/settings.tsx_jsx"),
-	},
+	{ name: "admin/src/components/settings.tsx_jsx.ts", templateFunction: require("./admin/src/components/settings.tsx_jsx") },
 	{ name: "admin/src/i18n/de.json.ts", templateFunction: require("./admin/src/i18n/de.json") },
 	{ name: "admin/src/i18n/en.json.ts", templateFunction: require("./admin/src/i18n/en.json") },
 	{ name: "admin/src/i18n/es.json.ts", templateFunction: require("./admin/src/i18n/es.json") },

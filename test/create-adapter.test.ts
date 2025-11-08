@@ -626,13 +626,22 @@ describe("adapter creation =>", () => {
 				);
 			});
 
-			it("dev-server", async () => {
+			it("dev-server (global)", async () => {
 				const answers: Answers = {
 					...baseAnswers,
-					devServer: "yes",
+					devServer: "global",
 					devServerPort: 9003,
 				};
 				await expectSuccess("dev-server", answers, file => file.name === "README.md");
+			});
+
+			it("dev-server (local)", async () => {
+				const answers: Answers = {
+					...baseAnswers,
+					devServer: "local",
+					devServerPort: 9004,
+				};
+				await expectSuccess("dev-server-local", answers, file => file.name === "README.md" || file.name === "package.json");
 			});
 
 			it("Start mode: schedule", async () => {
