@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
+* (@Apollon77/@copilot) Add option to create TypeScript adapters without build step for direct TS execution with JS-Controller 4+ (#889)
 * (@Apollon77/@copilot) Check for outdated version on startup and warn users to update (#1021)
 * (@Apollon77/@copilot) Add ack flag handling to onStateChange in adapter templates (#1058)
 * (@Apollon77/@copilot) Add three-choice option for dev-server installation (global/local/no) (#864)

@@ -552,7 +552,7 @@ export const questionGroups: QuestionGroup[] = [
 				name: "language",
 				label: "Programming Language",
 				message: "Which language do you want to use to code the adapter?",
-				choices: ["JavaScript", "TypeScript"],
+				choices: ["JavaScript", "TypeScript", "TypeScript (without build)"],
 				migrate: async ctx =>
 					(await ctx.hasFilesWithExtension("src", ".ts", f => !f.endsWith(".d.ts")))
 						? "TypeScript"
@@ -1058,7 +1058,7 @@ export interface Answers {
 	/**
 	 *
 	 */
-	language?: "JavaScript" | "TypeScript";
+	language?: "JavaScript" | "TypeScript" | "TypeScript (without build)";
 	/**
 	 *
 	 */

@@ -29,7 +29,7 @@
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/adapter-react": "2.0.22",
     "@iobroker/eslint-config": "^2.2.0",
-    "@iobroker/testing": "^5.1.1",
+    "@iobroker/testing": "^5.2.2",
     "@material-ui/core": "^4.12.4",
     "@tsconfig/node20": "^20.1.6",
     "@types/iobroker": "npm:@iobroker/types@^7.0.7",

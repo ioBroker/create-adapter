@@ -1,0 +1,11 @@
+admin/index_m.html
+admin/style.css
+admin/test-adapter.png
+admin/words.js
+src/lib/adapter-config.d.ts
+src/main.test.ts
+src/main.ts
+io-package.json
+LICENSE
+package.json
+README.md
