@@ -36,17 +36,17 @@ const templateFunction: TemplateFunction = async answers => {
 	const devDependencyPromises = [
 		...[
 			// testing and translations are always required
-			"@iobroker/testing",
+			"@iobroker/testing@~5.2.1",
 			"@iobroker/adapter-dev",
 		],
 		...(isAdapter
 			? [
-					// Testing dependencies are now included in @iobroker/testing 5.1.x
+					// Testing dependencies are now included in @iobroker/testing 5.2.x
 				]
 			: []),
 		...(isAdapter && useTypeChecking
 			? [
-					// Type definitions for testing dependencies are now included in @iobroker/testing 5.1.x
+					// Type definitions for testing dependencies are now included in @iobroker/testing 5.2.x
 					// Recommended tsconfig for the minimum supported Node.js version
 					`@tsconfig/node${minNodeVersion}`,
 					// and NodeJS typings
