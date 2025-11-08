@@ -5,11 +5,8 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
-## 3.1.1 (2025-11-08)
-* (@Apollon77/@copilot) Fix non-interactive mode
-
-## 3.1.0 (2025-11-08)
-* (@Apollon77/@copilot) Add `--nonInteractive` CLI option to prevent hanging in automated environments (#1238)
+## __WORK IN PROGRESS__
+* (@Apollon77) Revert an unneeded feature
 
 ## 3.0.0 (2025-11-08)
 * IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
