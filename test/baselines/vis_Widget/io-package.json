@@ -67,7 +67,6 @@
 			"vis"
 		],
 		"onlyWWW": true,
-		"noConfig": true,
 		"singleton": true,
 		"type": "visualization-widgets",
 		"mode": "once",
