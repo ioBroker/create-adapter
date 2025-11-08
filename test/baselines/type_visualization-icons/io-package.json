@@ -68,6 +68,9 @@
 		"singleton": true,
 		"type": "visualization-icons",
 		"mode": "once",
+		"adminUI": {
+			"config": "none"
+		},
 		"dependencies": [],
 		"globalDependencies": []
 	},

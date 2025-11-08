@@ -9,6 +9,7 @@
 ## __WORK IN PROGRESS__
 * IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
 * (@Apollon77/@copilot) Use @iobroker/types instead of @types/iobroker package · [Migration guide](docs/updates/20251014_iobroker_types_package.md)
+* (@Apollon77/@copilot) Add `adminUI.config: "none"` for adapters without configuration UI to satisfy adapter-checker W164 (#1071) · [Migration guide](docs/updates/20251014_admin_ui_config_none.md)
 * (@Apollon77/@copilot) Updated README template installation instructions to use GitHub Custom Install instead of direct npm commands
 * (@Apollon77/@copilot) Switch to npm trusted publishing for automatic releases (#1202) · [Migration guide](docs/updates/20251013_trusted_deploy.md)
 * (@Apollon77/@copilot) Added option to use official @iobroker/eslint-config with ESLint 9 format as primary configuration (#1186) · [Migration guide](docs/updates/20251012_eslint9_official_config.md)
