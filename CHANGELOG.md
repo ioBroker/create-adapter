@@ -8,6 +8,7 @@
 
 ## __WORK IN PROGRESS__
 * IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
+* (@Apollon77/@copilot) Check for outdated version on startup and warn users to update (#1021)
 * (@Apollon77/@copilot) Add three-choice option for dev-server installation (global/local/no) (#864)
 * (@Apollon77/@copilot) Replace custom_m.html with jsonCustom.json for Admin 5 compatibility (#723) · [Migration guide](docs/updates/20251014_jsoncustom_admin5_support.md)
 * (@Apollon77/@copilot) Use @iobroker/types instead of @types/iobroker package · [Migration guide](docs/updates/20251014_iobroker_types_package.md)
