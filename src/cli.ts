@@ -304,6 +304,11 @@ async function checkVersion(): Promise<void> {
 		return;
 	}
 
+	// Skip version check in CI environments
+	if (process.env.CI || process.env.GITHUB_ACTIONS || process.env.TRAVIS || process.env.CIRCLECI) {
+		return;
+	}
+
 	try {
 		const packageName = "@iobroker/create-adapter";
 		const localVersion = getOwnVersion();
