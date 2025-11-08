@@ -756,7 +756,7 @@ export const questionGroups: QuestionGroup[] = [
 						value: "global",
 					},
 					{
-						message: "yes, as a adapter own local installation (no root permissions needed)",
+						message: "yes, as an adapter-own local installation (no root permissions needed)",
 						hint: "(recommended)",
 						value: "local",
 					},
