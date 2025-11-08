@@ -7,6 +7,7 @@
 -->
 ## 3.0.0 (2025-11-08)
 * IMPORTANT: The adapter creator requires Node.js 20.x or newer to run!
+* (@Apollon77/@copilot) Add `--nonInteractive` CLI option to prevent hanging in automated environments (#1238)
 * (@Apollon77/@copilot) Add option to create TypeScript adapters without build step for direct TS execution with JS-Controller 4+ (#889)
 * (@Apollon77/@copilot) Check for outdated version on startup and warn users to update (#1021)
 * (@Apollon77/@copilot) Add ack flag handling to onStateChange in adapter templates (#1058)
