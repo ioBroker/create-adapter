@@ -30,6 +30,7 @@
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/testing": "^5.1.1",
     "@tsconfig/node20": "^20.1.6",
+    "@types/iobroker": "npm:@iobroker/types@^7.0.7",
     "@types/node": "^20.19.21",
     "@typescript-eslint/eslint-plugin": "^8.46.1",
     "@typescript-eslint/parser": "^8.46.1",

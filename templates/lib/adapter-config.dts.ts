@@ -30,7 +30,7 @@ const templateFunction: TemplateFunction = answers => {
 		const adapterSettings: AdapterSettings[] = answers.adapterSettings ?? getDefaultAnswer("adapterSettings")!;
 
 		template = `
-// This file extends the AdapterConfig type from "@types/iobroker"
+// This file extends the AdapterConfig type from "@iobroker/types"
 
 // Augment the globally declared type ioBroker.AdapterConfig
 declare global {
@@ -45,7 +45,7 @@ export {};
 `;
 	} else {
 		template = `
-// This file extends the AdapterConfig type from "@types/iobroker"
+// This file extends the AdapterConfig type from "@iobroker/types"
 // using the actual properties present in io-package.json
 // in order to provide typings for adapter.config properties
 
