@@ -291,7 +291,7 @@ void (async () => {
 			try {
 				// The script is run from .github directory, so go up one level to find bin/
 				const binPath = path.join(process.cwd(), "..", "bin", "create-adapter.js");
-				const result = execSync(
+				execSync(
 					`node "${binPath}" --replay "${testReplayFile}" --nonInteractive --target "${testOutputDir}" --noInstall --skipAdapterExistenceCheck`,
 					{
 						cwd: path.join(process.cwd(), ".."),
@@ -328,12 +328,19 @@ void (async () => {
 					hadError = true;
 				}
 				
-				// Verify that the adapter was created successfully (has package.json)
+				// Verify that the adapter was created successfully (has package.json and main.ts)
 				const packageJsonPath = path.join(testOutputDir, "ioBroker.template", "package.json");
+				const mainTsPath = path.join(testOutputDir, "ioBroker.template", "src", "main.ts");
 				if (await fs.pathExists(packageJsonPath)) {
-					console.log(green("✓ Adapter files were created successfully"));
+					console.log(green("✓ package.json was created successfully"));
 				} else {
-					console.error(red("✗ Adapter files were not created"));
+					console.error(red("✗ package.json was not created"));
+					hadError = true;
+				}
+				if (await fs.pathExists(mainTsPath)) {
+					console.log(green("✓ src/main.ts was created successfully"));
+				} else {
+					console.error(red("✗ src/main.ts was not created"));
 					hadError = true;
 				}
 			} else {
