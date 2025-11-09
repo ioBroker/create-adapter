@@ -64,7 +64,6 @@
 		"loglevel": "info",
 		"tier": 3,
 		"onlyWWW": true,
-		"noConfig": true,
 		"singleton": true,
 		"type": "visualization-widgets",
 		"mode": "once",
