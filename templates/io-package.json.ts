@@ -136,7 +136,6 @@ export = (async answers => {
 				: isWidget
 					? `
 			"onlyWWW": true,
-			"noConfig": true,
 			"singleton": true,
 			"type": "${answers.type || "visualization-widgets"}",
 			"mode": "once",
