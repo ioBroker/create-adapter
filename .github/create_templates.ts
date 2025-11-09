@@ -248,6 +248,98 @@ void (async () => {
 			console.error(red("At least one template had test errors!"));
 			process.exit(1);
 		}
+
+		console.log();
+		console.log(green("Test non-interactive replay mode"));
+		console.log(green("================================="));
+		// Test with TypeScript template
+		const testTemplate = "TypeScript";
+		console.log(blue(`Testing non-interactive replay with ${testTemplate} template`));
+		const templateDir = getTemplateDir(testTemplate);
+		const replayFile = path.join(templateDir, ".create-adapter.json");
+		
+		// Read the original replay file
+		const originalReplay = await fs.readJSON(replayFile);
+		
+		// Create a modified replay file with some fields removed
+		const modifiedReplay = { ...originalReplay };
+		
+		// Remove a required field with default (startMode)
+		delete modifiedReplay.startMode;
+		
+		// Remove a choice with default (tools - this is multiselect)
+		delete modifiedReplay.tools;
+		
+		// Remove an optional field (description) - note: this might not be in the file anyway
+		delete modifiedReplay.description;
+		
+		// Write the modified replay file
+		const testReplayFile = path.join(templateDir, ".create-adapter-test.json");
+		await fs.writeJSON(testReplayFile, modifiedReplay, { spaces: "\t" });
+		
+		// Run the adapter creator with non-interactive mode
+		const testOutputDir = path.join(outDir, "NonInteractiveTest");
+		await fs.emptyDir(testOutputDir);
+		
+		console.log("Running adapter creator in non-interactive mode...");
+		try {
+			// Use the correct path to bin/create-adapter.js relative to the project root
+			const binPath = path.join(process.cwd(), "bin", "create-adapter.js");
+			execSync(
+				`node "${binPath}" --replay "${testReplayFile}" --nonInteractive --target "${testOutputDir}" --noInstall --skipAdapterExistenceCheck`,
+				{
+					cwd: process.cwd(),
+					stdio: "pipe",
+				}
+			);
+		} catch (e) {
+			console.error(red("Non-interactive mode test failed!"));
+			console.error(e.message || e);
+			hadError = true;
+		}
+		
+		// Verify the result
+		const resultReplayFile = path.join(testOutputDir, "ioBroker.template", ".create-adapter.json");
+		if (await fs.pathExists(resultReplayFile)) {
+			const resultReplay = await fs.readJSON(resultReplayFile);
+			
+			// Verify that defaults were applied
+			if (resultReplay.startMode === "daemon") {
+				console.log(green("✓ Required field with default (startMode) was correctly applied"));
+			} else {
+				console.error(red(`✗ startMode was not correctly applied: ${resultReplay.startMode}`));
+				hadError = true;
+			}
+			
+			// Verify that tools were converted from indices to values
+			if (Array.isArray(resultReplay.tools) && resultReplay.tools.includes("ESLint")) {
+				console.log(green("✓ Choice with default (tools) was correctly applied and converted"));
+			} else {
+				console.error(red(`✗ tools was not correctly applied: ${JSON.stringify(resultReplay.tools)}`));
+				hadError = true;
+			}
+			
+			// Verify that the adapter was created successfully (has package.json)
+			const packageJsonPath = path.join(testOutputDir, "ioBroker.template", "package.json");
+			if (await fs.pathExists(packageJsonPath)) {
+				console.log(green("✓ Adapter files were created successfully"));
+			} else {
+				console.error(red("✗ Adapter files were not created"));
+				hadError = true;
+			}
+		} else {
+			console.error(red("Non-interactive test output file not found!"));
+			hadError = true;
+		}
+		
+		// Clean up test files
+		await fs.remove(testReplayFile);
+		await fs.remove(testOutputDir);
+		
+		if (hadError) {
+			console.error(red("Non-interactive mode test had errors!"));
+			process.exit(1);
+		}
 	}
 })();
 
