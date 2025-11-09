@@ -289,12 +289,12 @@ void (async () => {
 			
 			console.log("Running adapter creator in non-interactive mode...");
 			try {
-				// Use the correct path to bin/create-adapter.js relative to the project root
-				const binPath = path.join(process.cwd(), "bin", "create-adapter.js");
+				// The script is run from .github directory, so go up one level to find bin/
+				const binPath = path.join(process.cwd(), "..", "bin", "create-adapter.js");
 				const result = execSync(
 					`node "${binPath}" --replay "${testReplayFile}" --nonInteractive --target "${testOutputDir}" --noInstall --skipAdapterExistenceCheck`,
 					{
-						cwd: process.cwd(),
+						cwd: path.join(process.cwd(), ".."),
 						stdio: "pipe",
 						encoding: "utf8",
 					}
