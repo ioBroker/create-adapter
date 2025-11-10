@@ -6,7 +6,6 @@
 	(at the beginning of a new line)
 -->
 ## __WORK IN PROGRESS__
-* (@Apollon77) Revert an unneeded feature
 * (@Apollon77/@copilot) Add `--nonInteractive` option for replay mode to enable automated regeneration without prompts (#1249)
 
 ## 3.0.0 (2025-11-08)
