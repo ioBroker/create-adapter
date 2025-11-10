@@ -5,7 +5,7 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
-## __WORK IN PROGRESS__
+## 3.1.2 (2025-11-10)
 * (@Apollon77/@copilot) Add `--nonInteractive` option for replay mode to enable automated regeneration without prompts (#1249)
 
 ## 3.0.0 (2025-11-08)
