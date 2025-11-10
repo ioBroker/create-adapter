@@ -248,6 +248,115 @@ void (async () => {
 			console.error(red("At least one template had test errors!"));
 			process.exit(1);
 		}
+
+		console.log();
+		console.log(green("Test non-interactive replay mode"));
+		console.log(green("================================="));
+		// Test with TypeScript template
+		const testTemplate = "TypeScript";
+		console.log(blue(`Testing non-interactive replay with ${testTemplate} template`));
+		const templateDir = getTemplateDir(testTemplate);
+		const replayFile = path.join(templateDir, ".create-adapter.json");
+		
+		// Check if the replay file exists
+		if (!(await fs.pathExists(replayFile))) {
+			console.error(red(`Replay file not found: ${replayFile}`));
+			console.error(red("Skipping non-interactive test"));
+			hadError = true;
+		} else {
+			// Read the original replay file
+			const originalReplay = await fs.readJSON(replayFile);
+			
+			// Create a modified replay file with some fields removed
+			const modifiedReplay = { ...originalReplay };
+			
+			// Remove a required field with default (startMode)
+			delete modifiedReplay.startMode;
+			
+			// Remove a choice with default (tools - this is multiselect)
+			delete modifiedReplay.tools;
+			
+			// Remove an optional field (description) - note: this might not be in the file anyway
+			delete modifiedReplay.description;
+			
+			// Write the modified replay file
+			const testReplayFile = path.join(templateDir, ".create-adapter-test.json");
+			await fs.writeJSON(testReplayFile, modifiedReplay, { spaces: "\t" });
+			
+			// Run the adapter creator with non-interactive mode
+			const testOutputDir = path.join(outDir, "NonInteractiveTest");
+			await fs.emptyDir(testOutputDir);
+			
+			console.log("Running adapter creator in non-interactive mode...");
+			try {
+				// The script is run from .github directory, so go up one level to find bin/
+				const binPath = path.join(process.cwd(), "..", "bin", "create-adapter.js");
+				execSync(
+					`node "${binPath}" --replay "${testReplayFile}" --nonInteractive --target "${testOutputDir}" --noInstall --skipAdapterExistenceCheck`,
+					{
+						cwd: path.join(process.cwd(), ".."),
+						stdio: "pipe",
+						encoding: "utf8",
+					}
+				);
+			} catch (e: any) {
+				console.error(red("Non-interactive mode test failed!"));
+				console.error(red("Error message:"), e.message);
+				if (e.stdout) console.error(red("stdout:"), e.stdout);
+				if (e.stderr) console.error(red("stderr:"), e.stderr);
+				hadError = true;
+			}
+			
+			// Verify the result
+			const resultReplayFile = path.join(testOutputDir, "ioBroker.template", ".create-adapter.json");
+			if (await fs.pathExists(resultReplayFile)) {
+				const resultReplay = await fs.readJSON(resultReplayFile);
+				
+				// Verify that defaults were applied
+				if (resultReplay.startMode === "daemon") {
+					console.log(green("✓ Required field with default (startMode) was correctly applied"));
+				} else {
+					console.error(red(`✗ startMode was not correctly applied: ${resultReplay.startMode}`));
+					hadError = true;
+				}
+				
+				// Verify that tools were converted from indices to values
+				if (Array.isArray(resultReplay.tools) && resultReplay.tools.includes("ESLint")) {
+					console.log(green("✓ Choice with default (tools) was correctly applied and converted"));
+				} else {
+					console.error(red(`✗ tools was not correctly applied: ${JSON.stringify(resultReplay.tools)}`));
+					hadError = true;
+				}
+				
+				// Verify that the adapter was created successfully (has package.json and main.ts)
+				const packageJsonPath = path.join(testOutputDir, "ioBroker.template", "package.json");
+				const mainTsPath = path.join(testOutputDir, "ioBroker.template", "src", "main.ts");
+				if (await fs.pathExists(packageJsonPath)) {
+					console.log(green("✓ package.json was created successfully"));
+				} else {
+					console.error(red("✗ package.json was not created"));
+					hadError = true;
+				}
+				if (await fs.pathExists(mainTsPath)) {
+					console.log(green("✓ src/main.ts was created successfully"));
+				} else {
+					console.error(red("✗ src/main.ts was not created"));
+					hadError = true;
+				}
+			} else {
+				console.error(red("Non-interactive test output file not found!"));
+				hadError = true;
+			}
+			
+			// Clean up test files
+			await fs.remove(testReplayFile);
+			await fs.remove(testOutputDir);
+		}
+		
+		if (hadError) {
+			console.error(red("Non-interactive mode test had errors!"));
+			process.exit(1);
+		}
 	}
 })();
 

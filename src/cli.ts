@@ -64,6 +64,12 @@ const argv = yargs(hideBin(process.argv))
 			default: false,
 			desc: "Skip check if this version is outdated",
 		},
+		nonInteractive: {
+			alias: "y",
+			type: "boolean",
+			default: false,
+			desc: "Enable non-interactive mode - use defaults for missing answers in replay mode",
+		},
 	})
 	.parseSync();
 
@@ -114,6 +120,39 @@ async function ask(): Promise<Answers> {
 		}
 	}
 
+	/**
+	 * Converts an initial value (which may be an index or array of indices) to the actual answer value
+	 * This is necessary because enquirer's select/multiselect questions use indices in their initial property
+	 */
+	function convertInitialToValue(q: Question, initial: any): any {
+		if (initial === undefined) {
+			return initial;
+		}
+
+		// For select questions, convert index to value
+		if (q.type === "select" && typeof initial === "number" && q.choices) {
+			const choice = q.choices[initial];
+			return choice && typeof choice === "object" && "value" in choice ? choice.value : choice;
+		}
+
+		// For multiselect questions, convert array of indices to array of values
+		if (q.type === "multiselect" && Array.isArray(initial) && q.choices) {
+			return initial
+				.map(index => {
+					const choice = q.choices![index];
+					if (typeof choice === "object" && "message" in choice) {
+						// If choice has a value property, use it, otherwise use the message
+						return "value" in choice ? choice.value : choice.message;
+					}
+					return choice;
+				})
+				.filter(v => v !== undefined);
+		}
+
+		// For other question types, return the initial value as-is
+		return initial;
+	}
+
 	async function askQuestion(q: Question): Promise<void> {
 		if (testCondition(q.condition, answers)) {
 			if (q.replay) {
@@ -138,7 +177,21 @@ async function ask(): Promise<Answers> {
 				} else {
 					if (answers.expert !== "yes" && q.expert && q.initial !== undefined) {
 						// In non-expert mode, prefill the default answer for expert questions
-						answer = { [q.name as string]: q.initial };
+						answer = { [q.name as string]: convertInitialToValue(q, q.initial) };
+					} else if (argv.nonInteractive && argv.replay) {
+						// In non-interactive replay mode, use the default answer for missing questions
+						if (q.initial !== undefined) {
+							answer = { [q.name as string]: convertInitialToValue(q, q.initial) };
+						} else if (q.optional) {
+							// For optional questions without defaults, use empty string
+							answer = { [q.name as string]: "" };
+						} else {
+							// For required questions without defaults in non-interactive mode, fail
+							error(
+								`Cannot run in non-interactive mode: required question "${q.label}" is missing from replay file and has no default value`,
+							);
+							return process.exit(1);
+						}
 					} else {
 						// Ask the user for an answer
 						try {

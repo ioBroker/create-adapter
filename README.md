@@ -39,6 +39,7 @@ The following CLI options are available:
 -   `--skipAdapterExistenceCheck` - Don't check if an adapter with the same name already exists on `npm`. Shortcut: `-x`
 -   `--replay=/path/to/file` - Re-run the adapter creator with the answers of a previous run (the given file needs to be the `.create-adapter.json` in the root of the previously generated directory). Shortcut: `-r`
 -   `--migrate=/path/to/dir` - Run the adapter creator with the answers pre-filled from an existing adapter directory (the given path needs to point to the adapter base directory where `io-package.json` is found). Shortcut: `-m`
+-   `--nonInteractive` - Enable non-interactive mode. When used with `--replay`, missing answers will use their default values instead of prompting the user. Useful for automated regeneration. Shortcut: `-y`
 -   `--noInstall` - Don't install dependencies after creating the files. Shortcut: `-n`
 -   `--ignoreOutdatedVersion` - Skip the check if this version is outdated (not recommended). The version check is automatically skipped in CI environments.
 
