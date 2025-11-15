@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - master
-      - automated/**
+      - automated/*
     tags:
       # normal versions
       - "v[0-9]+.[0-9]+.[0-9]+"
