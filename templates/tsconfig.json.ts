@@ -10,6 +10,7 @@ export = (answers => {
 	}
 
 	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
+	const useESM = answers.moduleType === "esm";
 
 	let include: string;
 	let exclude: string;
@@ -46,6 +47,16 @@ export = (answers => {
 					: ""
 		}
 		"noEmit": true,
+${
+	useESM
+		? `
+		// ESM module settings
+		"module": "ES2022",
+		"moduleResolution": "bundler",
+`
+		: ""
+}
+
 
 		// check JS files${useTypeScript ? ", but do not compile them => tsconfig.build.json" : useTSWithoutBuild ? "" : ""}
 		"allowJs": true,

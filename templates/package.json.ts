@@ -24,6 +24,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const useNyc = answers.tools && answers.tools.indexOf("code coverage") > -1;
 	const useReleaseScript = answers.releaseScript === "yes";
 	const useDevServerLocal = answers.devServer === "local";
+	const useESM = answers.moduleType === "esm";
 
 	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
 
@@ -285,7 +286,8 @@ const templateFunction: TemplateFunction = async answers => {
 	"devDependencies": {${devDependencies.join(",")}},
 	${
 		isAdapter
-			? `
+			? `${useESM ? `
+		"type": "module",` : ""}
 		"main": "${useTSWithoutBuild ? "src/main.ts" : useTypeScript ? "build/main.js" : "main.js"}",
 	`
 			: isWidget
