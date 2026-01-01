@@ -33,7 +33,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@alcalzone/release-script": "^4.0.0",
+    "@alcalzone/release-script": "^5.0.0",
     "@iobroker/eslint-config": "^2.2.0",
     "@tsconfig/node20": "^20.1.8",
     "@types/chai": "^4.3.20",
