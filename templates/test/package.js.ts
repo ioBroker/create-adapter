@@ -3,7 +3,7 @@ import { readFile } from "../../src/lib/createAdapter";
 
 export = (answers => {
 	const useESM = answers.moduleType === "esm";
-	
+
 	if (useESM) {
 		return `import path from "path";
 import { fileURLToPath } from "url";
@@ -15,6 +15,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 tests.packageFiles(path.join(__dirname, ".."));
 `;
 	}
-	
+
 	return readFile("package.raw.js", __dirname);
 }) as TemplateFunction;
