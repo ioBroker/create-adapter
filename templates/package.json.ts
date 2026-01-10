@@ -28,6 +28,25 @@ const templateFunction: TemplateFunction = async answers => {
 
 	const minNodeVersion = answers.nodeVersion ?? RECOMMENDED_NODE_VERSION_FALLBACK;
 
+	// Build the Node.js engines string based on module type and minimum version
+	let nodeEnginesString: string;
+	if (useESM) {
+		// ESM requires specific Node.js versions due to js-controller compatibility
+		if (minNodeVersion === "20") {
+			// For Node 20: need specific patch versions that support ESM in js-controller
+			nodeEnginesString = ">=20.19.0 <22.0.0 || >=22.13.0";
+		} else if (minNodeVersion === "22") {
+			// For Node 22: just need the patch version with ESM support
+			nodeEnginesString = ">=22.13.0";
+		} else {
+			// For Node 24+: default string is sufficient
+			nodeEnginesString = `>= ${minNodeVersion}`;
+		}
+	} else {
+		// CommonJS uses standard version string
+		nodeEnginesString = `>= ${minNodeVersion}`;
+	}
+
 	const dependencyPromises = [...(isAdapter ? ["@iobroker/adapter-core"] : [])]
 		.sort()
 		.map(dep => async () => `"${dep}": "${await fetchPackageReferenceVersion(dep)}"`)
@@ -280,7 +299,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"url": "${gitUrl}",
 	},
 	"engines": {
-		"node": ">= ${minNodeVersion}"
+		"node": "${nodeEnginesString}"
 	},
 	"dependencies": {${dependencies.join(",")}},
 	"devDependencies": {${devDependencies.join(",")}},

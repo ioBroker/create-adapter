@@ -15,15 +15,13 @@ const templateFunction: TemplateFunction = async answers => {
 	const t = answers.indentation === "Space (4)" ? "    " : "\t";
 	const useESM = answers.moduleType === "esm";
 
-	const template = `${useESM ? "" : `${quote}use strict${quote};\n\n`}
-
-/*
+	const template = `${useESM ? "" : `${quote}use strict${quote};\n\n`}/*
  * Created with @iobroker/create-adapter v${answers.creatorVersion}
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-${useESM ? `import utils from ${quote}@iobroker/adapter-core${quote};` : `const utils = require(${quote}@iobroker/adapter-core${quote});`}
+${useESM ? `import * as utils from ${quote}@iobroker/adapter-core${quote};` : `const utils = require(${quote}@iobroker/adapter-core${quote});`}
 
 // Load your modules here, e.g.:
 // const fs = require(${quote}fs${quote});
