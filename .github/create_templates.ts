@@ -235,6 +235,14 @@ void (async () => {
 				console.log("not an adapter template, skipping tests...");
 				continue;
 			}
+			// Skip TypeScript ESM templates - build-adapter doesn't support ESM output yet
+			const isTypeScriptESM =
+				(template.language === "TypeScript" || template.language === "TypeScript (without build)") &&
+				template.moduleType === "esm";
+			if (isTypeScriptESM) {
+				console.log("TypeScript ESM template - skipping tests (build tooling doesn't support ESM yet)...");
+				continue;
+			}
 			const templateDir = getTemplateDir(tplName);
 			const cmdOpts: ExecSyncOptions = {
 				cwd: templateDir,
