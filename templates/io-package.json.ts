@@ -117,6 +117,7 @@ export = (async answers => {
 					: ""
 			}
 			"type": "${answers.type || "general"}",
+			// Compact mode works with both CommonJS and ESM (requires js-controller >= 6.0.11 for ESM)
 			"compact": true,
 			${
 				answers.connectionType

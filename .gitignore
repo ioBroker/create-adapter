@@ -13,3 +13,6 @@ node_modules/
 # npm packet files
 iobroker-create-adapter-*.tgz
 /.idea
+
+# Generated templates for testing
+/ioBroker.template
