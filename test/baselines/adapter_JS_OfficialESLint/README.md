@@ -117,7 +117,7 @@ For later updates:
 ## License
 MIT License
 
-Copyright (c) 2025 Al Calzone <al@calzo.ne>
+Copyright (c) 2026 Al Calzone <al@calzo.ne>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
