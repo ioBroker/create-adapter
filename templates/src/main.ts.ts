@@ -22,7 +22,7 @@ const templateFunction: TemplateFunction = async answers => {
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-${useESM ? `import utils from ${quote}@iobroker/adapter-core${quote};` : `import * as utils from ${quote}@iobroker/adapter-core${quote};`}
+import * as utils from ${quote}@iobroker/adapter-core${quote};
 
 // Load your modules here, e.g.:
 // import * as fs from ${quote}fs${quote};

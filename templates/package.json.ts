@@ -280,7 +280,7 @@ const templateFunction: TemplateFunction = async answers => {
 		"url": "${gitUrl}",
 	},
 	"engines": {
-		"node": ">= ${minNodeVersion}"
+		"node": "${useESM ? ">=20.19.0 <22.0.0 || >=22.13.0" : `>= ${minNodeVersion}`}"
 	},
 	"dependencies": {${dependencies.join(",")}},
 	"devDependencies": {${devDependencies.join(",")}},

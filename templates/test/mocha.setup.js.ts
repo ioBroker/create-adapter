@@ -2,9 +2,10 @@ import type { TemplateFunction } from "../../src/lib/createAdapter";
 
 export = (answers => {
 	const useTypeScript = answers.language === "TypeScript";
+	const useESM = answers.moduleType === "esm";
 
 	const template = `${
-		useTypeScript
+		useTypeScript && !useESM
 			? `
 "use strict";
 
@@ -22,7 +23,21 @@ process.on("unhandledRejection", (e) => {
 	throw e;
 });
 
-// enable the should interface with sinon
+${
+	useESM
+		? `// enable the should interface with sinon
+// and load chai-as-promised and sinon-chai by default
+import sinonChai from "sinon-chai";
+import chaiAsPromised from "chai-as-promised";
+import chai from "chai";
+
+const { should, use } = chai;
+
+should();
+use(sinonChai);
+use(chaiAsPromised);
+`
+		: `// enable the should interface with sinon
 // and load chai-as-promised and sinon-chai by default
 const sinonChai = require("sinon-chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -31,6 +46,7 @@ const { should, use } = require("chai");
 should();
 use(sinonChai);
 use(chaiAsPromised);
-`;
+`
+}`;
 	return template.trim();
 }) as TemplateFunction;
