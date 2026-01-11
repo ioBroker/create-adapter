@@ -10,6 +10,7 @@
   "homepage": "https://github.com/AlCalzone/ioBroker.test-adapter",
   "license": "Apache-2.0",
   "keywords": [
+    "ioBroker",
     "template",
     "automation",
     "IoT",

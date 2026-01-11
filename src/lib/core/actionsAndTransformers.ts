@@ -152,6 +152,10 @@ export function transformKeywords(keywords: string): string[] | undefined {
 	if (keywordsArray.length === 0) {
 		return undefined;
 	}
+	// Ensure "ioBroker" is always included in the keywords
+	if (!keywordsArray.some(k => k.toLowerCase() === "iobroker")) {
+		keywordsArray.unshift("ioBroker");
+	}
 	return keywordsArray;
 }
 

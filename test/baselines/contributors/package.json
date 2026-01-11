@@ -17,6 +17,7 @@
   "homepage": "https://github.com/AlCalzone/ioBroker.test-adapter",
   "license": "MIT",
   "keywords": [
+    "ioBroker",
     "template",
     "automation",
     "IoT",
