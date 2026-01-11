@@ -7,7 +7,7 @@ To allow support for newer versions of the `admin` dependency, the version const
   "globalDependencies": [
     {
 -     "admin": "7.0.23"
-+     "admin": ">=7.0.23"
++     "admin": ">=7.6.17"
     }
   ]
 ```
