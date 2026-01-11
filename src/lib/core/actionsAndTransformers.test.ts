@@ -9,6 +9,7 @@ import {
 	checkTitle,
 	transformAdapterName,
 	transformDescription,
+	transformKeywords,
 } from "./actionsAndTransformers";
 
 const checkAdapterExistence = stub<string[], Promise<CheckResult>>();
@@ -177,5 +178,37 @@ describe("actionsAndTransformers/checkTitle()", () => {
 
 	it("should return true otherwise", async () => {
 		checkTitle("foo").should.equal(true);
+	});
+});
+
+describe("actionsAndTransformers/transformKeywords()", () => {
+	it("should split keywords by comma and trim them", () => {
+		const result = transformKeywords("automation, IoT, integration");
+		expect(result).to.deep.equal(["ioBroker", "automation", "IoT", "integration"]);
+	});
+
+	it("should ensure 'ioBroker' is always included", () => {
+		const result = transformKeywords("template, automation");
+		expect(result).to.deep.equal(["ioBroker", "template", "automation"]);
+	});
+
+	it("should not duplicate 'ioBroker' if already present", () => {
+		const result = transformKeywords("ioBroker, template, automation");
+		expect(result).to.deep.equal(["ioBroker", "template", "automation"]);
+	});
+
+	it("should handle 'ioBroker' in different cases", () => {
+		const result = transformKeywords("iobroker, template");
+		expect(result).to.deep.equal(["iobroker", "template"]);
+	});
+
+	it("should return undefined for empty keyword string", () => {
+		const result = transformKeywords("");
+		expect(result).to.be.undefined;
+	});
+
+	it("should filter out empty keywords after splitting", () => {
+		const result = transformKeywords("template, , automation, ");
+		expect(result).to.deep.equal(["ioBroker", "template", "automation"]);
 	});
 });
