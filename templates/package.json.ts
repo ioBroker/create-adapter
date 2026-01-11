@@ -14,7 +14,8 @@ const templateFunction: TemplateFunction = async answers => {
 	const isWidget = answers.features.indexOf("vis") > -1;
 	const useTypeScript = answers.language === "TypeScript";
 	const useTSWithoutBuild = answers.language === "TypeScript (without build)";
-	const useTypeChecking = useTypeScript || useTSWithoutBuild || (answers.tools && answers.tools.indexOf("type checking") > -1);
+	const useTypeChecking =
+		useTypeScript || useTSWithoutBuild || (answers.tools && answers.tools.indexOf("type checking") > -1);
 	const useAdminReact = answers.adminUi === "react";
 	const useTabReact = answers.tabReact === "yes";
 	const useReact = useAdminReact || useTabReact;

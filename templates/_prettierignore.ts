@@ -7,7 +7,6 @@ const templateFunction: TemplateFunction = answers => {
 	}
 	const useTypeScript = answers.language === "TypeScript";
 
-
 	const template = `
 package.json
 package-lock.json
