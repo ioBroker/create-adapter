@@ -13,7 +13,8 @@ const templateFunction: TemplateFunction = answers => {
 
 	// Determine the LTS version and test versions based on the minimum Node.js version selected
 	const minNodeVersion = answers.nodeVersion || RECOMMENDED_NODE_VERSION_FALLBACK;
-	const ltsNodeVersion = `${minNodeVersion}.x`;
+	// Use the recommended version for non-test operations like check-and-lint and deploy
+	const ltsNodeVersion = `${RECOMMENDED_NODE_VERSION_FALLBACK}.x`;
 
 	// Filter test versions to only include versions >= the minimum version
 	const allTestVersions = ["20.x", "22.x", "24.x"];

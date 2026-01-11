@@ -20,7 +20,7 @@
     "url": "https://github.com/AlCalzone/ioBroker.test-widget.git"
   },
   "engines": {
-    "node": ">= 20"
+    "node": ">= 22"
   },
   "dependencies": {},
   "devDependencies": {

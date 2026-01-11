@@ -686,7 +686,7 @@ describe("adapter creation =>", () => {
 					{
 						nodeVersion: "20",
 						expectedVersions: ["20.x", "22.x", "24.x"],
-						expectedLts: "20.x",
+						expectedLts: "22.x", // LTS should always use the recommended version
 					},
 					{
 						nodeVersion: "22",
@@ -696,7 +696,7 @@ describe("adapter creation =>", () => {
 					{
 						nodeVersion: "24",
 						expectedVersions: ["24.x"],
-						expectedLts: "24.x",
+						expectedLts: "22.x", // LTS should always use the recommended version, not necessarily the minimum
 					},
 				];
 

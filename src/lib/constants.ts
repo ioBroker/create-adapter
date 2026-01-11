@@ -3,4 +3,4 @@
  */
 
 /** The recommended Node.js version to use as a fallback when none is specified */
-export const RECOMMENDED_NODE_VERSION_FALLBACK = "20";
+export const RECOMMENDED_NODE_VERSION_FALLBACK = "22";
