@@ -31,7 +31,7 @@
     "@iobroker/testing": "^5.2.2",
     "@tsconfig/node20": "^20.1.8",
     "@types/iobroker": "npm:@iobroker/types@^7.1.0",
-    "@types/node": "^20.19.28",
+    "@types/node": "^20.19.30",
     "eslint": "^9.39.2",
     "typescript": "~5.9.3"
   },
