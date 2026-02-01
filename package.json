@@ -49,7 +49,7 @@
     "@types/sinon": "^21.0.0",
     "@types/sinon-chai": "^3.2.12",
     "@types/yargs": "^17.0.35",
-    "chai": "^4.5.0",
+    "chai": "^6.2.2",
     "chai-as-promised": "^7.1.2",
     "copyfiles": "^2.4.1",
     "execa": "^9.6.0",
