@@ -14,6 +14,7 @@ const templateFunction: TemplateFunction = async answers => {
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 	const quote = answers.quotes === "double" ? '"' : "'";
 	const t = answers.indentation === "Space (4)" ? "    " : "\t";
+	const useESM = answers.moduleType === "esm";
 
 	const template = `/*
  * Created with @iobroker/create-adapter v${answers.creatorVersion}
@@ -184,6 +185,20 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 	// ${t}}
 	// }
 }
+${
+	useESM
+		? `
+// ESM module export for compact mode
+export default function startAdapter(options?: Partial<utils.AdapterOptions>): ${className} {
+	return new ${className}(options);
+}
+
+// Start adapter if not loaded as module
+if (import.meta.url === \`file://\${process.argv[1]}\`) {
+	new ${className}();
+}
+`
+		: `
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	module.exports = (options: Partial<utils.AdapterOptions> | undefined) => new ${className}(options);
@@ -191,7 +206,8 @@ if (require.main !== module) {
 	// otherwise start the instance directly
 	(() => new ${className}())();
 }
-`;
+`
+}`;
 	return template;
 };
 
