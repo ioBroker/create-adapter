@@ -173,7 +173,7 @@ export const questionGroups: QuestionGroup[] = [
 				type: "input",
 				name: "adapterName",
 				label: "Adapter Name",
-				message: "Please enter the name of your project:",
+				message: "Please enter the name of your project (in ENGLISH):",
 				resultTransform: transformAdapterName,
 				action: checkAdapterName,
 				migrate: ctx => ctx.ioPackageJson.common?.name,
