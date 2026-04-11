@@ -13,16 +13,15 @@ const templateFunction: TemplateFunction = async answers => {
 	const adapterSettings: AdapterSettings[] = answers.adapterSettings || getDefaultAnswer("adapterSettings")!;
 	const quote = answers.quotes === "double" ? '"' : "'";
 	const t = answers.indentation === "Space (4)" ? "    " : "\t";
+	const useESM = answers.moduleType === "esm";
 
-	const template = `${quote}use strict${quote};
-
-/*
+	const template = `${useESM ? "" : `${quote}use strict${quote};\n\n`}/*
  * Created with @iobroker/create-adapter v${answers.creatorVersion}
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-const utils = require(${quote}@iobroker/adapter-core${quote});
+${useESM ? `import * as utils from ${quote}@iobroker/adapter-core${quote};` : `const utils = require(${quote}@iobroker/adapter-core${quote});`}
 
 // Load your modules here, e.g.:
 // const fs = require(${quote}fs${quote});
@@ -190,7 +189,24 @@ ${adapterSettings.map(s => `\t\tthis.log.debug(${quote}config ${s.key}: \${this.
 	// ${t}}
 	// }
 }
+${
+	useESM
+		? `
+// ESM module export for compact mode
+/**
+ * @param {Partial<utils.AdapterOptions>} [options] - Adapter options
+ * @returns {${className}} - Adapter instance
+ */
+export default function startAdapter(options) {
+	return new ${className}(options);
+}
 
+// Start adapter if not loaded as module
+if (import.meta.url === \`file://\${process.argv[1]}\`) {
+	new ${className}();
+}
+`
+		: `
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	/**
@@ -201,7 +217,8 @@ if (require.main !== module) {
 	// otherwise start the instance directly
 	new ${className}();
 }
-`;
+`
+}`;
 	return template;
 };
 templateFunction.customPath = "main.js";

@@ -584,6 +584,33 @@ export const questionGroups: QuestionGroup[] = [
 			{
 				condition: [{ name: "features", contains: "adapter" }],
 				type: "select",
+				name: "moduleType",
+				label: "Module System",
+				expert: true,
+				optional: true,
+				message: "Which module system do you want to use?",
+				initial: "esm",
+				choices: [
+					{
+						message: "ESM (ECMAScript Modules)",
+						hint: "(recommended, modern standard with better dependency support)",
+						value: "esm",
+					},
+					{
+						message: "CommonJS",
+						hint: "(legacy format, use only if needed for specific dependencies)",
+						value: "commonjs",
+					},
+				],
+				migrate: async ctx => {
+					// Check if package.json has "type": "module"
+					const pkgJson = await ctx.readJsonFile("package.json");
+					return pkgJson?.type === "module" ? "esm" : "commonjs";
+				},
+			},
+			{
+				condition: [{ name: "features", contains: "adapter" }],
+				type: "select",
 				name: "adminUi",
 				label: "Admin UI",
 				message: "Which framework would you like to use for the Admin UI?",
@@ -1079,6 +1106,10 @@ export interface Answers {
 	 *
 	 */
 	nodeVersion?: "20" | "22" | "24";
+	/**
+	 * Module system to use (ESM or CommonJS)
+	 */
+	moduleType?: "esm" | "commonjs";
 	/**
 	 *
 	 */
