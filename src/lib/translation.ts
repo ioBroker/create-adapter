@@ -1,4 +1,5 @@
-import { translateText } from "@iobroker/adapter-dev/build/translate";
+import { translateText, TranslationSkippedError } from "@iobroker/adapter-dev/build/translate";
+import { yellow } from "ansi-colors";
 import type { AdapterSettings, Answers } from "./core/questions";
 import { getDefaultAnswer } from "./core/questions";
 import type { TemplateFunction } from "./createAdapter";
@@ -37,8 +38,20 @@ export async function getTranslatedSettingsForLanguage(
 		/<adapterName>/gi,
 		answers.adapterName,
 	);
-	for (const setting of adapterSettings) {
-		translatedSettings[setting.label || setting.key] = await translateText(setting.label || setting.key, language);
+	try {
+		for (const setting of adapterSettings) {
+			translatedSettings[setting.label || setting.key] = await translateText(
+				setting.label || setting.key,
+				language,
+			);
+		}
+	} catch (err) {
+		// We accept TranslationSkippedError here, and still save whatever we had as progress
+		if (err instanceof TranslationSkippedError) {
+			console.log(yellow("Translation incomplete because of rate Limiting. See above for details."));
+		} else {
+			throw err;
+		}
 	}
 
 	return translatedSettings;
