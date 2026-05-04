@@ -5,7 +5,8 @@
 	## __WORK IN PROGRESS__
 	(at the beginning of a new line)
 -->
-## 3.1.3 (2026-05-04)
+
+## **WORK IN PROGRESS**
 
 - (@UncleSamSwiss) Continue file creation despite translation errors due to rate limiting
 
