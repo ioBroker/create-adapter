@@ -76,7 +76,7 @@
     "p-limit": "^7.2.0",
     "prettier": "^3.8.3",
     "semver": "^7.7.3",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "yargs": "^18.0.0"
   },
   "scripts": {
