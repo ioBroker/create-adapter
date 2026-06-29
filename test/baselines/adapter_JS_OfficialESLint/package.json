@@ -23,7 +23,7 @@
     "node": ">= 20"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.3.2"
+    "@iobroker/adapter-core": "^3.4.1"
   },
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.5.0",
