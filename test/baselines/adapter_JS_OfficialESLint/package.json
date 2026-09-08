@@ -23,12 +23,12 @@
     "node": ">= 20"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.4.1"
+    "@iobroker/adapter-core": "^3.4.3"
   },
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/eslint-config": "^2.3.4",
-    "@iobroker/testing": "^5.2.2"
+    "@iobroker/testing": "^6.1.0"
   },
   "main": "main.js",
   "files": [

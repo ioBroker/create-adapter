@@ -23,15 +23,15 @@
     "node": ">= 20"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.4.1"
+    "@iobroker/adapter-core": "^3.4.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^9.39.5",
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/adapter-react": "2.0.22",
-    "@iobroker/testing": "^5.2.2",
+    "@iobroker/testing": "^6.1.0",
     "@material-ui/core": "^4.12.4",
-    "eslint": "^9.39.4",
+    "eslint": "^9.39.5",
     "eslint-plugin-react": "^7.37.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
