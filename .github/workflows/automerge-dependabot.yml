@@ -6,8 +6,7 @@ name: Auto-Merge Dependabot PRs
 
 on:
   # Trigger when a PR is opened or updated
-  # WARNING: This needs to be run in the PR base, DO NOT build untrusted code in this action
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
